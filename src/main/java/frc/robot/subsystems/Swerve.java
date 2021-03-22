@@ -75,7 +75,7 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
-    //set module states for auto
+    /* Used by SwerveCommandController in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         for(SwerveModule mod : mSwerveMods){
