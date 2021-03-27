@@ -2,8 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
-
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -15,7 +14,7 @@ public class OpenLoopSwerve extends CommandBase {
     private Boolean fieldRelative = true;
     
     private Swerve s_Swerve;
-    private XboxController controller;
+    private Joystick controller;
     private int translationAxis;
     private int strafeAxis;
     private int rotationAxis;
@@ -23,7 +22,7 @@ public class OpenLoopSwerve extends CommandBase {
     /**
      * Driver control
      */
-    public OpenLoopSwerve(Swerve s_Swerve, XboxController controller, int translationAxis, int strafeAxis, int rotationAxis) {
+    public OpenLoopSwerve(Swerve s_Swerve, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -40,9 +39,9 @@ public class OpenLoopSwerve extends CommandBase {
         double rAxis = -controller.getRawAxis(rotationAxis);
         
         /* Deadbands */
-        yAxis = (Math.abs(yAxis) < Constants.Swerve.stickDeadband) ? 0 : yAxis;
-        xAxis = (Math.abs(xAxis) < Constants.Swerve.stickDeadband) ? 0 : xAxis;
-        rAxis = (Math.abs(rAxis) < Constants.Swerve.stickDeadband) ? 0 : rAxis;
+        yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
+        xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
+        rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;

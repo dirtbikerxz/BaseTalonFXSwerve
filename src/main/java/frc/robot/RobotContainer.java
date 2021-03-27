@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,7 +23,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Controllers */
-  private final XboxController driver = new XboxController(0);
+  private final Joystick driver = new Joystick(0);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -39,6 +40,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(new OpenLoopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis));
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -50,13 +52,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /** Driver Buttons */
-    zeroGyro.whenPressed(new InstantCommand(() -> zeroGyro()));
-  }
-
-  /* Reset Gyro */
-  private void zeroGyro(){
-    s_Swerve.zeroGyro();
+    /* Driver Buttons */
+    zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
   }
 
   /**

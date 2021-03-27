@@ -8,16 +8,12 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.util.Units;
 
 public final class Constants {
-
-    public static final int ctreTimeout = 10;
+    public static final int ctreTimeout = 30;
+    public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
-
-        public static final int pigeonID = 1; // ID of the Talon SRX the Pigeon is connected to
+        public static final int pigeonID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
-
-        /* Swerve Controller Deadband */
-        public static final double stickDeadband = 0.05;
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(21.73);
@@ -67,59 +63,49 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5;
-        public static final double maxAngularVelocity = 11.5; //true max: 11.5
-
-        /* Angle Motor Encoder Settings */
-        public static final boolean canCoderPhase = false;
+        public static final double maxAngularVelocity = 11.5;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
-        /* Status Frame Update Periods */
-        public static final int angleStatus1 = 10;
-        public static final int angleStatus2 = 20;
-        public static final int driveStatus1 = 10;
-        public static final int driveStatus2 = 20;
+        /* Motor Inverts */
+        public static final boolean driveInvert = false;
+        public static final boolean angleInvert = false;
+
+        /* Angle Encoder Invert */
+        public static final boolean canCoderInvert = false;
 
         /* Module Specific Constants */
-        /** Front Left Module */
-        public static final class Mod1 {
+        /* Front Left Module - Module 0 */
+        public static final class Mod0 {
             public static final int driveID = 1;
             public static final int angleID = 2;
             public static final int canCoderID = 1;
-            public static final boolean driveInvert = false;
-            public static final boolean angleInvert = false;
             public static final double angleOffset = 37.35;
         }
 
-        /** Front Right Module */
-        public static final class Mod2 {
+        /* Front Right Module - Module 1 */
+        public static final class Mod1 {
             public static final int driveID = 3;
             public static final int angleID = 4;
             public static final int canCoderID = 2;
-            public static final boolean driveInvert = false;
-            public static final boolean angleInvert = false;
             public static final double angleOffset = 10.45;
         }
         
-        /** Back Left Module */
-        public static final class Mod3 {
+        /* Back Left Module - Module 2 */
+        public static final class Mod2 {
             public static final int driveID = 5;
             public static final int angleID = 6;
             public static final int canCoderID = 3;
-            public static final boolean driveInvert = false;
-            public static final boolean angleInvert = false;
             public static final double angleOffset = 38.75;
         }
 
-        /** Back Right Module */
-        public static final class Mod4 {
+        /* Back Right Module - Module 3 */
+        public static final class Mod3 {
             public static final int driveID = 7;
             public static final int angleID = 8;
             public static final int canCoderID = 4;
-            public static final boolean driveInvert = false;
-            public static final boolean angleInvert = false;
             public static final double angleOffset = 58.88;
         }
 

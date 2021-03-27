@@ -29,7 +29,7 @@ public class CTREModuleState {
      * @param newAngle Target Angle
      * @return Closest angle within scope
      */
-    public static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
+    private static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
       double lowerBound;
       double upperBound;
       double lowerOffset = scopeReference % 360;

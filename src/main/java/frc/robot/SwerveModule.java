@@ -9,11 +9,8 @@ import frc.lib.util.CTREModuleState;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
 
 public class SwerveModule {
     public int moduleNumber;
@@ -21,24 +18,13 @@ public class SwerveModule {
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
     private CANCoder angleEncoder;
-    private TalonFXConfiguration angleMotorConfig;
-    private TalonFXConfiguration driveMotorConfig;
-    private CANCoderConfiguration canCoderConfig;
-    private boolean invertDrive;
-    private boolean invertAngle;
     private double lastAngle;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-    public SwerveModule(int moduleNumber, double offset, int angleMotorID, int angleEncoderID, int driveMotorID,
-    boolean invertDrive, boolean invertAngle, TalonFXConfiguration angleMotorConfig, TalonFXConfiguration driveMotorConfig, CANCoderConfiguration canCoderConfig){
+    public SwerveModule(int moduleNumber, double offset, int angleMotorID, int angleEncoderID, int driveMotorID){
         this.moduleNumber = moduleNumber;
         this.offset = offset;
-        this.angleMotorConfig = angleMotorConfig;
-        this.driveMotorConfig = driveMotorConfig;
-        this.canCoderConfig = canCoderConfig;
-        this.invertDrive = invertDrive;
-        this.invertAngle = invertAngle;
         
         /* Angle Encoder Config */
         angleEncoder = new CANCoder(angleEncoderID);
@@ -79,27 +65,22 @@ public class SwerveModule {
 
     private void configAngleEncoder(){        
         angleEncoder.configFactoryDefault();
-        angleEncoder.configAllSettings(canCoderConfig);
+        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
     }
 
     private void configAngleMotor(){
         mAngleMotor.configFactoryDefault();
-        mAngleMotor.configAllSettings(angleMotorConfig, Constants.ctreTimeout);
-        mAngleMotor.setInverted(invertAngle);
+        mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig, Constants.ctreTimeout);
+        mAngleMotor.setInverted(Constants.Swerve.angleInvert);
         mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
-        mAngleMotor.setStatusFramePeriod(StatusFrame.Status_1_General, Constants.Swerve.angleStatus1, Constants.ctreTimeout);
-        mAngleMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, Constants.Swerve.angleStatus2, Constants.ctreTimeout);
-        mAngleMotor.configNeutralDeadband(0.04, Constants.ctreTimeout); //0.001 for tuning
         resetToAbsolute();
     }
 
     private void configDriveMotor(){        
         mDriveMotor.configFactoryDefault();
-        mDriveMotor.configAllSettings(driveMotorConfig);
-        mDriveMotor.setInverted(invertDrive);
+        mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig, Constants.ctreTimeout);
+        mDriveMotor.setInverted(Constants.Swerve.driveInvert);
         mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
-        mDriveMotor.setStatusFramePeriod(StatusFrame.Status_1_General, Constants.Swerve.driveStatus1);
-        mDriveMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, Constants.Swerve.driveStatus2);
         mDriveMotor.setSelectedSensorPosition(0);
     }
 
