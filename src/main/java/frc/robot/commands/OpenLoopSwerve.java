@@ -28,7 +28,7 @@ public class OpenLoopSwerve extends CommandBase {
 
         this.controller = controller;
         this.translationAxis = translationAxis;
-        this.strafeAxis = -strafeAxis;
+        this.strafeAxis = strafeAxis;
         this.rotationAxis = rotationAxis;
     }
 
