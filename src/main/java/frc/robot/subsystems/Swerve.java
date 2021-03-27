@@ -20,11 +20,11 @@ public class Swerve extends SubsystemBase {
     public PigeonIMU gyro;
 
     public Swerve() {
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
-
         gyro = new PigeonIMU(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+        
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.angleOffset, Constants.Swerve.Mod0.angleID, Constants.Swerve.Mod0.canCoderID, Constants.Swerve.Mod0.driveID),
