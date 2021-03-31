@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swerve extends SubsystemBase {
@@ -92,6 +93,17 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getStates());        
+        swerveOdometry.update(getYaw(), getStates());
+
+        /* Printing Swerve Module Details on SmartDashboard */
+        for(SwerveModule mod : mSwerveMods){
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " cancoder", mod.getCanCoder());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " integrated", mod.getAngle().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " velocity", mod.getVelocity());    
+        }
+
+        SmartDashboard.putNumber("Gyro Yaw", getYaw().getDegrees());
+        SmartDashboard.putNumber("Odometry X", getPose().getX());
+        SmartDashboard.putNumber("Odometry Y", getPose().getY());
     }
 }

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.util.Units;
 
 public final class Constants {
-    public static final int ctreTimeout = 30;
     public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
