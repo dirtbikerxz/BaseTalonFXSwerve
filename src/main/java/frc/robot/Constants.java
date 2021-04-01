@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.util.Units;
+import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
@@ -23,8 +24,8 @@ public final class Constants {
         public static final double openLoopRamp = 0.25;
         public static final double closedLoopRamp = 0.0;
 
-        public static final double driveGearRatio = (7.14 / 1.0); //7.14:1
-        public static final double angleGearRatio = (18.0 / 1.0); //18:1
+        public static final double driveGearRatio = (6.86 / 1.0); //6.86:1
+        public static final double angleGearRatio = (12.8 / 1.0); //12.8:1
 
         public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
                 new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
@@ -78,34 +79,42 @@ public final class Constants {
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
-            public static final int driveID = 1;
-            public static final int angleID = 2;
+            public static final int driveMotorID = 1;
+            public static final int angleMotorID = 2;
             public static final int canCoderID = 1;
             public static final double angleOffset = 37.35;
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 {
-            public static final int driveID = 3;
-            public static final int angleID = 4;
+            public static final int driveMotorID = 3;
+            public static final int angleMotorID = 4;
             public static final int canCoderID = 2;
             public static final double angleOffset = 10.45;
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
         
         /* Back Left Module - Module 2 */
         public static final class Mod2 {
-            public static final int driveID = 5;
-            public static final int angleID = 6;
+            public static final int driveMotorID = 5;
+            public static final int angleMotorID = 6;
             public static final int canCoderID = 3;
             public static final double angleOffset = 38.75;
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 {
-            public static final int driveID = 7;
-            public static final int angleID = 8;
+            public static final int driveMotorID = 7;
+            public static final int angleMotorID = 8;
             public static final int canCoderID = 4;
             public static final double angleOffset = 58.88;
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
     }

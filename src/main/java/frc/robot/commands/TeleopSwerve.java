@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class OpenLoopSwerve extends CommandBase {
+public class TeleopSwerve extends CommandBase {
 
     private double rotation;
     private Translation2d translation;
-    private Boolean fieldRelative = true;
+    private boolean fieldRelative;
+    private boolean openLoop;
     
     private Swerve s_Swerve;
     private Joystick controller;
@@ -22,7 +23,7 @@ public class OpenLoopSwerve extends CommandBase {
     /**
      * Driver control
      */
-    public OpenLoopSwerve(Swerve s_Swerve, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis) {
+    public TeleopSwerve(Swerve s_Swerve, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -30,6 +31,8 @@ public class OpenLoopSwerve extends CommandBase {
         this.translationAxis = translationAxis;
         this.strafeAxis = strafeAxis;
         this.rotationAxis = rotationAxis;
+        this.fieldRelative = fieldRelative;
+        this.openLoop = openLoop;
     }
 
     @Override
@@ -45,6 +48,6 @@ public class OpenLoopSwerve extends CommandBase {
 
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
-        s_Swerve.drive(translation, rotation, fieldRelative, true);
+        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
     }
 }

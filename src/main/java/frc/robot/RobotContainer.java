@@ -39,7 +39,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    s_Swerve.setDefaultCommand(new OpenLoopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis));
+    boolean fieldRelative = true;
+    boolean openLoop = true;
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();

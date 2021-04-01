@@ -28,10 +28,10 @@ public class Swerve extends SubsystemBase {
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
 
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.angleOffset, Constants.Swerve.Mod0.angleID, Constants.Swerve.Mod0.canCoderID, Constants.Swerve.Mod0.driveID),
-            new SwerveModule(1, Constants.Swerve.Mod1.angleOffset, Constants.Swerve.Mod1.angleID, Constants.Swerve.Mod1.canCoderID, Constants.Swerve.Mod1.driveID),
-            new SwerveModule(2, Constants.Swerve.Mod2.angleOffset, Constants.Swerve.Mod2.angleID, Constants.Swerve.Mod2.canCoderID, Constants.Swerve.Mod2.driveID),
-            new SwerveModule(3, Constants.Swerve.Mod3.angleOffset, Constants.Swerve.Mod3.angleID, Constants.Swerve.Mod3.canCoderID, Constants.Swerve.Mod3.driveID)
+            new SwerveModule(0, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
+            new SwerveModule(2, Constants.Swerve.Mod2.constants),
+            new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
     }
 
@@ -93,17 +93,12 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getStates());
+        swerveOdometry.update(getYaw(), getStates());  
 
-        /* Printing Swerve Module Details on SmartDashboard */
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " cancoder", mod.getCanCoder());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " integrated", mod.getAngle().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " velocity", mod.getVelocity());    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getAngle().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getVelocity());    
         }
-
-        SmartDashboard.putNumber("Gyro Yaw", getYaw().getDegrees());
-        SmartDashboard.putNumber("Odometry X", getPose().getX());
-        SmartDashboard.putNumber("Odometry Y", getPose().getY());
     }
 }
