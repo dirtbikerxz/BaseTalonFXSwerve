@@ -61,7 +61,7 @@ public final class Constants {
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
-        public static final double maxSpeed = 4.5;
+        public static final double maxSpeed = 4.5; //meters per second
         public static final double maxAngularVelocity = 11.5;
 
         /* Neutral Modes */
@@ -69,8 +69,8 @@ public final class Constants {
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Motor Inverts */
-        public static final boolean driveInvert = false;
-        public static final boolean angleInvert = false;
+        public static final boolean driveMotorInvert = false;
+        public static final boolean angleMotorInvert = false;
 
         /* Angle Encoder Invert */
         public static final boolean canCoderInvert = false;
