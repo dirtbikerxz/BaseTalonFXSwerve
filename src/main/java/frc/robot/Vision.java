@@ -16,7 +16,8 @@ public class Vision {
     double disX = 0, disY = 0, tx = 0, ty = 0, ta = 0, tv = 0;
     boolean targetFound = false;
 
-    private double Update(){
+    public double getAimValue(){  
+        
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);
@@ -32,12 +33,8 @@ public class Vision {
                 disX = tx;
                 disY = ty;
             }
-        return disX;
-    }
 
-    double aimValue(){    
-        double s = Update()/125;
         // m_turretMotor.set(s);
-        return s;
+        return disX / 125;
     }
 }

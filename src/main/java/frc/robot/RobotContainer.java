@@ -39,14 +39,14 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
-  private final TeleopSwerve tele = new TeleopSwerve(vision.aimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, false, true);
+  private final TeleopSwerve tele = new TeleopSwerve(vision.getAimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, false, true);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(vision.aimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(vision.getAimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();
