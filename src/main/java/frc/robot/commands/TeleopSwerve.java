@@ -48,23 +48,31 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-        rotation = rAxis * Constants.Swerve.maxAngularVelocity;
-        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
+        if(controller.getRawButton(1)){    
+
+            translation = new Translation2d(0, 0);
+            rotation = -allignDist;
+            s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
+            
+        } else {
+            translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
+            rotation = rAxis * Constants.Swerve.maxAngularVelocity;
+            s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
+        }
     }
 
-    public void executeAlign() {
-        // double yAxis = 0;
-        // double xAxis = 0;
-        // double rAxis = -controller.getRawAxis(rotationAxis);
+    // public void executeAlign() {
+    //     // double yAxis = 0;
+    //     // double xAxis = 0;
+    //     // double rAxis = -controller.getRawAxis(rotationAxis);
         
-        // /* Deadbands */
-        // yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
-        // xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-        // rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
+    //     // /* Deadbands */
+    //     // yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
+    //     // xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
+    //     // rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        translation = new Translation2d(0, 0);
-        rotation = -allignDist;
-        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-    }
+    //     translation = new Translation2d(0, 0);
+    //     rotation = -allignDist;
+    //     s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
+    // }
 }
