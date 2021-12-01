@@ -34,19 +34,20 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton align = new JoystickButton(driver, XboxController.Button.kA.value);
+  // private final JoystickButton align = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
-  private final TeleopSwerve tele = new TeleopSwerve(vision.getAimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, false, true);
+  // private final TeleopSwerve tele = new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, rotation, false, true);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(vision.getAimValue(), s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    double rotation = vision.getAimValue(); 
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis,rotation, fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -61,7 +62,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    align.whenPressed(new InstantCommand(() -> tele.executeAlign()));
+    // align.whenPressed(new InstantCommand(() -> tele.executeAlign()));
   }
 
   /**
