@@ -48,7 +48,8 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        if(controller.getRawButton(1)){    
+        if(controller.getRawButton(1)){   
+            System.out.println("A");
 
             translation = new Translation2d(0, 0);
             rotation = -allignDist;

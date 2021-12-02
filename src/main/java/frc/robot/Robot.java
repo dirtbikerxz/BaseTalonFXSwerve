@@ -88,7 +88,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    System.out.println(vision.getAimValue());
+
+    if(vision.getAimValue() != 0.0)
+    System.out.println("True");
 
   }
 
