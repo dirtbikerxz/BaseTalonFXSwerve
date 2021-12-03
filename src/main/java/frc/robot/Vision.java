@@ -39,6 +39,8 @@ public class Vision {
     }
 
     public double getAimValue(){  
-        return update()/125;
+        // System.out.println(update());
+        return (update());
+        // return 0;
     }
 }

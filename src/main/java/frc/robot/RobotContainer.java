@@ -49,8 +49,8 @@ public class RobotContainer {
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    double rotation = vision.getAimValue(); 
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, rotation, fieldRelative, openLoop));
+    // double rotation = vision.getAimValue(); 
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, vision.getAimValue(), fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();
