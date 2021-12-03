@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 public class TeleopSwerve extends CommandBase {
 
     private double rotation;
@@ -20,6 +19,8 @@ public class TeleopSwerve extends CommandBase {
     private int strafeAxis;
     private int rotationAxis;
     private double allignDist;
+
+    // private Vision vision = new Vision();
 
     /**
      * Driver control
@@ -61,19 +62,4 @@ public class TeleopSwerve extends CommandBase {
             s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         }
     }
-
-    // public void executeAlign() {
-    //     // double yAxis = 0;
-    //     // double xAxis = 0;
-    //     // double rAxis = -controller.getRawAxis(rotationAxis);
-        
-    //     // /* Deadbands */
-    //     // yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
-    //     // xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-    //     // rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
-
-    //     translation = new Translation2d(0, 0);
-    //     rotation = -allignDist;
-    //     s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-    // }
 }
