@@ -19,17 +19,15 @@ public class TeleopSwerve extends CommandBase {
     private int translationAxis;
     private int strafeAxis;
     private int rotationAxis;
-    private double allignDist;
-    private Vision vision = new Vision();
-
-    // private Vision vision = new Vision();
+    private Vision vision;
 
     /**
      * Driver control
      */
-    public TeleopSwerve(Swerve s_Swerve, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, double allignDist, boolean fieldRelative, boolean openLoop) {
+    public TeleopSwerve(Swerve s_Swerve, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
+        vision = new Vision();
 
         this.controller = controller;
         this.translationAxis = translationAxis;
@@ -37,8 +35,6 @@ public class TeleopSwerve extends CommandBase {
         this.rotationAxis = rotationAxis;
         this.fieldRelative = fieldRelative;
         this.openLoop = openLoop;
-        this.allignDist = allignDist;
-        this.vision = vision;
     }
 
     @Override
@@ -52,19 +48,12 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        if(controller.getRawButton(2)){   
-            System.out.println("A");
-            rotation = -vision.getAimValue();
-            // rotation = .5;
-            // System.out.println(rotation);
-            translation = new Translation2d(0, 0);
-            s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
+        if(vision.getTargetFound() && yAxis == 0){   
+            rotation = vision.getAimValue();
         } else {
             rotation = rAxis * Constants.Swerve.maxAngularVelocity;
-            translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-            s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         }
-        
-        
+        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
+        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
     }
 }

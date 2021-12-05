@@ -25,8 +25,6 @@ public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
 
-  Vision vision = new Vision();
-
   /* Drive Controls */
   // private final int translationAxis = XboxController.Axis.kLeftY.value;
   // private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -37,20 +35,15 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 4);
-  // private final JoystickButton align = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-
-  // private final TeleopSwerve tele = new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, rotation, false, true);
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    // double rotation = vision.getAimValue(); 
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, vision.getAimValue(), fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     // Configure the button bindings
     configureButtonBindings();
