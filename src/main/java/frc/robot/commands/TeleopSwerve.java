@@ -48,7 +48,8 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        if(vision.getTargetFound() && yAxis == 0){   
+        if(controller.getRawButton(2)){   
+            System.out.println("pressed");
             rotation = vision.getAimValue();
         } else {
             rotation = rAxis * Constants.Swerve.maxAngularVelocity;

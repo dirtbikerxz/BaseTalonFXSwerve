@@ -63,7 +63,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 1; //meters per second
-        public static final double maxAngularVelocity = .2;
+        public static final double maxAngularVelocity = 2;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
