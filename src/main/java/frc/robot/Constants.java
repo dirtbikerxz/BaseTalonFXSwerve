@@ -16,8 +16,8 @@ public final class Constants {
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(13.5);
-        public static final double wheelBase = Units.inchesToMeters(13.5);
+        public static final double trackWidth = Units.inchesToMeters(27);
+        public static final double wheelBase = Units.inchesToMeters(27);
         public static final double wheelDiameter = Units.inchesToMeters(3.94);
         public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -62,8 +62,8 @@ public final class Constants {
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
-        public static final double maxSpeed = .2; //meters per second
-        public static final double maxAngularVelocity = .2;
+        public static final double maxSpeed = 2; //meters per second
+        public static final double maxAngularVelocity = 2;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Brake;
@@ -134,5 +134,4 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
       }
-
 }
