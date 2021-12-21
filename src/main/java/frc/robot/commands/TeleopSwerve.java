@@ -50,6 +50,16 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
+        double currentDistanceCentimeters = ultrasonic.getAverageValue() * 0.125;
+
+        if(currentDistanceCentimeters <= 30){
+            System.out.println("Under 30cm");
+        } else {
+            System.out.println(currentDistanceCentimeters + "cm");
+        }
+
+        
+
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
