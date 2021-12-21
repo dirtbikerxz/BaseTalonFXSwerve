@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 
 public class TeleopSwerve extends CommandBase {
 
@@ -19,6 +21,8 @@ public class TeleopSwerve extends CommandBase {
     private int translationAxis;
     private int strafeAxis;
     private int rotationAxis;
+
+    private final AnalogInput ultrasonic = new AnalogInput(0);
 
     /**
      * Driver control
