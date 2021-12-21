@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-
 
 public class TeleopSwerve extends CommandBase {
 
@@ -22,7 +20,6 @@ public class TeleopSwerve extends CommandBase {
     private int strafeAxis;
     private int rotationAxis;
 
-    private final AnalogInput ultrasonic = new AnalogInput(0);
 
     /**
      * Driver control
@@ -49,14 +46,6 @@ public class TeleopSwerve extends CommandBase {
         yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
-
-        double currentDistanceCentimeters = ultrasonic.getAverageValue() * 0.125;
-
-        if(currentDistanceCentimeters <= 30){
-            System.out.println("Under 30cm");
-        } else {
-            System.out.println(currentDistanceCentimeters + "cm");
-        }
 
         
 
