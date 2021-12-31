@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -24,6 +25,13 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
+
+  private final SendableChooser<String> autoChooser = new SendableChooser<>();
+
+  private Command autoCommand;
+
+  private static final String exampleAuto = "Example Auto";
+  private static final String ultrasonicAuto = "Ultrasonic Auto";
 
   /* Drive Controls */
   // private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -46,6 +54,10 @@ public class RobotContainer {
     boolean openLoop = true;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
+    autoChooser.setDefaultOption("Example Auto", exampleAuto);
+    autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
+    SmartDashboard.putData("Choose Auto: ", autoChooser);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -66,8 +78,25 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
+   /*
+  switch (autoChooser.getSelected()) {
+    case "Example Auto":
+      return new exampleAuto(s_Swerve);
+    case "Ultrasonic Auto":
+      return new ultrasonicAuto(s_Swerve);
+  }
+  */
+
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve);
+    switch (autoChooser.getSelected()) {
+      case "Example Auto":
+        autoCommand = new exampleAuto(s_Swerve);
+      case "Ultrasonic Auto":
+        autoCommand = new ultrasonicAuto(s_Swerve);
+    }
+    return autoCommand;
+    
   }
 }
