@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -41,23 +42,27 @@ public class RobotContainer {
   private final int strafeAxis = 0;
   private final int rotationAxis = 2;
 
+  private final Timer timer = new Timer();
+
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
+  private Ultrasonic ultrasonic = new Ultrasonic();
+
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -90,12 +95,22 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    switch (autoChooser.getSelected()) {
-      case "Example Auto":
-        autoCommand = new exampleAuto(s_Swerve);
-      case "Ultrasonic Auto":
-        autoCommand = new ultrasonicAuto(s_Swerve);
+    // autoCommand = new exampleAuto(s_Swerve);
+    // switch (autoChooser.getSelected()) {
+    //   case "Example Auto":
+    //     System.out.println("Example Auto!!!!!!!!!!!!!!");
+    //   case "Ultrasonic Auto":
+    //     System.out.println("Ultrasonic Auto!!!!!!!!!!!!!!");
+    // }
+
+    if(autoChooser.getSelected() == "Example Auto"){
+      System.out.println("Example Auto!!!!!!!!!!!!!!");
+      autoCommand = new exampleAuto(s_Swerve);
+    } else if (autoChooser.getSelected() == "Ultrasonic Auto"){
+      System.out.println("Ultrasonic Auto!!!!!!!!!!!!!!");
+      autoCommand = new ultrasonicAuto(s_Swerve, ultrasonic, timer);
     }
+    // // return new exampleAuto(s_Swerve);
     return autoCommand;
     
   }
