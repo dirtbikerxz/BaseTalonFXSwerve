@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -36,39 +38,50 @@ public class ultrasonicAuto extends SequentialCommandGroup {
         Trajectory firstHalfTrajectory =
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
                 // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(1, 0)),
+                List.of(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(0))),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(1.5, 1.5, new Rotation2d(0)),
                 config);
+        // Trajectory firstHalfTrajectory2 =
+        //     TrajectoryGenerator.generateTrajectory(
+        
+        //         // Start at the origin facing the +X direction
+        //         // Pass through these two interior waypoints, making an 's' curve path
+        //         List.of(new Pose2d(1,1, new Rotation2d(0))),
+        //         // End 3 meters straight ahead of where we started, facing forward
+        //         config);
 
-        Trajectory secondHalfTrajectory =
-            TrajectoryGenerator.generateTrajectory( 
-                new Pose2d(2, 2, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(3, 2)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(0, 0, new Rotation2d(90)),
-                config
-        );  
+        // Trajectory secondHalfTrajectory =
+        //     TrajectoryGenerator.generateTrajectory( 
+        //         new Pose2d(0, 3, new Rotation2d(0)),
+        //         // Pass through these two interior waypoints, making an 's' curve path
+        //         List.of(new Translation2d(2, 3)),
+        //         // End 3 meters straight ahead of where we started, facing forward
+        //         new Pose2d(3, 3, new Rotation2d(0)),
+        //         config
+        // );  
 
         var thetaController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
         SwerveControllerCommand firstHalfTraject = new SwerveControllerCommand(firstHalfTrajectory, s_Swerve::getPose, Constants.Swerve.swerveKinematics, new PIDController(Constants.AutoConstants.kPXController, 0, 0), new PIDController(Constants.AutoConstants.kPYController, 0, 0), thetaController, s_Swerve::setModuleStates, s_Swerve);
-        PrintCommand sensorVal = new PrintCommand(ultrasonic.getDistanceValue() + " cm");
-        SwerveControllerCommand secondHalfTraject = new SwerveControllerCommand(secondHalfTrajectory, s_Swerve::getPose, Constants.Swerve.swerveKinematics, new PIDController(Constants.AutoConstants.kPXController, 0, 0), new PIDController(Constants.AutoConstants.kPYController, 0, 0), thetaController, s_Swerve::setModuleStates, s_Swerve);
-        WaitCommand firstWait = new WaitCommand(.5);
-        // CommandBase.addRequirements(firstWait);
+        // SwerveControllerCommand firstHalfTraject2 = new SwerveControllerCommand(firstHalfTrajectory2, s_Swerve::getPose, Constants.Swerve.swerveKinematics, new PIDController(Constants.AutoConstants.kPXController, 0, 0), new PIDController(Constants.AutoConstants.kPYController, 0, 0), thetaController, s_Swerve::setModuleStates, s_Swerve);
 
+        PrintCommand sensorVal = new PrintCommand("dafasdfasdf cm");
+        // SwerveControllerCommand secondHalfTraject = new SwerveControllerCommand(secondHalfTrajectory, s_Swerve::getPose, Constants.Swerve.swerveKinematics, new PIDController(Constants.AutoConstants.kPXController, 0, 0), new PIDController(Constants.AutoConstants.kPYController, 0, 0), thetaController, s_Swerve::setModuleStates, s_Swerve);
+        WaitCommand firstWait = new WaitCommand(3);
+        WaitCommand secondWait = new WaitCommand(3);
+        // StartEndCommand test = new StartEndCommand(() -> firstHalfTraject.execute(), () -> firstHalfTraject.execute());
+        // CommandBase.addRequirements(firstWait);
+        // PerpetualCommand getSensorValue = new PerpetualCommand(sensorVal);
 
         addCommands(
             new InstantCommand(() -> s_Swerve.resetOdometry(firstHalfTrajectory.getInitialPose())),
-            firstHalfTraject, 
+            // getSensorValue
             firstWait,
-            sensorVal,
-            firstWait,
-            secondHalfTraject
+            firstHalfTraject ,
+            // firstHalfTraject2,
+            secondWait
+            // secondHalfTraject
         );
     }
 }
