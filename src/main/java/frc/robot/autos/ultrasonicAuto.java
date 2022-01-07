@@ -31,13 +31,18 @@ public class ultrasonicAuto extends SequentialCommandGroup {
         Trajectory firstHalfTrajectory =
             TrajectoryGenerator.generateTrajectory(
 
-                List.of(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(90))),
+                List.of(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(0))),
+                config);
+        Trajectory secondHalfTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+
+                List.of(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(0))),
                 config);
 
         var thetaController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
         SwerveControllerCommand firstHalfTraject = new SwerveControllerCommand(firstHalfTrajectory, s_Swerve::getPose, Constants.Swerve.swerveKinematics, new PIDController(Constants.AutoConstants.kPXController, 0, 0), new PIDController(Constants.AutoConstants.kPYController, 0, 0), thetaController, s_Swerve::setModuleStates, s_Swerve);
-        InstantCommand setMotorsZero = new InstantCommand(s_Swerve.setMotorsZero(true, true), s_Swerve);
+        InstantCommand setMotorsZero = new InstantCommand(() -> s_Swerve.setMotorsZero(true, true), s_Swerve);
         WaitCommand firstWait = new WaitCommand(3);
         WaitCommand secondWait = new WaitCommand(3);
 

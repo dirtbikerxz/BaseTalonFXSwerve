@@ -58,7 +58,7 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
-    public Runnable setMotorsZero(boolean isOpenLoop, boolean fieldRelative) {
+    public void setMotorsZero(boolean isOpenLoop, boolean fieldRelative) {
         
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
@@ -77,7 +77,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-        return setMotorsZero(isOpenLoop, fieldRelative);
+        // return setMotorsZero(isOpenLoop, fieldRelative)
     }    
 
     /* Used by SwerveControllerCommand in Auto */
