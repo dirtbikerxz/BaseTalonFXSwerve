@@ -21,8 +21,6 @@ public class TeleopSwerve extends CommandBase {
     private int strafeAxis;
     private int rotationAxis;
 
-    private double ultrasonicDistance;
-
     /**
      * Driver control
      */
@@ -49,16 +47,6 @@ public class TeleopSwerve extends CommandBase {
         yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
-
-        ultrasonicDistance = ultrasonic.getDistanceValue();
-
-        // if(ultrasonicDistance >= 30){
-        //     System.out.println(ultrasonicDistance);
-        // } else {
-        //     System.out.println("Less than 30cm");
-        // }
-
-        
 
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;

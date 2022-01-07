@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -41,8 +40,6 @@ public class RobotContainer {
   private final int translationAxis = 1;
   private final int strafeAxis = 0;
   private final int rotationAxis = 2;
-
-  private final Timer timer = new Timer();
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -108,7 +105,7 @@ public class RobotContainer {
       autoCommand = new exampleAuto(s_Swerve);
     } else if (autoChooser.getSelected() == "Ultrasonic Auto"){
       System.out.println("Ultrasonic Auto!!!!!!!!!!!!!!");
-      autoCommand = new ultrasonicAuto(s_Swerve, ultrasonic, timer);
+      autoCommand = new ultrasonicAuto(s_Swerve, ultrasonic);
     }
     // // return new exampleAuto(s_Swerve);
     return autoCommand;
