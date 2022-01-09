@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import frc.robot.Ultrasonic;
+
+
 public class TeleopSwerve extends CommandBase {
 
     private double rotation;
@@ -20,6 +23,11 @@ public class TeleopSwerve extends CommandBase {
     private int strafeAxis;
     private int rotationAxis;
     private Vision vision;
+
+    private double ultrasonicDistance;
+
+    private Ultrasonic ultrasonic = new Ultrasonic();
+
 
     /**
      * Driver control
@@ -54,6 +62,16 @@ public class TeleopSwerve extends CommandBase {
         } else {
             rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         }
+        ultrasonicDistance = ultrasonic.getDistanceValue();
+
+        if(ultrasonicDistance >= 30){
+            System.out.println(ultrasonicDistance);
+        } else {
+            System.out.println("Less than 30cm");
+        }
+
+        
+
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
     }
