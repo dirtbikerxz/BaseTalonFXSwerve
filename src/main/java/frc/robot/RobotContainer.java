@@ -53,8 +53,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    boolean fieldRelative = true;
-    boolean openLoop = true;
+    boolean fieldRelative = Constants.Swerve.isFieldRelative;
+    boolean openLoop = Constants.Swerve.isOpenLoop;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
