@@ -8,6 +8,10 @@ public class Ultrasonic {
 
     public double getDistanceValue(){
         double currentDistanceCentimeters = ultrasonicCal.getAverageValue() * 0.125;
-        return currentDistanceCentimeters;
+        if (currentDistanceCentimeters < 30){
+            return 0;
+        } else {
+            return currentDistanceCentimeters;
+        }
     }
 }
