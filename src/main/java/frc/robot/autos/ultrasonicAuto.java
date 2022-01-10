@@ -22,7 +22,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 public class ultrasonicAuto extends SequentialCommandGroup {
     Ultrasonic ultrasonic;
     public ultrasonicAuto(Swerve s_Swerve, Ultrasonic ultrasonic){
-        ultrasonic = new Ultrasonic();
+        // ultrasonic = new Ultrasonic();
+
         System.out.println("Ultrasonic Auto !!");
         TrajectoryConfig config =
             new TrajectoryConfig(
