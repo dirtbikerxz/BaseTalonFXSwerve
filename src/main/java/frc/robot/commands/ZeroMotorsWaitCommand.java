@@ -19,24 +19,24 @@ public class ZeroMotorsWaitCommand extends CommandBase {
 
     @Override
     public void initialize() {
-    m_timer.reset();
-    m_timer.start();
+      s_Swerve.setMotorsZero(Constants.Swerve.isOpenLoop, Constants.Swerve.isFieldRelative);
+      m_timer.reset();
+      m_timer.start();
     }
 
     @Override
     public void end(boolean interrupted) {
-    m_timer.stop();
-    s_Swerve.setMotorsZero(Constants.Swerve.isOpenLoop, Constants.Swerve.isFieldRelative);
+      m_timer.stop(); 
     }
 
     @Override
     public boolean isFinished() {
-    return m_timer.hasElapsed(m_duration);
+      return m_timer.hasElapsed(m_duration);
     }
 
     @Override
     public boolean runsWhenDisabled() {
-    return true;
+      return true;
     }
     
 }
