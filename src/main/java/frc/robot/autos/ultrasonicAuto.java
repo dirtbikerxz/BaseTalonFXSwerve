@@ -15,10 +15,13 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.ProxyScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.ExecUltrasonic;
 import frc.robot.commands.ZeroMotorsWaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.commands.ExecUltrasonic;
 
 public class ultrasonicAuto extends SequentialCommandGroup {
     Ultrasonic ultrasonic;
@@ -50,7 +53,8 @@ public class ultrasonicAuto extends SequentialCommandGroup {
         // WaitUntilCommand untilUltrasonicZero = new WaitUntilCommand(() -> ultrasonic.getDistanceValue() == 0);
         PrintCommand ultrasonicValue = new PrintCommand("Ultrasonic: " + ultrasonic.getDistanceValue() + "cm");
         ZeroMotorsWaitCommand firstWait = new ZeroMotorsWaitCommand(3);
-        ZeroMotorsWaitCommand secondWait = new ZeroMotorsWaitCommand(.8);
+        ZeroMotorsWaitCommand secondWait = new ZeroMotorsWaitCommand(.5);
+        ProxyScheduleCommand proxy = new ProxyScheduleCommand(ExecUltrasonic);
 
         addCommands(
             new InstantCommand(() -> s_Swerve.resetOdometry(firstHalfTrajectory.getInitialPose())),
