@@ -65,7 +65,7 @@ public final class Constants {
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
-        public static final double maxSpeed = 2; //meters per second
+        public static final double maxSpeed = 4; //meters per second
         public static final double maxAngularVelocity = 2;
 
         /* Neutral Modes */
