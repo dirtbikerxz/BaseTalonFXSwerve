@@ -67,11 +67,11 @@ public class ultrasonicAuto extends SequentialCommandGroup {
 
         addCommands(
             new InstantCommand(() -> s_Swerve.resetOdometry(firstHalfTrajectory.getInitialPose())),
-            firstHalfTraject,
-            secondWait,
-            ultrasonicValue,
-            secondTrajectNewMotor,
-            firstWait
+            // firstHalfTraject,
+            // secondWait,
+            ultrasonicValue
+            // // secondTrajectNewMotor,
+            // firstWait
             // secondHalfTraject,
             // ultrasonicValue,
             // secondWait

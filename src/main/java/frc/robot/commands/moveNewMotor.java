@@ -11,7 +11,7 @@ public class moveNewMotor extends CommandBase{
 
     @Override
     public void execute() {
-        System.out.println("Running!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // System.out.println("Running!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         s_NewMotor.move();
     }
 
@@ -19,4 +19,9 @@ public class moveNewMotor extends CommandBase{
     public void end(boolean interrupted) {
         s_NewMotor.stop();
     }
+
+    // @Override
+    // public boolean isFinished() {
+    //     return true;
+    // }
 }

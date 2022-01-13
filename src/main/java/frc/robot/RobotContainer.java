@@ -58,7 +58,7 @@ public class RobotContainer {
     boolean fieldRelative = Constants.Swerve.isFieldRelative;
     boolean openLoop = Constants.Swerve.isOpenLoop;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
-    s_NewMotor.setDefaultCommand(new moveNewMotor(s_NewMotor));
+    // s_NewMotor.setDefaultCommand(new moveNewMotor(s_NewMotor));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
