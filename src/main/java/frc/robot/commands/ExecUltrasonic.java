@@ -9,14 +9,20 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 public class ExecUltrasonic extends CommandBase{
     Swerve s_Swerve = new Swerve();
     Ultrasonic s_Ultrasonic = new Ultrasonic();
+    Translation2d direction;
+    boolean fieldRelative;
+    boolean isOpenLoop;
 
-    ExecUltrasonic(Translation2d direction){
+    ExecUltrasonic(Translation2d direction, boolean fieldRelative, boolean isOpenLoop){
+        this.direction = direction;
+        this.fieldRelative = fieldRelative;
+        this.isOpenLoop = isOpenLoop;
     }
 
-    @Override
-    public void execute() {
-        s_Swerve.drive(new Translation2d(direction), new Rotation2d(0), fieldRelative, isOpenLoop);
-    }
+    // @Override
+    // public void execute() {
+    //     s_Swerve.drive(new Translation2d(direction), new Rotation2d(0), fieldRelative, isOpenLoop);
+    // }
 
     @Override
     public boolean isFinished() {

@@ -46,6 +46,8 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  // private final moveNewMotor c_moveMotor = new moveNewMotor();
+  private final NewMotor s_NewMotor = new NewMotor();
 
   private Ultrasonic ultrasonic = new Ultrasonic();
 
@@ -56,7 +58,7 @@ public class RobotContainer {
     boolean fieldRelative = Constants.Swerve.isFieldRelative;
     boolean openLoop = Constants.Swerve.isOpenLoop;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
-
+    s_NewMotor.setDefaultCommand(new moveNewMotor(s_NewMotor));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
