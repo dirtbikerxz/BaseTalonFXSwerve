@@ -34,31 +34,25 @@ public class RobotContainer {
   private static final String ultrasonicAuto = "Ultrasonic Auto";
 
   /* Drive Controls */
-  // private final int translationAxis = XboxController.Axis.kLeftY.value;
-  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  // private final int rotationAxis = XboxController.Axis.kRightX.value;
-  private final int translationAxis = 1;
-  private final int strafeAxis = 0;
-  private final int rotationAxis = 2;
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton moveMotorNew = new JoystickButton(driver, XboxController.Button.kX.value);
+
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-  // private final moveNewMotor c_moveMotor = new moveNewMotor();
-  private final NewMotor s_NewMotor = new NewMotor();
 
   private Ultrasonic ultrasonic = new Ultrasonic();
-
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = Constants.Swerve.isFieldRelative;
     boolean openLoop = Constants.Swerve.isOpenLoop;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
-    s_NewMotor.setDefaultCommand(new moveNewMotor(s_NewMotor));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
@@ -75,6 +69,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    moveMotorNew.whileHeld(new moveNewMotor(new NewMotor()));
+
   }
 
   /**

@@ -14,10 +14,10 @@ public class ZeroMotorsWaitCommand extends CommandBase {
     private NewMotor s_NewMotor;
 
     public ZeroMotorsWaitCommand(double seconds) {
-        m_duration = seconds;
+        this.m_duration = seconds;
         SendableRegistry.setName(this, getName() + ": " + seconds + " seconds");
-        s_Swerve = new Swerve();
-        s_NewMotor = new NewMotor();
+        this.s_Swerve = new Swerve();
+        this.s_NewMotor = new NewMotor();
       }
 
     @Override
