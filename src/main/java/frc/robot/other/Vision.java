@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.other;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
