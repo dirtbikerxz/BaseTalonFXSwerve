@@ -12,19 +12,17 @@ public class ZeroMotorsWaitCommand extends CommandBase {
     private final double m_duration;
     private Swerve s_Swerve;
     private NewMotor s_NewMotor;
-    private moveNewMotor moveNewMotor;
 
     public ZeroMotorsWaitCommand(double seconds) {
-        m_duration = seconds;
+        this.m_duration = seconds;
         SendableRegistry.setName(this, getName() + ": " + seconds + " seconds");
-        s_Swerve = new Swerve();
-        s_NewMotor = new NewMotor();
-        moveNewMotor = new moveNewMotor(s_NewMotor);
+        this.s_Swerve = new Swerve();
+        this.s_NewMotor = new NewMotor();
       }
 
     @Override
     public void initialize() {
-      // moveNewMotor.end(true);
+      s_NewMotor.stop();
       s_Swerve.setMotorsZero(Constants.Swerve.isOpenLoop, Constants.Swerve.isFieldRelative);
       m_timer.reset();
       m_timer.start();
