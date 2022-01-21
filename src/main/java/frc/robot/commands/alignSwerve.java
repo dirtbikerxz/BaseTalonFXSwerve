@@ -5,11 +5,10 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.other.Vision;
 import frc.robot.other.Ultrasonic;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class TeleopSwerve extends CommandBase {
+public class alignSwerve extends CommandBase {
 
     private double rotation;
     private Translation2d translation;
@@ -17,7 +16,6 @@ public class TeleopSwerve extends CommandBase {
     private boolean openLoop;
     
     private Swerve s_Swerve;
-    private Ultrasonic ultrasonic;
     private Joystick controller;
     private int translationAxis;
     private int strafeAxis;
@@ -27,7 +25,7 @@ public class TeleopSwerve extends CommandBase {
     /**
      * Driver control
      */
-    public TeleopSwerve(Swerve s_Swerve, Ultrasonic ultrasonic, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
+    public alignSwerve(Swerve s_Swerve, Ultrasonic ultrasonic, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
         vision = new Vision();
@@ -38,44 +36,24 @@ public class TeleopSwerve extends CommandBase {
         this.rotationAxis = rotationAxis;
         this.fieldRelative = fieldRelative;
         this.openLoop = openLoop;
-        this.ultrasonic = ultrasonic;
     }
 
     @Override
     public void execute() {
         double yAxis = -controller.getRawAxis(translationAxis);
         double xAxis = -controller.getRawAxis(strafeAxis);
-        double rAxis = -controller.getRawAxis(rotationAxis);
+        // double rAxis = -controller. (rotationAxis);
         
         /* Deadbands */
         yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-        rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
+        // rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        if(controller.getRawButton(XboxController.Button.kX.value)){   
-            System.out.println("pressed");
-            rotation = vision.getAimValue();
-        } else {
-            rotation = rAxis * Constants.Swerve.maxAngularVelocity;
-        }
+        rotation = vision.getAimValue();
+        System.out.println(rotation);
 
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         
-        // Print out ultrasonic value
-        // System.out.println(ultrasonic.getDistanceValue());
-    }
-
-    public void allign(){
-
-        double yAxis = -controller.getRawAxis(translationAxis);
-        double xAxis = -controller.getRawAxis(strafeAxis);
-        yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
-        xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-        System.out.println("pressed");
-        rotation = vision.getAimValue();
-        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-
     }
 }
