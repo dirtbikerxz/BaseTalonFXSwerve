@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.other.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -40,7 +41,13 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton moveMotorNew = new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton moveMotorNew = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton alignSwerve = new JoystickButton(driver, XboxController.Button.kX.value);
+
+  
+
+  boolean fieldRelative;
+  boolean openLoop;
 
 
   /* Subsystems */
@@ -50,8 +57,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    boolean fieldRelative = Constants.Swerve.isFieldRelative;
-    boolean openLoop = Constants.Swerve.isOpenLoop;
+    this.fieldRelative = Constants.Swerve.isFieldRelative;
+    this.openLoop = Constants.Swerve.isOpenLoop;
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
@@ -69,8 +76,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    // allignSwerve.whileHeld(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop).allign());
+    // align.whenPressed(new InstantCommand(() -> tele.executeAlign()));
     moveMotorNew.whileHeld(new moveNewMotor(new NewMotor()));
-
+    alignSwerve.whileHeld(new alignSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
   }
 
   /**

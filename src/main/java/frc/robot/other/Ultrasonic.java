@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.other;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
