@@ -42,7 +42,7 @@ public class RobotContainer {
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton moveMotorNew = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton alignSwerve = new JoystickButton(driver, XboxController.Button.kX.value);
+  // private final JoystickButton alignSwerve = new JoystickButton(driver, XboxController.Button.kX.value);
 
   
 
@@ -52,6 +52,7 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private Vision vision = new Vision();
 
   private Ultrasonic ultrasonic = new Ultrasonic();
 
@@ -59,7 +60,7 @@ public class RobotContainer {
   public RobotContainer() {
     this.fieldRelative = Constants.Swerve.isFieldRelative;
     this.openLoop = Constants.Swerve.isOpenLoop;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, vision, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
@@ -79,7 +80,7 @@ public class RobotContainer {
     // allignSwerve.whileHeld(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop).allign());
     // align.whenPressed(new InstantCommand(() -> tele.executeAlign()));
     moveMotorNew.whileHeld(new moveNewMotor(new NewMotor()));
-    alignSwerve.whileHeld(new alignSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    // alignSwerve.whileHeld(new alignSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
   }
 
   /**

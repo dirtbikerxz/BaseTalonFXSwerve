@@ -22,7 +22,7 @@ public final class Constants {
         public static final double wheelCircumference = wheelDiameter * Math.PI;
 
         public static final boolean isFieldRelative = true;
-        public static final boolean isOpenLoop = true;
+        public static final boolean isOpenLoop = false;
 
         public static final double openLoopRamp = 0.25;
         public static final double closedLoopRamp = 0.0;
@@ -66,7 +66,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4; //meters per second
-        public static final double maxAngularVelocity = 2;
+        public static final double maxAngularVelocity = 4;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
