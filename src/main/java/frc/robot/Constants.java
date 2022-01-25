@@ -25,7 +25,7 @@ public final class Constants {
         public static final boolean isOpenLoop = false;
 
         public static final double openLoopRamp = 0.25;
-        public static final double closedLoopRamp = 0.0;
+        public static final double closedLoopRamp = 0.4;
 
         public static final double driveGearRatio = (8.14 / 1.0); //6.86:1
         public static final double angleGearRatio = (12.8 / 1.0); //12.8:1
@@ -66,7 +66,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4; //meters per second
-        public static final double maxAngularVelocity = 4;
+        public static final double maxAngularVelocity = 2;
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;

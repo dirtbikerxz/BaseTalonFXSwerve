@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
-import frc.robot.other.Vision;
+import frc.robot.subsystems.Vision;
 import frc.robot.other.Ultrasonic;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -42,7 +42,6 @@ public class TeleopSwerve extends CommandBase {
 
     @Override
     public void execute() {
-        // System.out.println("Excetuting!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         vision.update();
         double yAxis = -controller.getRawAxis(translationAxis);
         double xAxis = -controller.getRawAxis(strafeAxis);
@@ -54,33 +53,14 @@ public class TeleopSwerve extends CommandBase {
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
         if(controller.getRawButton(XboxController.Button.kX.value) && vision.getTargetFound()){   
-            // System.out.println("pressed");
             rotation = vision.getAimValue();
-            System.out.println("Aligning!!!!!!!!!!!!!!!!!!!!!");
         } else {
             rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         }
 
-        System.out.println(rotation);
-
-
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-        // translation = new Translation2d(0, 0);
-
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         
     }
 
-    public void allign(){
-
-        double yAxis = -controller.getRawAxis(translationAxis);
-        double xAxis = -controller.getRawAxis(strafeAxis);
-        yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
-        xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-        System.out.println("pressed");
-        rotation = vision.getAimValue();
-        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-
-    }
 }
