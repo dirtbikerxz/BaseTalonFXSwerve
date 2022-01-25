@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
-import frc.robot.other.Vision;
+import frc.robot.subsystems.Vision;
 import frc.robot.other.Ultrasonic;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,10 +27,10 @@ public class TeleopSwerve extends CommandBase {
     /**
      * Driver control
      */
-    public TeleopSwerve(Swerve s_Swerve, Ultrasonic ultrasonic, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
+    public TeleopSwerve(Swerve s_Swerve, Vision vision, Joystick controller, int translationAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
-        vision = new Vision();
+        this.vision = new Vision();
 
         this.controller = controller;
         this.translationAxis = translationAxis;
@@ -38,11 +38,11 @@ public class TeleopSwerve extends CommandBase {
         this.rotationAxis = rotationAxis;
         this.fieldRelative = fieldRelative;
         this.openLoop = openLoop;
-        this.ultrasonic = ultrasonic;
     }
 
     @Override
     public void execute() {
+        vision.update();
         double yAxis = -controller.getRawAxis(translationAxis);
         double xAxis = -controller.getRawAxis(strafeAxis);
         double rAxis = -controller.getRawAxis(rotationAxis);
@@ -52,8 +52,7 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
-        if(controller.getRawButton(XboxController.Button.kX.value)){   
-            System.out.println("pressed");
+        if(controller.getRawButton(XboxController.Button.kX.value) && vision.getTargetFound()){   
             rotation = vision.getAimValue();
         } else {
             rotation = rAxis * Constants.Swerve.maxAngularVelocity;
@@ -62,20 +61,6 @@ public class TeleopSwerve extends CommandBase {
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
         s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
         
-        // Print out ultrasonic value
-        // System.out.println(ultrasonic.getDistanceValue());
     }
 
-    public void allign(){
-
-        double yAxis = -controller.getRawAxis(translationAxis);
-        double xAxis = -controller.getRawAxis(strafeAxis);
-        yAxis = (Math.abs(yAxis) < Constants.stickDeadband) ? 0 : yAxis;
-        xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis;
-        System.out.println("pressed");
-        rotation = vision.getAimValue();
-        translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed);
-        s_Swerve.drive(translation, rotation, fieldRelative, openLoop);
-
-    }
 }

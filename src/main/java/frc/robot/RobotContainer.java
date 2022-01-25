@@ -42,7 +42,6 @@ public class RobotContainer {
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton moveMotorNew = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton alignSwerve = new JoystickButton(driver, XboxController.Button.kX.value);
 
   
 
@@ -52,6 +51,7 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private Vision vision = new Vision();
 
   private Ultrasonic ultrasonic = new Ultrasonic();
 
@@ -59,7 +59,7 @@ public class RobotContainer {
   public RobotContainer() {
     this.fieldRelative = Constants.Swerve.isFieldRelative;
     this.openLoop = Constants.Swerve.isOpenLoop;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, vision, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
     autoChooser.setDefaultOption("Example Auto", exampleAuto);
     autoChooser.addOption("Ultrasonic Auto", ultrasonicAuto);
     SmartDashboard.putData("Choose Auto: ", autoChooser);
@@ -76,10 +76,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    // allignSwerve.whileHeld(new TeleopSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop).allign());
-    // align.whenPressed(new InstantCommand(() -> tele.executeAlign()));
     moveMotorNew.whileHeld(new moveNewMotor(new NewMotor()));
-    alignSwerve.whileHeld(new alignSwerve(s_Swerve, ultrasonic, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
   }
 
   /**
@@ -88,24 +85,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
-   /*
-  switch (autoChooser.getSelected()) {
-    case "Example Auto":
-      return new exampleAuto(s_Swerve);
-    case "Ultrasonic Auto":
-      return new ultrasonicAuto(s_Swerve);
-  }
-  */
-
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // autoCommand = new exampleAuto(s_Swerve);
-    // switch (autoChooser.getSelected()) {
-    //   case "Example Auto":
-    //     System.out.println("Example Auto!!!!!!!!!!!!!!");
-    //   case "Ultrasonic Auto":
-    //     System.out.println("Ultrasonic Auto!!!!!!!!!!!!!!");
-    // }
 
     if(autoChooser.getSelected() == "Example Auto"){
       System.out.println("Example Auto!!!!!!!!!!!!!!");
@@ -114,7 +94,6 @@ public class RobotContainer {
       System.out.println("Ultrasonic Auto!!!!!!!!!!!!!!");
       autoCommand = new ultrasonicAuto(s_Swerve, ultrasonic);
     }
-    // // return new exampleAuto(s_Swerve);
     return autoCommand;
     
   }

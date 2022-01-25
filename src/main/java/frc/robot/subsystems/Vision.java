@@ -1,11 +1,14 @@
-package frc.robot.other;
+package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Vision {
+public class Vision extends SubsystemBase{
 
     double disX = 0, disY = 0, tx = 0, ty = 0, ta = 0, tv = 0;
     boolean targetFound = false;
+
+    double deadPocket = 0.1;
 
     public double update(){  
         
@@ -24,7 +27,10 @@ public class Vision {
                 disX = tx;
                 disY = ty;
             }
-        return -(disX / 125);
+        double calculated =  -(disX / 125) * 10;
+        double roundOff = Math.round(calculated * 100.0) / 100.0;
+        roundOff = (Math.abs(roundOff) <= deadPocket) ? 0 : roundOff;
+        return roundOff;
     }
 
     public double getAimValue(){  
