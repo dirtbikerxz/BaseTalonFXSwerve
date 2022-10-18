@@ -17,16 +17,24 @@ public final class Constants {
         public static final int pigeonID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
+        public static final COTSSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
+            COTSSwerveConstants.SDSMK4i(COTSSwerveConstants.driveGearRatios.SDSMK4i_L2);
+
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
-        public static final double wheelCircumference = COTSSwerveConstants.SDSMK4i.wheelCircumference;
+        public static final double wheelCircumference = chosenModule.wheelCircumference;
 
-        public static final double openLoopRamp = 0.25;
-        public static final double closedLoopRamp = 0.0;
+        /* Motor Inverts */
+        public static final boolean angleMotorInvert = chosenModule.angleMotorInvert;
+        public static final boolean driveMotorInvert = chosenModule.driveMotorInvert;
 
-        public static final double driveGearRatio = COTSSwerveConstants.SDSMK4i.driveGearRatios.L2;
-        public static final double angleGearRatio = COTSSwerveConstants.SDSMK4i.angleGearRatio;
+        /* Module Gear Ratios */
+        public static final double driveGearRatio = chosenModule.driveGearRatio;
+        public static final double angleGearRatio = chosenModule.angleGearRatio;
+
+        /* Angle Encoder Invert */
+        public static final boolean canCoderInvert = chosenModule.canCoderInvert;
 
         public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
                 new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
@@ -45,11 +53,16 @@ public final class Constants {
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
+        /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
+         * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
+        public static final double openLoopRamp = 0.25;
+        public static final double closedLoopRamp = 0.0;
+
         /* Angle Motor PID Values */
-        public static final double angleKP = COTSSwerveConstants.SDSMK4i.angleKP;
-        public static final double angleKI = COTSSwerveConstants.SDSMK4i.angleKI;
-        public static final double angleKD = COTSSwerveConstants.SDSMK4i.angleKD;
-        public static final double angleKF = COTSSwerveConstants.SDSMK4i.angleKF;
+        public static final double angleKP = chosenModule.angleKP;
+        public static final double angleKI = chosenModule.angleKI;
+        public static final double angleKD = chosenModule.angleKD;
+        public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.05; //TODO: This must be tuned to specific robot
@@ -72,13 +85,6 @@ public final class Constants {
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
-
-        /* Motor Inverts */
-        public static final boolean angleMotorInvert = COTSSwerveConstants.SDSMK4i.angleMotorInvert;
-        public static final boolean driveMotorInvert = COTSSwerveConstants.SDSMK4i.driveMotorInvert;
-
-        /* Angle Encoder Invert */
-        public static final boolean canCoderInvert = COTSSwerveConstants.SDSMK4i.canCoderInvert;
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
@@ -137,6 +143,5 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-      }
-
+    }
 }
