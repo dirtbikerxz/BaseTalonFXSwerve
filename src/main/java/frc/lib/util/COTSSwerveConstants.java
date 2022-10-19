@@ -4,7 +4,6 @@ import edu.wpi.first.math.util.Units;
 
 /* Contains values and required settings for common COTS swerve modules. */
 public class COTSSwerveConstants {
-
     public final double wheelDiameter;
     public final double wheelCircumference;
     public final double angleGearRatio;
@@ -35,10 +34,10 @@ public class COTSSwerveConstants {
     public static COTSSwerveConstants SDSMK4(double driveGearRatio){
         double wheelDiameter = Units.inchesToMeters(4.0);
  
-         /** 12.8 : 1 */
+        /** 12.8 : 1 */
         double angleGearRatio = (12.8 / 1.0);
  
-        double angleKP = 0.0;
+        double angleKP = 0.2;
         double angleKI = 0.0;
         double angleKD = 0.0;
         double angleKF = 0.0;
