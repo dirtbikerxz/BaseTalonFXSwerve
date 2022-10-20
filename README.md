@@ -21,15 +21,15 @@ The following things must be adjusted to your robot and module's specific consta
     
 3. ```trackWidth```: Center to Center distance of left and right modules in meters.
 4. ```wheelBase```: Center to Center distance of front and rear module wheels in meters.
-5. ```wheelCircumference```: Cirumference of the wheel (including tread) in meters. <b>If you are using a supported module, this value will be automatically set.</b>
-6. ```driveGearRatio```: Total gear ratio for the drive motor. <b>If you are using a supported module, this value will be automatically set.</b>
-7. ```angleGearRatio```: Total gear ratio for the angle motor. <b>If you are using a supported module, this value will be automatically set.</b>
-8. ```canCoderInvert``` and ```angleMotorInvert```: Both must be set such that they are CCW+. <b>If you are using a supported module, this value will be automatically set.</b>
+5. ```wheelCircumference```: Cirumference of the wheel (including tread) in meters. <br><b>If you are using a supported module, this value will be automatically set.</b>
+6. ```driveGearRatio```: Total gear ratio for the drive motor. <br><b>If you are using a supported module, this value will be automatically set.</b>
+7. ```angleGearRatio```: Total gear ratio for the angle motor. <br><b>If you are using a supported module, this value will be automatically set.</b>
+8. ```canCoderInvert``` and ```angleMotorInvert```: Both must be set such that they are CCW+. <br><b>If you are using a supported module, this value will be automatically set.</b>
 9. ```driveMotorInvert```: <b>If you are using a supported module, this value will be automatically set.</b>
 <br>This can always remain false, since you set your offsets in step 14 such that a positive input to the drive motor will cause the robot to drive forwards.
 <br>However this can be set to true if for some reason you prefer the bevel gears on the wheel to face one direction or another when setting offsets. See Step 14 for more information.
 
-10. Angle Motor PID Values: <b>If you are using a supported module, this value will be automatically set. If you are not, you can use the below instructions to tune.</b> 
+10. Angle Motor PID Values: <br><b>If you are using a supported module, this value will be automatically set. If you are not, you can use the below instructions to tune.</b> 
     * To tune start with a low P value (0.01).
     * Multiply by 10 until the module starts oscilating around the set point
     * Scale back by searching for the value (for example, if it starts oscillating at a P of 10, then try (10 -> 5 -> 7.5 -> etc)) until the module overshoots the setpoint but corrects with no oscillation.
