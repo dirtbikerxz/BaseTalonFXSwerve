@@ -36,9 +36,11 @@ The following things must be adjusted to your robot and module's specific consta
     * Repeat the process for D. The D value will basically help prevent the overshoot. Ignore I.
 
 11. Get the drive characterization values (KS, KV, KA) by using the WPILib characterization tool, found [here](https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robot-characterization/introduction.html). You will need to lock your modules straight forward, and complete the characterization as if it was a standard tank drive.
-12. Tune drive kP until it doesn't overshoot and doesnt oscilate around a target velocity.
-13. For ```maxSpeed``` and ```maxAngularVelocity``` you can use the theoretical values, but it is better to physically drive the robot and find the actual max values.
+12. ```driveKP```: 
+<br>After completeing characterization and inserting the KS, KV, and KA values into the code, tune the drive motor kP until it doesn't overshoot and doesnt oscilate around a target velocity.
+<br>Leave ```driveKI```, ```driveKD```, and ```driveKF``` at 0.0.
 
+13. ```maxSpeed```: In Meters Per Second. ```maxAngularVelocity```: In Radians Per Second. For these you can use the theoretical values, but it is better to physically drive the robot and find the actual max values.
 14. In the module specific constants, set the can ID's of the motors and CANCoders for the respective modules.
 15. Setting Offsets
     * For finding the offsets, use a piece of 1x1 metal that is straight against the forks of the front and back modules (on the left and right side) to ensure that the modules are straight. 
