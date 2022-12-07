@@ -2,7 +2,6 @@ package frc.lib.util;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.*;
 
 public class AbsoluteEncoder {
     
@@ -33,7 +32,7 @@ public class AbsoluteEncoder {
     public void getRotationPeriodic() {
 
         Rotation2d rotation2d = Rotation2d.fromDegrees(360 * (analogInput.getVoltage() / 5.0));
-        
+
     }
 
 }
