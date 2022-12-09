@@ -5,8 +5,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import frc.lib.math.Conversions;
+import frc.lib.util.AbsoluteEncoder;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
+
+import javax.sound.sampled.Port;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -21,6 +24,7 @@ public class SwerveModule {
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
     private CANCoder angleEncoder;
+    private AbsoluteEncoder absoluteEncoder;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -29,13 +33,19 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
         
         /* Angle Encoder Config */
+        /*
         angleEncoder = new CANCoder(moduleConstants.cancoderID);
+        configAngleEncoder();
+        */
+
+        absoluteEncoder = new AbsoluteEncoder(moduleConstants.encoderID);
         configAngleEncoder();
 
         /* Angle Motor Config */
+        
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
         configAngleMotor();
-
+        
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         configDriveMotor();
@@ -72,18 +82,23 @@ public class SwerveModule {
         return Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
     }
 
+    
     public Rotation2d getCanCoder(){
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        
+        //return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        
+        return absoluteEncoder.getRotation();
     }
 
+
     private void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        double absolutePosition = Conversions.degreesToFalcon((absoluteEncoder.getRotation().getDegrees()) - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
     private void configAngleEncoder(){        
-        angleEncoder.configFactoryDefault();
-        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        //angleEncoder.configFactoryDefault();
+        //angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
     }
 
     private void configAngleMotor(){
