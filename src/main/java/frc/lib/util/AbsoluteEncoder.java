@@ -26,7 +26,7 @@ public class AbsoluteEncoder {
 
     public Rotation2d getRotation() {
 
-        return this.home.rotateBy(Rotation2d.fromDegrees(360 * (analogInput.getVoltage() / 5.0)));
+        return Rotation2d.fromDegrees(360 * (analogInput.getVoltage() / 5.0));
 
     }
 

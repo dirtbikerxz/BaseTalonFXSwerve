@@ -92,13 +92,14 @@ public class SwerveModule {
 
 
     private void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToFalcon((absoluteEncoder.getRotation().getDegrees()) - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        double absolutePosition = Conversions.degreesToFalcon((absoluteEncoder.getRo
+        tation().getDegrees()) - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
     private void configAngleEncoder(){        
-        //angleEncoder.configFactoryDefault();
-        //angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        // angleEncoder.configFactoryDefault();
+        // angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
     }
 
     private void configAngleMotor(){
