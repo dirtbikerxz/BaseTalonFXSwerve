@@ -1,4 +1,4 @@
-# WARNING: As of 1/8/23 This code is untested after being converted from 22 to 23 WPILib.
+# WARNING: There is currently an issue causing this code to not work with MK4i's, we are working on finding the issue, as soon as it is fixed this warning will be removed. If you would like to follow the progress/help test please see this [issue](https://github.com/Team364/BaseFalconSwerve/issues/8).
 **Once ths code is tested on an actual robot sometime in the next week or so, this warning shall be removed.**
 
 # BaseFalconSwerve </br>
