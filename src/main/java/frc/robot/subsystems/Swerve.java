@@ -81,6 +81,13 @@ public class Swerve extends SubsystemBase {
         return states;
     }
 
+    public void resetAbsolute(){
+        for(SwerveModule mod : mSwerveMods){
+            mod.resetToAbsolute();
+        }
+    }
+
+
     public void zeroGyro(){
         gyro.setYaw(0);
     }
@@ -97,6 +104,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
         }
     }
 }
