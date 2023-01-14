@@ -20,6 +20,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick operator = new Joystick(1);
+    
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -40,7 +42,7 @@ public class RobotContainer {
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -operator.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
