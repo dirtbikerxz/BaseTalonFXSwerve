@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -99,8 +100,18 @@ public class Swerve extends SubsystemBase {
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public void resetModulesToAbsolute(){
+        for(SwerveModule mod : mSwerveMods){
+            mod.resetToAbsolute();
+        }
+    }
+
     @Override
     public void periodic(){
+        if (DriverStation.isDisabled()){
+            resetModulesToAbsolute();
+        }
+
         swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
