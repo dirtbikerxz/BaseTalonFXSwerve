@@ -1,5 +1,4 @@
-# WARNING: There is currently an issue causing this code to not work, we are working on finding the issue, as soon as it is fixed this warning will be removed. If you would like to follow the progress/help test please see this [issue](https://github.com/Team364/BaseFalconSwerve/issues/8).
-**Once ths code is tested on an actual robot sometime in the next week or so, this warning shall be removed.**
+**Note: In 2023, there was an [issue](https://github.com/Team364/BaseFalconSwerve/issues/8) that prevented this code from working with MK4i's (or any module that used inverted motors). A [fix](https://github.com/Team364/BaseFalconSwerve/issues/8#issuecomment-1384799539) has been found, tested on a real robot, and this issue is believed to have been fixed as of 1/17. If anyone experiences any further issues, please report them. Thanks**
 
 # BaseFalconSwerve </br>
 
