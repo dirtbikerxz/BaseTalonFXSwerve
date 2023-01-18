@@ -3,11 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.lib.util.AbsoluteEncoder;
+//import frc.lib.util.AbsoluteEncoder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +25,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private Command resetAbsolute;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,12 +68,33 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    /*Reset Absolute */
+    m_robotContainer.resetAbsolute();
+    
+    PathConstraints pathConstraints = new PathConstraints(4, 3);
+    
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    PathPlannerTrajectory examplePath = PathPlanner.loadPath("2023 Test", pathConstraints);
+    
+    // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+    // Or the path can be sampled at a given point in time for custom path following
+      
+    // Sample the state of the path at 1.2 seconds
+    PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
+    
+    // Print the velocity at the sampled time
+    System.out.println(exampleState.velocityMetersPerSecond);
+    System.out.println(exampleState.velocityMetersPerSecond);
+    System.out.println(exampleState.velocityMetersPerSecond);
+    
+    m_autonomousCommand = m_robotContainer.followTrajectoryCommand(examplePath, true);
+    
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+  
   }
 
   /** This function is called periodically during autonomous. */
@@ -83,6 +110,13 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+  
+    
+ /*Reset Absolute */
+ m_robotContainer.resetAbsolute();
+ 
+
+
   }
 
   /** This function is called periodically during operator control. */
