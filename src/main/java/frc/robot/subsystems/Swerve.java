@@ -19,14 +19,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swerve extends SubsystemBase {
-    public SwerveDriveOdometry swerveOdometry;
+    // public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-    public Pigeon2 gyro;
+    // public Pigeon2 gyro;
 
     public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID); // TODO switch to NavX
-        gyro.configFactoryDefault();
-        zeroGyro();
+        // gyro = new Pigeon2(Constants.Swerve.pigeonID); // TODO switch to NavX
+        // gyro.configFactoryDefault();
+        // zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -41,19 +41,19 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
-                                    getYaw()
-                                )
-                                : new ChassisSpeeds(
+                // fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                //                     translation.getX(), 
+                //                     translation.getY(), 
+                //                     rotation, 
+                //                     getYaw()
+                //                 ) :
+                                new ChassisSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation)
@@ -74,13 +74,13 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
-    public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
-    }
+    // public Pose2d getPose() {
+    //     return swerveOdometry.getPoseMeters();
+    // }
 
-    public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
-    }
+    // public void resetOdometry(Pose2d pose) {
+    //     swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+    // }
 
     public SwerveModuleState[] getModuleStates(){
         SwerveModuleState[] states = new SwerveModuleState[4];
@@ -98,13 +98,13 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(){
-        gyro.setYaw(0);
-    }
+    // public void zeroGyro(){
+    //     gyro.setYaw(0);
+    // }
 
-    public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
-    }
+    // public Rotation2d getYaw() {
+    //     return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
+    // }
 
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
@@ -114,7 +114,7 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getModulePositions());  
+        // swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
