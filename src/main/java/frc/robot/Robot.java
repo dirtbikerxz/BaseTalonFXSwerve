@@ -11,7 +11,6 @@ import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
 
 /**
@@ -113,8 +112,8 @@ public class Robot extends TimedRobot {
     }
   
     
-    /*Reset Absolute */
-    m_robotContainer.resetAbsolute();
+ /*Reset Absolute */
+ m_robotContainer.resetAbsolute();
  
 
 
