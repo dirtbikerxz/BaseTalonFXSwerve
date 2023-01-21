@@ -46,7 +46,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.get()
+                () -> robotCentric.getAsBoolean()
             )
         );
 
@@ -62,8 +62,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        resetAbsolute.whenPressed(new InstantCommand(() -> s_Swerve.resetAbsolute()));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetAbsolute()));
 
     }
 
