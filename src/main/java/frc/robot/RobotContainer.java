@@ -63,7 +63,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetAbsolute()));
+        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
     }
 
     /**
@@ -77,7 +77,7 @@ public class RobotContainer {
     }
 
     public void resetAbsolute() {
-        s_Swerve.resetAbsolute();
+        s_Swerve.resetModulesToAbsolute();
     }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
