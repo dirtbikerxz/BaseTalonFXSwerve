@@ -3,6 +3,7 @@ package frc.lib.util;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 public class AbsoluteEncoder {
     
@@ -24,10 +25,11 @@ public class AbsoluteEncoder {
 
     }
 
-    public Rotation2d getRotation() {
-
-        return Rotation2d.fromDegrees(360 * (analogInput.getVoltage() / 5.0));
-
+    public Rotation2d getRotation(int moduleNumber) {
+        double voltage = analogInput.getVoltage();
+        double degrees = 360 * (voltage / Constants.MAX_ENCODER_VOLTAGE);
+        SmartDashboard.putNumber("voltage " + moduleNumber, voltage);
+        return Rotation2d.fromDegrees(degrees);
     }
 
     /*
