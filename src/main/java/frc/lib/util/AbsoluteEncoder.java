@@ -25,10 +25,9 @@ public class AbsoluteEncoder {
 
     }
 
-    public Rotation2d getRotation(int moduleNumber) {
+    public Rotation2d getRotation() {
         double voltage = analogInput.getVoltage();
         double degrees = 360 * (voltage / Constants.MAX_ENCODER_VOLTAGE);
-        SmartDashboard.putNumber("voltage " + moduleNumber, voltage);
         return Rotation2d.fromDegrees(degrees);
     }
 
