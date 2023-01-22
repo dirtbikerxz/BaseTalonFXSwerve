@@ -7,6 +7,15 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import frc.robot.Constants;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Timer;
@@ -15,13 +24,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
 
-public class Swerve extends SubsystemBase {
-    // public SwerveDriveOdometry swerveOdometry;
+public class SwerveDrive extends SubsystemBase {
+
     public SwerveModule[] mSwerveMods;
     AHRS navx;
 
-    public Swerve() {
-        // zeroGyro();
+    public SwerveDrive() {
+
         navx = new AHRS(Port.kUSB);
         zeroGyro();
 
@@ -38,27 +47,24 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
-                                    getYaw()
-                                ) :
-                                new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation)
-                                );
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    public void drive(double vx, double vy, double vomega, boolean fieldRelative) {
+        ChassisSpeeds speeds = fieldRelative
+                ? ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, vomega, getYaw())
+                : new ChassisSpeeds(vx, vy, vomega);
+        drive(speeds);
+    }
 
+    public void drive(ChassisSpeeds speeds) {
+        SwerveModuleState [] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(speeds);
+        setModuleStates(swerveModuleStates);
+    }    
+
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
     }    
 
@@ -74,15 +80,6 @@ public class Swerve extends SubsystemBase {
         }
         return Rotation2d.fromDegrees(-(navx.getYaw())+0);
     }
-
-    /* Used by SwerveControllerCommand in Auto */
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-        
-        for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
-        }
-    }    
 
     public SwerveModuleState[] getModuleStates(){
         SwerveModuleState[] states = new SwerveModuleState[4];
