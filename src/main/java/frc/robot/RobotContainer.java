@@ -34,7 +34,7 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
-    private final SwerveDrive s_Swerve = new SwerveDrive();
+    public final SwerveDrive s_Swerve = new SwerveDrive();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
