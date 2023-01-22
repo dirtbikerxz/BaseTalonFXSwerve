@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.SwerveModule;
+import frc.robot.subsystems.SwerveModule;
 
 public class SwerveDrive extends SubsystemBase {
 
@@ -100,7 +100,7 @@ public class SwerveDrive extends SubsystemBase {
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
-        }
+            }
     }
 
     @Override
