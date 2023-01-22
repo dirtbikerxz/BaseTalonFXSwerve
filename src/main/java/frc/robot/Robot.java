@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.lang.ModuleLayer.Controller;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -58,7 +59,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
+    // CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -103,8 +104,14 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double timeElapsed = Timer.getFPGATimestamp() - startTime;
 
-    if (timeElapsed < 4 && timeElapsed > 1){
-    m_robotContainer.s_Swerve.drive(0.8, 0, 0, true);  
+    if (timeElapsed > 1){
+      if (timeElapsed < 4) {
+    m_robotContainer.s_Swerve.drive(Units.feetToMeters(1), 0, 0, true);  
+     } else if (timeElapsed < 7) {
+    m_robotContainer.s_Swerve.drive(0, 0, Units.degreesToRadians(30), true);
+     } else {
+    m_robotContainer.s_Swerve.drive(0, 0, 0, true);
+     }
     }
   }
 
