@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SwerveDrive extends SubsystemBase {
+public class SwerveDriveSubsystem extends SubsystemBase {
 
     public SwerveModule[] mSwerveMods;
     AHRS navx;
 
-    public SwerveDrive() {
+    public SwerveDriveSubsystem() {
 
         navx = new AHRS(Port.kUSB);
         zeroGyro();

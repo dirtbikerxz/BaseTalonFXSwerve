@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.SwerveConfig;
-import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -13,13 +13,13 @@ public class TeleopSwerve extends CommandBase {
 
     public static final double stickDeadband = 0.1;
 
-    private SwerveDrive s_Swerve;    
+    private SwerveDriveSubsystem s_Swerve;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
 
-    public TeleopSwerve(SwerveDrive s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    public TeleopSwerve(SwerveDriveSubsystem s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 

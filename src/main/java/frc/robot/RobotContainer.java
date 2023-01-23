@@ -1,7 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -30,11 +28,12 @@ public class RobotContainer {
     
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton runProgram = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton runKyleAndChristopher = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton runEd = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
-    public final SwerveDrive s_Swerve = new SwerveDrive();
+    public final SwerveDriveSubsystem s_Swerve = new SwerveDriveSubsystem();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -62,11 +61,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        runProgram.onFalse(TimedDriveCommand.buildProgram(s_Swerve)
-                .add(new ChassisSpeeds(1, 0, 0), 1.0)
-                .add(new ChassisSpeeds(0, 1, 0), 1.0)
-                .add(new ChassisSpeeds(0, 0, Units.degreesToRadians(90)), 1.0)
-                .toCommand());
+        runEd.onTrue(EdsCommand.buildMultiStepProgram(s_Swerve));
+        runKyleAndChristopher.onTrue(new KyleAndChristopherCommand(s_Swerve));
     }
 
     /**

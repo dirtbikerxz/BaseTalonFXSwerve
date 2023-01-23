@@ -1,7 +1,7 @@
 package frc.robot.autos;
 
 import frc.robot.subsystems.SwerveConfig;
-import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class exampleAuto extends SequentialCommandGroup {
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
-    public exampleAuto(SwerveDrive s_Swerve){
+    public exampleAuto(SwerveDriveSubsystem s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
                     kMaxSpeedMetersPerSecond,
