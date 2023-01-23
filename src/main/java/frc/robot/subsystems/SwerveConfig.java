@@ -13,7 +13,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants;
 
 public class SwerveConfig {
-        
 
     /**
      * Create a new drive motor
