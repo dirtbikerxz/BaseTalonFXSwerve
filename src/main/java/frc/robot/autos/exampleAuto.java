@@ -1,8 +1,5 @@
 package frc.robot.autos;
 
-import frc.robot.subsystems.SwerveConfig;
-import frc.robot.subsystems.SwerveDriveSubsystem;
-
 import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,6 +14,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.subsystems.swerve.SwerveConfig;
+import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
 public class exampleAuto extends SequentialCommandGroup {
 

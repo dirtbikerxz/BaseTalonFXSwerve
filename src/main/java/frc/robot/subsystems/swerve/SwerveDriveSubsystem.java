@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.swerve;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -44,6 +44,17 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 : new ChassisSpeeds(vx, vy, vomega);
         drive(speeds);
     }
+
+    public void drive(ChassisSpeeds speeds, boolean fieldRelative) {
+        if (fieldRelative) {
+            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond,
+                speeds.omegaRadiansPerSecond,
+                getYaw());
+        }
+        drive(speeds);
+    }    
 
     public void drive(ChassisSpeeds speeds) {
         SwerveModuleState [] swerveModuleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(speeds);
