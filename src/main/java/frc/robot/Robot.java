@@ -12,6 +12,15 @@ import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
 /**
  * This is where all the parts of our robot are created.
+ * 
+ * DON'T add new control logic to this class. Instead, do the following:
+ * 
+ *  - Create a new command that will wrap up your logic. See ExampleCommand.java
+ *  in the commands folder, or look at some of the other commands in there to
+ *  see how they work.
+ * 
+ *  - Update RobotControlMapping.java to establish a button or something that
+ *  will trigger your command.
  */
 public class Robot extends TimedRobot {
 
