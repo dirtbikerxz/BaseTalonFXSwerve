@@ -1,6 +1,6 @@
 package frc.robot.autos;
 
-import frc.robot.Constants;
+import frc.robot.subsystems.SwerveConfig;
 import frc.robot.subsystems.SwerveDrive;
 
 import java.util.List;
@@ -13,17 +13,33 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 public class exampleAuto extends SequentialCommandGroup {
+
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+    public static final double kPXController = 1;
+    public static final double kPYController = 1;
+    public static final double kPThetaController = 1;
+
+    /* Constraint for the motion profilied robot angle controller */
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        new TrapezoidProfile.Constraints(
+            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
     public exampleAuto(SwerveDrive s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
-                    Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                    Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                .setKinematics(Constants.Swerve.swerveKinematics);
+                    kMaxSpeedMetersPerSecond,
+                    kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(SwerveConfig.swerveKinematics);
 
         // An example trajectory to follow.  All units in meters.
         Trajectory exampleTrajectory =
@@ -38,7 +54,7 @@ public class exampleAuto extends SequentialCommandGroup {
 
         var thetaController =
             new ProfiledPIDController(
-                Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+                kPThetaController, 0, 0, kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         SwerveControllerCommand swerveControllerCommand = null;
@@ -46,8 +62,8 @@ public class exampleAuto extends SequentialCommandGroup {
             //     exampleTrajectory,
             //     s_Swerve::getPose,
             //     Constants.Swerve.swerveKinematics,
-            //     new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-            //     new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+            //     new PIDController(kPXController, 0, 0),
+            //     new PIDController(kPYController, 0, 0),
             //     thetaController,
             //     s_Swerve::setModuleStates,
             //     s_Swerve);

@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import frc.robot.Constants;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -25,10 +24,10 @@ public class SwerveDrive extends SubsystemBase {
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-            new SwerveModule(1, Constants.Swerve.Mod1.constants),
-            new SwerveModule(2, Constants.Swerve.Mod2.constants),
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)
+            new SwerveModule(0, SwerveConfig.frontLeft),
+            new SwerveModule(1, SwerveConfig.frontRight),
+            new SwerveModule(2, SwerveConfig.backLeft),
+            new SwerveModule(3, SwerveConfig.backRight)
         };
 
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
@@ -47,12 +46,12 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void drive(ChassisSpeeds speeds) {
-        SwerveModuleState [] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(speeds);
+        SwerveModuleState [] swerveModuleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(speeds);
         setModuleStates(swerveModuleStates);
     }    
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConfig.maxSpeed);
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }

@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import frc.robot.Constants;
+import frc.robot.subsystems.SwerveConfig;
 import frc.robot.subsystems.SwerveDrive;
 
 import java.util.function.BooleanSupplier;
@@ -9,8 +9,10 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 public class TeleopSwerve extends CommandBase {    
+
+    public static final double stickDeadband = 0.1;
+
     private SwerveDrive s_Swerve;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
@@ -30,15 +32,15 @@ public class TeleopSwerve extends CommandBase {
     @Override
     public void execute() {
         /* Get Values, Deadband*/
-        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), stickDeadband);
+        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), stickDeadband);
+        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), stickDeadband);
 
         /* Drive */
         s_Swerve.drive(
-            translationVal * Constants.Swerve.maxSpeed,
-            strafeVal * Constants.Swerve.maxSpeed,
-            rotationVal * Constants.Swerve.maxAngularVelocity, 
+            translationVal * SwerveConfig.maxSpeed,
+            strafeVal * SwerveConfig.maxSpeed,
+            rotationVal * SwerveConfig.maxAngularVelocity, 
             !robotCentricSup.getAsBoolean());
     }
 }
