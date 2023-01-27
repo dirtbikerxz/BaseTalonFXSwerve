@@ -5,7 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -15,15 +14,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
 
-    public SwerveModule[] mSwerveMods;
-    AHRS navx;
+    private final SwerveModule [] swerveModules;
+    private final AHRS navx;
 
     public SwerveDriveSubsystem() {
 
         navx = new AHRS(Port.kUSB);
         zeroGyro();
 
-        mSwerveMods = new SwerveModule[] {
+        swerveModules = new SwerveModule[] {
             new SwerveModule(0, SwerveConfig.frontLeft),
             new SwerveModule(1, SwerveConfig.frontRight),
             new SwerveModule(2, SwerveConfig.backLeft),
@@ -57,21 +56,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }    
 
     public void drive(ChassisSpeeds speeds) {
-        SwerveModuleState [] swerveModuleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(speeds);
-        setModuleStates(swerveModuleStates);
+        SwerveModuleState [] moduleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(speeds);
+        setModuleStates(moduleStates);
     }    
 
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
+    public void setModuleStates(SwerveModuleState [] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConfig.maxSpeed);
-        for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+        for (SwerveModule module : swerveModules){
+            module.setDesiredState(desiredStates[module.moduleNumber], false);
         }
     }    
 
     public void zeroGyro() {
         navx.zeroYaw();
-        
-        
     }
 
     private Rotation2d getYaw() {
@@ -81,26 +78,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(-(navx.getYaw())+0);
     }
 
-    public SwerveModuleState[] getModuleStates(){
-        SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
-            states[mod.moduleNumber] = mod.getState();
-        }
-        return states;
-    }
-
-    public SwerveModulePosition[] getModulePositions(){
-        SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
-            positions[mod.moduleNumber] = mod.getPosition();
-        }
-        return positions;
-    }
-
     public void resetModulesToAbsolute(){
-        for(SwerveModule mod : mSwerveMods){
-            mod.resetToAbsolute();
-            }
+        for (SwerveModule module : swerveModules){
+            module.resetToAbsolute();
+        }
     }
 
     @Override
@@ -108,7 +89,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Yaw", getYaw().getDegrees());
         SmartDashboard.putBoolean("Mag Cal?", navx.isMagnetometerCalibrated());
 
-        for(SwerveModule mod : mSwerveMods){
+        for(SwerveModule mod : swerveModules) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
