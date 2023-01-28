@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "mika"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -24,15 +26,15 @@
     },
     {
       "anchorPoint": {
-        "x": 3.690898878234812,
-        "y": 4.379427286170487
+        "x": 2.976861820707015,
+        "y": 0.9044469395352096
       },
       "prevControl": {
-        "x": 2.2342632808781073,
-        "y": 4.350865803869375
+        "x": 1.9200869755658752,
+        "y": 1.3138281858511447
       },
       "nextControl": null,
-      "holonomicAngle": -178.29018595585848,
+      "holonomicAngle": -142.04576912486758,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -40,10 +42,26 @@
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
+        "waitBehavior": "before",
         "waitTime": 0
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.6109090909091237,
+      "names": [
+        "Drive",
+        "TeleopSwerve"
+      ]
+    },
+    {
+      "position": 0.7636363636363759,
+      "names": [
+        "MoveForward",
+        "TeleopSwerve",
+        "ddd"
+      ]
+    }
+  ]
 }
