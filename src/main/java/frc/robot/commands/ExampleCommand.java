@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
@@ -20,7 +21,8 @@ public class ExampleCommand extends CommandBase {
 
         // If you are going to use a subsystem in any of your methods, you
         // HAVE to uncomment the corresponding line below.
-        // addRequirements(robot.swerveDrive);
+    
+        
         // addRequirements(robot.hand);
         // addRequirements(robot.arm);
         // addRequirements(robot.vision);
@@ -28,11 +30,14 @@ public class ExampleCommand extends CommandBase {
 
     @Override
     public void initialize() {
+      
+
         // REPLACE ME with real logic that actually does something
     }
 
     @Override
     public void execute() {
+               
         // REPLACE ME with real logic that actually does something
     }
 
