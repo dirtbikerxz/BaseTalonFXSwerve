@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SwerveDriveSubsystem extends SubsystemBase {
 
     private final SwerveModule [] swerveModules;
-    private final AHRS navx;
+    public final AHRS navx;
 
     public SwerveDriveSubsystem() {
 

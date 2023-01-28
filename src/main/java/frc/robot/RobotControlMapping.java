@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.EdsCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
 import frc.robot.commands.ZeroGyroCommand;
+import frc.robot.commands.TurningToAIndicatedWallCommand;
 
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
@@ -76,6 +77,7 @@ public class RobotControlMapping {
         trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
         trigger(driverController, kY, EdsCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
+        trigger(driverController, Button.kB, new TurningToAIndicatedWallCommand(robot));
         // trigger(specialOpsController, kY, new ExampleCommand(robot));
     }
 
