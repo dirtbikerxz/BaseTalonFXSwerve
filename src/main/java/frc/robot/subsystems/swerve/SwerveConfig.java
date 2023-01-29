@@ -22,7 +22,7 @@ import edu.wpi.first.math.util.Units;
 public class SwerveConfig {
 
     // max speeds
-    public static final double maxSpeed = Units.feetToMeters(2);
+    public static final double maxSpeed = Units.feetToMeters(6);
     public static final double maxAngularVelocity = Units.degreesToRadians(120);
 
     // physical properties of chassis

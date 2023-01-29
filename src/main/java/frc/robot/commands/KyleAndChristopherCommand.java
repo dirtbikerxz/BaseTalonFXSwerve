@@ -41,27 +41,28 @@ public class KyleAndChristopherCommand extends CommandBase {
     @Override
     public void execute() {
 
-        double timeElapsed = Timer.getFPGATimestamp() - startTime;
+        // double timeElapsed = Timer.getFPGATimestamp() - startTime;
 
-        // for the first second, we'll stay still.
-        if (timeElapsed < 1) {
-            swerveDrive.drive(0, 0, 0, true);
-        }
+        // // for the first second, we'll stay still.
+        // if (timeElapsed < 1) {
+        //     swerveDrive.drive(0, 0, 0, true);
+        // }
 
-        // for the next three seconds, we'll drive forward.
-        else if (timeElapsed < 4) {
-            swerveDrive.drive(Units.feetToMeters(1), 0, 0, true);  
-        }
+        // // for the next three seconds, we'll drive forward.
+        // else if (timeElapsed < 4) {
+        //     swerveDrive.drive(Units.feetToMeters(1), 0, 0, true);  
+        // }
 
-        // for the next three seconds, we'll turn in place.
-        else if (timeElapsed < 7) {
-            swerveDrive.drive(0, 0, Units.degreesToRadians(30), true);
-        }
+        // // for the next three seconds, we'll turn in place.
+        // else if (timeElapsed < 7) {
+        //     swerveDrive.drive(0, 0, Units.degreesToRadians(30), true);
+        // }
 
         // otherwise, we're done.
-        else {
-            done = true;
-        }
+        // else {
+        //     done = true;
+        // }
+
     }
 
     // this gets called right after execute(), to see if the

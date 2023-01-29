@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.EdsCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
 import frc.robot.commands.ZeroGyroCommand;
+import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.commands.TurningToAIndicatedWallCommand;
 
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
@@ -41,9 +42,10 @@ public class RobotControlMapping {
     public static Supplier<ChassisSpeeds> createSpeedSupplier(XboxController driverController) {
         return () -> {
 
-            double vx = -driverController.getRawAxis(kLeftY.value); 
-            double vy = -driverController.getRawAxis(kLeftX.value); 
-            double vomega = -driverController.getRawAxis(kRightX.value);
+            double vx = -driverController.getRawAxis(kLeftY.value) * SwerveConfig.maxSpeed; 
+            double vy = -driverController.getRawAxis(kLeftX.value) * SwerveConfig.maxSpeed; 
+            double vomega = -driverController.getRawAxis(kRightX.value)
+            ;
 
             vx = MathUtil.applyDeadband(vx * Math.abs(vx), DEADBAND);
             vy = MathUtil.applyDeadband(vy * Math.abs(vy), DEADBAND);
@@ -64,7 +66,9 @@ public class RobotControlMapping {
     public static BooleanSupplier createFieldRelativeSupplier(XboxController driverController) {
         return () -> !driverController.getLeftBumper();
     }
-
+    public static BooleanSupplier createHighSpeedSupplier(XboxController driverController) {
+        return () -> !driverController.getRightBumper();
+    }
     /**
      * Maps additional controls on the driver's joystick
      *    - X will trigger Kyle & Christopher's command

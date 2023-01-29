@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
 public class TeleopSwerve extends CommandBase {    
@@ -12,20 +13,33 @@ public class TeleopSwerve extends CommandBase {
     private SwerveDriveSubsystem swerveDrive;    
     private Supplier<ChassisSpeeds> speedSupplier;
     private BooleanSupplier fieldRelativeSupplier;
+    private BooleanSupplier highspeedSupplier;
 
-    public TeleopSwerve(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier fieldRelativeSupplier) {
+    public TeleopSwerve(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier fieldRelativeSupplier, BooleanSupplier highspeedsupplier) {
 
         this.swerveDrive = swerveDrive;
         this.speedSupplier = speedSupplier;
         this.fieldRelativeSupplier = fieldRelativeSupplier;
+        this.highspeedSupplier = highspeedsupplier;
 
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
+        ChassisSpeeds speeds=speedSupplier.get();
+        double maxspeed;
+        if (highspeedSupplier.getAsBoolean()) {
+            maxspeed = SwerveConfig.maxSpeed;
+        }
+        else {
+            maxspeed = SwerveConfig.maxSpeed / 2;
+        }
         swerveDrive.drive(
-            speedSupplier.get(),
-            fieldRelativeSupplier.getAsBoolean());
+            speeds.vxMetersPerSecond,
+            speeds.vyMetersPerSecond,
+            speeds.omegaRadiansPerSecond,
+            fieldRelativeSupplier.getAsBoolean(), maxspeed);
+
     }
 }
