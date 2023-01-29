@@ -17,7 +17,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button.kStart;
 public class SpecialOpsModeCommand extends CommandBase{
 
     private final SwerveDriveSubsystem swerveDrive;
-    private final XboxController driverController;
+    private final XboxController inputController;
     private boolean done;
 
 
@@ -31,9 +31,9 @@ public class SpecialOpsModeCommand extends CommandBase{
 
     }
 
-    public SpecialOpsModeCommand(SwerveDriveSubsystem swerveDrive, XboxController driverController) {
+    public SpecialOpsModeCommand(SwerveDriveSubsystem swerveDrive, XboxController inputController) {
         this.swerveDrive = swerveDrive;
-        this.driverController = driverController;
+        this.inputController = inputController;
 
         // all commands have to declare which subsystems they need to use;
         // this one only uses the swerve drive, but we could have more
@@ -47,11 +47,11 @@ public class SpecialOpsModeCommand extends CommandBase{
 
     public void execute(){
 
-        double vx = -driverController.getRawAxis(kLeftX.value); 
-        double vy = -driverController.getRawAxis(kLeftY.value); 
-        double vomega = -driverController.getRawAxis(kLeftX.value);
+        double vx = -inputController.getRawAxis(kLeftX.value); 
+        double vy = -inputController.getRawAxis(kLeftY.value); 
+        double vomega = -inputController.getRawAxis(kLeftX.value);
 
-        if (driverController.getBackButtonPressed()){
+        if (inputController.getBackButtonPressed()){
             done = true;
         }
 
