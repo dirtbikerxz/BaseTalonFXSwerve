@@ -2,12 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HandSubsystem;
-
-public class HandReleaseCommand extends CommandBase {
+import frc.robot.subsystems.HandSubsystem;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+public class HandOffCommand extends CommandBase {
 
     private final HandSubsystem handSubsystem;
 
-    public HandReleaseCommand(HandSubsystem handSubsystem) {
+    public HandOffCommand(HandSubsystem handSubsystem) {
         this.handSubsystem = handSubsystem;
         addRequirements(handSubsystem);
     }
@@ -19,7 +20,7 @@ public class HandReleaseCommand extends CommandBase {
 
     @Override
     public void execute() {
-        // TODO what do we do here?
+        handSubsystem._Charge.set(DoubleSolenoid.Value.kOff);
     }
 
     @Override
