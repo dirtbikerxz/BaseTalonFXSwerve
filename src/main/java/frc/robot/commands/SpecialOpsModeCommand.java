@@ -19,6 +19,7 @@ public class SpecialOpsModeCommand extends CommandBase{
     private final SwerveDriveSubsystem swerveDrive;
     private final XboxController inputController;
     private boolean done;
+    private double wantedMaxSpeed;
 
 
     private double applyMaxSpeed(double speedConfigure, double maxSpeed){
@@ -31,9 +32,10 @@ public class SpecialOpsModeCommand extends CommandBase{
 
     }
 
-    public SpecialOpsModeCommand(SwerveDriveSubsystem swerveDrive, XboxController inputController) {
+    public SpecialOpsModeCommand(SwerveDriveSubsystem swerveDrive, XboxController inputController, double wantedMaxSpeed) {
         this.swerveDrive = swerveDrive;
         this.inputController = inputController;
+        this.wantedMaxSpeed = wantedMaxSpeed;
 
         // all commands have to declare which subsystems they need to use;
         // this one only uses the swerve drive, but we could have more
@@ -55,7 +57,7 @@ public class SpecialOpsModeCommand extends CommandBase{
             done = true;
         }
 
-        swerveDrive.drive(vx, vy, vomega, false, 0.3);
+        swerveDrive.drive(vx, vy, vomega, false, wantedMaxSpeed);
 
     }
 
