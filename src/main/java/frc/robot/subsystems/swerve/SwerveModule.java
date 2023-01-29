@@ -14,6 +14,8 @@ import static frc.robot.subsystems.swerve.SwerveConfig.*;
 
 public class SwerveModule {
 
+    public static final double MIN_SPEED_FOR_TURNING = 0.03;
+
     public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
             driveKS,
             driveKV,
@@ -45,21 +47,18 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         desiredState = SwerveUtils.optimize(desiredState, getState().angle);
         setAngle(desiredState);
-        setSpeed(desiredState, isOpenLoop);
+        setSpeed(desiredState);
+        //Ignoring request for open loop for now.
     }
 
     /**
      * Set the speed of the drive motor
      */
-    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
-        if (isOpenLoop) {
-            double percentOutput = desiredState.speedMetersPerSecond / maxSpeed;
-            driveMotor.set(ControlMode.PercentOutput, percentOutput);
-        }
-        else {
+    private void setSpeed(SwerveModuleState desiredState) {
+        
             double velocity = SwerveUtils.MPSToFalcon(desiredState.speedMetersPerSecond, wheelCircumference, driveGearRatio);
             driveMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
-        }
+        
     }
 
     /**
@@ -67,7 +66,7 @@ public class SwerveModule {
      * speed is low to keep the wheel from "jittering".
      */
     private void setAngle(SwerveModuleState desiredState) {
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (maxSpeed * 0.01))
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= MIN_SPEED_FOR_TURNING)
                 ? lastAngle :
                 desiredState.angle;
         angleMotor.set(ControlMode.Position, SwerveUtils.degreesToFalcon(angle.getDegrees(), angleGearRatio));

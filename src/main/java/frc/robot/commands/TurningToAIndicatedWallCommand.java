@@ -53,16 +53,16 @@ public class TurningToAIndicatedWallCommand extends CommandBase {
 
     @Override
     public void execute(){
-        currentAngle = robot.swerveDrive.getYaw().getDegrees();
-        SmartDashboard.putNumber("getYaw", currentAngle);
-        if (currentAngle < 91 && currentAngle > 89){
-           robot.swerveDrive.drive(0, 0, 0, true);
-           done = true;
-        } else if (currentAngle > -90 && currentAngle < 90){
-           robot.swerveDrive.drive(0, 0 , 0.5, true);
-        } else {
-           robot.swerveDrive.drive(0, 0, -0.5, true );
-        }
+        // currentAngle = robot.swerveDrive.getYaw().getDegrees();
+        // SmartDashboard.putNumber("getYaw", currentAngle);
+        // if (currentAngle < 91 && currentAngle > 89){
+        //    robot.swerveDrive.drive(0, 0, 0, true);
+        //    done = true;
+        // } else if (currentAngle > -90 && currentAngle < 90){
+        //    robot.swerveDrive.drive(0, 0 , 0.5, true);
+        // } else {
+        //    robot.swerveDrive.drive(0, 0, -0.5, true );
+        // }
 
         // REPLACE ME with real logic that actually does something
     }
