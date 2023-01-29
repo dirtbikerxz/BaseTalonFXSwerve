@@ -22,7 +22,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button.kY;
 import static edu.wpi.first.wpilibj.XboxController.Button.kStart;;
 
 /**
- * All of the mapping of controls to commands happens here.
+ * All of the mapping of controls to commands for the production robot happens here.
  */
 public class RobotControlMapping {
 
