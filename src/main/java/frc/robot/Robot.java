@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.ArmTeleopLoopCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
@@ -51,7 +52,10 @@ public class Robot extends TimedRobot {
 
         // create all the other subsystems                
         hand = new HandSubsystem();
+
         arm = new ArmSubsystem();
+        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, specialOpsController));
+        
         vision = new VisionSubsystem();
 
         // do any additional control mapping that needs to be done
