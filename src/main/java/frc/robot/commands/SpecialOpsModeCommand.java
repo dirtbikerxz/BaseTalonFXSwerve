@@ -49,9 +49,9 @@ public class SpecialOpsModeCommand extends CommandBase{
 
     public void execute(){
 
-        double vx = -inputController.getRawAxis(kLeftX.value); 
-        double vy = -inputController.getRawAxis(kLeftY.value); 
-        double vomega = -inputController.getRawAxis(kLeftX.value);
+        double vx = -inputController.getRawAxis(kLeftY.value); 
+        double vy = -inputController.getRawAxis(kLeftX.value); 
+        double vomega = -inputController.getRawAxis(kRightX.value);
 
         if (inputController.getBackButtonPressed()){
             done = true;
