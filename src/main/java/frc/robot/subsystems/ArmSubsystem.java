@@ -27,7 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
     public CANSparkMax extendingMotor = new CANSparkMax(2, MotorType.kBrushless);
 
     public RelativeEncoder rotatingEncoder = rotatingMotor.getEncoder();
-    public RelativeEncoder extedingEncoder = extendingMotor.getEncoder();
+    public RelativeEncoder extendingEncoder = extendingMotor.getEncoder();
 
     public DigitalInput limitSwitch0 = new DigitalInput(0);
     public DigitalInput limitSwitch1 = new DigitalInput(1);
