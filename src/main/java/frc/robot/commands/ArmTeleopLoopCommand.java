@@ -93,6 +93,8 @@ public class ArmTeleopLoopCommand extends CommandBase {
 
         SmartDashboard.putNumber("rotatingMotorPosition", rotatingMotorPosition);
         SmartDashboard.putNumber("extendingMotorPosition", extendingMotorPosition);
+        SmartDashboard.putNumber("rotatingMotorVelocity", arm.rotatingEncoder.getVelocity());
+        SmartDashboard.putNumber("extendingMotorVelocity", arm.extendingEncoder.getVelocity());
 
     }
 
