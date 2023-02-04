@@ -42,11 +42,11 @@ public class ArmCalabrationCommand extends CommandBase {
 
         if (which == calabrateExtention) {
             if (LS0Pressed) {
-                ArmSubsystem.MAXIMUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
-                ArmSubsystem.extendingMotor.set(0);
+                armSubsystem.MAXIMUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
+                armSubsystem.extendingMotor.set(0);
                 done = true;
             } else {
-                ArmSubsystem.extendingMotor.set(-0.2);
+                armSubsystem.extendingMotor.set(-0.2);
             }
         }
 
@@ -60,7 +60,7 @@ public class ArmCalabrationCommand extends CommandBase {
             }
         }
     }
-    
+
     @Override
     public boolean isFinished() {
         return done;
