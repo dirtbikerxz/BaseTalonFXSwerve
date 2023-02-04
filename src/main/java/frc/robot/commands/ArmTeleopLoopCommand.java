@@ -46,14 +46,24 @@ public class ArmTeleopLoopCommand extends CommandBase {
     public void execute(){
 
         double rotatingMotorPosition = arm.rotatingEncoder.getPosition();
-        double extendingMotorPostition = arm.extendingEncoder.getPosition();
+        double extendingMotorPosition = arm.extendingEncoder.getPosition();
+
+        //Alternative: convert this to a method
 
         if (rotatingMotorPosition < arm.MAXIMUM_POSITION_ROTATING || rotatingMotorPosition > arm.MININUM_POSITION_EXTENDING){       
             arm.rotatingMotor.set(-inputController.getRawAxis(kLeftY.value));
+        } else if (rotatingMotorPosition > arm.MAXIMUM_POSITION_ROTATING && -inputController.getRawAxis(kLeftY.value) > 0){
+            arm.rotatingMotor.set(0);
+        } else if (rotatingMotorPosition < arm.MININUM_POSITION_ROTATING && -inputController.getRawAxis(kLeftY.value) < 0){
+            arm.rotatingMotor.set(0);
         }
 
-        if (extendingMotorPostition < arm.MAXIMUM_POSITION_EXTENDING || extendingMotorPostition > arm.MININUM_POSITION_EXTENDING){
+        if (extendingMotorPosition < arm.MAXIMUM_POSITION_EXTENDING || extendingMotorPosition > arm.MININUM_POSITION_EXTENDING){
             arm.extendingMotor.set(-inputController.getRawAxis(kRightY.value));
+        } else if (extendingMotorPosition > arm.MAXIMUM_POSITION_EXTENDING && -inputController.getRawAxis(kRightY.value) > 0){
+            arm.rotatingMotor.set(0);
+        } else if (rotatingMotorPosition < arm.MININUM_POSITION_EXTENDING && -inputController.getRawAxis(kRightY.value) < 0){
+            arm.rotatingMotor.set(0);
         }
 
     }
