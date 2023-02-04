@@ -56,6 +56,8 @@ public class ArmTeleopLoopCommand extends CommandBase {
             arm.rotatingMotor.set(0);
         } else if (rotatingMotorPosition < arm.MININUM_POSITION_ROTATING && -inputController.getRawAxis(kLeftY.value) < 0){
             arm.rotatingMotor.set(0);
+        } else {
+            arm.rotatingMotor.set(-inputController.getRawAxis(kLeftY.value));
         }
 
         if (extendingMotorPosition < arm.MAXIMUM_POSITION_EXTENDING || extendingMotorPosition > arm.MININUM_POSITION_EXTENDING){
@@ -64,6 +66,8 @@ public class ArmTeleopLoopCommand extends CommandBase {
             arm.rotatingMotor.set(0);
         } else if (rotatingMotorPosition < arm.MININUM_POSITION_EXTENDING && -inputController.getRawAxis(kRightY.value) < 0){
             arm.rotatingMotor.set(0);
+        } else {
+            arm.extendingMotor.set(-inputController.getRawAxis(kRightY.value));
         }
 
     }
