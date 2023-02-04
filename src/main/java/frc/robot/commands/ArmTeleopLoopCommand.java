@@ -30,10 +30,24 @@ public class ArmTeleopLoopCommand extends CommandBase {
     private final XboxController inputController;
     private boolean done;
 
+    private double restrictedOutput(double motorPosition, double controllerInput, double maxPosition, double minPosition){
+        double restrictedOutput;
+        if (controllerInput > 0 && motorPosition > maxPosition ){
+            restrictedOutput = 0;
+        } else if (controllerInput < 0 && motorPosition < minPosition){
+            restrictedOutput = 0;
+        } else {
+            restrictedOutput = controllerInput;
+        }
+
+        return restrictedOutput;
+    }
+
     public ArmTeleopLoopCommand(ArmSubsystem armSubsystem, XboxController xboxController){
 
         this.arm = armSubsystem;
         this.inputController = xboxController;
+        addRequirements(armSubsystem);
 
     }  
 
@@ -50,17 +64,22 @@ public class ArmTeleopLoopCommand extends CommandBase {
 
         //Alternative: convert this to a method
 
-        if (rotatingMotorPosition < arm.MAXIMUM_POSITION_ROTATING || rotatingMotorPosition > arm.MININUM_POSITION_EXTENDING){       
+        arm.rotatingMotor.set(restrictedOutput(rotatingMotorPosition, -inputController.getRawAxis(kLeftY.value), arm.MAXIMUM_POSITION_ROTATING, arm.MININUM_POSITION_ROTATING));
+        arm.extendingMotor.set(restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
+        /* 
+
+        if (rotatingMotorPosition < arm.MAXIMUM_POSITION_ROTATING && rotatingMotorPosition > arm.MININUM_POSITION_EXTENDING){       
             arm.rotatingMotor.set(-inputController.getRawAxis(kLeftY.value));
         } else if (rotatingMotorPosition > arm.MAXIMUM_POSITION_ROTATING && -inputController.getRawAxis(kLeftY.value) > 0){
             arm.rotatingMotor.set(0);
+            SmartDashboard.getBoolean("", done)
         } else if (rotatingMotorPosition < arm.MININUM_POSITION_ROTATING && -inputController.getRawAxis(kLeftY.value) < 0){
             arm.rotatingMotor.set(0);
         } else {
             arm.rotatingMotor.set(-inputController.getRawAxis(kLeftY.value));
         }
 
-        if (extendingMotorPosition < arm.MAXIMUM_POSITION_EXTENDING || extendingMotorPosition > arm.MININUM_POSITION_EXTENDING){
+        if (extendingMotorPosition < arm.MAXIMUM_POSITION_EXTENDING && extendingMotorPosition > arm.MININUM_POSITION_EXTENDING){
             arm.extendingMotor.set(-inputController.getRawAxis(kRightY.value));
         } else if (extendingMotorPosition > arm.MAXIMUM_POSITION_EXTENDING && -inputController.getRawAxis(kRightY.value) > 0){
             arm.rotatingMotor.set(0);
@@ -69,6 +88,13 @@ public class ArmTeleopLoopCommand extends CommandBase {
         } else {
             arm.extendingMotor.set(-inputController.getRawAxis(kRightY.value));
         }
+
+        */
+
+        SmartDashboard.putNumber("rotatingMotorPosition", rotatingMotorPosition);
+        SmartDashboard.putNumber("extendingMotorPosition", extendingMotorPosition);
+        SmartDashboard.putNumber("rotatingMotorVelocity", arm.rotatingEncoder.getVelocity());
+        SmartDashboard.putNumber("extendingMotorVelocity", arm.extendingEncoder.getVelocity());
 
     }
 

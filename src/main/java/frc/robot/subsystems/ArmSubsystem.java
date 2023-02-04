@@ -14,13 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArmSubsystem extends SubsystemBase {
 
-    public final double MAXIMUM_POSITION_ROTATING = 100000;
-    public final double MININUM_POSITION_ROTATING = -100000;
-    public final double MAXIMUM_POSITION_EXTENDING = 100000;
-    public final double MININUM_POSITION_EXTENDING = -100000;
+    public final double MAXIMUM_POSITION_ROTATING = 300;
+    public final double MININUM_POSITION_ROTATING = -300;
+    public final double MAXIMUM_POSITION_EXTENDING = 300;
+    public final double MININUM_POSITION_EXTENDING = -300;
 
-    public final double TRAVEL_RANGE_ROTATING = 200000;
-    public final double TRAVEL_RANGE_EXTEDING = 200000;
+    public final double TRAVEL_RANGE_ROTATING = 300;
+    public final double TRAVEL_RANGE_EXTEDING = 300;
 
 
     public CANSparkMax rotatingMotor = new CANSparkMax(1, MotorType.kBrushless);
