@@ -57,7 +57,7 @@ public class SpecialOpsModeCommand extends CommandBase{
             done = true;
         }
 
-        swerveDrive.drive(vx, vy, vomega, false, wantedMaxSpeed);
+        swerveDrive.drive(vx, vy, vomega, wantedMaxSpeed);
 
     }
 

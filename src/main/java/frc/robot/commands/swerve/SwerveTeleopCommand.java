@@ -12,14 +12,12 @@ public class SwerveTeleopCommand extends CommandBase {
 
     private SwerveDriveSubsystem swerveDrive;    
     private Supplier<ChassisSpeeds> speedSupplier;
-    private BooleanSupplier fieldRelativeSupplier;
     private BooleanSupplier highspeedSupplier;
 
-    public SwerveTeleopCommand(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier fieldRelativeSupplier, BooleanSupplier highspeedsupplier) {
+    public SwerveTeleopCommand(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier highspeedsupplier) {
 
         this.swerveDrive = swerveDrive;
         this.speedSupplier = speedSupplier;
-        this.fieldRelativeSupplier = fieldRelativeSupplier;
         this.highspeedSupplier = highspeedsupplier;
 
         addRequirements(swerveDrive);
@@ -39,7 +37,6 @@ public class SwerveTeleopCommand extends CommandBase {
             speeds.vxMetersPerSecond,
             speeds.vyMetersPerSecond,
             speeds.omegaRadiansPerSecond,
-            fieldRelativeSupplier.getAsBoolean(), maxspeed);
-
+            maxspeed);
     }
 }

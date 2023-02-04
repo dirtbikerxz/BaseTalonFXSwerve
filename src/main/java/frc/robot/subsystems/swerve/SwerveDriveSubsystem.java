@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SwerveDriveSubsystem extends SubsystemBase {
 
     private final SwerveModule [] swerveModules;
-    public final AHRS navx;
+    private final AHRS navx;
+    private SwerveDriveKinematics kinematics;
+    private boolean robotRelative;
 
     public SwerveDriveSubsystem() {
 
@@ -37,14 +39,22 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     }
 
-    public void stop() {
-        drive(0, 0, 0, false, 0.0);
+    public void setKinematics(SwerveDriveKinematics kinematics) {
+        this.kinematics = kinematics;
     }
 
-    public void drive(double vx, double vy, double vomega, boolean fieldRelative, double maxSpeed) {
-        ChassisSpeeds speeds = fieldRelative
-                ? ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, vomega, getYaw())
-                : new ChassisSpeeds(vx, vy, vomega);
+    public void setRobotRelative(boolean robotRelative) {
+        this.robotRelative = robotRelative;
+    }
+
+    public void stop() {
+        drive(0, 0, 0, 0.0);
+    }
+
+    public void drive(double vx, double vy, double vomega, double maxSpeed) {
+        ChassisSpeeds speeds = robotRelative
+                ? new ChassisSpeeds(vx, vy, vomega)
+                : ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, vomega, getYaw());
         drive(speeds, maxSpeed);
     }
 

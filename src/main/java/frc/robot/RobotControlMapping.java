@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.swerve.SetRobotRelativeCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
 import frc.robot.commands.swerve.ZeroGyroCommand;
@@ -18,6 +19,8 @@ import frc.robot.commands.swerve.AlignToWallCommand;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kRightX;
+import static edu.wpi.first.wpilibj.XboxController.Button.kB;
+import static edu.wpi.first.wpilibj.XboxController.Button.kLeftBumper;
 import static edu.wpi.first.wpilibj.XboxController.Button.kX;
 import static edu.wpi.first.wpilibj.XboxController.Button.kY;
 import static edu.wpi.first.wpilibj.XboxController.Button.kStart;;
@@ -54,18 +57,6 @@ public class RobotControlMapping {
             return new ChassisSpeeds(vx, vy, vomega);
         };
     }
-
-    /**
-     * Creates a function that can be used to poll the joystick and determine
-     * whether we're driving in field-relative mode. Default implementation:
-     *   - normally in field-relative; hold the left bumper to be in robot-relative mode
-     * 
-     * Change this if you want a different way of triggering robot-relative
-     * driving, or you want different default behavior.
-     */
-    public static BooleanSupplier createFieldRelativeSupplier(XboxController driverController) {
-        return () -> !driverController.getLeftBumper();
-    }
     public static BooleanSupplier createHighSpeedSupplier(XboxController driverController) {
         return () -> !driverController.getRightBumper();
     }
@@ -81,8 +72,11 @@ public class RobotControlMapping {
         trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
         trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
-        trigger(driverController, Button.kB, new AlignToWallCommand(robot));
-        // trigger(specialOpsController, kY, new ExampleCommand(robot));
+        trigger(driverController, kB, new AlignToWallCommand(robot));
+
+        new JoystickButton(driverController, kLeftBumper.value)
+                .onTrue(new SetRobotRelativeCommand(robot.swerveDrive, true))
+                .onFalse(new SetRobotRelativeCommand(robot.swerveDrive, false));
     }
 
     /**
