@@ -1,14 +1,13 @@
-package frc.robot.commands;
+package frc.robot.commands.hand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HandSubsystem;
-import frc.robot.subsystems.HandSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-public class HandOffCommand extends CommandBase {
+public class HandReleaseCommand extends CommandBase {
 
     private final HandSubsystem handSubsystem;
 
-    public HandOffCommand(HandSubsystem handSubsystem) {
+    public HandReleaseCommand(HandSubsystem handSubsystem) {
         this.handSubsystem = handSubsystem;
         addRequirements(handSubsystem);
     }

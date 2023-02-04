@@ -3,15 +3,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.ArmTeleopLoopCommand;
 import frc.robot.commands.AutonomousCommand;
-import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.swerve.SwerveTeleopCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
-import frc.robot.commands.EdsCommand;
 
 /**
  * This is where all the parts of our robot are created.
@@ -45,18 +43,16 @@ public class Robot extends TimedRobot {
         // create the swerve drive and establish the default control mapping
         // for driving in teleop mode
         swerveDrive = new SwerveDriveSubsystem();
-        swerveDrive.setDefaultCommand(new TeleopSwerve(swerveDrive, 
-                RobotControlMapping.createSpeedSupplier(driverController),
-                RobotControlMapping.createFieldRelativeSupplier(driverController),
-                RobotControlMapping.createHighSpeedSupplier(driverController)));
 
         // create all the other subsystems                
         hand = new HandSubsystem();
 
+        // arm subsystem default
+
         arm = new ArmSubsystem();
-        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, specialOpsController));
+        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, driverController));
         
-        vision = new VisionSubsystem();
+        vision = new VisionSubsystem(true);
 
         // do any additional control mapping that needs to be done
         RobotControlMapping.mapDriverControls(this, driverController);

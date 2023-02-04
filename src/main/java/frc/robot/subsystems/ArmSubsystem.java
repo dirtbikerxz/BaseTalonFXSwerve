@@ -12,15 +12,14 @@ public class ArmSubsystem extends SubsystemBase {
 
     public double MAXIMUM_POSITION_ROTATING;
     public double MININUM_POSITION_ROTATING;
-    public static double MAXIMUM_POSITION_EXTENDING;
+    public double MAXIMUM_POSITION_EXTENDING;
     public double MININUM_POSITION_EXTENDING;
 
-    public final double TRAVEL_RANGE_ROTATING = 42;
-    public final double TRAVEL_RANGE_EXTEDING = 42;
-
+    public final double TRAVEL_RANGE_ROTATING = 300;
+    public final double TRAVEL_RANGE_EXTEDING = 300;
 
     public CANSparkMax rotatingMotor = new CANSparkMax(1, MotorType.kBrushless);
-    public static CANSparkMax extendingMotor = new CANSparkMax(2, MotorType.kBrushless);
+    public CANSparkMax extendingMotor = new CANSparkMax(2, MotorType.kBrushless);
 
     public RelativeEncoder rotatingEncoder = rotatingMotor.getEncoder();
     public RelativeEncoder extendingEncoder = extendingMotor.getEncoder();

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.swerve;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
@@ -14,9 +14,10 @@ import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
  * Re-implementation of Kyle & Christopher's autonomous driving routine showing
  * how we can chain commands together to make interesting behaviors.
  */
-public class EdsCommand extends CommandBase {
+public class SwerveFixedSpeedCommand extends CommandBase {
     
     private final SwerveDriveSubsystem swerveDrive;
+    private final ChassisSpeeds speeds;
     private final double duration;
     private double startTime;
     private double vx;
@@ -27,11 +28,9 @@ public class EdsCommand extends CommandBase {
     // this command takes a single set of chassis speeds, and a duration. it
     // will drive the chassis at that speed for that many seconds, and then
     // stop it.
-    public EdsCommand(SwerveDriveSubsystem swerveDrive, ChassisSpeeds speeds, double duration) {
+    public SwerveFixedSpeedCommand(SwerveDriveSubsystem swerveDrive, ChassisSpeeds speeds, double duration) {
         this.swerveDrive = swerveDrive;
-        this.vx = speeds.vxMetersPerSecond;
-        this.vy = speeds.vyMetersPerSecond;
-        this.vomega = speeds.omegaRadiansPerSecond;
+        this.speeds = speeds;
         this.duration = duration;
         addRequirements(swerveDrive);
     }
@@ -48,9 +47,9 @@ public class EdsCommand extends CommandBase {
     public void execute() {
         double timeElapsed = Timer.getFPGATimestamp() - startTime;
         if (timeElapsed < duration) {
-            swerveDrive.drive(vx, vy, vomega, false, SwerveConfig.maxSpeed);
+            swerveDrive.drive(speeds);
         } else {
-            swerveDrive.drive(0, 0, 0, false, SwerveConfig.maxSpeed);
+            swerveDrive.stop();
             done = true;
         }
     }
@@ -78,13 +77,13 @@ public class EdsCommand extends CommandBase {
         group.addCommands(new WaitCommand(1));
 
         // next, drive forward for 3 seconds
-        group.addCommands(new EdsCommand(
+        group.addCommands(new SwerveFixedSpeedCommand(
                 swerveDrive, 
                 new ChassisSpeeds(Units.feetToMeters(1), 0, 0), 
                 3));
         
         // next, rotate in place for 3 seconds
-        group.addCommands(new EdsCommand(swerveDrive, 
+        group.addCommands(new SwerveFixedSpeedCommand(swerveDrive,
                 new ChassisSpeeds(0, 0, Units.degreesToRadians(90)), 
                 3));
 
