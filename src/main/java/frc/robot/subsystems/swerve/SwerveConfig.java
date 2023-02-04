@@ -48,11 +48,19 @@ public class SwerveConfig {
     public static final ModuleConfig backRight = new ModuleConfig(19, 20, 21, 157.148);
 
     // swerve drive kinematics (same order as above)
-     public static final SwerveDriveKinematics defaultKinematics = new SwerveDriveKinematics(
+    public static final SwerveDriveKinematics defaultKinematics = new SwerveDriveKinematics(
         new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
         new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
         new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
         new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+
+    // orbit kinematics (same order as above)
+    public static final double orbitDistance = Units.feetToMeters(1.5);
+    public static final SwerveDriveKinematics orbitKinematics = new SwerveDriveKinematics(
+        new Translation2d(-orbitDistance, trackWidth / 2.0),
+        new Translation2d(-orbitDistance, -trackWidth / 2.0),
+        new Translation2d(-orbitDistance - wheelBase, trackWidth / 2.0),
+        new Translation2d(-orbitDistance - wheelBase, -trackWidth / 2.0));
 
     /**
      * Create a new drive motor. This is where all of the drive motor 
