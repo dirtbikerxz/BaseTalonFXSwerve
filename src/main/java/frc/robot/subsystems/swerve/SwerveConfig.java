@@ -22,8 +22,9 @@ import edu.wpi.first.math.util.Units;
 public class SwerveConfig {
 
     // max speeds
-    public static final double maxSpeed = Units.feetToMeters(6);
-    public static final double maxAngularVelocity = Units.degreesToRadians(120);
+    public static final double defaultMaxLinearSpeed = Units.feetToMeters(6);
+    public static final double defaultMaxAngularVelocity = Units.degreesToRadians(120);
+    public static final double defaultMaxWheelSpeed = Units.feetToMeters(6);
 
     // physical properties of chassis
     public static final double trackWidth = Units.inchesToMeters(18.75);
@@ -47,7 +48,7 @@ public class SwerveConfig {
     public static final ModuleConfig backRight = new ModuleConfig(19, 20, 21, 157.148);
 
     // swerve drive kinematics (same order as above)
-     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+     public static final SwerveDriveKinematics defaultKinematics = new SwerveDriveKinematics(
         new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
         new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
         new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),

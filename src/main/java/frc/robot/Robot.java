@@ -43,9 +43,6 @@ public class Robot extends TimedRobot {
         // create the swerve drive and establish the default control mapping
         // for driving in teleop mode
         swerveDrive = new SwerveDriveSubsystem();
-        swerveDrive.setDefaultCommand(new SwerveTeleopCommand(swerveDrive,
-                RobotControlMapping.createSpeedSupplier(driverController),
-                RobotControlMapping.createHighSpeedSupplier(driverController)));
 
         // create all the other subsystems                
         hand = new HandSubsystem();

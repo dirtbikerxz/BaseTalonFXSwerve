@@ -47,7 +47,7 @@ public class SwerveFixedSpeedCommand extends CommandBase {
     public void execute() {
         double timeElapsed = Timer.getFPGATimestamp() - startTime;
         if (timeElapsed < duration) {
-            swerveDrive.drive(speeds, SwerveConfig.maxSpeed);
+            swerveDrive.drive(speeds);
         } else {
             swerveDrive.stop();
             done = true;

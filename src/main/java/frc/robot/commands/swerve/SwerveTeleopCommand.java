@@ -1,42 +1,35 @@
 package frc.robot.commands.swerve;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
+import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
 public class SwerveTeleopCommand extends CommandBase {
 
-    private SwerveDriveSubsystem swerveDrive;    
-    private Supplier<ChassisSpeeds> speedSupplier;
-    private BooleanSupplier highspeedSupplier;
+    private final SwerveDriveSubsystem swerveDrive;
+    private final DoubleSupplier pxSupplier;
+    private final DoubleSupplier pySupplier;
+    private final DoubleSupplier pomegaSupplier;
 
-    public SwerveTeleopCommand(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier highspeedsupplier) {
+    public SwerveTeleopCommand(SwerveDriveSubsystem swerveDrive,
+                               DoubleSupplier pxSupplier,
+                               DoubleSupplier pySupplier,
+                               DoubleSupplier pomegaSupplier) {
 
         this.swerveDrive = swerveDrive;
-        this.speedSupplier = speedSupplier;
-        this.highspeedSupplier = highspeedsupplier;
+        this.pxSupplier = pxSupplier;
+        this.pySupplier = pySupplier;
+        this.pomegaSupplier = pomegaSupplier;
 
         addRequirements(swerveDrive);
     }
 
     @Override
     public void execute() {
-        ChassisSpeeds speeds=speedSupplier.get();
-        double maxspeed;
-        if (highspeedSupplier.getAsBoolean()) {
-            maxspeed = SwerveConfig.maxSpeed;
-        }
-        else {
-            maxspeed = SwerveConfig.maxSpeed / 2;
-        }
         swerveDrive.drive(
-            speeds.vxMetersPerSecond,
-            speeds.vyMetersPerSecond,
-            speeds.omegaRadiansPerSecond,
-            maxspeed);
+                pxSupplier.getAsDouble(),
+                pySupplier.getAsDouble(),
+                pomegaSupplier.getAsDouble());
     }
 }
