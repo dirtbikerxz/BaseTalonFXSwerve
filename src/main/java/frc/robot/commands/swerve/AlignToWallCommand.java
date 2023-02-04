@@ -1,16 +1,8 @@
-package frc.robot.commands;
-import java.lang.ModuleLayer.Controller;
+package frc.robot.commands.swerve;
 
-import com.kauailabs.navx.frc.AHRS;
-import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.robot.RobotControlMapping;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
 /**
 
  * This is a "skeleton" of a command that does nothing. To make a new command,
@@ -20,13 +12,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * AwesomeCommand.java")
  */
 
-public class TurningToAIndicatedWallCommand extends CommandBase {
+public class AlignToWallCommand extends CommandBase {
     private double currentAngle;
     private final Robot robot;
     private double angleInitial;
     private boolean done;
 
-    public TurningToAIndicatedWallCommand(Robot robot) {
+    public AlignToWallCommand(Robot robot) {
 
         this.robot = robot;
 

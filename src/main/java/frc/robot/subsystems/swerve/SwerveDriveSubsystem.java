@@ -37,6 +37,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     }
 
+    public void stop() {
+        drive(0, 0, 0, false, 0.0);
+    }
+
     public void drive(double vx, double vy, double vomega, boolean fieldRelative, double maxSpeed) {
         ChassisSpeeds speeds = fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(vx, vy, vomega, getYaw())
@@ -44,7 +48,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         drive(speeds, maxSpeed);
     }
 
-    private void drive(ChassisSpeeds speeds, double maxSpeed) {
+    public void drive(ChassisSpeeds speeds, double maxSpeed) {
         SwerveModuleState [] moduleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(speeds);
         setModuleStates(moduleStates, maxSpeed);
     }    

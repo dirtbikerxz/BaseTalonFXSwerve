@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.swerve;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
-public class TeleopSwerve extends CommandBase {    
+public class SwerveTeleopCommand extends CommandBase {
 
     private SwerveDriveSubsystem swerveDrive;    
     private Supplier<ChassisSpeeds> speedSupplier;
     private BooleanSupplier fieldRelativeSupplier;
     private BooleanSupplier highspeedSupplier;
 
-    public TeleopSwerve(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier fieldRelativeSupplier, BooleanSupplier highspeedsupplier) {
+    public SwerveTeleopCommand(SwerveDriveSubsystem swerveDrive, Supplier<ChassisSpeeds> speedSupplier, BooleanSupplier fieldRelativeSupplier, BooleanSupplier highspeedsupplier) {
 
         this.swerveDrive = swerveDrive;
         this.speedSupplier = speedSupplier;

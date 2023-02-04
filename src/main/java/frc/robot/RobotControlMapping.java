@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.EdsCommand;
+import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
-import frc.robot.commands.ZeroGyroCommand;
+import frc.robot.commands.swerve.ZeroGyroCommand;
 import frc.robot.subsystems.swerve.SwerveConfig;
-import frc.robot.commands.TurningToAIndicatedWallCommand;
+import frc.robot.commands.swerve.AlignToWallCommand;
 
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
@@ -79,9 +79,9 @@ public class RobotControlMapping {
      */
     public static void mapDriverControls(Robot robot, XboxController driverController) {
         trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
-        trigger(driverController, kY, EdsCommand.buildMultiStepProgram(robot.swerveDrive));
+        trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
-        trigger(driverController, Button.kB, new TurningToAIndicatedWallCommand(robot));
+        trigger(driverController, Button.kB, new AlignToWallCommand(robot));
         // trigger(specialOpsController, kY, new ExampleCommand(robot));
     }
 
