@@ -53,8 +53,10 @@ public class Robot extends TimedRobot {
         // create all the other subsystems                
         hand = new HandSubsystem();
 
+        // arm subsystem default
+
         arm = new ArmSubsystem();
-        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, specialOpsController));
+        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, driverController));
         
         vision = new VisionSubsystem();
 
