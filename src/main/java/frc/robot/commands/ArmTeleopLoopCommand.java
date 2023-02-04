@@ -66,6 +66,7 @@ public class ArmTeleopLoopCommand extends CommandBase {
 
         arm.rotatingMotor.set(restrictedOutput(rotatingMotorPosition, -inputController.getRawAxis(kLeftY.value), arm.MAXIMUM_POSITION_ROTATING, arm.MININUM_POSITION_ROTATING));
         arm.extendingMotor.set(restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
+        
         /* 
 
         if (rotatingMotorPosition < arm.MAXIMUM_POSITION_ROTATING && rotatingMotorPosition > arm.MININUM_POSITION_EXTENDING){       
@@ -95,6 +96,8 @@ public class ArmTeleopLoopCommand extends CommandBase {
         SmartDashboard.putNumber("extendingMotorPosition", extendingMotorPosition);
         SmartDashboard.putNumber("rotatingMotorVelocity", arm.rotatingEncoder.getVelocity());
         SmartDashboard.putNumber("extendingMotorVelocity", arm.extendingEncoder.getVelocity());
+        SmartDashboard.putNumber("restrictedMotorRotating", restrictedOutput(rotatingMotorPosition, -inputController.getRawAxis(kLeftY.value), arm.MAXIMUM_POSITION_ROTATING, arm.MININUM_POSITION_ROTATING));
+        SmartDashboard.putNumber("restrictedOutputExtending", restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
 
     }
 

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.hand.HandGrabCommand;
 import frc.robot.commands.hand.HandReleaseCommand;
+import frc.robot.commands.ArmTurningToAnIndicatedPosition;
 
 /**
  * All of the mapping of controls to commands happens here.
@@ -27,6 +28,7 @@ public class TestBenchControlMapping {
         trigger(specialopsController, Button.kY, new HandGrabCommand(testBench.hand, HandGrabCommand.CONE));
         trigger(specialopsController, Button.kB, new HandGrabCommand(testBench.hand, HandGrabCommand.CUBE));
         trigger(specialopsController, Button.kRightBumper, new HandReleaseCommand(testBench.hand));
+        trigger(specialopsController, Button.kBack, new ArmTurningToAnIndicatedPosition(testBench.arm, ArmTurningToAnIndicatedPosition.TRAVEL_PRESET));
     }
 
     /**
