@@ -55,7 +55,7 @@ public class ArmTeleopLoopCommand extends CommandBase {
         if (extendingMotorPostition < arm.MAXIMUM_POSITION_EXTENDING || extendingMotorPostition > arm.MININUM_POSITION_EXTENDING){
             arm.extendingMotor.set(-inputController.getRawAxis(kRightY.value));
         }
-
+        ;
     }
 
     public boolean isFinished(){

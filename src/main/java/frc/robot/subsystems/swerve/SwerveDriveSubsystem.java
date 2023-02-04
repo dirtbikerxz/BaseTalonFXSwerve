@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
 
@@ -77,6 +78,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void periodic(){
         SmartDashboard.putNumber("Yaw", getYaw().getDegrees());
         SmartDashboard.putBoolean("Mag Cal?", navx.isMagnetometerCalibrated());
+        
 
         for(SwerveModule mod : swerveModules) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
