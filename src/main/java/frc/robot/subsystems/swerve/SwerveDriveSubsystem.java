@@ -66,18 +66,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.robotRelative = robotRelative;
     }
 
-    public void toggleMaxSpeeds() {
-        if (maxLinearSpeed > SwerveConfig.defaultMaxLinearSpeed) {
-            multiplyMaxSpeeds(0.5);
+    public void setTurboMode(boolean turbo) {
+        if (turbo) {
+            maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed * SwerveConfig.turboFactor;
+            maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed * SwerveConfig.turboFactor;
+            maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed * SwerveConfig.turboFactor;
         } else {
-            multiplyMaxSpeeds(2.0);
+            maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed;
+            maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed;
+            maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed;
         }
-    }
-
-    public void multiplyMaxSpeeds(double factor) {
-        maxAngularSpeed *= factor;
-        maxLinearSpeed *= factor;
-        maxWheelSpeed *= factor;
     }
 
     /**

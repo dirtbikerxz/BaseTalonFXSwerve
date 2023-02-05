@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.swerve.MultiplyMaxSpeedCommand;
+import frc.robot.commands.swerve.TurboModeCommand;
 import frc.robot.commands.swerve.SetRobotRelativeCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
@@ -69,13 +69,8 @@ public class RobotControlMapping {
 
         // hold the right bumper to double the maximum speed
         new JoystickButton(driverController, kRightBumper.value)
-                .onTrue(new MultiplyMaxSpeedCommand(robot.swerveDrive, 2.0))
-                .onFalse(new MultiplyMaxSpeedCommand(robot.swerveDrive, 0.5));
-
-        // hold the right trigger to put it in orbit mode
-        new JoystickButton(driverController, kRightBumper.value)
-                .onTrue(new MultiplyMaxSpeedCommand(robot.swerveDrive, 2.0))
-                .onFalse(new MultiplyMaxSpeedCommand(robot.swerveDrive, 0.5));
+                .onTrue(new TurboModeCommand(robot.swerveDrive, true))
+                .onFalse(new TurboModeCommand(robot.swerveDrive, false));
 
         new Trigger(() -> driverController.getRightTriggerAxis() > 0.5)
                 .onTrue(new SwerveOrbitCommand(robot.swerveDrive, true))
