@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.swerve.TurboModeCommand;
 import frc.robot.commands.swerve.SetRobotRelativeCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
+import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
 import frc.robot.commands.swerve.SwerveOrbitCommand;
 import frc.robot.commands.swerve.SwerveOrbitToggleCommand;
@@ -61,6 +62,7 @@ public class RobotControlMapping {
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
         trigger(driverController, kB, new AlignToWallCommand(robot));
         trigger(driverController, kA, new SwerveOrbitToggleCommand(robot.swerveDrive));
+        // trigger(driverController, Button.kBack, new AutonomousCommand(robot));
 
         // hold the left bumper to run in robot relative mode
         new JoystickButton(driverController, kLeftBumper.value)

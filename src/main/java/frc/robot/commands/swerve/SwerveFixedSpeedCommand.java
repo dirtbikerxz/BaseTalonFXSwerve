@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Re-implementation of Kyle & Christopher's autonomous driving routine showing
@@ -52,6 +53,7 @@ public class SwerveFixedSpeedCommand extends CommandBase {
             swerveDrive.stop();
             done = true;
         }
+        SmartDashboard.putNumber("CalculatedSpeed", Units.feetToMeters(8/3));
     }
 
     @Override
