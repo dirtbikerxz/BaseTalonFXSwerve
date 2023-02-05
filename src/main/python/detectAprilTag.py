@@ -55,8 +55,14 @@ def main():
         output_img = np.copy(input_img)
 
         # Coordinates of found targets, for NT output:
-        x_list = []
-        y_list = []
+        img_x_list = []
+        img_y_list = []
+        pose_tx_list = []
+        pose_ty_list = []
+        pose_tz_list = []
+        pose_rx_list = []
+        pose_ry_list = []
+        pose_rz_list = []
         id_list = []
 
         # Notify output of error and skip iteration
@@ -127,12 +133,24 @@ def main():
             # Label the tag with the ID:
             cv2.putText(output_img, f"{tag_id}", (int(center.x), int(center.y)), cv2.FONT_HERSHEY_SIMPLEX, 1, col_txt, 2)
 
-            x_list.append((center.x - width / 2) / (width / 2))
-            y_list.append((center.y - width / 2) / (width / 2))
+            img_x_list.append((center.x - width / 2) / (width / 2))
+            img_y_list.append((center.y - height / 2) / (height / 2))
+            pose_tx_list.append(pose.translation().x_feet)
+            pose_ty_list.append(pose.translation().y_feet)
+            pose_tz_list.append(pose.translation().z_feet)
+            pose_rx_list.append(pose.rotation().x_degrees)
+            pose_ry_list.append(pose.rotation().y_degrees)
+            pose_rz_list.append(pose.rotation().z_degrees)
             id_list.append(tag_id)
         
-        vision_nt.putNumberArray('target_x', x_list)
-        vision_nt.putNumberArray('target_y', y_list)
+        vision_nt.putNumberArray('target_img_x', img_x_list)
+        vision_nt.putNumberArray('target_img_y', img_y_list)
+        vision_nt.putNumberArray('target_pose_tx', pose_tx_list)
+        vision_nt.putNumberArray('target_pose_ty', pose_ty_list)
+        vision_nt.putNumberArray('target_pose_tz', pose_tz_list)
+        vision_nt.putNumberArray('target_pose_rx', pose_rx_list)
+        vision_nt.putNumberArray('target_pose_ry', pose_ry_list)
+        vision_nt.putNumberArray('target_pose_rz', pose_rz_list)
         vision_nt.putNumberArray('target_id', id_list)
 
         processing_time = start_time - prev_time
