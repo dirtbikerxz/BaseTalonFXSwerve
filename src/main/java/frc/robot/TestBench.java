@@ -1,3 +1,4 @@
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -5,6 +6,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
+
+import frc.robot.commands.arm.ArmTeleopLoopCommand;
 
 /**
  * This is the test bench
@@ -23,6 +26,7 @@ public class TestBench extends TimedRobot {
 
         hand = new HandSubsystem();
         arm = new ArmSubsystem();
+        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, controller));
 
         TestBenchControlMapping.mapControls(this, controller);
     }

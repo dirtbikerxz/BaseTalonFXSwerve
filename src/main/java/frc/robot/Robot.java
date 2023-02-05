@@ -3,9 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArmTeleopLoopCommand;
+import frc.robot.commands.arm.ArmTeleopLoopCommand;
 import frc.robot.commands.AutonomousCommand;
-import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -43,10 +42,6 @@ public class Robot extends TimedRobot {
         // create the swerve drive and establish the default control mapping
         // for driving in teleop mode
         swerveDrive = new SwerveDriveSubsystem();
-        swerveDrive.setDefaultCommand(new TeleopSwerve(swerveDrive, 
-                RobotControlMapping.createSpeedSupplier(driverController),
-                RobotControlMapping.createFieldRelativeSupplier(driverController),
-                RobotControlMapping.createHighSpeedSupplier(driverController)));
 
         // create all the other subsystems                
         hand = new HandSubsystem();

@@ -2,7 +2,6 @@ package frc.robot.autos;
 
 import java.util.List;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,7 +10,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.swerve.SwerveConfig;
@@ -38,7 +36,7 @@ public class exampleAuto extends SequentialCommandGroup {
             new TrajectoryConfig(
                     kMaxSpeedMetersPerSecond,
                     kMaxAccelerationMetersPerSecondSquared)
-                .setKinematics(SwerveConfig.swerveKinematics);
+                .setKinematics(SwerveConfig.defaultKinematics);
 
         // An example trajectory to follow.  All units in meters.
         Trajectory exampleTrajectory =

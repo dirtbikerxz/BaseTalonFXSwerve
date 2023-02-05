@@ -1,28 +1,13 @@
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
-import static edu.wpi.first.wpilibj.XboxController.Axis.kRightX;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kRightY;
-import static edu.wpi.first.wpilibj.XboxController.Button.kX;
-import static edu.wpi.first.wpilibj.XboxController.Button.kY;
-import static edu.wpi.first.wpilibj.XboxController.Button.kStart;
 
 public class ArmTeleopLoopCommand extends CommandBase {
 
@@ -65,7 +50,8 @@ public class ArmTeleopLoopCommand extends CommandBase {
         //Alternative: convert this to a method
 
         arm.rotatingMotor.set(restrictedOutput(rotatingMotorPosition, -inputController.getRawAxis(kLeftY.value), arm.MAXIMUM_POSITION_ROTATING, arm.MININUM_POSITION_ROTATING));
-        arm.rotatingMotor.set(restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
+        arm.extendingMotor.set(restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
+        
         /* 
 
         if (rotatingMotorPosition < arm.MAXIMUM_POSITION_ROTATING && rotatingMotorPosition > arm.MININUM_POSITION_EXTENDING){       
@@ -93,6 +79,10 @@ public class ArmTeleopLoopCommand extends CommandBase {
 
         SmartDashboard.putNumber("rotatingMotorPosition", rotatingMotorPosition);
         SmartDashboard.putNumber("extendingMotorPosition", extendingMotorPosition);
+        SmartDashboard.putNumber("rotatingMotorVelocity", arm.rotatingEncoder.getVelocity());
+        SmartDashboard.putNumber("extendingMotorVelocity", arm.extendingEncoder.getVelocity());
+        SmartDashboard.putNumber("restrictedMotorRotating", restrictedOutput(rotatingMotorPosition, -inputController.getRawAxis(kLeftY.value), arm.MAXIMUM_POSITION_ROTATING, arm.MININUM_POSITION_ROTATING));
+        SmartDashboard.putNumber("restrictedOutputExtending", restrictedOutput(extendingMotorPosition, -inputController.getRawAxis(kRightY.value), arm.MAXIMUM_POSITION_EXTENDING, arm.MININUM_POSITION_EXTENDING));
 
     }
 

@@ -1,23 +1,23 @@
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.EdsCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.swerve.MultiplyMaxSpeedCommand;
+import frc.robot.commands.swerve.SetRobotRelativeCommand;
+import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
-import frc.robot.commands.ZeroGyroCommand;
-import frc.robot.subsystems.swerve.SwerveConfig;
-import frc.robot.commands.TurningToAIndicatedWallCommand;
+import frc.robot.commands.swerve.SwerveOrbitCommand;
+import frc.robot.commands.swerve.SwerveTeleopCommand;
+import frc.robot.commands.swerve.ZeroGyroCommand;
+import frc.robot.commands.swerve.AlignToWallCommand;
 
-import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftX;
-import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
-import static edu.wpi.first.wpilibj.XboxController.Axis.kRightX;
+import static edu.wpi.first.wpilibj.XboxController.Button.kB;
+import static edu.wpi.first.wpilibj.XboxController.Button.kLeftBumper;
+import static edu.wpi.first.wpilibj.XboxController.Button.kRightBumper;
 import static edu.wpi.first.wpilibj.XboxController.Button.kX;
 import static edu.wpi.first.wpilibj.XboxController.Button.kY;
 import static edu.wpi.first.wpilibj.XboxController.Button.kStart;;
@@ -29,46 +29,10 @@ public class RobotControlMapping {
 
     public static final double DEADBAND = 0.1;
 
-    /**
-     * Creates a function that can be used to poll the joystick for speed controls.
-     * Default implementation:
-     *   - left Y is drive forward/backwards
-     *   - left X is strafe left/right
-     *   - right X is rotate left/right
-     * 
-     * Change this if you want to fiddle with how we drive the robot, or how
-     * fast it responds to the controls.
-     */
-    public static Supplier<ChassisSpeeds> createSpeedSupplier(XboxController driverController) {
-        return () -> {
-
-            double vx = -driverController.getRawAxis(kLeftY.value) * SwerveConfig.maxSpeed; 
-            double vy = -driverController.getRawAxis(kLeftX.value) * SwerveConfig.maxSpeed; 
-            double vomega = -driverController.getRawAxis(kRightX.value)
-            ;
-
-            vx = MathUtil.applyDeadband(vx * Math.abs(vx), DEADBAND);
-            vy = MathUtil.applyDeadband(vy * Math.abs(vy), DEADBAND);
-            vomega = MathUtil.applyDeadband(vomega * Math.abs(vomega), DEADBAND);
-
-            return new ChassisSpeeds(vx, vy, vomega);
-        };
+    public static double clean(double input) {
+        return MathUtil.applyDeadband(input * Math.abs(input), DEADBAND);
     }
 
-    /**
-     * Creates a function that can be used to poll the joystick and determine
-     * whether we're driving in field-relative mode. Default implementation:
-     *   - normally in field-relative; hold the left bumper to be in robot-relative mode
-     * 
-     * Change this if you want a different way of triggering robot-relative
-     * driving, or you want different default behavior.
-     */
-    public static BooleanSupplier createFieldRelativeSupplier(XboxController driverController) {
-        return () -> !driverController.getLeftBumper();
-    }
-    public static BooleanSupplier createHighSpeedSupplier(XboxController driverController) {
-        return () -> !driverController.getRightBumper();
-    }
     /**
      * Maps additional controls on the driver's joystick
      *    - X will trigger Kyle & Christopher's command
@@ -78,11 +42,41 @@ public class RobotControlMapping {
      * Add additional button/axis mappings here.
      */
     public static void mapDriverControls(Robot robot, XboxController driverController) {
+
+        /*
+         *   - left Y is drive forward/backwards
+         *   - left X is strafe left/right
+         *   - right X is rotate left/right
+         */
+        robot.swerveDrive.setDefaultCommand(new SwerveTeleopCommand(
+                robot.swerveDrive,
+                () -> clean(-driverController.getLeftY()),
+                () -> clean(-driverController.getLeftX()),
+                () -> clean(-driverController.getRightX())));
+
         trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
-        trigger(driverController, kY, EdsCommand.buildMultiStepProgram(robot.swerveDrive));
+        trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
-        trigger(driverController, Button.kB, new TurningToAIndicatedWallCommand(robot));
-        // trigger(specialOpsController, kY, new ExampleCommand(robot));
+        trigger(driverController, kB, new AlignToWallCommand(robot));
+
+        // hold the left bumper to run in robot relative mode
+        new JoystickButton(driverController, kLeftBumper.value)
+                .onTrue(new SetRobotRelativeCommand(robot.swerveDrive, true))
+                .onFalse(new SetRobotRelativeCommand(robot.swerveDrive, false));
+
+        // hold the right bumper to double the maximum speed
+        new JoystickButton(driverController, kRightBumper.value)
+                .onTrue(new MultiplyMaxSpeedCommand(robot.swerveDrive, 2.0))
+                .onFalse(new MultiplyMaxSpeedCommand(robot.swerveDrive, 0.5));
+
+        // hold the right trigger to put it in orbit mode
+        new JoystickButton(driverController, kRightBumper.value)
+                .onTrue(new MultiplyMaxSpeedCommand(robot.swerveDrive, 2.0))
+                .onFalse(new MultiplyMaxSpeedCommand(robot.swerveDrive, 0.5));
+
+        new Trigger(() -> driverController.getRightTriggerAxis() > 0.5)
+                .onTrue(new SwerveOrbitCommand(robot.swerveDrive, true))
+                .onFalse(new SwerveOrbitCommand(robot.swerveDrive, false));
     }
 
     /**
