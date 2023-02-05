@@ -1,19 +1,10 @@
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.ArmTeleopLoopCommand;
-import frc.robot.Robot;
 import frc.robot.subsystems.ArmSubsystem;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-public class ArmCalabrationCommand extends CommandBase {
-    public static final int calabrateExtention = 0;
+public class ArmCalibrationCommand extends CommandBase {
+    public static final int calibrateExtension = 0;
     public static final int calibrateRotation = 1;
     public final int which;
     private final ArmSubsystem armSubsystem;
@@ -21,7 +12,7 @@ public class ArmCalabrationCommand extends CommandBase {
     
     
     
-    public ArmCalabrationCommand(ArmSubsystem armSubsystem, int which) {
+    public ArmCalibrationCommand(ArmSubsystem armSubsystem, int which) {
         this.armSubsystem = armSubsystem;
         this.which = which;
         
@@ -40,7 +31,7 @@ public class ArmCalabrationCommand extends CommandBase {
         boolean LS1Pressed = !armSubsystem.limitSwitch1.get();
         System.err.println(LS0Pressed+"/"+LS1Pressed);
 
-        if (which == calabrateExtention) {
+        if (which == calibrateExtension) {
             if (LS0Pressed) {
                 armSubsystem.MAXIMUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
                 armSubsystem.extendingMotor.set(0);

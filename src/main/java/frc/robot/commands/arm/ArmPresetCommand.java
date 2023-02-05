@@ -1,25 +1,12 @@
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ArmTurningToAnIndicatedPosition extends CommandBase{
+public class ArmPresetCommand extends CommandBase{
 
     public static final int TRAVEL_PRESET = 0;
     public static final int PICKUP_PRESET = 1;
@@ -36,7 +23,7 @@ public class ArmTurningToAnIndicatedPosition extends CommandBase{
     private boolean done;
 
     
-    public ArmTurningToAnIndicatedPosition(ArmSubsystem arm, int which){
+    public ArmPresetCommand(ArmSubsystem arm, int which){
 
         this.arm = arm;
         this.indicatedPositionExtending = PRESETS[which][0];

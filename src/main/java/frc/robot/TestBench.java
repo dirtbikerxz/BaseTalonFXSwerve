@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
 
-import frc.robot.commands.ArmTeleopLoopCommand;
+import frc.robot.commands.arm.ArmTeleopLoopCommand;
 
 /**
  * This is the test bench
