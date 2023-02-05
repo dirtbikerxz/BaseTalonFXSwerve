@@ -75,7 +75,7 @@ public class SwerveConfig {
         config.slot0.kD = 0.0;
         config.slot0.kF = 0.0;
         config.openloopRamp = 0.25;
-        config.closedloopRamp = 0.0;
+        config.closedloopRamp = 0.25;
         config.supplyCurrLimit = new SupplyCurrentLimitConfiguration(
                 true, 
                 35, 
