@@ -11,10 +11,12 @@ import frc.robot.commands.swerve.SetRobotRelativeCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
 import frc.robot.commands.swerve.SwerveOrbitCommand;
+import frc.robot.commands.swerve.SwerveOrbitToggleCommand;
 import frc.robot.commands.swerve.SwerveTeleopCommand;
 import frc.robot.commands.swerve.ZeroGyroCommand;
 import frc.robot.commands.swerve.AlignToWallCommand;
 
+import static edu.wpi.first.wpilibj.XboxController.Button.kA;
 import static edu.wpi.first.wpilibj.XboxController.Button.kB;
 import static edu.wpi.first.wpilibj.XboxController.Button.kLeftBumper;
 import static edu.wpi.first.wpilibj.XboxController.Button.kRightBumper;
@@ -58,6 +60,7 @@ public class RobotControlMapping {
         trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
         trigger(driverController, kB, new AlignToWallCommand(robot));
+        trigger(driverController, kA, new SwerveOrbitToggleCommand(robot.swerveDrive));
 
         // hold the left bumper to run in robot relative mode
         new JoystickButton(driverController, kLeftBumper.value)

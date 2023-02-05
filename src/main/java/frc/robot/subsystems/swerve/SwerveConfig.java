@@ -22,9 +22,9 @@ import edu.wpi.first.math.util.Units;
 public class SwerveConfig {
 
     // max speeds
-    public static final double defaultMaxLinearSpeed = Units.feetToMeters(6);
-    public static final double defaultMaxAngularVelocity = Units.degreesToRadians(120);
-    public static final double defaultMaxWheelSpeed = Units.feetToMeters(6);
+    public static final double defaultMaxLinearSpeed = Units.feetToMeters(3);
+    public static final double defaultMaxAngularSpeed = Units.degreesToRadians(120);
+    public static final double defaultMaxWheelSpeed = Units.feetToMeters(3);
 
     // physical properties of chassis
     public static final double trackWidth = Units.inchesToMeters(18.75);

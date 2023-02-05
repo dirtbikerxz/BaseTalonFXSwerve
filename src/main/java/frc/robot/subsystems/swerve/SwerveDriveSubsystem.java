@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.ArmSubsystem;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
 
@@ -46,7 +45,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         kinematics = SwerveConfig.defaultKinematics;
         maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed;
-        maxAngularSpeed = SwerveConfig.defaultMaxAngularVelocity;
+        maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed;
         maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed;
         robotRelative = false;
     }
@@ -55,8 +54,24 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.kinematics = kinematics;
     }
 
+    public void toggleKinematics() {
+        if (this.kinematics == SwerveConfig.defaultKinematics) {
+            this.kinematics = SwerveConfig.orbitKinematics;
+        } else {
+            this.kinematics = SwerveConfig.defaultKinematics;
+        }
+    }
+
     public void setRobotRelative(boolean robotRelative) {
         this.robotRelative = robotRelative;
+    }
+
+    public void toggleMaxSpeeds() {
+        if (maxLinearSpeed > SwerveConfig.defaultMaxLinearSpeed) {
+            multiplyMaxSpeeds(0.5);
+        } else {
+            multiplyMaxSpeeds(2.0);
+        }
     }
 
     public void multiplyMaxSpeeds(double factor) {
