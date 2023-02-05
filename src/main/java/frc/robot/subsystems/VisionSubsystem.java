@@ -42,6 +42,7 @@ public class VisionSubsystem extends SubsystemBase {
             // TODO how do we pick the "best" matched tag?
         }
 
+        // TODO get z values
         return new Translation3d(x[0], y[0], 0);
     }
 
