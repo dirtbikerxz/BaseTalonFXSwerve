@@ -6,6 +6,6 @@ import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 public class TurboModeCommand extends InstantCommand {
 
     public TurboModeCommand(SwerveDriveSubsystem swerveDrive, boolean turbo) {
-        super(() -> swerveDrive.setTurboMode(true), swerveDrive);
+        super(() -> swerveDrive.setTurboMode(turbo), swerveDrive);
     }
 }
