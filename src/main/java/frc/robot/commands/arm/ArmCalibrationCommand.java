@@ -27,14 +27,14 @@ public class ArmCalibrationCommand extends CommandBase {
     @Override
     public void execute() {
 
-        boolean LS0Pressed = !armSubsystem.limitSwitch0.get();
-        boolean LS1Pressed = !armSubsystem.limitSwitch1.get();
-        System.err.println(LS0Pressed+"/"+LS1Pressed);
-
         if (which == calibrateExtension) {
-            if (LS0Pressed) {
-                armSubsystem.MAXIMUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
+            if (armSubsystem.isExtenderLimitPressed()) {
+                armSubsystem.MININUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
+                armSubsystem.MAXIMUM_POSITION_EXTENDING =
+                        armSubsystem.MININUM_POSITION_EXTENDING +
+                        ArmSubsystem.TRAVEL_RANGE_EXTEDING;
                 armSubsystem.extendingMotor.set(0);
+                armSubsystem.extendingEncoder.setPosition(0);
                 done = true;
             } else {
                 armSubsystem.extendingMotor.set(-0.2);
@@ -42,9 +42,13 @@ public class ArmCalibrationCommand extends CommandBase {
         }
 
         if (which == calibrateRotation) {
-            if (LS1Pressed) {
-                armSubsystem.MAXIMUM_POSITION_ROTATING = armSubsystem.rotatingEncoder.getPosition();
+            if (armSubsystem.isRotatorLimitPressed()) {
+                armSubsystem.MININUM_POSITION_ROTATING = armSubsystem.rotatingEncoder.getPosition();
+                armSubsystem.MAXIMUM_POSITION_ROTATING =
+                        armSubsystem.MININUM_POSITION_ROTATING +
+                        ArmSubsystem.TRAVEL_RANGE_ROTATING;
                 armSubsystem.rotatingMotor.set(0);
+                armSubsystem.rotatingEncoder.setPosition(0);
                 done = true;
             } else {
                 armSubsystem.rotatingMotor.set(-0.2);

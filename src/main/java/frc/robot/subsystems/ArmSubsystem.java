@@ -51,6 +51,14 @@ public class ArmSubsystem extends SubsystemBase {
         limitSwitch2 = new DigitalInput(6);
     }
 
+    public boolean isExtenderLimitPressed() {
+        return limitSwitch0.get();
+    }
+
+    public boolean isRotatorLimitPressed() {
+        return limitSwitch1.get();
+    }
+
     public void periodic() {
         SmartDashboard.putBoolean("LS0", limitSwitch0.get());
         SmartDashboard.putBoolean("LS1", limitSwitch1.get());
