@@ -122,6 +122,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         navx.zeroYaw();
     }
 
+    public double getPitch() {
+        return navx.getPitch();
+    }
+
     public Rotation2d getYaw() {
         if (navx.isMagnetometerCalibrated()) {
             return Rotation2d.fromDegrees(-navx.getFusedHeading());
