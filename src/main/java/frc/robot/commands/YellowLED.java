@@ -15,13 +15,13 @@ public class YellowLED extends CommandBase {
     public YellowLED(LEDs leds) {
       // Use addRequirements() here to declare subsystem dependencies.
       this.leds = leds;
-      //addRequirements(leds);
+      addRequirements(leds);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      leds.setColor(255,255,0);
+      leds.setColor(255,150,0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

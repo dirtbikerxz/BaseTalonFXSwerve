@@ -76,7 +76,7 @@ public class RobotContainer {
 
         purplelights.onTrue(new PurpleLED(leds));
         yellowlights.onTrue(new YellowLED(leds));
-        
+
     }
 
     /**

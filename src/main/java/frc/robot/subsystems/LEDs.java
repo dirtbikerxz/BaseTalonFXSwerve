@@ -2,13 +2,17 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class LEDs {
+public class LEDs extends SubsystemBase{
    
     
     CANdle candle = new CANdle(Constants.CANDLE_PORT);
@@ -37,7 +41,10 @@ public class LEDs {
 
     public void setColor(int red, int green, int blue) {
 
-        candle.setLEDs(red, green, blue);
+        //System.out.println(candle.setLEDs(red, green, blue));
+        ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 308, Direction.Forward);
+
+        System.out.println(candle.animate(animation));
     }
 
 

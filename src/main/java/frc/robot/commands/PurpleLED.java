@@ -15,7 +15,7 @@ public class PurpleLED extends CommandBase {
     public PurpleLED(LEDs leds) {
       // Use addRequirements() here to declare subsystem dependencies.
       this.leds = leds;
-      //addRequirements(leds);
+      addRequirements(leds);
     }
 
     // Called when the command is initially scheduled.
