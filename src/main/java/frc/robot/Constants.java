@@ -14,6 +14,8 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double MAX_ENCODER_VOLTAGE = 4.79;
 
+    public static final int CANDLE_PORT = 9;
+
     public static final class Swerve {
         //TODO: Fixme
         public static final int pigeonID = 8;

@@ -34,8 +34,14 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton resetAbsolute = new JoystickButton(driver, XboxController.Button.kX.value);
 
+    private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final LEDs leds = new LEDs();
+
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -65,6 +71,12 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        //purplelights.onTrue(new InstantCommand(( new RainbowLED(leds))));
+
+        purplelights.onTrue(new PurpleLED(leds));
+        yellowlights.onTrue(new YellowLED(leds));
+
     }
 
     /**
