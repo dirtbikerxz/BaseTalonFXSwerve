@@ -2,13 +2,17 @@ package frc.robot.subsystems.swerve;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,7 +20,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private final SwerveModule [] swerveModules;
     private final AHRS navx;
+    private final Field2d field;
     private SwerveDriveKinematics kinematics;
+    private SwerveDriveOdometry odometry;
     private boolean robotRelative;
     private double maxLinearSpeed;
     private double maxAngularSpeed;
@@ -26,6 +32,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         navx = new AHRS(Port.kUSB);
         zeroGyro();
+
+        field = new Field2d();
+        SmartDashboard.putData("field", field);
 
         swerveModules = new SwerveModule[] {
             new SwerveModule(0, SwerveConfig.frontLeft),
@@ -50,7 +59,28 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         robotRelative = false;
     }
 
+    public SwerveModulePosition [] getModulePositions() {
+        SwerveModulePosition [] positions = new SwerveModulePosition[4];
+        for (int i=0; i<4; i++) {
+            positions[i] = swerveModules[i].getPosition();
+        }
+        return positions;
+    }
+
     public void setKinematics(SwerveDriveKinematics kinematics) {
+        if (odometry == null) {
+            odometry = new SwerveDriveOdometry(
+                    kinematics,
+                    getYaw(),
+                    getModulePositions());
+        } else {
+            Pose2d currentPose = odometry.getPoseMeters();
+            odometry = new SwerveDriveOdometry(
+                    kinematics,
+                    getYaw(),
+                    getModulePositions(),
+                    currentPose);
+        }
         this.kinematics = kinematics;
     }
 
@@ -134,19 +164,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         SmartDashboard.putNumber("Max Angular Speed", maxAngularSpeed);
         SmartDashboard.putNumber("Max Linear Speed", maxLinearSpeed);
         SmartDashboard.putNumber("Max Wheel Speed", maxWheelSpeed);
 
         SmartDashboard.putNumber("Yaw", getYaw().getDegrees());
         SmartDashboard.putBoolean("Mag Cal?", navx.isMagnetometerCalibrated());
-        
 
-        for(SwerveModule mod : swerveModules) {
+        for (SwerveModule mod : swerveModules) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+
+        field.setRobotPose(odometry.getPoseMeters());
     }
 }
