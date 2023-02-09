@@ -9,7 +9,7 @@ import frc.robot.subsystems.Elevator;
 
 public class ExtendElevator extends CommandBase {
   
-    Elevator elevator = new Elevator();
+    Elevator elevator;
 
     /** Creates a new ExtendElevator. */
     public ExtendElevator(Elevator elevator) {

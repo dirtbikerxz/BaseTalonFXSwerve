@@ -10,7 +10,7 @@ import frc.robot.subsystems.LEDs;
 
 public class YellowLED extends CommandBase {
 
-    LEDs leds = new LEDs(); 
+    LEDs leds; 
     /** Creates a new DriveForward. */
     public YellowLED(LEDs leds) {
       // Use addRequirements() here to declare subsystem dependencies.

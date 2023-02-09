@@ -10,7 +10,7 @@ import frc.robot.subsystems.Swerve;
 
 public class DriveForward extends CommandBase {
 
-  Swerve swerve = new Swerve();
+  Swerve swerve;
 
   /** Creates a new DriveForward. */
   public DriveForward(Swerve swerve) {
