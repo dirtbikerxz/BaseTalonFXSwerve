@@ -36,13 +36,14 @@ public class RobotContainer {
 
     private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final LEDs leds = new LEDs();
-
-
+    private final Elevator elevator = new Elevator();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -76,6 +77,9 @@ public class RobotContainer {
 
         purplelights.onTrue(new PurpleLED(leds));
         yellowlights.onTrue(new YellowLED(leds));
+
+        driverA.whileTrue(new ExtendElevator(elevator));
+        driverB.whileTrue(new RetractElevator(elevator));
 
     }
 

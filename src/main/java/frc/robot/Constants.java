@@ -16,8 +16,14 @@ public final class Constants {
 
     public static final int CANDLE_PORT = 9;
 
+    /* Elevator Constants */
+    //TODO: Test Both Elevator Limits
+    public static final int FORWARD_ELEVATOR_LIMIT = 36000;
+    public static final int REVERSE_ELEVATOR_LIMIT = 0;
+    // TODO: Set Motor id
+    public static final int ELEVATOR_MOTOR_ID = 14;
+
     public static final class Swerve {
-        //TODO: Fixme
         public static final int pigeonID = 8;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
