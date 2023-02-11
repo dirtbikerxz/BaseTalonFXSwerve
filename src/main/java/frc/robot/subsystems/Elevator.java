@@ -52,9 +52,6 @@ public class Elevator extends SubsystemBase {
         return elevatorEncoder.getPosition();
     }
     
-    public void goToPosition () {
-        elevatorMotor.set(ControlMode.Position,16);
-    }
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
