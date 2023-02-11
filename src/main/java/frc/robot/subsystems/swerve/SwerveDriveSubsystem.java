@@ -52,7 +52,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             module.resetToAbsolute();
         }
 
-        kinematics = SwerveConfig.defaultKinematics;
+        
+        setKinematics(SwerveConfig.defaultKinematics);
         maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed;
         maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed;
         maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed;
