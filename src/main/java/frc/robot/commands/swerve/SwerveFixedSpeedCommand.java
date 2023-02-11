@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.swerve.SwerveConfig;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,9 +20,6 @@ public class SwerveFixedSpeedCommand extends CommandBase {
     private final ChassisSpeeds speeds;
     private final double duration;
     private double startTime;
-    private double vx;
-    private double vy;
-    private double vomega;
     private boolean done;
 
     // this command takes a single set of chassis speeds, and a duration. it
