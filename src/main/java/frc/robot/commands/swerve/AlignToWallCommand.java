@@ -13,14 +13,22 @@ import frc.robot.Robot;
  */
 
 public class AlignToWallCommand extends CommandBase {
-    private double currentAngle;
+    private double currentDirection;
     private final Robot robot;
-    private double angleInitial;
+    private double directionInitial;
     private boolean done;
+    private double wantedDirection;
+    private double northDirection = 0;
+    private double eastDirection = -90;
+    private double southDirection = 180;
+    private double westDirection = 90;
+    private double toleration = 0.5;
+    private double directionDisposition;
 
-    public AlignToWallCommand(Robot robot) {
+    public AlignToWallCommand(Robot robot, double wantedDirection) {
 
         this.robot = robot;
+        this.wantedDirection = wantedDirection;
 
         // If you are going to use a subsystem in any of your methods, you
         // HAVE to uncomment the corresponding line below.
@@ -33,29 +41,32 @@ public class AlignToWallCommand extends CommandBase {
     @Override
     public void initialize() {
         double northAngle = 0;
-        double eastAngle = -90;
-        double southAngle = 180;
-        double westAngle = 90;
-        //going to the west Angle
-        
-        angleInitial = robot.swerveDrive.getYaw().getDegrees();
+
+        directionInitial = robot.swerveDrive.getYaw().getDegrees();
+        directionDisposition = wantedDirection - directionInitial;
         // REPLACE ME with real logic that actually does something
         done = false;
     }
 
     @Override
     public void execute(){
-        // currentAngle = robot.swerveDrive.getYaw().getDegrees();
+        currentDirection = robot.swerveDrive.getYaw().getDegrees();
         // SmartDashboard.putNumber("getYaw", currentAngle);
-        // if (currentAngle < 91 && currentAngle > 89){
-        //    robot.swerveDrive.drive(0, 0, 0, true);
-        //    done = true;
-        // } else if (currentAngle > -90 && currentAngle < 90){
-        //    robot.swerveDrive.drive(0, 0 , 0.5, true);
-        // } else {
-        //    robot.swerveDrive.drive(0, 0, -0.5, true );
-        // }
 
+        if (currentDirection < toleration + wantedDirection && currentDirection > wantedDirection - toleration){
+            
+            robot.swerveDrive.drive(0, 0, 0);
+            done = true;
+
+        } else if (directionDisposition < -180 || directionDisposition < 180){
+
+            robot.swerveDrive.drive(0, 0, 0.5);
+
+        } else {
+
+            robot.swerveDrive.drive(0, 0, -0.5);
+        }
+   
         // REPLACE ME with real logic that actually does something
     }
 
