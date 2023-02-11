@@ -2,6 +2,7 @@ package frc.robot.commands.swerve;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AlignToWallCommand extends CommandBase {
     private double currentDirection;
@@ -13,7 +14,7 @@ public class AlignToWallCommand extends CommandBase {
     private double eastDirection = -90;
     private double southDirection = 180;
     private double westDirection = 90;
-    private double toleration = 0.5;
+    private double toleration = 1;
     private double directionDisposition;
 
     public AlignToWallCommand(Robot robot, double wantedDirection) {
@@ -36,25 +37,28 @@ public class AlignToWallCommand extends CommandBase {
         directionDisposition = wantedDirection - directionInitial;
         // REPLACE ME with real logic that actually does something
         done = false;
+        System.err.println(directionDisposition);
     }
 
     @Override
     public void execute(){
         currentDirection = robot.swerveDrive.getYaw().getDegrees();
-        // SmartDashboard.putNumber("getYaw", currentAngle);
+        //System.err.println("StartingCommand");
+        //System.err.println(currentDirection);
+        SmartDashboard.putNumber("getYaw", currentDirection);
 
         if (currentDirection < toleration + wantedDirection && currentDirection > wantedDirection - toleration){
             
             robot.swerveDrive.drive(0, 0, 0);
             done = true;
 
-        } else if (directionDisposition < -180 || directionDisposition < 180){
+        } else if (directionDisposition < -180 || (directionDisposition < 180 && directionDisposition > 0)){
 
-            robot.swerveDrive.drive(0, 0, 0.5);
+            robot.swerveDrive.drive(0, 0, 0.3);
 
         } else {
 
-            robot.swerveDrive.drive(0, 0, -0.5);
+            robot.swerveDrive.drive(0, 0, -0.3);
         }
    
         // REPLACE ME with real logic that actually does something

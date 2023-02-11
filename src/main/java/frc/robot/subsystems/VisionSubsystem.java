@@ -75,7 +75,7 @@ public class VisionSubsystem extends SubsystemBase {
     public void periodic() {
         double since = Timer.getFPGATimestamp() - start;
         if (report && since > 3.0) {
-            System.err.println("aprilTag = "+getAprilTag());
+            // System.err.println("aprilTag = "+getAprilTag());
         }
     }
 }
