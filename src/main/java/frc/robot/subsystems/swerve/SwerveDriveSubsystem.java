@@ -166,6 +166,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Pitching", this.getPitch());
+        
         SmartDashboard.putNumber("Max Angular Speed", maxAngularSpeed);
         SmartDashboard.putNumber("Max Linear Speed", maxLinearSpeed);
         SmartDashboard.putNumber("Max Wheel Speed", maxWheelSpeed);

@@ -44,12 +44,12 @@ public class Robot extends TimedRobot {
         swerveDrive = new SwerveDriveSubsystem();
 
         // create all the other subsystems                
-        hand = new HandSubsystem();
+      //  hand = new HandSubsystem();
 
         // arm subsystem default
 
-        arm = new ArmSubsystem();
-        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, driverController));
+       // arm = new ArmSubsystem();
+       // arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, driverController));
         
         vision = new VisionSubsystem(true);
 
