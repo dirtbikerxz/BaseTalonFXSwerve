@@ -40,7 +40,6 @@ public class AlignToWallCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        double northAngle = 0;
 
         directionInitial = robot.swerveDrive.getYaw().getDegrees();
         directionDisposition = wantedDirection - directionInitial;
