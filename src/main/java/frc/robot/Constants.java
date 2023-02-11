@@ -18,7 +18,7 @@ public final class Constants {
 
     /* Elevator Constants */
     //TODO: Test Both Elevator Limits
-    public static final int FORWARD_ELEVATOR_LIMIT = 36000;
+    public static final int FORWARD_ELEVATOR_LIMIT = 38;
     public static final int REVERSE_ELEVATOR_LIMIT = 0;
     // TODO: Set Motor id
     public static final int ELEVATOR_MOTOR_ID = 12;
