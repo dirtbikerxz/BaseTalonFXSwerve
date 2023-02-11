@@ -3,15 +3,6 @@ package frc.robot.commands.swerve;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-/**
-
- * This is a "skeleton" of a command that does nothing. To make a new command,
- * you can create a copy of this. Don't forget:
- *   - change "ExampleCommand" to something else (e.g. "MyAwesomeCommand")
- *   - make sure the file name corresponds to that (e.g. "My
- * AwesomeCommand.java")
- */
-
 public class AlignToWallCommand extends CommandBase {
     private double currentDirection;
     private final Robot robot;
