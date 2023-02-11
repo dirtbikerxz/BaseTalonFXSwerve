@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "mika"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -49,6 +51,16 @@
     {
       "position": 0.6109090909091237,
       "names": [
+        "Drive",
+        "TeleopSwerve"
+      ]
+    },
+    {
+      "position": 0.7636363636363759,
+      "names": [
+        "MoveForward",
+        "TeleopSwerve",
+        "ddd"
         "event"
       ]
     }

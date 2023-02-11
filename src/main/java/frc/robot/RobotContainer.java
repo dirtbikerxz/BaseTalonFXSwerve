@@ -34,14 +34,15 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton resetAbsolute = new JoystickButton(driver, XboxController.Button.kX.value);
 
+    private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     
-
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final LEDs leds = new LEDs();
-
+    private final Intake intake = new Intake();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -71,6 +72,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+        intakeHandler();
 
         //purplelights.onTrue(new InstantCommand(( new RainbowLED(leds))));
 
@@ -95,5 +97,12 @@ public class RobotContainer {
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
+    }
+
+
+    public void intakeHandler() {
+
+        driverA.whileTrue(new RunIntake(intake));
+        driverB.whileTrue(new RunIntakeBackwards(intake));
     }
 }

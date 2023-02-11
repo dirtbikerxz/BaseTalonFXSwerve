@@ -14,6 +14,9 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double MAX_ENCODER_VOLTAGE = 4.79;
 
+    public static final double INTAKE_SPEED = 0.15;
+    public static int INTAKE_MOTOR_1_ID = 10;
+    public static int INTAKE_MOTOR_2_ID = 11;
     public static final int CANDLE_PORT = 9;
 
     public static final class Swerve {
