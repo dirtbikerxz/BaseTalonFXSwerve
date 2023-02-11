@@ -15,7 +15,6 @@ import math
 team = 3373
 server = False
 
-
 def main():
     with open('/boot/frc.json') as f:
         config = json.load(f)
@@ -23,6 +22,7 @@ def main():
 
     width = camera['width']
     height = camera['height']
+    print("w, h from file = (%s,%s)" % (width,height))
 
     CameraServer.startAutomaticCapture()
 
@@ -52,6 +52,8 @@ def main():
         start_time = time.time()
 
         frame_time, input_img = input_stream.grabFrame(img)
+        print("type = %s" % type(input_img))
+        print("dir = %s" % dir(input_img))
         output_img = np.copy(input_img)
 
         # Coordinates of found targets, for NT output:
