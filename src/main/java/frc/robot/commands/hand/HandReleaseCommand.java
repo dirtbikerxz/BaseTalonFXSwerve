@@ -1,11 +1,13 @@
 package frc.robot.commands.hand;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HandSubsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class HandReleaseCommand extends CommandBase {
 
     private final HandSubsystem handSubsystem;
+    private double seconds;
+    private boolean done;
 
     public HandReleaseCommand(HandSubsystem handSubsystem) {
         this.handSubsystem = handSubsystem;
@@ -14,17 +16,26 @@ public class HandReleaseCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        // TODO what do we do here?
+        seconds = 0;
+        done = false;
     }
 
     @Override
     public void execute() {
-        handSubsystem._Charge.set(DoubleSolenoid.Value.kOff);
+
+        if (seconds == 0) {
+            handSubsystem.ungrab();
+            seconds = Timer.getFPGATimestamp();
+        }
+
+        if (Timer.getFPGATimestamp() - seconds > 1.0) {
+            handSubsystem.turnOff();
+            done = true;
+        }
     }
 
     @Override
     public boolean isFinished() {
-        // TODO what do we do here?
-        return true;
+        return done;
     }
 }

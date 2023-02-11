@@ -25,8 +25,8 @@ public class TestBench extends TimedRobot {
         XboxController controller = new XboxController(CONTROLLER_PORT);
 
         hand = new HandSubsystem();
-        arm = new ArmSubsystem();
-        arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, controller));
+        // arm = new ArmSubsystem();
+        // arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, controller));
 
         TestBenchControlMapping.mapControls(this, controller);
     }
