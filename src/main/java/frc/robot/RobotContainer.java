@@ -78,11 +78,11 @@ public class RobotContainer {
         purplelights.onTrue(new PurpleLED(leds));
         yellowlights.onTrue(new YellowLED(leds));
 
-        driverA.whileTrue(new ExtendElevator(elevator));
-        driverB.whileTrue(new RetractElevator(elevator));
-
+        // driverA.whileTrue(new ExtendElevator(elevator));
+        // driverB.whileTrue(new RetractElevator(elevator));
+        driverB.whileTrue(new PositionElevator (elevator,5));
+        driverA.whileTrue(new PositionElevator (elevator,6));
     }
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
