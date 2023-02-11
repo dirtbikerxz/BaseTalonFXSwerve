@@ -60,7 +60,7 @@ public class RobotControlMapping {
         trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
         trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
-        trigger(driverController, kB, new AlignToWallCommand(robot));
+        trigger(driverController, kB, new AlignToWallCommand(robot, 0));
         trigger(driverController, kA, new SwerveOrbitToggleCommand(robot.swerveDrive));
         // trigger(driverController, Button.kBack, new AutonomousCommand(robot));
 
