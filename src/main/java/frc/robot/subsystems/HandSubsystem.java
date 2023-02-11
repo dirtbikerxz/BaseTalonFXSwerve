@@ -45,9 +45,15 @@ public class HandSubsystem extends SubsystemBase {
         // _Fire.toggle();
     }
 
-    public void release() {
+    public void ungrab() {
         setPressure(false);
         setPosition(false);
+    //   _Charge.set(DoubleSolenoid.Value.kOff);
+    }
+
+    public void turnOff() {
+        System.err.println("turning off ...");
+        _Charge.set(Value.kOff);
     //   _Charge.set(DoubleSolenoid.Value.kOff);
     }
 }
