@@ -27,6 +27,6 @@ public class AprilTag {
     }
 
     public String toString() {
-        return String.format("AprilTag(id=%d,  pose=%s)", id, pose);
+        return String.format("AprilTag(id=%s,  pose=%s)", id, pose);
     }
 }

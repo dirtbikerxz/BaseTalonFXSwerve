@@ -9,9 +9,9 @@ import frc.robot.subsystems.vision.AprilTag;
 
 public class AlignToAprilTagForwardReverseCommand extends CommandBase {
 
-    public static final double TARGET_VALUE = 1.0; // TODO determine the correct value
+    public static final double TARGET_VALUE = 2.1; // TODO determine the correct value
     public static final double TOLERANCE = 0.1; // TODO determine the currect value
-    public static final double SPEED = Units.metersToFeet(1.0); // TODO determine the correct value
+    public static final double SPEED = Units.metersToFeet(0.25); // TODO determine the correct value
 
     private final SwerveDriveSubsystem swerveDrive;
     private final VisionSubsystem vision;
@@ -46,6 +46,7 @@ public class AlignToAprilTagForwardReverseCommand extends CommandBase {
         // larger values mean we're further away from the tag
         
         double distance = tag.getForwardReverseDistance();
+        System.err.println("distance = "+distance);
 
         // close enough; stop driving
         if (Math.abs(distance - TARGET_VALUE) < TOLERANCE) {

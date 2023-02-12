@@ -30,7 +30,7 @@ public class VisionSubsystem extends SubsystemBase {
         this.rotX = table.getDoubleArrayTopic("target_pose_rx").subscribe(new double[0]);
         this.rotY = table.getDoubleArrayTopic("target_pose_ry").subscribe(new double[0]);
         this.rotZ = table.getDoubleArrayTopic("target_pose_rz").subscribe(new double[0]);
-        this.idArray = table.getDoubleArrayTopic("target_id").subscribe(new double[0]);
+        this.idArray = table.getDoubleArrayTopic("robot_id").subscribe(new double[0]);
     }
 
     public AprilTag getAprilTag() {
