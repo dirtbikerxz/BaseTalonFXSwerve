@@ -9,9 +9,9 @@ import frc.robot.subsystems.vision.AprilTag;
 
 public class AlignToAprilTagCommand extends CommandBase {
 
-    public static final double TARGET_Z = 2.2;
-    public static final double TOLERANCE = 0.1;
-    public static final double SPEED = Units.metersToFeet(0.25);
+    public static final double TARGET_Z = 3;
+    public static final double TOLERANCE = 0.075;
+    public static final double SPEED = Units.metersToFeet(0.1);
     
     private final SwerveDriveSubsystem swerveDrive;
     private final VisionSubsystem vision;

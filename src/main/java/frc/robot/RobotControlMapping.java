@@ -16,6 +16,7 @@ import frc.robot.commands.swerve.SwerveOrbitCommand;
 import frc.robot.commands.swerve.SwerveOrbitToggleCommand;
 import frc.robot.commands.swerve.SwerveTeleopCommand;
 import frc.robot.commands.swerve.ZeroGyroCommand;
+import frc.robot.commands.swerve.AlignToAprilTagCommand;
 import frc.robot.commands.swerve.AlignToAprilTagForwardReverseCommand;
 import frc.robot.commands.swerve.AlignToAprilTagLeftRightCommand;
 import frc.robot.commands.swerve.AlignToWallCommand;
@@ -68,7 +69,7 @@ public class RobotControlMapping {
         //trigger(driverController, kB, new AlignToWallCommand(robot, 0));
         trigger(driverController, kB, new MountingToChargeStationIntegratedCommand(robot, driverController));
         trigger(driverController, kA, new AlignToAprilTagForwardReverseCommand(robot.swerveDrive, robot.vision));
-        trigger(driverController, kX, new AlignToAprilTagLeftRightCommand(robot.swerveDrive, robot.vision));
+        trigger(driverController, kX, new AlignToAprilTagCommand(robot.swerveDrive, robot.vision));
         trigger(driverController, Button.kLeftStick, new RotatingWheelsToADegreeCommand(robot, 90));
         // trigger(driverController, Button.kBack, new AutonomousCommand(robot));
 

@@ -23,7 +23,7 @@ public class AprilTag {
     // the robot will drive in its Y dimension to close this distance. this
     // will hopefully limit confusion when writing the commands.
     public double getLeftRightDistance() {
-        return pose.getX();
+        return pose.getY();
     }
 
     public String toString() {
