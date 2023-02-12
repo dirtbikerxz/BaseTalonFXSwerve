@@ -3,11 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.ArmTeleopLoopCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 
 /**
