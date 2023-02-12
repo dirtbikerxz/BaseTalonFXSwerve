@@ -17,6 +17,7 @@ import frc.robot.commands.swerve.SwerveTeleopCommand;
 import frc.robot.commands.swerve.ZeroGyroCommand;
 import frc.robot.commands.swerve.AlignToWallCommand;
 import frc.robot.commands.swerve.ParkingOnThePlatformCommand;
+import frc.robot.commands.swerve.RotatingWheelsToADegreeCommand;
 
 import static edu.wpi.first.wpilibj.XboxController.Button.kA;
 import static edu.wpi.first.wpilibj.XboxController.Button.kB;
@@ -64,6 +65,7 @@ public class RobotControlMapping {
         trigger(driverController, kB, new AlignToWallCommand(robot, 0));
         trigger(driverController, kA, new SwerveOrbitToggleCommand(robot.swerveDrive));
         trigger(driverController, kX, new ParkingOnThePlatformCommand(robot, driverController));
+        trigger(driverController, Button.kLeftStick, new RotatingWheelsToADegreeCommand(robot, 90));
         // trigger(driverController, Button.kBack, new AutonomousCommand(robot));
 
         // hold the left bumper to run in robot relative mode

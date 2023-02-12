@@ -5,13 +5,13 @@ import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 import frc.robot.subsystems.vision.AprilTag;
 
-public class AlignToAprilTagCommand extends CommandBase {
+public class AlignToAprilTagLeftRightCommand extends CommandBase {
 
     private final SwerveDriveSubsystem swerveDrive;
     private final VisionSubsystem vision;
     private boolean done;
 
-    public AlignToAprilTagCommand(SwerveDriveSubsystem swerveDrive, VisionSubsystem vision) {
+    public AlignToAprilTagLeftRightCommand(SwerveDriveSubsystem swerveDrive, VisionSubsystem vision) {
 
         this.swerveDrive = swerveDrive;
         this.vision = vision;
@@ -36,8 +36,10 @@ public class AlignToAprilTagCommand extends CommandBase {
             return;
         }
 
-        // TODO use tag info to drive into correct position
+        // larger values means the tag is further to the RIGHT in our view
+        double distance = tag.getLeftRightDistance();
 
+        // TODO use tag info to drive into correct position
     }
 
     public boolean isFinished() {
