@@ -11,6 +11,7 @@ import frc.robot.commands.swerve.SetRobotRelativeCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.KyleAndChristopherCommand;
+import frc.robot.commands.MountingToChargeStationIntegratedCommand;
 import frc.robot.commands.swerve.SwerveOrbitCommand;
 import frc.robot.commands.swerve.SwerveOrbitToggleCommand;
 import frc.robot.commands.swerve.SwerveTeleopCommand;
@@ -62,7 +63,8 @@ public class RobotControlMapping {
         // trigger(driverController, kX, new KyleAndChristopherCommand(robot.swerveDrive));
         trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
-        trigger(driverController, kB, new AlignToWallCommand(robot, 0));
+        //trigger(driverController, kB, new AlignToWallCommand(robot, 0));
+        trigger(driverController, kB, new MountingToChargeStationIntegratedCommand(robot, driverController));
         trigger(driverController, kA, new SwerveOrbitToggleCommand(robot.swerveDrive));
         trigger(driverController, kX, new ParkingOnThePlatformCommand(robot, driverController));
         trigger(driverController, Button.kLeftStick, new RotatingWheelsToADegreeCommand(robot, 90));
