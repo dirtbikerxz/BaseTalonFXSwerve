@@ -13,7 +13,7 @@ from wpimath.geometry import Transform3d
 import math
 
 team = 3373
-server = True
+server = False
 
 def main():
     with open('/boot/frc.json') as f:
