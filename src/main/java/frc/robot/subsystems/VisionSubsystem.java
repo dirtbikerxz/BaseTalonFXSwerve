@@ -43,8 +43,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     public AprilTag getAprilTag() {
 
-        double [] ix = imgX.get();
-        double [] iy = imgY.get();
         double [] ptx = transX.get();
         double [] pty = transY.get();
         double [] ptz = transZ.get();
@@ -53,13 +51,14 @@ public class VisionSubsystem extends SubsystemBase {
         double [] prz = rotZ.get();
         double [] id = idArray.get();
 
-        if (!hasAtLeastOne(ix, iy, ptx, pty, ptz, prx, pry, prz, id)) {
+        if (!hasAtLeastOne(ptx, pty, ptz, prx, pry, prz, id)) {
             return null;
         }
 
         Rotation3d r = new Rotation3d(prx[0], pry[0], prz[0]);
         Translation3d t = new Translation3d(ptx[0], pty[0], ptz[0]);
-        return new AprilTag(id[0], ix[0], iy[0], new Transform3d(t, r));
+        System.err.println("x1 = "+ptx[0]);
+        return new AprilTag(id[0], new Transform3d(t, r));
     }
 
     private boolean hasAtLeastOne(double [] ...arrays) {

@@ -5,14 +5,10 @@ import edu.wpi.first.math.geometry.Transform3d;
 public class AprilTag {
 
     public final double id;
-    public final double imageX;
-    public final double imageY;
     public final Transform3d pose;
 
-    public AprilTag(double id, double imageX, double imageY, Transform3d pose) {
+    public AprilTag(double id, Transform3d pose) {
         this.id = id;
-        this.imageX = imageX;
-        this.imageY = imageY;
         this.pose = pose;
     }
 
@@ -20,7 +16,7 @@ public class AprilTag {
     // the robot will drive in its x dimension to close this distance. this
     // will hopefully limit confusion when writing the commands.
     public double getForwardReverseDistance() {
-        return pose.getZ();
+        return pose.getX();
     }
 
     // the vision system uses "X" as the left/right position of the tag.
@@ -31,6 +27,6 @@ public class AprilTag {
     }
 
     public String toString() {
-        return String.format("AprilTag(id=%d, imageX=%s, imageY=%s, pose=%s)", id, imageX, imageY, pose);
+        return String.format("AprilTag(id=%d,  pose=%s)", id, pose);
     }
 }

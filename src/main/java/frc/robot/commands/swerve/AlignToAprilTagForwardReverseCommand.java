@@ -42,6 +42,9 @@ public class AlignToAprilTagForwardReverseCommand extends CommandBase {
             return;
         }
 
+        System.err.println("x2 = "+tag.pose.getX());
+        System.err.println("x3 = "+tag.pose.getTranslation().getX());
+
         // larger values mean we're further away from the tag
         
         double distance = tag.getForwardReverseDistance();
