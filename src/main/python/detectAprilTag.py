@@ -52,13 +52,13 @@ def main():
         start_time = time.time()
 
         frame_time, input_img = input_stream.grabFrame(img)
-        print("type = %s" % type(input_img))
-        print("dir = %s" % dir(input_img))
+        # print("type = %s" % type(input_img))
+        # print("dir = %s" % dir(input_img))
         output_img = np.copy(input_img)
 
         # Coordinates of found targets, for NT output:
-        img_x_list = []
         img_y_list = []
+        img_z_list = []
         pose_tx_list = []
         pose_ty_list = []
         pose_tz_list = []
@@ -135,17 +135,32 @@ def main():
             # Label the tag with the ID:
             cv2.putText(output_img, f"{tag_id}", (int(center.x), int(center.y)), cv2.FONT_HERSHEY_SIMPLEX, 1, col_txt, 2)
 
-            img_x_list.append((center.x - width / 2) / (width / 2))
-            img_y_list.append((center.y - height / 2) / (height / 2))
-            pose_tx_list.append(pose.translation().x_feet)
-            pose_ty_list.append(pose.translation().y_feet)
-            pose_tz_list.append(pose.translation().z_feet)
-            pose_rx_list.append(pose.rotation().x_degrees)
-            pose_ry_list.append(pose.rotation().y_degrees)
-            pose_rz_list.append(pose.rotation().z_degrees)
+            img_y_list.append(-(center.x - width / 2) / (width / 2))
+            img_z_list.append(-(center.y - height / 2) / (height / 2))
+            
+            # Convert Vision system coords to Robot-centric coords
+            # Vision X is Robot -Y
+            # Vision Y is Robot -Z
+            # Vision Z is Robot X
+            pose_tx_list.append(pose.translation().z_feet)
+            pose_ty_list.append(-pose.translation().x_feet)
+            pose_tz_list.append(-pose.translation().y_feet)
+            pose_rx_list.append(pose.rotation().z_degrees)
+            pose_ry_list.append(-pose.rotation().x_degrees)
+            pose_rz_list.append(-pose.rotation().y_degrees)
+
+
+            # Vision system coords (original code)
+            # pose_tx_list.append(pose.translation().x_feet)
+            # pose_ty_list.append(pose.translation().y_feet)
+            # pose_tz_list.append(pose.translation().z_feet)
+            # pose_rx_list.append(pose.rotation().x_degrees)
+            # pose_ry_list.append(pose.rotation().y_degrees)
+            # pose_rz_list.append(pose.rotation().z_degrees)
             id_list.append(tag_id)
-        
-        vision_nt.putNumberArray('target_img_x', img_x_list)
+
+
+        vision_nt.putNumberArray('target_img_z', img_z_list)
         vision_nt.putNumberArray('target_img_y', img_y_list)
         vision_nt.putNumberArray('target_pose_tx', pose_tx_list)
         vision_nt.putNumberArray('target_pose_ty', pose_ty_list)
@@ -153,7 +168,15 @@ def main():
         vision_nt.putNumberArray('target_pose_rx', pose_rx_list)
         vision_nt.putNumberArray('target_pose_ry', pose_ry_list)
         vision_nt.putNumberArray('target_pose_rz', pose_rz_list)
-        vision_nt.putNumberArray('target_id', id_list)
+        
+        # These sends the values in Vision system coords
+        # vision_nt.putNumberArray('robot_pose_tx', robot_tx)
+        # vision_nt.putNumberArray('robot_pose_ty', robot_ty)
+        # vision_nt.putNumberArray('robot_pose_tz', robot_tz)
+        # vision_nt.putNumberArray('robot_pose_rx', robot_rx)
+        # vision_nt.putNumberArray('robot_pose_ry', robot_ry)
+        # vision_nt.putNumberArray('robot_pose_rz', robot_rz)
+        vision_nt.putNumberArray('robot_id', id_list)
 
         processing_time = start_time - prev_time
         prev_time = start_time
