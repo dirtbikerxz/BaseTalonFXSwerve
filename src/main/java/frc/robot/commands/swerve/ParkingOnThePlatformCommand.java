@@ -34,7 +34,7 @@ public class ParkingOnThePlatformCommand extends CommandBase{
 
         thenPitch = Math.abs(swerveDrive.getPitch());
         done = false;
-        retentionCounter = 5;
+        retentionCounter = 15;
         // Tuening : increase the retention counter
 
     }
@@ -49,7 +49,7 @@ public class ParkingOnThePlatformCommand extends CommandBase{
 
         }
 
-        System.err.println(nowPitch - thenPitch);
+        //System.err.println(nowPitch - thenPitch);
 
         if (nowPitch - thenPitch < -0.45){
 
