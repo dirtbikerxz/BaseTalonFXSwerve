@@ -42,21 +42,22 @@ public class AlignToAprilTagForwardReverseCommand extends CommandBase {
             return;
         }
 
-        System.err.println("x2 = "+tag.pose.getX());
-        System.err.println("x3 = "+tag.pose.getTranslation().getX());
-
+        System.err.println("got tag "+tag);
         // larger values mean we're further away from the tag
         
         double distance = tag.getForwardReverseDistance();
 
         // close enough; stop driving
         if (Math.abs(distance - TARGET_VALUE) < TOLERANCE) {
+            System.err.println("close enough; stopping");
             swerveDrive.stop();
             done = true;
         } 
         
         // too close; back up
         else if (distance < TARGET_VALUE) {
+            System.err.println("too close; moving backward");
+
             ChassisSpeeds speeds = new ChassisSpeeds(-SPEED, 0, 0);
             swerveDrive.drive(speeds);
             done = false;
@@ -64,6 +65,7 @@ public class AlignToAprilTagForwardReverseCommand extends CommandBase {
         
         // too far away, move forward
         else {
+            System.err.println("too far; moving forward");
             ChassisSpeeds speeds = new ChassisSpeeds(SPEED, 0, 0);
             swerveDrive.drive(speeds);
             done = false;
