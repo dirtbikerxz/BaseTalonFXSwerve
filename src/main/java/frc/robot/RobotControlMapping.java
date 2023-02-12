@@ -25,7 +25,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button.kLeftBumper;
 import static edu.wpi.first.wpilibj.XboxController.Button.kRightBumper;
 import static edu.wpi.first.wpilibj.XboxController.Button.kX;
 import static edu.wpi.first.wpilibj.XboxController.Button.kY;
-import static edu.wpi.first.wpilibj.XboxController.Button.kStart;;
+import static edu.wpi.first.wpilibj.XboxController.Button.kStart;
 
 /**
  * All of the mapping of controls to commands for the production robot happens here.

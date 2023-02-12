@@ -1,11 +1,18 @@
 package frc.robot.commands.swerve;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 import frc.robot.subsystems.vision.AprilTag;
 
 public class AlignToAprilTagLeftRightCommand extends CommandBase {
+
+    public static final double TARGET_VALUE = 1.0; // TODO determine the correct value
+    public static final double TOLERANCE = 0.1; // TODO determine the currect value
+    public static final double SPEED = Units.metersToFeet(1.0); // TODO determine the correct value
 
     private final SwerveDriveSubsystem swerveDrive;
     private final VisionSubsystem vision;
@@ -39,7 +46,25 @@ public class AlignToAprilTagLeftRightCommand extends CommandBase {
         // larger values means the tag is further to the RIGHT in our view
         double distance = tag.getLeftRightDistance();
 
-        // TODO use tag info to drive into correct position
+        if (Math.abs(distance - TARGET_VALUE) < TOLERANCE) {
+            swerveDrive.stop();
+            done = true;
+        } 
+        
+        // Too much to right; move left
+        else if (distance < TARGET_VALUE) {
+            ChassisSpeeds speeds = new ChassisSpeeds(0, SPEED, 0);
+            swerveDrive.drive(speeds);
+            done = false;
+        } 
+        
+        // Too much left; move right
+        else {
+            ChassisSpeeds speeds = new ChassisSpeeds(0, SPEED, 0);
+            swerveDrive.drive(speeds);
+            done = false;
+        }
+        
     }
 
     public boolean isFinished() {
