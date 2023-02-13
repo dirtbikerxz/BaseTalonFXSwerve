@@ -1,59 +1,82 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.HandSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
- * Represents the pneumatics for the hand.
+ * Represents the pneumatics for the hand. There are two double solenoids that
+ * control its behavior:
+ *   - PRESSURE (options: low, high or off)
+ *   - POSITION (options: open, closed or off)
  */
 public class HandSubsystem extends SubsystemBase {
-    /**
-     *
-     */
-    private static final int REVPH_CAN_ID = 5;
-    private static final int CHARGE_FWD = 0;
-    private static final int CHARGE_REV = 1;
-    private static final int FIRE_FWD = 2;
-    private static final int FIRE_REV = 3;
-    private final DoubleSolenoid _Charge = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, CHARGE_FWD, CHARGE_REV);
-    private final DoubleSolenoid _Fire = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, FIRE_FWD, FIRE_REV);
 
-    private void setPressure(boolean high) {
-        _Charge.set(high ? Value.kForward : Value.kReverse);
+    /** CAN bus ID for the pneumatics hub */
+    public static final int REVPH_CAN_ID = 5;
+
+    /** Switch IDs on the hub for the solenoids */
+    public static final int PRESSURE_FORWARD = 0;
+    public static final int PRESSURE_REVERSE = 1;
+    public static final int POSITION_FORWARD = 2;
+    public static final int POSITION_REVERSE = 3;
+
+    /** Solenoid values for the different options */
+    public static final Value LO = Value.kReverse;
+    public static final Value HI = Value.kForward;
+    public static final Value OPEN = Value.kForward;
+    public static final Value CLOSED = Value.kReverse;
+    public static final Value OFF = Value.kOff;
+
+    private final DoubleSolenoid pressure;
+    private final DoubleSolenoid position;
+
+    public HandSubsystem() {
+        pressure = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, PRESSURE_FORWARD, PRESSURE_REVERSE);
+        position = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, POSITION_FORWARD, POSITION_REVERSE);
+        SmartDashboard.putData("Hand", builder -> {
+            builder.addBooleanProperty("Closed", () -> isClosed(), null);
+            builder.addStringProperty("Position", () -> getPositionString(), null);
+            builder.addStringProperty("Pressure", () -> getPressureString(), null);
+        });
     }
 
-    private void setPosition(boolean closed) {
-        _Fire.set(closed ? Value.kReverse : Value.kForward);
+    private String getPressureString() {
+        Value val = pressure.get();
+        if (val == LO) return "Low";
+        if (val == HI) return "High";
+        return "Off";
+    }
+
+    private String getPositionString() {
+        Value val = position.get();
+        if (val == OPEN) return "Open";
+        if (val == CLOSED) return "Closed";
+        return "Off";
+    }
+
+    private boolean isClosed() {
+        return pressure.get() != OFF && position.get() == CLOSED;
     }
 
     public void grabCone() {
-        setPressure(true);
-        setPosition(true);
-        // _Fire.set(DoubleSolenoid.Value.kReverse);
-        // _Charge.set(DoubleSolenoid.Value.kForward);
-        // _Fire.toggle();
+        pressure.set(HI);
+        position.set(CLOSED);
     }
 
     public void grabCube() {
-        setPressure(false);
-        setPosition(true);
-        // _Fire.set(DoubleSolenoid.Value.kReverse);
-        // _Charge.set(DoubleSolenoid.Value.kReverse);
-        // _Fire.toggle();
+        pressure.set(LO);
+        position.set(CLOSED);
     }
 
-    public void ungrab() {
-        setPressure(false);
-        setPosition(false);
-    //   _Charge.set(DoubleSolenoid.Value.kOff);
+    public void release() {
+        pressure.set(LO);
+        position.set(OPEN);
     }
 
     public void turnOff() {
-        System.err.println("turning off ...");
-        _Charge.set(Value.kOff);
-    //   _Charge.set(DoubleSolenoid.Value.kOff);
+        pressure.set(OFF);
     }
 }
