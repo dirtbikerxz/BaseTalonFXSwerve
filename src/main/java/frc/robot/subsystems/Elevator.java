@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,20 +40,16 @@ public class Elevator extends SubsystemBase {
 
         /*Rate of Speed (Based on 930 Code) */
 
-        this.controller = new ProfiledPIDController(1, 0, 0, new Constraints(360, 360));
+        this.controller = new ProfiledPIDController(1, 0, 0, new Constraints(1, 2));
         this.controller.setTolerance(1, 1);
         // TODO: Recalculate these constants
-        this.ff = new ElevatorFeedforward(0, 0.1, 0);
-
-         
-    
-
+        this.ff = new ElevatorFeedforward(0, 0.16, 7.01, 0.02);
     }
     
     
     /* Sets the Target Elevator Position in inches.*/
-    public void setTargetElevatorPosition(double inches){
-        targetElevatorPosition = inches;
+    public void setTargetElevatorPosition(double rotations){
+        targetElevatorPosition = rotations;
     }
 
     public void extend() {
@@ -76,19 +73,22 @@ public class Elevator extends SubsystemBase {
     
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
-        // This method will be called once per scheduler run
-        double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
-        double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
-        MathUtil.clamp(voltage, -12, 12);
+        if (DriverStation.isEnabled()){
+            targetElevatorPosition = 15;
+            SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
+            // This method will be called once per scheduler run
+            double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
+            double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
+            MathUtil.clamp(voltage, -12, 12);
 
-        elevatorMotor.setVoltage(voltage + feedforward);
+            elevatorMotor.setVoltage(voltage + feedforward);
 
-        SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
-        SmartDashboard.putNumber("Elevator Encoder Value: ", elevatorEncoder.getPosition());
-        SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
-        SmartDashboard.putNumber("ELEVATOR VOLTAGE", voltage + feedforward);
-       
+            SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
+            SmartDashboard.putNumber("Elevator Encoder Value: ", elevatorEncoder.getPosition());
+            SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
+            SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
+            SmartDashboard.putNumber("Elevator feedforward", feedforward);
+        }
     }
 }
 

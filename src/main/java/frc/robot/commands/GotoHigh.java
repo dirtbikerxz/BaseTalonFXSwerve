@@ -7,14 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
-public class PositionElevator extends CommandBase {
+public class GotoHigh extends CommandBase {
   Elevator elevator;
-  double targetElevatorPosition;
-  /** Creates a new PositionElevator. */
-  public PositionElevator(Elevator elevator, double targetElevatorPosition) {
-      this.elevator = elevator;
-      this.targetElevatorPosition = targetElevatorPosition;
-      addRequirements(elevator);
+  /** Creates a new GotoHigh. */
+  public GotoHigh(Elevator elevator) {
+    // Use addRequirements() here to declare
+    this.elevator = elevator;
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +23,7 @@ public class PositionElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.setTargetElevatorPosition(targetElevatorPosition);
+    elevator.setTargetElevatorPosition(30);
   }
 
   // Called once the command ends or is interrupted.

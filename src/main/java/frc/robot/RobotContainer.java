@@ -80,8 +80,8 @@ public class RobotContainer {
 
         // driverA.whileTrue(new ExtendElevator(elevator));
         // driverB.whileTrue(new RetractElevator(elevator));
-        driverB.whileTrue(new PositionElevator (elevator,5));
-        driverA.whileTrue(new PositionElevator (elevator,6));
+        driverB.whileTrue(new PositionElevator(elevator,15));
+        driverA.whileTrue(new PositionElevator(elevator,30));
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
