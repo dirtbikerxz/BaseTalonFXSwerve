@@ -14,6 +14,11 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double MAX_ENCODER_VOLTAGE = 4.926;
 
+    /* Arm Constants */
+    // TODO: Change later when we have actual robot
+    public static final int ARM_MOTOR_ID = 20;
+    public static final int ARM_ENCODER_ID = 25;
+
     public static final double INTAKE_SPEED = 0.15;
     public static int INTAKE_MOTOR_1_ID = 10;
     public static int INTAKE_MOTOR_2_ID = 11;
