@@ -77,11 +77,14 @@ public class Elevator extends SubsystemBase {
     private double motorRotationsToInches(double rotations) {
         return rotations * Constants.ELEVATOR_ROTATIONS_TO_IN;
     }
+
+    private double inchesToMotorRotations(double inches) {
+        return inches / Constants.ELEVATOR_ROTATIONS_TO_IN;
+    }
     
     @Override
     public void periodic() {
         if (DriverStation.isEnabled()){
-            // targetElevatorPosition = 15;
             // This method will be called once per scheduler run
             // TODO: Test that .getPosition() gives us the elevator position in inches
             double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
