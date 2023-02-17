@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -23,21 +23,23 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick operator = new Joystick(1);
 
     /* Drive Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = XboxController.Axis.kRightX.value;
+    private final int driverLeftY = XboxController.Axis.kLeftY.value;
+    private final int driverLeftX = XboxController.Axis.kLeftX.value;
+    private final int driverRightX = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton resetAbsolute = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton driverStart = new JoystickButton(driver, XboxController.Button.kStart.value);
 
-    private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverR = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driverL = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final POVButton driverDPadDown = new POVButton(driver, 180);
     
 
     /* Subsystems */
@@ -50,10 +52,10 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                () -> -driver.getRawAxis(driverLeftY), 
+                () -> -driver.getRawAxis(driverLeftX), 
+                () -> -driver.getRawAxis(driverRightX), 
+                () -> driverStart.getAsBoolean()
             )
             // new DriveForward(s_Swerve)
         );
@@ -70,18 +72,19 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        driverX.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
 
         //purplelights.onTrue(new InstantCommand(( new RainbowLED(leds))));
 
-        purplelights.onTrue(new PurpleLED(leds));
-        yellowlights.onTrue(new YellowLED(leds));
+        driverR.onTrue(new PurpleLED(leds));
+        driverL.onTrue(new YellowLED(leds));
 
         // driverA.whileTrue(new ExtendElevator(elevator));
         // driverB.whileTrue(new RetractElevator(elevator));
-        driverB.whileTrue(new PositionElevator(elevator,15));
-        driverA.whileTrue(new PositionElevator(elevator,30));
+        driverB.whileTrue(new PositionElevator(elevator, 15));
+        driverA.whileTrue(new PositionElevator(elevator, 30));
+        driverDPadDown.whileTrue(new PositionElevator(elevator, Constants.REVERSE_ELEVATOR_LIMIT));
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

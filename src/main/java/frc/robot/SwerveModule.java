@@ -56,9 +56,9 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         /* This is a custom optimize function, since default WPILib optimize assumes continuous controller which CTRE and Rev onboard is not */
-        SmartDashboard.putNumber("Angle Motor (pre) " + moduleNumber + ":", desiredState.angle.getDegrees());
+        // SmartDashboard.putNumber("Angle Motor (pre) " + moduleNumber + ":", desiredState.angle.getDegrees());
         desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
-        SmartDashboard.putNumber("Angle Motor (post) " + moduleNumber + ":", desiredState.angle.getDegrees());
+        // SmartDashboard.putNumber("Angle Motor (post) " + moduleNumber + ":", desiredState.angle.getDegrees());
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }
