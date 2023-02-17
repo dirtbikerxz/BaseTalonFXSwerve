@@ -17,11 +17,12 @@ public final class Constants {
     public static final int CANDLE_PORT = 9;
 
     /* Elevator Constants */
-    //TODO: Test Both Elevator Limits
     public static final int FORWARD_ELEVATOR_LIMIT = 38;
-    public static final int REVERSE_ELEVATOR_LIMIT = 5;
-    // TODO: Set Motor id
+    public static final int REVERSE_ELEVATOR_LIMIT = 3;
     public static final int ELEVATOR_MOTOR_ID = 12;
+    public static final double ELEVATOR_GEAR_RATIO = 9.0;
+    public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
+    public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
 
     public static final class Swerve {
         public static final int pigeonID = 8;

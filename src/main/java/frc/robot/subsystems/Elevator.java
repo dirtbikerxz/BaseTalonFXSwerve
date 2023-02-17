@@ -25,31 +25,34 @@ public class Elevator extends SubsystemBase {
     private CANSparkMax elevatorMotor;
     private ProfiledPIDController controller;
     private ElevatorFeedforward ff;
-    //TODO: set targetElevatorPosition
     private double targetElevatorPosition;
 
     public Elevator() {
         elevatorMotor = new CANSparkMax(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
-
+        //TODO: Set Current Limiters
         elevatorMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
         elevatorMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
         elevatorMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.FORWARD_ELEVATOR_LIMIT);
         elevatorMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.REVERSE_ELEVATOR_LIMIT);
         elevatorEncoder = elevatorMotor.getEncoder(); 
-        elevatorMotor.setIdleMode(IdleMode.kBrake);
+        elevatorMotor.setIdleMode(IdleMode.kCoast);
 
         /*Rate of Speed (Based on 930 Code) */
 
-        this.controller = new ProfiledPIDController(1, 0, 0, new Constraints(1, 2));
+        // double p = SmartDashboard.getNumber("p", 0);
+        this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
         this.controller.setTolerance(1, 1);
         // TODO: Recalculate these constants
-        this.ff = new ElevatorFeedforward(0, 0.16, 7.01, 0.02);
+        //this.ff = new ElevatorFeedforward(0, 0.16, 0.18, 0.02);
+
+        elevatorEncoder.setPositionConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
+        elevatorEncoder.setVelocityConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
     }
     
     
     /* Sets the Target Elevator Position in inches.*/
-    public void setTargetElevatorPosition(double rotations){
-        targetElevatorPosition = rotations;
+    public void setTargetElevatorPosition(double inches){
+        targetElevatorPosition = inches;
     }
 
     public void extend() {
@@ -70,25 +73,29 @@ public class Elevator extends SubsystemBase {
     public double getEncoderPosition() {
         return elevatorEncoder.getPosition();
     }
+
+    private double motorRotationsToInches(double rotations) {
+        return rotations * Constants.ELEVATOR_ROTATIONS_TO_IN;
+    }
     
     @Override
     public void periodic() {
         if (DriverStation.isEnabled()){
-            targetElevatorPosition = 15;
-            SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
+            // targetElevatorPosition = 15;
             // This method will be called once per scheduler run
+            // TODO: Test that .getPosition() gives us the elevator position in inches
             double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
-            double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
+            // double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
             MathUtil.clamp(voltage, -12, 12);
 
-            elevatorMotor.setVoltage(voltage + feedforward);
+            elevatorMotor.setVoltage(voltage);
 
-            SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
-            SmartDashboard.putNumber("Elevator Encoder Value: ", elevatorEncoder.getPosition());
-            SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
             SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
-            SmartDashboard.putNumber("Elevator feedforward", feedforward);
         }
+        SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
+        SmartDashboard.putNumber("Elevator Encoder Value: ", elevatorEncoder.getPosition());
+        SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
+        //SmartDashboard.putNumber("Elevator feedforward", feedforward);
     }
 }
 
