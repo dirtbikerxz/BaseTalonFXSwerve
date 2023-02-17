@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -15,6 +18,8 @@ public class Intake extends SubsystemBase {
 
     private CANSparkMax motor1;
     private CANSparkMax motor2;
+    private DoubleSolenoid solenoid;
+    PneumaticHub pneumaticHub;
 
 
     public Intake() {
@@ -22,7 +27,9 @@ public class Intake extends SubsystemBase {
       motor1 = new CANSparkMax(Constants.INTAKE_MOTOR_1_ID, MotorType.kBrushless);
       motor2 = new CANSparkMax(Constants.INTAKE_MOTOR_2_ID, MotorType.kBrushless);
 
-      //motor2.setInverted(true);
+      pneumaticHub = new PneumaticHub(Constants.PNEUMATIC_HUB_ID);
+      solenoid = pneumaticHub.makeDoubleSolenoid(Constants.PNEUMATIC_FORWARD_CHANNEL, Constants.PNEUMATIC_REVERSE_CHANEL);
+
     }
 
     public void Run(double speed) {
@@ -39,6 +46,17 @@ public class Intake extends SubsystemBase {
 
     }
 
+    public void Extend() {
+
+      solenoid.set(DoubleSolenoid.Value.kForward);
+
+    }
+    
+    public void Retract() {
+
+      solenoid.set(DoubleSolenoid.Value.kForward);
+      
+    }
 
 
     @Override

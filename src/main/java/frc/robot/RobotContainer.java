@@ -36,6 +36,8 @@ public class RobotContainer {
 
     private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     
@@ -104,5 +106,7 @@ public class RobotContainer {
 
         driverA.whileTrue(new RunIntake(intake));
         driverB.whileTrue(new RunIntakeBackwards(intake));
+        driverX.onTrue(new OpenIntake(intake));
+        driverY.onTrue(new CloseIntake(intake));
     }
 }

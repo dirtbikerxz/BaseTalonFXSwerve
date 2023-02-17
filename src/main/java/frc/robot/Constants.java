@@ -17,6 +17,11 @@ public final class Constants {
     public static final double INTAKE_SPEED = 0.15;
     public static int INTAKE_MOTOR_1_ID = 10;
     public static int INTAKE_MOTOR_2_ID = 11;
+    
+    public static final int PNEUMATIC_HUB_ID = 12;
+    public static final int PNEUMATIC_FORWARD_CHANNEL = 13;
+    public static final int PNEUMATIC_REVERSE_CHANEL = 14;
+
     public static final int CANDLE_PORT = 9;
 
     public static final int GRYO_OFFSET = 0;
