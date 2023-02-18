@@ -24,7 +24,8 @@ def main():
     height = camera['height']
     print("w, h from file = (%s,%s)" % (width,height))
 
-    CameraServer.startAutomaticCapture()
+    video = CameraServer.startAutomaticCapture()
+    video.setResolution(width, height)
 
     input_stream = CameraServer.getVideo()
     output_stream = CameraServer.putVideo('Processed', width, height)
