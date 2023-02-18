@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.IdleLEDS;
+import frc.robot.subsystems.LEDs;
+import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
 import frc.robot.subsystems.Elevator;
 
@@ -30,6 +34,8 @@ public class Robot extends TimedRobot {
 
   private Command resetAbsolute;
 
+  private LEDs leds = new LEDs();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -41,6 +47,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //m_AbsoluteEncoder = new AbsoluteEncoder(port);
+    
   }
 
   /**
@@ -63,7 +70,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -78,7 +86,7 @@ public class Robot extends TimedRobot {
     PathConstraints pathConstraints = new PathConstraints(4, 3);
     
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    PathPlannerTrajectory examplePath = PathPlanner.loadPath("Spinny Path", pathConstraints);
+    PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New Path", pathConstraints);
     
     // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
     // Or the path can be sampled at a given point in time for custom path following
@@ -115,8 +123,8 @@ public class Robot extends TimedRobot {
     }
   
     
- /*Reset Absolute */
- m_robotContainer.resetAbsolute();
+    /*Reset Absolute */
+    m_robotContainer.resetAbsolute();
  
 
 

@@ -8,11 +8,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDs;
 
-public class PurpleLED extends CommandBase {
+public class IdleLEDS extends CommandBase {
 
     LEDs leds; 
     /** Creates a new DriveForward. */
-    public PurpleLED(LEDs leds) {
+    public IdleLEDS(LEDs leds) {
       // Use addRequirements() here to declare subsystem dependencies.
       this.leds = leds;
       addRequirements(leds);
@@ -21,7 +21,7 @@ public class PurpleLED extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      leds.setColor(120,0,120);
+      leds.setColor(50,50,255);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
