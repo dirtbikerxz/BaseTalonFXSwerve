@@ -25,6 +25,7 @@ def main():
     print("w, h from file = (%s,%s)" % (width,height))
 
     video = CameraServer.startAutomaticCapture()
+    # video.setVideoMode(VideoMode.PixelFormat.kMJPEG, width, height, 30)
     video.setResolution(width, height)
 
     input_stream = CameraServer.getVideo()
