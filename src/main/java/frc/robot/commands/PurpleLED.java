@@ -21,7 +21,7 @@ public class PurpleLED extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      leds.setColor(138,43,226);
+      leds.setColor(120,0,120);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

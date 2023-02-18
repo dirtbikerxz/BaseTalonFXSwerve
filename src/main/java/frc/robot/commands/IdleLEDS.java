@@ -21,7 +21,7 @@ public class IdleLEDS extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      leds.setColor(70,70,255);
+      leds.setColor(50,50,255);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
