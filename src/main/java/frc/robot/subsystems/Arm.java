@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,13 +14,16 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Arm extends SubsystemBase{
+public class Arm extends SubsystemBase {
   private ProfiledPIDController controller;
   private CANSparkMax armMotor;
   private CANCoder armEncoder;
+  private double netPosition;
+  private double targetArmAngle;
 
   //private double targetArmAngle;
 
@@ -27,51 +31,44 @@ public class Arm extends SubsystemBase{
   public Arm() {
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
-    armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armMotor.setIdleMode(IdleMode.kBrake);
+    //TODO:ADDBACKSOFTLIMIT
+   armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+   armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
   
-  this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
-  this.controller.setTolerance(1, 1);
-        // TODO: Recalculate these constants
-        armMotor = new CANSparkMax(Constants.INTAKE_MOTOR_1_ID, MotorType.kBrushless);
+    this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
+    this.controller.setTolerance(1, 1);
+    armEncoder.configFactoryDefault();
+    armEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
   }
 
-  public void stop() {
-    armMotor.set(0);
+  public void setSpeed(double speed){
+    armMotor.set(speed);
   }
 
-  private double armPositionInDegrees() {
-    return getEncoderOffsetPosition() * Constants.encoderRatio;
-  }
-  //How many degrees the robot needs to rotate to get to Target Angle
-  private double Netposition = Constants.targetArmAngle-armPositionInDegrees();
-
-   //Sets the targetArmAngle in degrees */
-   public void setTargetArmAngle(double degrees) {
-     double targetArmAngle = degrees;
-   }
-  public double getEncoderAngle() {
-    return armEncoder.getAbsolutePosition();
-  }
-//Gets the angle that the encoder is set to after taking care of the offset
-  public double getEncoderOffsetPosition() {
-    return getEncoderAngle()-Constants.ENCODER_OFFSET;
+  /* Always use this method when you want the position of the arm */
+  private double getPositionInDegrees() {
+    return armEncoder.getAbsolutePosition() * Constants.ARM_ENCODER_RATIO;
   }
 
-  public void MoveArmPosition(){
-    armMotor.set(0.25);{
-    }
+  //Sets the targetArmAngle in degrees */
+  public void setTargetArmAngle(double degrees) {
+    targetArmAngle = degrees;
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     if (DriverStation.isEnabled()){
       // This method will be called once per scheduler run
       // TODO: Test that .getPosition() gives us the elevator position in inches
-      double voltage = controller.calculate(armEncoder.getPosition(), getEncoderAngle());
-      MathUtil.clamp(voltage, -12, 12);
+      // double voltage = controller.calculate(armEncoder.getPosition(), getEncoderAngle());
+      // MathUtil.clamp(voltage, -12, 12);
 
-      armMotor.setVoltage(voltage);
+      // armMotor.setVoltage(voltage);
     }
+    SmartDashboard.putNumber(C, netPosition)
+    if (armEncoder != null) {
+      SmartDashboard.putNumber("Arm Position", getPositionInDegrees());    }
   }
 }

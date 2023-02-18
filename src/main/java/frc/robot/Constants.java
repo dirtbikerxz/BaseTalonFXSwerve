@@ -16,17 +16,17 @@ public final class Constants {
 
     /* Arm Constants */
     // TODO: Change later when we have actual robot
-    public static final int ARM_MOTOR_ID = 20;
-    public static final int ARM_ENCODER_ID = 25;
+    public static final int ARM_MOTOR_ID = 12;
+    public static final int ARM_ENCODER_ID = 1;
     //TODO: Set offset
-    public static final double ENCODER_OFFSET = 0;
-    public static final double targetArmAngle = 20;
+    public static final double ARM_ENCODER_OFFSET = 300;
+    public static final double TARGET_ARM_ANGLE = 20;
 
     public static final double INTAKE_SPEED = 0.15;
     public static int INTAKE_MOTOR_1_ID = 10;
     public static int INTAKE_MOTOR_2_ID = 11;
     public static final int CANDLE_PORT = 9;
-    public static final double encoderRatio = 1.2;
+    public static final double ARM_ENCODER_RATIO = 1.2;
 
     public static final int GRYO_OFFSET = 0;
 
