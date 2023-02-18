@@ -185,6 +185,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
 
+        odometry.update(getYaw(), getModulePositions());
+
         field.setRobotPose(odometry.getPoseMeters());
     }
 }

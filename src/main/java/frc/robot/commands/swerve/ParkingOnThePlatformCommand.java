@@ -3,7 +3,7 @@ package frc.robot.commands.swerve;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
-import frc.robot.autos.exampleAuto;
+
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

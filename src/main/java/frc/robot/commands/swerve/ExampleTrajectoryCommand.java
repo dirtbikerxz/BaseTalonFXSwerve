@@ -9,6 +9,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.swerve.SwerveConfig;
@@ -54,8 +55,8 @@ public class ExampleTrajectoryCommand extends SequentialCommandGroup {
         Pose2d startingPose = new Pose2d(0, 0, new Rotation2d(0));
 
         List<Translation2d> waypoints = List.of(
-                new Translation2d(1, 1),
-                new Translation2d(2, -1));
+               new Translation2d(1, 0.7),
+               new Translation2d(2, -1));
 
         Pose2d finalPose = new Pose2d(3, 0, new Rotation2d(0));
 
@@ -71,14 +72,21 @@ public class ExampleTrajectoryCommand extends SequentialCommandGroup {
      */
     public ExampleTrajectoryCommand(SwerveDriveSubsystem swerve) {
 
+        SmartDashboard.putNumber("Foo", 2);
+
         TrajectoryConfig config = makeTrajectoryConfig();
+
+        SmartDashboard.putNumber("Foo", 3);
+
         Trajectory exampleTrajectory = makeTrajectory(config);
+
+        SmartDashboard.putNumber("Foo", 4);
 
         ProfiledPIDController thetaController =
             new ProfiledPIDController(PTHETA_CONTROLLER, 0, 0, THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-        SwerveControllerCommand swerveControllerCommand = null;
+        SwerveControllerCommand swerveControllerCommand =
              new SwerveControllerCommand(
                  exampleTrajectory,
                  swerve::getPose,

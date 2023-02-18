@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -20,6 +21,7 @@ import frc.robot.commands.swerve.AlignToAprilTagCommand;
 import frc.robot.commands.swerve.AlignToAprilTagForwardReverseCommand;
 import frc.robot.commands.swerve.AlignToAprilTagLeftRightCommand;
 import frc.robot.commands.swerve.AlignToWallCommand;
+import frc.robot.commands.swerve.ExampleTrajectoryCommand;
 import frc.robot.commands.swerve.ParkingOnThePlatformCommand;
 import frc.robot.commands.swerve.RotatingWheelsToADegreeCommand;
 
@@ -67,7 +69,13 @@ public class RobotControlMapping {
         trigger(driverController, kY, SwerveFixedSpeedCommand.buildMultiStepProgram(robot.swerveDrive));
         trigger(driverController, kStart, new ZeroGyroCommand(robot.swerveDrive));
         //trigger(driverController, kB, new AlignToWallCommand(robot, 0));
-        trigger(driverController, kB, new MountingToChargeStationIntegratedCommand(robot, driverController));
+        // trigger(driverController, kB, new MountingToChargeStationIntegratedCommand(robot, driverController));
+        SmartDashboard.putNumber("Foo", 1);
+        try {
+            trigger(driverController, kB, new ExampleTrajectoryCommand(robot.swerveDrive));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         trigger(driverController, kA, new AlignToAprilTagForwardReverseCommand(robot.swerveDrive, robot.vision));
         trigger(driverController, kX, new AlignToAprilTagCommand(robot.swerveDrive, robot.vision));
         trigger(driverController, Button.kLeftStick, new RotatingWheelsToADegreeCommand(robot, 90));
