@@ -45,7 +45,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //m_AbsoluteEncoder = new AbsoluteEncoder(port);
-    m_robotContainer.idleAnimation();
     
   }
 
