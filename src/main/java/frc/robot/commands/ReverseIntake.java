@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class RunIntakeBackwards extends CommandBase {
+public class ReverseIntake extends CommandBase {
   
     private Intake intake;
 
-    public RunIntakeBackwards(Intake intake) {
+    public ReverseIntake(Intake intake) {
 
         this.intake = intake;
 
