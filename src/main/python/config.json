@@ -1,0 +1,104 @@
+{
+    "fps": 30,
+    "height": 1080,
+    "pixel format": "mjpeg",
+    "properties": [
+        {
+            "name": "connect_verbose",
+            "value": 1
+        },
+        {
+            "name": "raw_brightness",
+            "value": 128
+        },
+        {
+            "name": "brightness",
+            "value": 50
+        },
+        {
+            "name": "raw_contrast",
+            "value": 128
+        },
+        {
+            "name": "contrast",
+            "value": 50
+        },
+        {
+            "name": "raw_saturation",
+            "value": 128
+        },
+        {
+            "name": "saturation",
+            "value": 50
+        },
+        {
+            "name": "white_balance_temperature_auto",
+            "value": true
+        },
+        {
+            "name": "raw_gain",
+            "value": 0
+        },
+        {
+            "name": "gain",
+            "value": 0
+        },
+        {
+            "name": "power_line_frequency",
+            "value": 2
+        },
+        {
+            "name": "white_balance_temperature",
+            "value": 3453
+        },
+        {
+            "name": "raw_sharpness",
+            "value": 128
+        },
+        {
+            "name": "sharpness",
+            "value": 50
+        },
+        {
+            "name": "backlight_compensation",
+            "value": 0
+        },
+        {
+            "name": "exposure_auto",
+            "value": 3
+        },
+        {
+            "name": "raw_exposure_absolute",
+            "value": 166
+        },
+        {
+            "name": "exposure_absolute",
+            "value": 7
+        },
+        {
+            "name": "exposure_auto_priority",
+            "value": true
+        },
+        {
+            "name": "pan_absolute",
+            "value": 0
+        },
+        {
+            "name": "tilt_absolute",
+            "value": 0
+        },
+        {
+            "name": "focus_absolute",
+            "value": 0
+        },
+        {
+            "name": "focus_auto",
+            "value": true
+        },
+        {
+            "name": "zoom_absolute",
+            "value": 100
+        }
+    ],
+    "width": 1920
+}

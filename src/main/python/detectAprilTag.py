@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from cscore import CameraServer
+from cscore import CameraServer, VideoMode
 from ntcore import NetworkTableInstance, EventFlags
 
 import cv2
@@ -25,8 +25,8 @@ def main():
     print("w, h from file = (%s,%s)" % (width,height))
 
     video = CameraServer.startAutomaticCapture()
-    # video.setVideoMode(VideoMode.PixelFormat.kMJPEG, width, height, 30)
-    video.setResolution(width, height)
+    video.setVideoMode(VideoMode.PixelFormat.kMJPEG, width, height, 30)
+    # video.setResolution(width, height)
 
     input_stream = CameraServer.getVideo()
     output_stream = CameraServer.putVideo('Processed', width, height)

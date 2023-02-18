@@ -2,6 +2,7 @@ package frc.robot.commands.swerve;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
@@ -11,7 +12,7 @@ public class AlignToAprilTagCommand extends CommandBase {
 
     public static final double TARGET_Z = 3;
     public static final double TOLERANCE = 0.075;
-    public static final double SPEED = Units.metersToFeet(0.1);
+    public static final double SPEED = 0.1;
     
     private final SwerveDriveSubsystem swerveDrive;
     private final VisionSubsystem vision;
