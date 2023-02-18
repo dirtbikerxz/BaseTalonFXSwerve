@@ -164,6 +164,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(-(navx.getYaw())+0);
     }
 
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Pitching", this.getPitch());
