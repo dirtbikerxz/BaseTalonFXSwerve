@@ -22,7 +22,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final Joystick driver = new Joystick(Constants.DRIVER_PORT);
+    private final Joystick operator = new Joystick(Constants.OPERATOR_PORT);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -30,16 +31,28 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton resetAbsolute = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-
     private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverLB = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverRB = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driverLStick = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton driverRStick = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final JoystickButton driverStart = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton driverBack = new JoystickButton(driver, XboxController.Button.kBack.value);
+
+    /* Operator Buttons */
+    private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton operatorX = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton operatorY = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton operatorLB = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton operatorRB = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton operatorLStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
+    private final JoystickButton operatorRStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+    private final JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -55,7 +68,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                () -> driverY.getAsBoolean()
             )
             // new DriveForward(s_Swerve)
         );
@@ -71,15 +84,10 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        swerveHandler();
         intakeHandler();
-
-        //purplelights.onTrue(new InstantCommand(( new RainbowLED(leds))));
-
-        purplelights.onTrue(new PurpleLED(leds));
-        yellowlights.onTrue(new YellowLED(leds));
+        lightHandler();
 
     }
 
@@ -104,9 +112,25 @@ public class RobotContainer {
 
     public void intakeHandler() {
 
-        driverA.whileTrue(new RunIntake(intake));
-        driverB.whileTrue(new RunIntakeBackwards(intake));
         driverX.whileTrue(new OpenIntake(intake));
-        driverY.whileTrue(new CloseIntake(intake));
+        driverA.whileTrue(new CloseIntake(intake));
+
+        driverLB.whileTrue(new RunIntake(intake));
+        driverRB.whileTrue(new ReverseIntake(intake));
+
     }
+
+    public void lightHandler() {
+
+        operatorLB.whileTrue(new PurpleLED(leds));
+        operatorRB.whileTrue(new YellowLED(leds));
+
+    }
+
+    public void swerveHandler() {
+
+        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+    }
+
 }
