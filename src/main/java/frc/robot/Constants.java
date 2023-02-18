@@ -19,8 +19,8 @@ public final class Constants {
     public static int INTAKE_MOTOR_2_ID = 11;
     
     public static final int PNEUMATIC_HUB_ID = 12;
-    public static final int PNEUMATIC_FORWARD_CHANNEL = 13;
-    public static final int PNEUMATIC_REVERSE_CHANEL = 14;
+    public static final int PNEUMATIC_FORWARD_CHANNEL = 0;
+    public static final int PNEUMATIC_REVERSE_CHANEL = 1;
 
     public static final int CANDLE_PORT = 9;
 

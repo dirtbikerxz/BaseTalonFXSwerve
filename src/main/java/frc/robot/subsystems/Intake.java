@@ -54,7 +54,7 @@ public class Intake extends SubsystemBase {
     
     public void Retract() {
 
-      solenoid.set(DoubleSolenoid.Value.kForward);
+      solenoid.set(DoubleSolenoid.Value.kReverse);
       
     }
 
