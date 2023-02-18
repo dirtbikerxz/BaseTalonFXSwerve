@@ -35,32 +35,18 @@ public class LEDs extends SubsystemBase{
         // - max brightness
         // - half speed
         // - 64 LEDs
-        RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 8);
+        RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 308);
         candle.animate(rainbowAnim);
     }
+
+
 
     public void setColor(int red, int green, int blue) {
 
         //System.out.println(candle.setLEDs(red, green, blue));
-        ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 100, Direction.Forward);
+        ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 308, Direction.Forward);
 
         System.out.println(candle.animate(animation));
-    }
-
-
-    public void purple() {
-
-        candle.setLEDs(138,43,226);
-
-    }
-
-    public void yellow() {
-
-        candle.setLEDs(255,255,0);
-    }
-
-    public void clear() {
-        candle.setLEDs(0,0,0);
     }
     
 }

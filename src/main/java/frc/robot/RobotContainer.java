@@ -62,6 +62,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        leds.setDefaultCommand(new IdleLEDS(leds));
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -131,6 +132,10 @@ public class RobotContainer {
 
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+    }
+
+    public void idleAnimation() {
+        new InstantCommand(() -> new IdleLEDS(leds));
     }
 
 }
