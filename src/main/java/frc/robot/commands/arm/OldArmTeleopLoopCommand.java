@@ -1,7 +1,7 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.arm.OldArmSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kLeftY;
 import static edu.wpi.first.wpilibj.XboxController.Axis.kRightY;
 
-public class ArmTeleopLoopCommand extends CommandBase {
+public class OldArmTeleopLoopCommand extends CommandBase {
 
-    private final ArmSubsystem arm;
+    private final OldArmSubsystem arm;
     private final XboxController inputController;
     private boolean done;
 
@@ -28,7 +28,7 @@ public class ArmTeleopLoopCommand extends CommandBase {
         return restrictedOutput;
     }
 
-    public ArmTeleopLoopCommand(ArmSubsystem armSubsystem, XboxController xboxController){
+    public OldArmTeleopLoopCommand(OldArmSubsystem armSubsystem, XboxController xboxController){
 
         this.arm = armSubsystem;
         this.inputController = xboxController;

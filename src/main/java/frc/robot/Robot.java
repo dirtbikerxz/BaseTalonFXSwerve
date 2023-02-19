@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutonomousCommand;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.arm.OldArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
 
     public SwerveDriveSubsystem swerveDrive;
     public HandSubsystem hand;
-    public ArmSubsystem arm;
+    public OldArmSubsystem arm;
     public VisionSubsystem vision;
     public AutonomousCommand autonomousCommand;
 

@@ -1,87 +1,86 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.arm.ArmSubsystem;
 
-import frc.robot.subsystems.ArmSubsystem;
+public class ArmPresetCommand extends CommandBase {
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-public class ArmPresetCommand extends CommandBase{
-
-    public static final int TRAVEL_PRESET = 0;
-    public static final int PICKUP_PRESET = 1;
+    // TODO calculate preset positions
+    public static final double [] TRAVEL = { 150.0, -150.0 };
+    public static final double [] PICKUP = { 2.0, 3.0 };
 
     // TODO tune me with the actual arm
-    public static final double MOVE_FAST = 0.8;
-    public static final double MOVE_SLOW = 0.15;
+    public static final double ROTATE_FAST = 0.8;
+    public static final double ROTATE_SLOW = 0.2;
+    public static final double ROTATE_TRANSITION_POINT = 35;
+    public static final double ROTATE_TOLERANCE = 5;
 
-    public static final double [][] PRESETS = {
-        { 150, -150 },   // preset values for "travel mode"
-        { 2.0, 3.0 }    // preset values for "pickup" mode
-    };
+    // TODO tune me with the actual arm
+    public static final double EXTEND_FAST = 0.8;
+    public static final double EXTEND_SLOW = 0.2;
+    public static final double EXTEND_TRANSITION_POINT = 35;
+    public static final double EXTEND_TOLERANCE = 5;
 
-    private double indicatedPositionRotating;
-    private double indicatedPositionExtending;
     private final ArmSubsystem arm;
+    private final double targetRotation;
+    private final double targetExtension;
     private boolean done;
 
-    public ArmPresetCommand(ArmSubsystem arm, int which){
-
+    public ArmPresetCommand(ArmSubsystem arm, double [] preset) {
         this.arm = arm;
-        this.indicatedPositionExtending = PRESETS[which][0];
-        this.indicatedPositionRotating = PRESETS[which][1];
-
+        this.targetRotation = preset[0];
+        this.targetExtension = preset[1];
         addRequirements(arm);
-
     }
 
-    private boolean withinRangeOfAcceptance(double wantedValue, double toleranceWidth, double input ){
-        if (input < wantedValue + toleranceWidth && input > wantedValue - toleranceWidth){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    @Override
     public void initialize() {
         done = false;
     }
 
-    public void execute(){
+    @Override
+    public void execute() {
 
-        double dispositionRotating = indicatedPositionRotating - arm.rotatingEncoder.getPosition();
-        double dispositionExtending = indicatedPositionExtending - arm.extendingEncoder.getPosition();
-
-        if (withinRangeOfAcceptance(indicatedPositionExtending, 0.5, arm.extendingEncoder.getPosition()) &&
-         withinRangeOfAcceptance(indicatedPositionRotating, 0.5, arm.rotatingEncoder.getPosition())) {
-
-            done = true;
-
-        } else {    
-
-            if (dispositionRotating > 35) {
-                arm.rotatingMotor.set(MOVE_FAST);
-            } else if (dispositionRotating < -35){
-                arm.rotatingMotor.set(-MOVE_FAST);
-            } else if (dispositionRotating > 0){
-                arm.rotatingMotor.set(MOVE_SLOW);
-            } else if (dispositionRotating < 0){
-                arm.rotatingMotor.set(-MOVE_SLOW);
-            }
-
-            if (dispositionExtending > 35) {
-                arm.extendingMotor.set(MOVE_FAST);
-            } else if (dispositionExtending < -35){
-                arm.extendingMotor.set(-MOVE_FAST);
-            } else if (dispositionExtending > 0){
-                arm.extendingMotor.set(MOVE_SLOW);
-            } else if (dispositionExtending < 0){
-                arm.extendingMotor.set(-MOVE_SLOW);
-            }
+        double rotationError = targetRotation - arm.getRotatorPosition();
+        double percentRotate = calculateRotationSpeed(Math.abs(rotationError));
+        if (rotationError > 0.0) {
+            percentRotate = -percentRotate;
         }
+
+        double extensionError = targetExtension - arm.getExtenderPosition();
+        double percentExtend = calculateExtensionSpeed(Math.abs(extensionError));
+        if (extensionError > 0.0) {
+            percentExtend = -percentExtend;
+        }
+
+        arm.moveAt(percentRotate, percentExtend);
+        done = (percentRotate == 0.0 && percentExtend == 0.0);
     }
 
+    @Override
     public boolean isFinished() {
         return done;
+    }
+
+    // TODO replace me with a ratio or a PID controller?
+    private double calculateRotationSpeed(double absoluteError) {
+        if (absoluteError < ROTATE_TOLERANCE) {
+            return 0.0;
+        }
+        if (absoluteError < ROTATE_TRANSITION_POINT) {
+            return ROTATE_SLOW;
+        }
+        return ROTATE_FAST;
+    }
+
+    // TODO replace me with a ratio or a PID controller?
+    private double calculateExtensionSpeed(double absoluteError) {
+        if (absoluteError < EXTEND_TOLERANCE) {
+            return 0.0;
+        }
+        if (absoluteError < EXTEND_TRANSITION_POINT) {
+            return EXTEND_SLOW;
+        }
+        return EXTEND_FAST;
     }
 }

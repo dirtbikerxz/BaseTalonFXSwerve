@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.arm;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ArmSubsystem extends SubsystemBase {
+public class OldArmSubsystem extends SubsystemBase {
 
     public static final double TRAVEL_RANGE_ROTATING = 300;
     public static final double TRAVEL_RANGE_EXTEDING = 300;
@@ -28,7 +28,7 @@ public class ArmSubsystem extends SubsystemBase {
     public double MAXIMUM_POSITION_EXTENDING;
     public double MININUM_POSITION_EXTENDING;
 
-    public ArmSubsystem() {
+    public OldArmSubsystem() {
 
         rotatingMotor = new CANSparkMax(1, MotorType.kBrushless);
         rotatingMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);

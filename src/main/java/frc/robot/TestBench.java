@@ -4,10 +4,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.arm.OldArmSubsystem;
 import frc.robot.subsystems.HandSubsystem;
-
-import frc.robot.commands.arm.ArmTeleopLoopCommand;
 
 /**
  * This is the test bench
@@ -17,7 +15,7 @@ public class TestBench extends TimedRobot {
     public static final int CONTROLLER_PORT = 0;
 
     public HandSubsystem hand;
-    public ArmSubsystem arm;
+    public OldArmSubsystem arm;
 
     @Override
     public void robotInit() {
