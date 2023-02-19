@@ -113,11 +113,11 @@ public class RobotContainer {
 
     public void intakeHandler() {
 
-        driverX.whileTrue(new OpenIntake(intake));
-        driverA.whileTrue(new CloseIntake(intake));
+        driverLB.whileTrue(new OpenIntake(intake));
+        driverRB.whileTrue(new CloseIntake(intake));
 
-        driverLB.whileTrue(new RunIntake(intake));
-        driverRB.whileTrue(new ReverseIntake(intake));
+        driverA.whileTrue(new RunIntake(intake));
+        driverX.whileTrue(new ReverseIntake(intake));
 
     }
 

@@ -14,13 +14,13 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double MAX_ENCODER_VOLTAGE = 4.926;
 
-    public static final double INTAKE_SPEED = 0.15;
+    public static final double INTAKE_SPEED = 0.50;
     public static int INTAKE_MOTOR_1_ID = 10;
     public static int INTAKE_MOTOR_2_ID = 11;
     
-    public static final int PNEUMATIC_HUB_ID = 12;
-    public static final int PNEUMATIC_FORWARD_CHANNEL = 0;
-    public static final int PNEUMATIC_REVERSE_CHANEL = 1;
+    public static final int PNEUMATIC_HUB_ID = 15;
+    public static final int PNEUMATIC_FORWARD_CHANNEL = 14;
+    public static final int PNEUMATIC_REVERSE_CHANEL = 15;
 
     public static final int CANDLE_PORT = 9;
 
