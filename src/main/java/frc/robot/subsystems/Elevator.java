@@ -35,12 +35,12 @@ public class Elevator extends SubsystemBase {
         elevatorMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.FORWARD_ELEVATOR_LIMIT);
         elevatorMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.REVERSE_ELEVATOR_LIMIT);
         elevatorEncoder = elevatorMotor.getEncoder(); 
-        elevatorMotor.setIdleMode(IdleMode.kCoast);
+        elevatorMotor.setIdleMode(IdleMode.kBrake);
 
         /*Rate of Speed (Based on 930 Code) */
 
         // double p = SmartDashboard.getNumber("p", 0);
-        this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
+        this.controller = new ProfiledPIDController(Constants.ELEVATOR_P, Constants.ELEVATOR_I, Constants.ELEVATOR_D, new Constraints(80, 1000));
         this.controller.setTolerance(1, 1);
         // TODO: Recalculate these constants
         //this.ff = new ElevatorFeedforward(0, 0.16, 0.18, 0.02);
@@ -56,18 +56,27 @@ public class Elevator extends SubsystemBase {
     }
 
     public void extend() {
-        elevatorMotor.set(0.25);
-        SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
+
+        targetElevatorPosition = targetElevatorPosition + Constants.MANUAL_ELEVATOR_SPEED;
+
+        if (targetElevatorPosition >= Constants.FORWARD_ELEVATOR_LIMIT) {
+            targetElevatorPosition = Constants.FORWARD_ELEVATOR_LIMIT;
+        }
+
     }
 
     public void retract() {
-        elevatorMotor.set(-0.25);
-        SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
+
+        targetElevatorPosition = targetElevatorPosition - Constants.MANUAL_ELEVATOR_SPEED;
+
+        if (targetElevatorPosition <= Constants.REVERSE_ELEVATOR_LIMIT) {
+            targetElevatorPosition = Constants.REVERSE_ELEVATOR_LIMIT;
+        }
+        
     }
 
     public void stop() {
         elevatorMotor.set(0);
-        SmartDashboard.putNumber("where_robotis", elevatorEncoder.getPosition());
     } 
     
     public double getEncoderPosition() {
@@ -92,12 +101,12 @@ public class Elevator extends SubsystemBase {
             MathUtil.clamp(voltage, -12, 12);
 
             elevatorMotor.setVoltage(voltage);
-
+            
             SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
-        SmartDashboard.putNumber("Elevator Encoder Value: ", elevatorEncoder.getPosition());
-        SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
+        SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
+        // SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
         //SmartDashboard.putNumber("Elevator feedforward", feedforward);
     }
 }

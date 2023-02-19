@@ -41,6 +41,10 @@ public class RobotContainer {
     private final JoystickButton driverRStick = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton driverStart = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final JoystickButton driverBack = new JoystickButton(driver, XboxController.Button.kBack.value);
+    private final POVButton driverDpadUp = new POVButton(driver, 0);
+    private final POVButton driverDpadRight = new POVButton(driver, 90);
+    private final POVButton driverDpadDown = new POVButton(driver, 180);
+    private final POVButton driverDpadLeft = new POVButton(driver, 270);
 
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -53,6 +57,10 @@ public class RobotContainer {
     private final JoystickButton operatorRStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
     private final JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
     private final JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
+    private final POVButton operatorDpadUp = new POVButton(operator, 0);
+    private final POVButton operatorDpadRight = new POVButton(operator, 90);
+    private final POVButton operatorDpadDown = new POVButton(operator, 180);
+    private final POVButton operatorDpadLeft = new POVButton(operator, 270);
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -90,6 +98,7 @@ public class RobotContainer {
         swerveHandler();
         intakeHandler();
         lightHandler();
+        elevatorHandler();
 
         // driverA.whileTrue(new ExtendElevator(elevator));
         // driverB.whileTrue(new RetractElevator(elevator));
@@ -143,11 +152,13 @@ public class RobotContainer {
     public void elevatorHandler() {
 
         //positions
-        operatorX.whileTrue(new PositionElevator(elevator, 15));
-        operatorY.whileTrue(new PositionElevator(elevator, 30));
-        operatorA.whileTrue(new PositionElevator(elevator, Constants.REVERSE_ELEVATOR_LIMIT));
+        operatorX.whileTrue(new PositionElevator(elevator, Constants.MID_LEVEL));
+        operatorY.whileTrue(new PositionElevator(elevator, Constants.HIGH_LEVEL));
+        operatorA.whileTrue(new PositionElevator(elevator, Constants.LOW_LEVEL));
 
         //manual
-        operator
+        operatorDpadUp.whileTrue(new ManualUp(elevator));
+        operatorDpadDown.whileTrue(new ManualDown(elevator));
+
     }
 }
