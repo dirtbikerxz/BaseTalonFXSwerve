@@ -33,8 +33,10 @@ public class Arm extends SubsystemBase {
     armEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
     armMotor.setIdleMode(IdleMode.kBrake);
     //TODO:ADDBACKSOFTLIMIT
-   armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
-   armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
+   armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+   armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+   armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ARM_FORWARD_LIMIT);
+   armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ARM_REVERSE_LIMIT);
   
     this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
     this.controller.setTolerance(1, 1);

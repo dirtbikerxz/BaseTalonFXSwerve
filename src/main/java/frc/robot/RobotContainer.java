@@ -112,4 +112,8 @@ public class RobotContainer {
         driverA.whileTrue(new RunIntake(intake));
         driverB.whileTrue(new RunIntakeBackwards(intake));
     }
+
+    public void armHandler() {
+        
+    }
 }
