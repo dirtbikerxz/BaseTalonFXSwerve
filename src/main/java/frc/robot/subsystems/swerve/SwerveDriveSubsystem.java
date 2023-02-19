@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -51,13 +52,28 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         for (SwerveModule module : swerveModules){
             module.resetToAbsolute();
         }
-
         
         setKinematics(SwerveConfig.defaultKinematics);
         maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed;
         maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed;
         maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed;
         robotRelative = false;
+
+        SmartDashboard.putData("Swerve Gyro", builder -> {
+            builder.addBooleanProperty("Calibrated", navx::isMagnetometerCalibrated, null);
+            builder.addDoubleProperty("Pitch", () -> getPitch(), null);
+            builder.addDoubleProperty("Yaw", () -> getYaw().getDegrees(), null);
+        });
+        SmartDashboard.putData("Swerve Max Speeds", builder -> {
+            builder.addDoubleProperty("Angular", () -> maxAngularSpeed, val -> maxAngularSpeed = val);
+            builder.addDoubleProperty("Linear", () -> maxLinearSpeed, val -> maxLinearSpeed = val);
+            builder.addDoubleProperty("Wheel", () -> maxWheelSpeed, val -> maxWheelSpeed = val);
+        });
+        SmartDashboard.putData("Swerve Odometry", builder -> {
+            builder.addDoubleProperty("Heading", () -> odometry.getPoseMeters().getRotation().getDegrees(), null);
+            builder.addDoubleProperty("X", () -> Units.metersToFeet(odometry.getPoseMeters().getX()), null);
+            builder.addDoubleProperty("Y", () -> Units.metersToFeet(odometry.getPoseMeters().getY()), null);
+        });
     }
 
     public SwerveModulePosition [] getModulePositions() {
@@ -170,23 +186,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pitching", this.getPitch());
-        
-        SmartDashboard.putNumber("Max Angular Speed", maxAngularSpeed);
-        SmartDashboard.putNumber("Max Linear Speed", maxLinearSpeed);
-        SmartDashboard.putNumber("Max Wheel Speed", maxWheelSpeed);
-
-        SmartDashboard.putNumber("Yaw", getYaw().getDegrees());
-        SmartDashboard.putBoolean("Mag Cal?", navx.isMagnetometerCalibrated());
-
-        for (SwerveModule mod : swerveModules) {
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
-
         odometry.update(getYaw(), getModulePositions());
-
         field.setRobotPose(odometry.getPoseMeters());
     }
 }
