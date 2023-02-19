@@ -185,6 +185,12 @@ def main():
 
         fps = 1 / processing_time
         cv2.putText(output_img, str(round(fps, 1)), (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255))
-        output_stream.putFrame(output_img)
+        
+        # Resize output image for improved streaming bandwidth
+        output_size = [320,240]
+        output_img_small = cv2.resize(output_img, (output_size), interpolation=cv2.INTER_AREA)
+        
+        output_stream.putFrame(output_img_small)
+
 
 main()
