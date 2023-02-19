@@ -20,13 +20,6 @@ public class Arm2TeleopCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double r = get(rotateSupplier);
-        double e = get(extendSupplier);
-        arm.moveAt(r, e);
-    }
-
-    private double get(DoubleSupplier supplier) {
-        double val = supplier.getAsDouble();
-        return val * val * val;
+        arm.moveAt(rotateSupplier.getAsDouble(), extendSupplier.getAsDouble());
     }
 }
