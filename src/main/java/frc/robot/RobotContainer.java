@@ -22,42 +22,65 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final Joystick driver = new Joystick(Constants.DRIVER_PORT);
+    private final Joystick operator = new Joystick(Constants.OPERATOR_PORT);
 
     /* Drive Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = XboxController.Axis.kRightX.value;
-    private final POVButton dPADButtonDownArm = new POVButton(driver, 180);
-    private final POVButton dPADButtonUpArm = new POVButton(driver, 0);
-    private final POVButton dPADButtonRighPovButton = new POVButton(driver, 270);
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton resetAbsolute = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final int driverLeftY = XboxController.Axis.kLeftY.value;
+    private final int driverLeftX = XboxController.Axis.kLeftX.value;
+    private final int driverRightX = XboxController.Axis.kRightX.value;
 
+    /* Driver Buttons */
     private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton purplelights = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton yellowlights = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driverLB = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverRB = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driverLStick = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton driverRStick = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final JoystickButton driverStart = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton driverBack = new JoystickButton(driver, XboxController.Button.kBack.value);
+    private final POVButton driverDpadUp = new POVButton(driver, 0);
+    private final POVButton driverDpadRight = new POVButton(driver, 90);
+    private final POVButton driverDpadDown = new POVButton(driver, 180);
+    private final POVButton driverDpadLeft = new POVButton(driver, 270);
+
+    /* Operator Buttons */
+    private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton operatorX = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton operatorY = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton operatorLB = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton operatorRB = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton operatorLStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
+    private final JoystickButton operatorRStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+    private final JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
+    private final POVButton operatorDpadUp = new POVButton(operator, 0);
+    private final POVButton operatorDpadRight = new POVButton(operator, 90);
+    private final POVButton operatorDpadDown = new POVButton(operator, 180);
+    private final POVButton operatorDpadLeft = new POVButton(operator, 270);
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final LEDs leds = new LEDs();
     private final Intake intake = new Intake();
     private final Arm arm = new Arm();
+    private final Elevator elevator = new Elevator();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        arm.setDefaultCommand(new MoveArmManual(arm, driver));
+        //arm.setDefaultCommand(new MoveArmManual(arm, driver));
+        leds.setDefaultCommand(new IdleLEDS(leds));
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                () -> -driver.getRawAxis(driverLeftY), 
+                () -> -driver.getRawAxis(driverLeftX), 
+                () -> -driver.getRawAxis(driverRightX), 
+                () -> driverStart.getAsBoolean()
             )
             // new DriveForward(s_Swerve)
         );
@@ -73,21 +96,16 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        resetAbsolute.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        swerveHandler();
         intakeHandler();
+        lightHandler();
+        elevatorHandler();
+        armHandler();
 
-        //purplelights.onTrue(new InstantCommand(( new RainbowLED(leds))));
-
-        purplelights.onTrue(new PurpleLED(leds));
-        yellowlights.onTrue(new YellowLED(leds));
-        dPADButtonUpArm.onTrue(new MoveArmUp(arm));
-        dPADButtonDownArm.onTrue(new MoveArmDown(arm));
-        dPADButtonRighPovButton.onTrue(new MoveToLowPositiom(arm));
-
+        // driverA.whileTrue(new ExtendElevator(elevator));
+        // driverB.whileTrue(new RetractElevator(elevator));
     }
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -109,11 +127,47 @@ public class RobotContainer {
 
     public void intakeHandler() {
 
+        driverLB.whileTrue(new OpenIntake(intake));
+        driverRB.whileTrue(new CloseIntake(intake));
+
         driverA.whileTrue(new RunIntake(intake));
-        driverB.whileTrue(new RunIntakeBackwards(intake));
+        driverX.whileTrue(new ReverseIntake(intake));
+
+    }
+
+    public void lightHandler() {
+
+        operatorLB.whileTrue(new PurpleLED(leds));
+        operatorRB.whileTrue(new YellowLED(leds));
+
+    }
+
+    public void swerveHandler() {
+
+        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+    }
+
+    public void idleAnimation() {
+        new InstantCommand(() -> new IdleLEDS(leds));
+    }
+
+    public void elevatorHandler() {
+
+        //positions
+        operatorX.whileTrue(new PositionElevator(elevator, Constants.MID_LEVEL));
+        operatorY.whileTrue(new PositionElevator(elevator, Constants.HIGH_LEVEL));
+        operatorA.whileTrue(new PositionElevator(elevator, Constants.LOW_LEVEL));
+
+        //manual
+        operatorDpadUp.whileTrue(new ManualUp(elevator));
+        operatorDpadDown.whileTrue(new ManualDown(elevator));
+
     }
 
     public void armHandler() {
         
+        operatorDpadLeft.whileTrue(new MoveArmUp(arm));
+        operatorDpadRight.whileTrue(new MoveArmDown(arm));
     }
 }

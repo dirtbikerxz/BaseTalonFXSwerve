@@ -4,37 +4,38 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Elevator;
 
-public class YellowLED extends CommandBase {
+public class ExtendElevator extends CommandBase {
+  
+    Elevator elevator;
 
-    LEDs leds; 
-    /** Creates a new DriveForward. */
-    public YellowLED(LEDs leds) {
-      // Use addRequirements() here to declare subsystem dependencies.
-      this.leds = leds;
-      addRequirements(leds);
+    /** Creates a new ExtendElevator. */
+    public ExtendElevator(Elevator elevator) {
+        this.elevator = elevator;
+        addRequirements(elevator);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-      leds.setColor(255,150,0);
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        elevator.extend();
+    }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        elevator.stop();
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return false;
+        return false;
     }
-}   
+}

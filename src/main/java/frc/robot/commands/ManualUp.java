@@ -4,19 +4,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Elevator;
 
-public class DriveForward extends CommandBase {
-
-  Swerve swerve;
-
-  /** Creates a new DriveForward. */
-  public DriveForward(Swerve swerve) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.swerve = swerve;
-    addRequirements(swerve);
+public class ManualUp extends CommandBase {
+  Elevator elevator;
+  /** Creates a new GotoHigh. */
+  public ManualUp(Elevator elevator) {
+    // Use addRequirements() here to declare
+    this.elevator = elevator;
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -26,12 +23,15 @@ public class DriveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerve.drive(new Translation2d(0.5, 0), 0, true, true);
+    elevator.extend();
+    System.out.println("go up");
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    elevator.stop();
+  }
 
   // Returns true when the command should end.
   @Override

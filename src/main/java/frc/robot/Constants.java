@@ -24,16 +24,38 @@ public final class Constants {
     public static final double ARM_ENCODER_OFFSET = 360-264;
     public static final double TARGET_ARM_ANGLE = 20;
 
-    public static final double INTAKE_SPEED = 0.15;
+    public static final double INTAKE_SPEED = 0.30;
     public static int INTAKE_MOTOR_1_ID = 10;
     public static int INTAKE_MOTOR_2_ID = 11;
+    
+    public static final int PNEUMATIC_HUB_ID = 15;
+    public static final int PNEUMATIC_FORWARD_CHANNEL = 14;
+    public static final int PNEUMATIC_REVERSE_CHANEL = 15;
+
     public static final int CANDLE_PORT = 9;
     public static final double ARM_ENCODER_RATIO = 1.2;
 
+    /* Elevator Constants */
+    public static final int FORWARD_ELEVATOR_LIMIT = 26;
+    public static final int REVERSE_ELEVATOR_LIMIT = 2;
+    public static final int ELEVATOR_MOTOR_ID = 16;
+    public static final double ELEVATOR_GEAR_RATIO = 9.0;
+    public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
+    public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
+    public static final double MANUAL_ELEVATOR_SPEED = 0.50;
+    public static final double ELEVATOR_P = 0.5;
+    public static final double ELEVATOR_I = 0.0;
+    public static final double ELEVATOR_D = 0.0;
+    public static final int HIGH_LEVEL = 26;
+    public static final int MID_LEVEL = 15;
+    public static final int LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
+
     public static final int GRYO_OFFSET = 0;
 
+    public static final int DRIVER_PORT = 0;
+    public static final int OPERATOR_PORT = 1;
+
     public static final class Swerve {
-        //TODO: Fixme
         public static final int pigeonID = 8;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 

@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class RunIntakeBackwards extends CommandBase {
+public class OpenIntake extends CommandBase {
   
     private Intake intake;
 
-    public RunIntakeBackwards(Intake intake) {
+    public OpenIntake(Intake intake) {
 
         this.intake = intake;
 
@@ -25,8 +25,8 @@ public class RunIntakeBackwards extends CommandBase {
     @Override
     public void initialize() {
 
-        intake.Run(-Constants.INTAKE_SPEED);
-
+        intake.Retract();
+        
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -36,17 +36,11 @@ public class RunIntakeBackwards extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-
-        intake.Stop();
-        
-    }
+    public void end(boolean interrupted) {}
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-
-        //neo.StopMotor();
 
         return false;
     }
