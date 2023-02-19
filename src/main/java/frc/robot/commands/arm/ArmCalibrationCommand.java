@@ -1,59 +1,30 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.arm.ArmSubsystem;
 
 public class ArmCalibrationCommand extends CommandBase {
-    public static final int calibrateExtension = 0;
-    public static final int calibrateRotation = 1;
-    public final int which;
-    private final ArmSubsystem armSubsystem;
-    public boolean done;
-    
-    
-    
-    public ArmCalibrationCommand(ArmSubsystem armSubsystem, int which) {
-        this.armSubsystem = armSubsystem;
-        this.which = which;
-        
+
+    public static final double ROTATE_SPEED = 0.2;
+    public static final double EXTEND_SPEED = 0.2;
+
+    private final ArmSubsystem arm;
+    private boolean done;
+
+    public ArmCalibrationCommand(ArmSubsystem arm) {
+        this.arm = arm;
+        addRequirements(arm);
     }
-    
-    
+
     @Override
     public void initialize() {
         done = false;
+        arm.clearLimits();
     }
-    
+
     @Override
     public void execute() {
-
-        if (which == calibrateExtension) {
-            if (armSubsystem.isExtenderLimitPressed()) {
-                armSubsystem.MININUM_POSITION_EXTENDING = armSubsystem.extendingEncoder.getPosition();
-                armSubsystem.MAXIMUM_POSITION_EXTENDING =
-                        armSubsystem.MININUM_POSITION_EXTENDING +
-                        ArmSubsystem.TRAVEL_RANGE_EXTEDING;
-                armSubsystem.extendingMotor.set(0);
-                armSubsystem.extendingEncoder.setPosition(0);
-                done = true;
-            } else {
-                armSubsystem.extendingMotor.set(-0.2);
-            }
-        }
-
-        if (which == calibrateRotation) {
-            if (armSubsystem.isRotatorLimitPressed()) {
-                armSubsystem.MININUM_POSITION_ROTATING = armSubsystem.rotatingEncoder.getPosition();
-                armSubsystem.MAXIMUM_POSITION_ROTATING =
-                        armSubsystem.MININUM_POSITION_ROTATING +
-                        ArmSubsystem.TRAVEL_RANGE_ROTATING;
-                armSubsystem.rotatingMotor.set(0);
-                armSubsystem.rotatingEncoder.setPosition(0);
-                done = true;
-            } else {
-                armSubsystem.rotatingMotor.set(-0.2);
-            }
-        }
+        done = arm.calibrate(ROTATE_SPEED, EXTEND_SPEED);
     }
 
     @Override
