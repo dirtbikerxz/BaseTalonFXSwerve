@@ -10,10 +10,6 @@ public class AlignToWallCommand extends CommandBase {
     private double directionInitial;
     private boolean done;
     private double wantedDirection;
-    private double northDirection = 0;
-    private double eastDirection = -90;
-    private double southDirection = 180;
-    private double westDirection = 90;
     private double toleration = 1;
     private double directionDisposition;
 
