@@ -19,7 +19,7 @@ public final class Constants {
     public static final int ARM_MOTOR_ID = 12;
     public static final int ARM_ENCODER_ID = 1;
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 300;
+    public static final double ARM_ENCODER_OFFSET = 112;
     public static final double TARGET_ARM_ANGLE = 20;
 
     public static final double INTAKE_SPEED = 0.15;

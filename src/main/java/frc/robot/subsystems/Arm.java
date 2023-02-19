@@ -48,7 +48,7 @@ public class Arm extends SubsystemBase {
 
   /* Always use this method when you want the position of the arm */
   private double getPositionInDegrees() {
-    return armEncoder.getAbsolutePosition() * Constants.ARM_ENCODER_RATIO;
+    return armEncoder.getAbsolutePosition() / Constants.ARM_ENCODER_RATIO;
   }
 
   //Sets the targetArmAngle in degrees */
@@ -67,8 +67,7 @@ public class Arm extends SubsystemBase {
 
       // armMotor.setVoltage(voltage);
     }
-    SmartDashboard.putNumber(C, netPosition)
-    if (armEncoder != null) {
-      SmartDashboard.putNumber("Arm Position", getPositionInDegrees());    }
+    SmartDashboard.putNumber("CANCoder", armEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber("Arm Position", getPositionInDegrees());
   }
 }
