@@ -17,6 +17,9 @@ public class ArmUnit {
     public final DigitalInput limit;
     public double min;
     public double max;
+    public double currentHeight;
+    public double currentWidth;
+    public double currentLength;
 
     public ArmUnit(int motorId, int limitId, double factor, boolean inverted) {
 

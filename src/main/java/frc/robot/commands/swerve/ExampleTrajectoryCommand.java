@@ -9,8 +9,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.swerve.SwerveConfig;
@@ -73,16 +71,8 @@ public class ExampleTrajectoryCommand extends SequentialCommandGroup {
      */
     public ExampleTrajectoryCommand(SwerveDriveSubsystem swerve) {
 
-        SmartDashboard.putNumber("Foo", 2);
-
         TrajectoryConfig config = makeTrajectoryConfig();
-
-        SmartDashboard.putNumber("Foo", 3);
-
         Trajectory exampleTrajectory = makeTrajectory(config);
-
-        SmartDashboard.putNumber("Foo", 4);
-
         ProfiledPIDController thetaController =
             new ProfiledPIDController(PTHETA_CONTROLLER, 0, 0, THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
