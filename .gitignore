@@ -161,4 +161,8 @@ bin/
 # Simulation GUI and other tools window save file
 *-window.json
 
+# IntelliJ
 .idea
+*.ipr
+*.iml
+*.iws
