@@ -25,8 +25,8 @@ public class AutonomousCommand extends SequentialCommandGroup {
         robot.swerveDrive.zeroGyro();
 
         ParallelCommandGroup g = new ParallelCommandGroup(
-            new AlignToWallCommand(robot, 0),
-            new OldArmPresetCommand(robot.arm, OldArmPresetCommand.TRAVEL_PRESET)
+            new AlignToWallCommand(robot, 0)
+            // new OldArmPresetCommand(robot.arm, OldArmPresetCommand.TRAVEL_PRESET)
         );
 
 
