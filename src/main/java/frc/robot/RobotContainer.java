@@ -72,16 +72,16 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         leds.setDefaultCommand(new IdleLEDS(leds));
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(driverLeftY), 
-                () -> -driver.getRawAxis(driverLeftX), 
-                () -> -driver.getRawAxis(driverRightX), 
-                () -> driverStart.getAsBoolean()
-            )
-            // new DriveForward(s_Swerve)
-        );
+        // s_Swerve.setDefaultCommand(
+        //     new TeleopSwerve(
+        //         s_Swerve, 
+        //         () -> -driver.getRawAxis(driverLeftY), 
+        //         () -> -driver.getRawAxis(driverLeftX), 
+        //         () -> -driver.getRawAxis(driverRightX), 
+        //         () -> driverStart.getAsBoolean()
+        //     )
+        //     // new DriveForward(s_Swerve)
+        // );
 
         // Configure the button bindings
         configureButtonBindings();
@@ -99,6 +99,7 @@ public class RobotContainer {
         intakeHandler();
         lightHandler();
         elevatorHandler();
+        operatorB.whileTrue(new AutoBalance(s_Swerve));
 
         // driverA.whileTrue(new ExtendElevator(elevator));
         // driverB.whileTrue(new RetractElevator(elevator));
