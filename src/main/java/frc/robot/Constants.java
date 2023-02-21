@@ -20,8 +20,9 @@ public final class Constants {
     public static final int ARM_ENCODER_ID = 1;
     public static final int ARM_FORWARD_LIMIT = 144;
     public static final int ARM_REVERSE_LIMIT = 0;
+    public static final double ARM_GEAR_RATIO = 150.0;
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-264;
+    public static final double ARM_ENCODER_OFFSET = 360-6.2;
     public static final double TARGET_ARM_ANGLE = 20;
 
     public static final double INTAKE_SPEED = 0.30;

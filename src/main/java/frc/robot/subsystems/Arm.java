@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -21,18 +23,19 @@ import frc.robot.Constants;
 public class Arm extends SubsystemBase {
   private ProfiledPIDController controller;
   private CANSparkMax armMotor;
-  private CANCoder armEncoder;
+  private CANCoder armCANEncoder;
   private double netPosition;
   private double targetArmAngle;
+  // public RelativeEncoder armRelativeEncoder;
 
   //private double targetArmAngle;
 
   /** Creates a new Arm. */
   public Arm() {
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
-    armEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
+    armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
     armMotor.setIdleMode(IdleMode.kBrake);
-    //TODO:ADDBACKSOFTLIMIT
+
    armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
    armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ARM_FORWARD_LIMIT);
@@ -40,8 +43,16 @@ public class Arm extends SubsystemBase {
   
     this.controller = new ProfiledPIDController(2, 0, 0, new Constraints(80, 1000));
     this.controller.setTolerance(1, 1);
-    armEncoder.configFactoryDefault();
-    armEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
+    armCANEncoder.configFactoryDefault();
+    armCANEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
+    armCANEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    
+    // armRelativeEncoder = armMotor.getEncoder();
+    // armRelativeEncoder.setPosition(0.0);
+    // armRelativeEncoder.setPositionConversionFactor(1.0);
+    // armRelativeEncoder.setPosition(getPositionInDegrees());
+    // armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+    // armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
   }
 
   public void setSpeed(double speed){
@@ -50,7 +61,7 @@ public class Arm extends SubsystemBase {
 
   /* Always use this method when you want the position of the arm */
   private double getPositionInDegrees() {
-    return armEncoder.getAbsolutePosition() / Constants.ARM_ENCODER_RATIO;
+    return armCANEncoder.getAbsolutePosition() / Constants.ARM_ENCODER_RATIO;
   }
 
   //Sets the targetArmAngle in degrees */
@@ -69,7 +80,8 @@ public class Arm extends SubsystemBase {
 
       // armMotor.setVoltage(voltage);
     }
-    SmartDashboard.putNumber("CANCoder", armEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position", getPositionInDegrees());
+    // SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
   }
 }
