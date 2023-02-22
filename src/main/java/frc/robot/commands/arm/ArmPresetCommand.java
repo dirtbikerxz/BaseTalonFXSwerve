@@ -6,8 +6,13 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 public class ArmPresetCommand extends CommandBase {
 
     // TODO calculate preset positions
-    public static final double [] TRAVEL = { 150.0, -150.0 };
-    public static final double [] PICKUP = { 2.0, 3.0 };
+    public static final double [] TRAVEL_POSITION = { 150.0, -150.0 };
+    public static final double [] PICKUP_POSITION = { 2.0, 3.0 };
+    public static final double [] HIGH_POSITION = { 2.0, 3.0 };
+    public static final double [] MIDDLE_POSITION = { 2.0, 3.0 };
+    public static final double [] LOW_POSITION = { 2.0, 3.0 };
+    public static final double [] BALANCE_POSITION = { 2.0, 3.0 };
+    public static final double [] LOAD_POSITION = { 2.0, 3.0 };
 
     // TODO tune me with the actual arm
     public static final double ROTATE_FAST = 0.8;
