@@ -2,12 +2,28 @@
 
 # TODO
 
+- Implement mode commands
+  - DropOffMode
+  - LoadingStationMode
+  - PickupMode
+
+- Implement new hand
+  - Subsystem
+    - Two solenoids: claw and bumper
+    - Four operations in subs
+      - grab
+      - release
+  - Commands
+    - GrabCommand
+    - ReleaseCommand
+
 - Vision subsystem
-  - Get network switch
-  - Get case for Pi
-  - Build alternate power for radio
-  - Attach all of those to the robot (velcro FTW!)
-  - Mount camera(s) to robot
+  - Build
+    - Get network switch
+    - Get case for Pi
+    - Build alternate power for radio
+    - Attach all of those to the robot (velcro FTW!)
+    - Mount camera(s) to robot
 
 - General wiring
   - Connect to all motors and
@@ -19,10 +35,7 @@
   - Measurements
     - Arm extension
     - Arm rotation
-  - Test teleop
-    - Use this to establish presets (x8)
-  - Tune presets to be as fast as possible
-
-- Hand
-  - Update code to reflect new mechanism
   - Test
+    - Teleop (use this to establish presets - x8)
+    - Presets (tune these to be as fast/accurate as possible)
+  
