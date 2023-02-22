@@ -53,7 +53,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             module.resetToAbsolute();
         }
         
-        setKinematics(SwerveConfig.defaultKinematics);
+        setOrbitMode(false);
         maxLinearSpeed = SwerveConfig.defaultMaxLinearSpeed;
         maxAngularSpeed = SwerveConfig.defaultMaxAngularSpeed;
         maxWheelSpeed = SwerveConfig.defaultMaxWheelSpeed;
@@ -84,7 +84,15 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return positions;
     }
 
-    public void setKinematics(SwerveDriveKinematics kinematics) {
+    public void setOrbitMode(boolean orbit) {
+
+        SwerveDriveKinematics targetKinematics = orbit
+            ? SwerveConfig.orbitKinematics
+            : SwerveConfig.defaultKinematics;
+        if (kinematics == targetKinematics) {
+            return;
+        }
+
         if (odometry == null) {
             odometry = new SwerveDriveOdometry(
                     kinematics,
@@ -98,15 +106,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                     getModulePositions(),
                     currentPose);
         }
-        this.kinematics = kinematics;
-    }
-
-    public void toggleKinematics() {
-        if (this.kinematics == SwerveConfig.defaultKinematics) {
-            this.kinematics = SwerveConfig.orbitKinematics;
-        } else {
-            this.kinematics = SwerveConfig.defaultKinematics;
-        }
+        this.kinematics = targetKinematics;
     }
 
     public void setRobotRelative(boolean robotRelative) {
