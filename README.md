@@ -7,6 +7,8 @@
   - LoadingStationMode
   - PickupMode
 
+- Implement handoff between driver and special ops
+
 - Implement new hand
   - Subsystem
     - Two solenoids: claw and bumper
@@ -16,6 +18,8 @@
   - Commands
     - GrabCommand
     - ReleaseCommand
+
+- Shuffleboard configuration & stats
 
 - Vision subsystem
   - Build
