@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.subsystems.swerve.SwerveDriveSubsystem;
-import frc.robot.commands.arm.OldArmPresetCommand;
 import frc.robot.commands.swerve.AlignToWallCommand;
 import frc.robot.commands.swerve.SwerveFixedSpeedCommand;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
