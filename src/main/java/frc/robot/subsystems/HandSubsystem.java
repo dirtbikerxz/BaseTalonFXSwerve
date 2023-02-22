@@ -37,7 +37,31 @@ public class HandSubsystem extends SubsystemBase {
         claw = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, CLAW_FORWARD, CLAW_REVERSE);
         bumper = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, BUMPER_FORWARD, BUMPER_REVERSE);
         SmartDashboard.putData("Hand", builder -> {
+            builder.addStringProperty("Claw", this::getOpenCloseString, null);
+            builder.addStringProperty("Bumper", this::getExtendRetractString, null);
         });
+    }
+
+    private String getOpenCloseString() {
+        Value val = claw.get();
+        if (val == OPEN) {
+            return "OPEN";
+        } else if (val == CLOSED) {
+            return "CLOSED";
+        } else {
+            return "-";
+        }
+    }
+
+    private String getExtendRetractString() {
+        Value val = bumper.get();
+        if (val == EXTEND) {
+            return "EXTEND";
+        } else if (val == RETRACT) {
+            return "RETRACT";
+        } else {
+            return "-";
+        }
     }
 
     public void closeClaw() {
