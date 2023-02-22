@@ -1,8 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.HandSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
@@ -24,7 +24,6 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 public class Robot extends TimedRobot {
 
     public static final int DRIVE_PORT = 0;
-    public static final int SPECIAL_OPS_PORT = 1;
 
     public SwerveDriveSubsystem swerveDrive;
     public HandSubsystem hand;
@@ -35,26 +34,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 
-        XboxController driverController = new XboxController(DRIVE_PORT);
-        XboxController specialOpsController = new XboxController(SPECIAL_OPS_PORT);
-
         // create the swerve drive and establish the default control mapping
         // for driving in teleop mode
         swerveDrive = new SwerveDriveSubsystem();
-
-        // create all the other subsystems                
-      //  hand = new HandSubsystem();
-
-        // arm subsystem default
-
-       // arm = new ArmSubsystem();
-       // arm.setDefaultCommand(new ArmTeleopLoopCommand(arm, driverController));
-        
         vision = new VisionSubsystem(true);
 
         // do any additional control mapping that needs to be done
-        RobotControlMapping.mapDriverControls(this, driverController);
-        RobotControlMapping.mapSpecialOpsControls(this, specialOpsController);
+        RobotControlMapping.mapDriverControls(this, new CommandXboxController(DRIVE_PORT));
     }
 
     @Override

@@ -1,74 +1,63 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.HandCommands;
-import frc.robot.commands.swerve.AlignToAprilTagCommand;
-import frc.robot.commands.swerve.SetRobotRelativeCommand;
-import frc.robot.commands.swerve.SwerveOrbitCommand;
-import frc.robot.commands.swerve.SwerveTeleopCommand;
-import frc.robot.commands.swerve.TurboModeCommand;
-import frc.robot.commands.swerve.ZeroGyroCommand;
+import frc.robot.commands.arm.ArmPresetCommand;
+import frc.robot.commands.modes.BuzzAroundModeCommand;
+import frc.robot.commands.modes.DropOffModeCommand;
+import frc.robot.commands.modes.PickupModeCommand;
+import frc.robot.commands.swerve.SwerveCommands;
 
+import static frc.robot.commands.arm.ArmPresetCommand.HIGH_POSITION;
+import static frc.robot.commands.arm.ArmPresetCommand.LOW_POSITION;
+import static frc.robot.commands.arm.ArmPresetCommand.MIDDLE_POSITION;
+import static frc.robot.commands.arm.ArmPresetCommand.TRAVEL_POSITION;
 
 public class CompetitionControlMapping {
 
+    public static void mapDriverJoystick(Robot robot, CommandXboxController controller) {
 
+        controller.start()
+                .onTrue(SwerveCommands.zeroGyro(robot.swerveDrive));
 
-    public static void mapDriverJoystick(Robot robot, CommandXboxController driveController) {
-        
-        // Align to April Tag
-        driveController.a()
-                .onTrue(new AlignToAprilTagCommand(robot.swerveDrive, robot.vision));    
-        
-        // Zero Gryo
-        driveController.start()
-            .onTrue(new ZeroGyroCommand(robot.swerveDrive));
+        controller.rightTrigger(0.5)
+                .onTrue(SwerveCommands.setOrbitMode(robot.swerveDrive, true))
+                .onTrue(SwerveCommands.setOrbitMode(robot.swerveDrive, false));
 
-        // Orbit Command
-        driveController.rightTrigger(0.5)
-        .onTrue(new SwerveOrbitCommand(robot.swerveDrive, true))
-        .onFalse(new SwerveOrbitCommand(robot.swerveDrive, false));
+        controller.x()
+                .onTrue(HandCommands.grabCube(robot.hand));
 
-        // Trubo Mode
-        driveController.rightBumper()
-            .onTrue(new TurboModeCommand(robot.swerveDrive, true))
-            .onFalse(new TurboModeCommand(robot.swerveDrive, false));
+        controller.y()
+                .onTrue(HandCommands.release(robot.hand));
 
-        // Robot Relative
-        driveController.leftBumper()
-        .onTrue(new SetRobotRelativeCommand(robot.swerveDrive, true))
-        .onFalse(new SetRobotRelativeCommand(robot.swerveDrive, false));
-            
+        controller.rightBumper().onTrue(new BuzzAroundModeCommand(robot));
+        controller.leftBumper().onTrue(new PickupModeCommand(robot));
+
+        // ??? what button should we map to the loading command?
+        // controller.???().onTrue(new LoadingStationModeCommand(robot));
     }
 
     public static void mapSpecialOpsJoystick(Robot robot, CommandXboxController specialOpsController) {
         
-        //TODO add the commands for the arm hights.    
-        specialOpsController.pov(0) // High
-            .onTrue(null); 
-        specialOpsController.pov(90)
-            .onTrue(null); // Middle Hight
-        specialOpsController.pov(180)
-            .onTrue(null); // Low
-        specialOpsController.pov(270)
-            .onTrue(null); // Travel
-            
-        // Hand grabbing commands
-        specialOpsController.y()
-        .onTrue(new HandCommands().grabCone(robot.hand));
+        specialOpsController.pov(0).onTrue(new ArmPresetCommand(robot.arm, HIGH_POSITION));
+        specialOpsController.pov(90).onTrue(new ArmPresetCommand(robot.arm, MIDDLE_POSITION));
+        specialOpsController.pov(180).onTrue(new ArmPresetCommand(robot.arm, LOW_POSITION));
+        specialOpsController.pov(270).onTrue(new ArmPresetCommand(robot.arm, TRAVEL_POSITION));
 
-        specialOpsController.b()
-        .onTrue(new HandCommands().grabCube(robot.hand));
+        specialOpsController.a()
+                .onTrue(new DropOffModeCommand(robot));
+
+        specialOpsController.x()
+                .onTrue(HandCommands.grabCone(robot.hand));
+
+        specialOpsController.y()
+                 .onTrue(new HandCommands().release(robot.hand));
+
+        specialOpsController.leftBumper()
+                .onTrue(SwerveCommands.hopLeft(robot.swerveDrive, 22.0));
 
         specialOpsController.rightBumper()
-        .onTrue(new HandCommands().release(robot.hand));
-
-
-        // Align to April Tag
-        specialOpsController.a()
-            .onTrue(new AlignToAprilTagCommand(robot.swerveDrive, robot.vision));
-  
+                .onTrue(SwerveCommands.hopRight(robot.swerveDrive, 22.0));
     }
     
 }
