@@ -25,7 +25,7 @@ public class CompetitionControlMapping {
                 .onTrue(SwerveCommands.setOrbitMode(robot.swerveDrive, false));
 
         controller.x()
-                .onTrue(HandCommands.grabCube(robot.hand));
+                .onTrue(HandCommands.grab(robot.hand));
 
         controller.y()
                 .onTrue(HandCommands.release(robot.hand));
@@ -48,7 +48,7 @@ public class CompetitionControlMapping {
                 .onTrue(new DropOffModeCommand(robot));
 
         specialOpsController.x()
-                .onTrue(HandCommands.grabCone(robot.hand));
+                .onTrue(HandCommands.grab(robot.hand));
 
         specialOpsController.y()
                  .onTrue(new HandCommands().release(robot.hand));

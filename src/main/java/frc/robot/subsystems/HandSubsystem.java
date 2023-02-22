@@ -18,65 +18,41 @@ public class HandSubsystem extends SubsystemBase {
     public static final int REVPH_CAN_ID = 5;
 
     /** Switch IDs on the hub for the solenoids */
-    public static final int PRESSURE_FORWARD = 0;
-    public static final int PRESSURE_REVERSE = 1;
-    public static final int POSITION_FORWARD = 2;
-    public static final int POSITION_REVERSE = 3;
+    public static final int CLAW_FORWARD = 0;
+    public static final int CLAW_REVERSE = 1;
+    public static final int BUMPER_FORWARD = 2;
+    public static final int BUMPER_REVERSE = 3;
 
     /** Solenoid values for the different options */
-    public static final Value LO = Value.kReverse;
-    public static final Value HI = Value.kForward;
+    public static final Value EXTEND = Value.kReverse;
+    public static final Value RETRACT = Value.kForward;
     public static final Value OPEN = Value.kForward;
     public static final Value CLOSED = Value.kReverse;
     public static final Value OFF = Value.kOff;
 
-    private final DoubleSolenoid pressure;
-    private final DoubleSolenoid position;
+    private final DoubleSolenoid claw;
+    private final DoubleSolenoid bumper;
 
     public HandSubsystem() {
-        pressure = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, PRESSURE_FORWARD, PRESSURE_REVERSE);
-        position = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, POSITION_FORWARD, POSITION_REVERSE);
+        claw = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, CLAW_FORWARD, CLAW_REVERSE);
+        bumper = new DoubleSolenoid(REVPH_CAN_ID, PneumaticsModuleType.REVPH, BUMPER_FORWARD, BUMPER_REVERSE);
         SmartDashboard.putData("Hand", builder -> {
-            builder.addBooleanProperty("Closed", () -> isClosed(), null);
-            builder.addStringProperty("Position", () -> getPositionString(), null);
-            builder.addStringProperty("Pressure", () -> getPressureString(), null);
         });
     }
 
-    private String getPressureString() {
-        Value val = pressure.get();
-        if (val == LO) return "Low";
-        if (val == HI) return "High";
-        return "Off";
+    public void closeClaw() {
+        claw.set(CLOSED);
     }
 
-    private String getPositionString() {
-        Value val = position.get();
-        if (val == OPEN) return "Open";
-        if (val == CLOSED) return "Closed";
-        return "Off";
+    public void openClaw() {
+        claw.set(OPEN);
     }
 
-    private boolean isClosed() {
-        return pressure.get() != OFF && position.get() == CLOSED;
+    public void extendBumper() {
+        bumper.set(EXTEND);
     }
 
-    public void grabCone() {
-        pressure.set(HI);
-        position.set(CLOSED);
-    }
-
-    public void grabCube() {
-        pressure.set(LO);
-        position.set(CLOSED);
-    }
-
-    public void release() {
-        pressure.set(LO);
-        position.set(OPEN);
-    }
-
-    public void turnOff() {
-        pressure.set(OFF);
+    public void retractBumper() {
+        claw.set(RETRACT);
     }
 }

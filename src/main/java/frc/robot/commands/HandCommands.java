@@ -11,25 +11,22 @@ import frc.robot.subsystems.HandSubsystem;
 public class HandCommands {
 
     /**
-     * @return a command that will grab a cone
+     * @return a command that will close the claw, and then retract the bumper
+     * a tiny bit later
      */
-    public static Command grabCone(HandSubsystem hand) {
-        return new InstantCommand(hand::grabCone, hand);
+    public static Command grab(HandSubsystem hand) {
+        return new InstantCommand(hand::closeClaw, hand)
+                .andThen(new WaitCommand(0.5))
+                .andThen(new InstantCommand(hand::retractBumper, hand));
     }
 
     /**
-     * @return a command that will grab a cube
-     */
-    public static Command grabCube(HandSubsystem hand) {
-        return new InstantCommand(hand::grabCube, hand);
-    }
-
-    /**
-     * @return a command that will open the hand, then 1s later turn off the pressure solenoid
+     * @return a command that will open the claw, and then extend the bumper
+     * a tiny bit later
      */
     public static Command release(HandSubsystem hand) {
-        return new InstantCommand(hand::release, hand)
-                .andThen(new WaitCommand(1.0))
-                .andThen(new InstantCommand(hand::turnOff, hand));
+        return new InstantCommand(hand::closeClaw, hand)
+                .andThen(new WaitCommand(0.5))
+                .andThen(new InstantCommand(hand::extendBumper, hand));
     }
 }

@@ -9,16 +9,6 @@
 
 - Implement handoff between driver and special ops
 
-- Implement new hand
-  - Subsystem
-    - Two solenoids: claw and bumper
-    - Four operations in subs
-      - grab
-      - release
-  - Commands
-    - GrabCommand
-    - ReleaseCommand
-
 - Shuffleboard configuration & stats
 
 - Vision subsystem
@@ -43,3 +33,5 @@
     - Teleop (use this to establish presets - x8)
     - Presets (tune these to be as fast/accurate as possible)
   
+- Hand subsystem
+  - Test grab/release (tune timing of bumper)

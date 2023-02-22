@@ -9,8 +9,7 @@ import frc.robot.commands.HandCommands;
 public class TestBenchControlMapping {
 
     public static void mapControls(TestBench testBench, CommandXboxController controller) {
-        controller.y().onTrue(HandCommands.grabCone(testBench.hand));
-        controller.b().onTrue(HandCommands.grabCube(testBench.hand));
+        controller.y().onTrue(HandCommands.grab(testBench.hand));
         controller.rightBumper().onTrue(HandCommands.release(testBench.hand));
     }
 }
