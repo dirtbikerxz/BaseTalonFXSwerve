@@ -3,24 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-
-public class MoveArmUp extends CommandBase {
+public class SetArmPosition extends CommandBase {
   Arm arm;
-
-  /** Creates a new MoveArmUp. */
-  public MoveArmUp(Arm arm) {
+  double target;
+  /** Creates a new MoveArmDown. */
+  public SetArmPosition(Arm arm, double target) {
     this.arm = arm;
+    this.target = target;
     addRequirements(this.arm);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.moveArmUp();
+    arm.setTargetArmAngle(target);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +30,7 @@ public class MoveArmUp extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setSpeed(0);
+    
   }
 
   // Returns true when the command should end.

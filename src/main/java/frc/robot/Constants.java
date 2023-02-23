@@ -21,6 +21,14 @@ public final class Constants {
     public static final int ARM_FORWARD_LIMIT = 144;
     public static final int ARM_REVERSE_LIMIT = 0;
     public static final double ARM_GEAR_RATIO = 150.0;
+    public static final double MANUAL_ARM_SPEED = 0.0;
+    public static final double FORWARD_ARM_LIMIT = 0.0;
+    public static final double REVERSE_ARM_LIMIT = 0.0;
+    // positions
+    public static final double ARM_STOW_POSITION = 0.0;
+    public static final double ARM_LOW_POSITION = 0.0;
+    public static final double ARM_MID_POSITION = 0.0;
+    public static final double ARM_HIGH_POSITION = 0.0;
 
     //Feedforward
     public static final double ARM_G = 0.75;

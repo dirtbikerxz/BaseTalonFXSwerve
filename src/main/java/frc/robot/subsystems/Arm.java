@@ -30,8 +30,8 @@ public class Arm extends SubsystemBase {
   private CANCoder armCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
-  private double targetArmAngle;
-  double voltage;
+  private double targetArmAngle = Constants.ARM_STOW_POSITION;
+  private double voltage;
   // public RelativeEncoder armRelativeEncoder;
 
   //private double targetArmAngle;
@@ -82,12 +82,30 @@ public class Arm extends SubsystemBase {
     targetArmAngle = degrees;
   }
 
+  public void moveArmUp() {
+    
+    targetArmAngle = targetArmAngle + Constants.MANUAL_ARM_SPEED;
+
+    if (targetArmAngle >= Constants.FORWARD_ARM_LIMIT) {
+        targetArmAngle = Constants.FORWARD_ARM_LIMIT;
+    }
+
+  }
+
+  public void moveArmDown() {
+    targetArmAngle = targetArmAngle - Constants.MANUAL_ARM_SPEED;
+
+    if (targetArmAngle <= Constants.REVERSE_ARM_LIMIT) {
+        targetArmAngle = Constants.REVERSE_ARM_LIMIT;
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     if (DriverStation.isEnabled()){
       // This method will be called once per scheduler run
-      double effort = controller.calculate(getPositionInDegrees(), Constants.TARGET_ARM_ANGLE); //TODO check directionality probably needs to be negated
+      double effort = controller.calculate(getPositionInDegrees(), targetArmAngle); //TODO check directionality probably needs to be negated
       
       double feedforward = -ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
       voltage =  feedforward; //TODO: add effort to incorporate profiled PID

@@ -103,8 +103,6 @@ public class RobotContainer {
         elevatorHandler();
         armHandler();
 
-        // driverA.whileTrue(new ExtendElevator(elevator));
-        // driverB.whileTrue(new RetractElevator(elevator));
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -166,8 +164,15 @@ public class RobotContainer {
     }
 
     public void armHandler() {
+
+        arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
         operatorDpadLeft.whileTrue(new MoveArmUp(arm));
         operatorDpadRight.whileTrue(new MoveArmDown(arm));
+
+        operatorLStick.whileTrue(new SetArmPosition(arm, Constants.ARM_LOW_POSITION));
+        operatorRStick.whileTrue(new SetArmPosition(arm, Constants.ARM_MID_POSITION));
+        operatorB.whileTrue(new SetArmPosition(arm, Constants.ARM_HIGH_POSITION));
+
     }
 }
