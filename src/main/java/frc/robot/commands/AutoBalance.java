@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -44,13 +47,15 @@ public class AutoBalance extends CommandBase {
 
     if (angle <= Constants.BALANCE_LEVEL + Constants.BALANCE_LEVEL_DEADZONE && angle >= Constants.BALANCE_LEVEL - Constants.BALANCE_LEVEL_DEADZONE) {
 
-        swerve.drive(new Translation2d(0.0,0.0), 0.0, true, false);
-        System.out.println("balanced");
+      
+      System.out.println("balanced");
+      new LockWheels(swerve);
 
     } else {
 
-        System.out.println("balancing");
-        swerve.drive(move, 0.0, true, false);
+      System.out.println("balancing");
+      swerve.drive(move, 0.0, true, false);
+
     }
 
     SmartDashboard.putNumber("pidVar", pidVar);

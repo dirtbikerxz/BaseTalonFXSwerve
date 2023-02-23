@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Swerve extends SubsystemBase {
@@ -162,5 +164,10 @@ public class Swerve extends SubsystemBase {
                 this // Requires this drive subsystem
             )
         );
+    }
+
+    public Command LockWheels() {
+        Translation2d stop = new Translation2d(0.0, 0.0);
+        return new InstantCommand(() -> drive(stop, 90.0, true, false));
     }
 }
