@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 public class LockWheels extends CommandBase {
@@ -25,8 +26,8 @@ public class LockWheels extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    new ParallelDeadlineGroup(new WaitCommand(0.1), swerve.LockWheels());
+    //TODO lock drive wheels
+    new ParallelDeadlineGroup(new WaitCommand(Constants.WHEEL_LOCK_TIME), swerve.LockWheels());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

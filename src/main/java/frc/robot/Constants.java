@@ -50,6 +50,7 @@ public final class Constants {
     public static final double AUTO_BALANCE_D = 0.0;
     public static final double BALANCE_LEVEL = -2.4;
     public static final double BALANCE_LEVEL_DEADZONE = 5.0;
+    public static final double WHEEL_LOCK_TIME = 0.1;
 
     public static final class Swerve {
         public static final int pigeonID = 8;
