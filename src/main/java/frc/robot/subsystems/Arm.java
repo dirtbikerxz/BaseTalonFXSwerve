@@ -105,10 +105,14 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     if (DriverStation.isEnabled()){
       // This method will be called once per scheduler run
-      double effort = controller.calculate(getPositionInDegrees(), targetArmAngle); //TODO check directionality probably needs to be negated
+      //TODO check directionality probably needs to be negated
+
+      double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);
       
-      double feedforward = -ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
-      voltage =  feedforward; //TODO: add effort to incorporate profiled PID
+      double feedForward = -ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
+      //TODO: voltage = pid + feedForward
+      voltage =  feedForward; //TODO: add effort to incorporate profiled PID
+
       MathUtil.clamp(voltage, -12, 12);
       armMotor.setVoltage(voltage);
 
