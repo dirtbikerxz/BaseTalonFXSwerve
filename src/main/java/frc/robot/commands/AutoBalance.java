@@ -49,7 +49,10 @@ public class AutoBalance extends CommandBase {
 
       
       System.out.println("balanced");
-      new LockWheels(swerve);
+      // new LockWheels(swerve);
+      // swerve.lockWheels();
+      swerve.drive(new Translation2d(0.0, 0.0), 0.5, true, false);
+      swerve.drive(new Translation2d(0.0, 0.0), 0.0, true, false);
 
     } else {
 

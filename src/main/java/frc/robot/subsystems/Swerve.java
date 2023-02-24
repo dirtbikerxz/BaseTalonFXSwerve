@@ -170,4 +170,13 @@ public class Swerve extends SubsystemBase {
         Translation2d stop = new Translation2d(0.0, 0.0);
         return new InstantCommand(() -> drive(stop, 90.0, true, false));
     }
+
+    public void lockWheels() {
+        setModuleStates(new SwerveModuleState[] {
+            new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
+            new SwerveModuleState(0.0, Rotation2d.fromDegrees(90)),
+            new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
+            new SwerveModuleState(0.0, Rotation2d.fromDegrees(90))
+        });
+    }
 }
