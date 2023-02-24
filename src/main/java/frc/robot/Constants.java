@@ -18,28 +18,26 @@ public final class Constants {
     // TODO: Change later when we have actual robot
     public static final int ARM_MOTOR_ID = 20;
     public static final int ARM_ENCODER_ID = 1;
-    public static final int ARM_FORWARD_LIMIT = 144;
-    public static final int ARM_REVERSE_LIMIT = 0;
+    public static final double ARM_FORWARD_LIMIT = 40;
+    public static final double ARM_REVERSE_LIMIT = -90;
     public static final double ARM_GEAR_RATIO = 150.0;
-    public static final double MANUAL_ARM_SPEED = 0.0;
-    public static final double FORWARD_ARM_LIMIT = 0.0;
-    public static final double REVERSE_ARM_LIMIT = 0.0;
+    public static final double MANUAL_ARM_SPEED = 1.0;
     // positions
     public static final double ARM_STOW_POSITION = 0.0;
-    public static final double ARM_LOW_POSITION = 0.0;
-    public static final double ARM_MID_POSITION = 0.0;
-    public static final double ARM_HIGH_POSITION = 0.0;
+    public static final double ARM_LOW_POSITION = -90.0;
+    public static final double ARM_MID_POSITION = -45.0;
+    public static final double ARM_HIGH_POSITION = 10.0;
 
     //Feedforward
-    public static final double ARM_G = 0.75;
+    public static final double ARM_G = -0.15; //Its negative because the motors move the wrong direction
     public static final double ARM_V = 0.0;
     public static final double ARM_A = 0.0;
     public static final double ARM_S = 0.0;
 
     //PID
-    public static final double ARM_P = 0.0;
-    public static final double ARM_I = 0.0;
-    public static final double ARM_D= 0.0;
+    public static final double ARM_P = -0.15;
+    public static final double ARM_I = -0.0;
+    public static final double ARM_D= -0.0;
     
     
     //TODO: Set offset

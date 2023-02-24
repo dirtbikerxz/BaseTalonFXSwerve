@@ -43,12 +43,14 @@ public class Arm extends SubsystemBase {
     armMotor.setIdleMode(IdleMode.kBrake);
     this.ff = new ArmFeedforward(Constants.ARM_S, Constants.ARM_G, Constants.ARM_V, Constants.ARM_A);
 
+    armMotor.setSmartCurrentLimit(40);
+
   // armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
   //armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
  // armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ARM_FORWARD_LIMIT);
 //armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ARM_REVERSE_LIMIT);
   
-    this.controller = new ProfiledPIDController(Constants.ARM_P, Constants.ARM_I, Constants.ARM_D, new Constraints(80, 1000));
+    this.controller = new ProfiledPIDController(Constants.ARM_P, Constants.ARM_I, Constants.ARM_D, new Constraints(800, 1000));
     this.controller.setTolerance(1, 1);
     armCANEncoder.configFactoryDefault();
     armCANEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
@@ -86,8 +88,8 @@ public class Arm extends SubsystemBase {
     
     targetArmAngle = targetArmAngle + Constants.MANUAL_ARM_SPEED;
 
-    if (targetArmAngle >= Constants.FORWARD_ARM_LIMIT) {
-        targetArmAngle = Constants.FORWARD_ARM_LIMIT;
+    if (targetArmAngle >= Constants.ARM_FORWARD_LIMIT) {
+        targetArmAngle = Constants.ARM_FORWARD_LIMIT;
     }
 
   }
@@ -95,8 +97,8 @@ public class Arm extends SubsystemBase {
   public void moveArmDown() {
     targetArmAngle = targetArmAngle - Constants.MANUAL_ARM_SPEED;
 
-    if (targetArmAngle <= Constants.REVERSE_ARM_LIMIT) {
-        targetArmAngle = Constants.REVERSE_ARM_LIMIT;
+    if (targetArmAngle <= Constants.ARM_REVERSE_LIMIT) {
+        targetArmAngle = Constants.ARM_REVERSE_LIMIT;
     }
   }
 
@@ -109,17 +111,19 @@ public class Arm extends SubsystemBase {
 
       double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);
       
-      double feedForward = -ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
+      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
       //TODO: voltage = pid + feedForward
-      voltage =  feedForward; //TODO: add effort to incorporate profiled PID
+      voltage =  pid + feedForward; //TODO: add effort to incorporate profiled PID
 
       MathUtil.clamp(voltage, -12, 12);
       armMotor.setVoltage(voltage);
+      SmartDashboard.putNumber("PID VALUE", pid);
 
     }
-    SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position", getPositionInDegrees());
     SmartDashboard.putNumber("Arm Voltage", voltage);
+    
     // SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
   }
 

@@ -2,8 +2,10 @@ package frc.robot;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -68,10 +70,12 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
+    private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        //compressor.disable();
         //arm.setDefaultCommand(new MoveArmManual(arm, driver));
         leds.setDefaultCommand(new IdleLEDS(leds));
         s_Swerve.setDefaultCommand(
@@ -165,7 +169,7 @@ public class RobotContainer {
 
     public void armHandler() {
 
-        arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
+        // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
         operatorDpadLeft.whileTrue(new MoveArmUp(arm));
         operatorDpadRight.whileTrue(new MoveArmDown(arm));
