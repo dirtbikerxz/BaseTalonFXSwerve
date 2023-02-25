@@ -4,30 +4,33 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
-public class MoveArmManual extends CommandBase {
-  Arm arm;
-  Joystick driver;
-  /** Creates a new MoveArmManual. */
-  public MoveArmManual(Arm arm, Joystick driver) {
-    this.arm = arm;
-    this.driver = driver;
-    addRequirements(this.arm);
-    // Use addRequirements() here to declare subsystem dependencies.
+public class DisableCompressor extends CommandBase {
+  private PneumaticHub pneumaticHub;
+
+
+
+  /** Creates a new DisableCompressor. */
+  public DisableCompressor() {
+    pneumaticHub = new PneumaticHub(Constants.PNEUMATIC_HUB_ID);
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pneumaticHub.disableCompressor();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
