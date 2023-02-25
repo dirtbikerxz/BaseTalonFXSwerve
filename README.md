@@ -20,8 +20,6 @@
 
 - Update AlignToAprilTag to have multiple speeds
 
-- Implement handoff between driver and special ops
-
 - Develop autonomous programs
 
 - Shuffleboard configuration & stats

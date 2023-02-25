@@ -28,8 +28,8 @@ public class SwerveCommands {
 
     public static Command turnWheels(SwerveDriveSubsystem drive, double degrees) {
 
-        final SwerveModuleState [] states = new SwerveModuleState[4];
-        for (int i=0; i<states.length; i++) {
+        final SwerveModuleState[] states = new SwerveModuleState[4];
+        for (int i = 0; i < states.length; i++) {
             states[i] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(degrees));
         }
 
