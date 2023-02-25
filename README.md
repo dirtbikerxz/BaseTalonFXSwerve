@@ -2,22 +2,31 @@
 
 # TODO
 
-- Implement mode commands
-  - DropOffMode
-  - LoadingStationMode
-  - PickupMode
+# Prior to delivery
+
+- Test bench
+  - Rewire "arm" motors
+  - Rewire double solenoids for hi/lo pressure release
+  - Add THE DUCK
+
+- Test hand commands
+  - Grab
+  - Release
+
+- Test arm code
+  - Calibration routine to set min/max
+  - Move to preset
+  - Teleop
+
+- Update AlignToAprilTag to have multiple speeds
 
 - Implement handoff between driver and special ops
 
+- Develop autonomous programs
+
 - Shuffleboard configuration & stats
 
-- Vision subsystem
-  - Build
-    - Get network switch
-    - Get case for Pi
-    - Build alternate power for radio
-    - Attach all of those to the robot (velcro FTW!)
-    - Mount camera(s) to robot
+# Post delivery
 
 - General wiring
   - Connect to all motors and
@@ -27,11 +36,17 @@
 
 - Arm subsystem
   - Measurements
-    - Arm extension
-    - Arm rotation
+    - Arm extension (rate & travel range)
+    - Arm rotation (rate & travel range)
   - Test
     - Teleop (use this to establish presets - x8)
     - Presets (tune these to be as fast/accurate as possible)
   
 - Hand subsystem
   - Test grab/release (tune timing of bumper)
+
+- Vision subsystem
+  - Test aligning to tag (tune distance from tag)
+
+- Balance subsystem
+  - Test and tune speed profile
