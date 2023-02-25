@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -50,7 +51,7 @@ public class RobotContainer {
     private final POVButton driverDpadRight = new POVButton(driver, 90);
     private final POVButton driverDpadDown = new POVButton(driver, 180);
     private final POVButton driverDpadLeft = new POVButton(driver, 270);
-
+ 
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
@@ -60,6 +61,9 @@ public class RobotContainer {
     private final JoystickButton operatorRB = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton operatorLStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
     private final JoystickButton operatorRStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+    private final POVButton operatorUpStick = new POVButton(driver, 0);
+    private final POVButton operatorDownStick = new POVButton(driver, 180);
+    
     private final JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
     private final JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final POVButton operatorDpadUp = new POVButton(operator, 0);
@@ -165,8 +169,8 @@ public class RobotContainer {
 
 
         //manual
-        operatorDpadUp.whileTrue(new ManualUp(elevator));
-        operatorDpadDown.whileTrue(new ManualDown(elevator));
+        operatorUpStick.whileTrue(new ManualUp(elevator));
+        operatorDownStick.whileTrue(new ManualDown(elevator));
 
     }
 
@@ -175,8 +179,8 @@ public class RobotContainer {
         // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
         //Manual
-        operatorDpadLeft.whileTrue(new MoveArmUp(arm));
-        operatorDpadRight.whileTrue(new MoveArmDown(arm));
+        operatorLStick.whileTrue(new MoveArmUp(arm));
+        operatorRStick.whileTrue(new MoveArmDown(arm));
         
         //Stow
         operatorStart.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_STOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
@@ -184,12 +188,21 @@ public class RobotContainer {
         //Ground Intake
         operatorA.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_LOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
 
-        //Confirming Scores
-        operatorLB.onTrue(arm.SetArmPosition(Constants.ARM_MID_POSITION));
-        operatorLB.onFalse(arm.SetArmPosition(Constants.ARM_HIGH_POSITION));
+        
 
-        operatorRB.onTrue(elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL));
-        operatorRB.onFalse(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL));
+        //Confirming Scores
+        
+        //High Score
+        // operatorLB.onTrue(arm.SetArmPosition(Constants.ARM_MID_POSITION));
+        // operatorLB.onFalse(arm.SetArmPosition(Constants.ARM_HIGH_POSITION));
+
+        // //Mid Score
+        // operatorRB.onTrue(elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL));
+        // operatorRB.onFalse(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL));
+
+        // //Auto based on position
+        operatorLB.onTrue(new ConfirmScore(arm, elevator));
+        operatorLB.onFalse(new ReturnFromScoring(arm, elevator));
     }
 }
 

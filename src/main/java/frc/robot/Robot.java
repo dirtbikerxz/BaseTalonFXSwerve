@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.IdleLEDS;
+import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
@@ -127,6 +128,7 @@ public class Robot extends TimedRobot {
     
     /*Reset Absolute */
     m_robotContainer.resetAbsolute();
+    
     
     //arm.getPositionInDegrees();
 

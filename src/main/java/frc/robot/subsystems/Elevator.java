@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -58,6 +60,11 @@ public class Elevator extends SubsystemBase {
         targetElevatorPosition = inches;
     }
 
+    /* Sets the Target Elevator Position in inches.*/
+    public double getTargetElevatorPosition(){
+        return targetElevatorPosition;
+    }
+
     public void extend() {
 
         targetElevatorPosition = targetElevatorPosition + Constants.MANUAL_ELEVATOR_SPEED;
@@ -105,6 +112,10 @@ public class Elevator extends SubsystemBase {
             return false;
         }
         
+    }
+
+    public Boolean isHigh(){
+        return getTargetElevatorPosition() == Constants.ELEVATOR_HIGH_LEVEL;
     }
 
 
