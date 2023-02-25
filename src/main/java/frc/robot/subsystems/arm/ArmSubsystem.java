@@ -1,5 +1,7 @@
 package frc.robot.subsystems.arm;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,12 +22,22 @@ public class ArmSubsystem extends SubsystemBase {
     public static final double EXTENSION_TRAVEL_LIMIT = 300;
     public static final double EXTENSION_FACTOR = 1.0;
 
+    public static final int SOLENOID_CHANNEL = 1;
+
     private final ArmUnit rotator;
     private final ArmUnit extender;
+    private final Solenoid parkingBreak;
 
+    // TODO MotorControllers: 50 Amphs set current Limit
+    // TODO Limit the accelaration of the arm 3s from 0 - 100%
+    // We should be conservative on arm testing: arms are rathre fragile
+    // TODO Limit the accelaration, velocity graph is better at a triangle
+    
+    //TODO replace the parkingBreak with actual solenoid
     public ArmSubsystem() {
         extender = new ArmUnit(EXTENSION_CANID, EXTENSION_LIMIT_ID, EXTENSION_FACTOR, EXTENSION_INVERTED);
         rotator = new ArmUnit(ROTATION_CANID, ROTATION_LIMIT_ID, ROTATION_FACTOR, ROTATION_INVERTED);
+        parkingBreak = new Solenoid(PneumaticsModuleType.REVPH, SOLENOID_CHANNEL);
         SmartDashboard.putData("Rotator", builder -> {
             builder.addDoubleProperty("Current", () -> rotator.encoder.getPosition(), null);
             builder.addDoubleProperty("Max", () -> rotator.max, null);
@@ -50,6 +62,10 @@ public class ArmSubsystem extends SubsystemBase {
      * Calibrates both units
      * @return true when calibration is done on both of them
      */
+    public void retractParkingBreak(){
+        parkingBreak.set(true);
+    }
+    
     public boolean calibrate(double percentRotate, double percentExtend) {
         return rotator.calibrate(percentRotate, ROTATION_TRAVEL_LIMIT)
                 && extender.calibrate(percentExtend, EXTENSION_TRAVEL_LIMIT);

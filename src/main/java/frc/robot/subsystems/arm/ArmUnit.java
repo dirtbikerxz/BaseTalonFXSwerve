@@ -6,11 +6,14 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 
+
 /**
  * Represents a combination of a motor, its encoder, and a limit switch that triggers
  * when the motor is travelling in the negative direciton and hits a defined limit.
  */
 public class ArmUnit {
+
+    public final double COLLISON_RANGE = 10;
 
     public final CANSparkMax motor;
     public final RelativeEncoder encoder;
@@ -52,8 +55,9 @@ public class ArmUnit {
      * @return true if calibration has finished
      */
     public boolean calibrate(double percentOutput, double travelLimit) {
+        
         if (limit.get()) {
-            min = encoder.getPosition();
+            min = encoder.getPosition() + COLLISON_RANGE;
             max = min + travelLimit;
             motor.set(0.0);
             return true;
