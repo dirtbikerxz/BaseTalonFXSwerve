@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Launch Shuffleboard" type="JarApplication" activateToolWindowBeforeRun="false">
+    <option name="JAR_PATH" value="$USER_HOME$/wpilib/2023/tools/shuffleboard.jar" />
+    <module name="BaseFalconSwerve.main" />
+    <method v="2" />
+  </configuration>
+</component>
