@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.*;
@@ -68,7 +71,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final LEDs leds = new LEDs();
     private final Intake intake = new Intake();
-    private final Arm arm = new Arm();
+    final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
 
@@ -157,9 +160,9 @@ public class RobotContainer {
     public void elevatorHandler() {
 
         //positions
-        operatorX.whileTrue(new PositionElevator(elevator, Constants.MID_LEVEL));
-        operatorY.whileTrue(new PositionElevator(elevator, Constants.HIGH_LEVEL));
-        operatorA.whileTrue(new PositionElevator(elevator, Constants.LOW_LEVEL));
+        operatorY.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
+        operatorB.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
+
 
         //manual
         operatorDpadUp.whileTrue(new ManualUp(elevator));
@@ -171,12 +174,22 @@ public class RobotContainer {
 
         // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
+        //Manual
         operatorDpadLeft.whileTrue(new MoveArmUp(arm));
         operatorDpadRight.whileTrue(new MoveArmDown(arm));
+        
+        //Stow
+        operatorStart.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_STOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
+        
+        //Ground Intake
+        operatorA.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_LOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
 
-        operatorLStick.whileTrue(new SetArmPosition(arm, Constants.ARM_LOW_POSITION));
-        operatorRStick.whileTrue(new SetArmPosition(arm, Constants.ARM_MID_POSITION));
-        operatorB.whileTrue(new SetArmPosition(arm, Constants.ARM_HIGH_POSITION));
+        //Confirming Scores
+        operatorLB.onTrue(arm.SetArmPosition(Constants.ARM_MID_POSITION));
+        operatorLB.onFalse(arm.SetArmPosition(Constants.ARM_HIGH_POSITION));
 
+        operatorRB.onTrue(elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL));
+        operatorRB.onFalse(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL));
     }
 }
+
