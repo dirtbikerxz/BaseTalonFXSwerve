@@ -46,7 +46,7 @@ public final class Constants {
     public static final double ARM_ENCODER_OFFSET = 360-6.2;
     public static final double TARGET_ARM_ANGLE = 0;
 
-    public static final double INTAKE_SPEED = 0.40;
+    public static final double INTAKE_SPEED = 0.50;
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
     
@@ -91,6 +91,7 @@ public final class Constants {
         public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
+
 
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -147,7 +148,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.5*0.8/* 4.5 */; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 

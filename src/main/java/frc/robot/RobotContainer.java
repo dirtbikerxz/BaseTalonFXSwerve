@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -36,6 +39,8 @@ public class RobotContainer {
     private final int driverLeftX = XboxController.Axis.kLeftX.value;
     private final int driverRightX = XboxController.Axis.kRightX.value;
 
+
+
     /* Driver Buttons */
     private final JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -51,6 +56,9 @@ public class RobotContainer {
     private final POVButton driverDpadRight = new POVButton(driver, 90);
     private final POVButton driverDpadDown = new POVButton(driver, 180);
     private final POVButton driverDpadLeft = new POVButton(driver, 270);
+
+    private final int operatorLeftYAxis = XboxController.Axis.kLeftY.value;
+    private final int operatorRightYAxis = XboxController.Axis.kRightY.value;
  
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -61,9 +69,9 @@ public class RobotContainer {
     private final JoystickButton operatorRB = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton operatorLStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
     private final JoystickButton operatorRStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
-    private final POVButton operatorUpStick = new POVButton(driver, 0);
-    private final POVButton operatorDownStick = new POVButton(driver, 180);
-    
+    private final JoystickButton operatorUpStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
+    private final JoystickButton operatorDownStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+
     private final JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
     private final JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final POVButton operatorDpadUp = new POVButton(operator, 0);
@@ -82,7 +90,6 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        //compressor.disable();
         //arm.setDefaultCommand(new MoveArmManual(arm, driver));
         leds.setDefaultCommand(new IdleLEDS(leds));
         s_Swerve.setDefaultCommand(
@@ -136,12 +143,13 @@ public class RobotContainer {
 
     public void intakeHandler() {
 
-        driverLB.whileTrue(new OpenIntake(intake));
-        driverRB.whileTrue(new CloseIntake(intake));
+        driverRB.whileTrue(new OpenIntake(intake));
+        driverLB.whileTrue(new CloseIntake(intake));
 
-        driverA.whileTrue(new RunIntake(intake));
-        driverX.whileTrue(new ReverseIntake(intake));
-
+        driverX.whileTrue(new RunIntake(intake));
+        driverA.whileTrue(new ReverseIntake(intake));
+        // compressor
+        operatorBack.onTrue(new DisableCompressor());
     }
 
     public void lightHandler() {
@@ -156,6 +164,7 @@ public class RobotContainer {
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
     }
+   
 
     public void idleAnimation() {
         new InstantCommand(() -> new IdleLEDS(leds));
@@ -167,10 +176,18 @@ public class RobotContainer {
         operatorY.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
         operatorB.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
 
-
-        //manual
-        operatorUpStick.whileTrue(new ManualUp(elevator));
-        operatorDownStick.whileTrue(new ManualDown(elevator));
+        //elevator manual
+        final Trigger elevatorManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) > 0.5);
+        final Trigger elevatorManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) < -0.5);
+        //arm manual
+        final Trigger armManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorRightYAxis) > 0.5);
+       final Trigger armManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorRightYAxis) < -0.5);
+        //elevator manual
+        elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
+        elevatorManualDownTrigger.whileTrue(new ManualDown(elevator));
+        //Arm Manual
+        armManualUpTrigger.whileTrue(new MoveArmUp(arm));
+        armManualDownTrigger.whileTrue(new MoveArmDown(arm));
 
     }
 
