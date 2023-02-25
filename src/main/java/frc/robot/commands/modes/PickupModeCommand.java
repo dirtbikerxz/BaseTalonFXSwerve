@@ -1,7 +1,12 @@
 package frc.robot.commands.modes;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Robot;
+import frc.robot.commands.arm.ArmPresetCommand;
+import frc.robot.commands.swerve.AlignToAprilTagCommand;
+import frc.robot.commands.swerve.AlignToWallCommand;
 
 /**
  * Enters pickup mode for picking up from the floor:
@@ -15,6 +20,20 @@ import frc.robot.Robot;
 public class PickupModeCommand extends CommandBase {
 
     public PickupModeCommand(Robot robot) {
-        // TODO add some commands here - see BalanceModeCommand for an example of how to do this
+
+        turningOffSwerveDriveModes(robot);
+        new ArmPresetCommand(robot.arm, ArmPresetCommand.PICKUP_POSITION);
+        
     }
+
+    public void turningOffSwerveDriveModes(Robot robot){
+
+        new InstantCommand(() -> robot.swerveDrive.setTurboMode(false));
+        new InstantCommand(() -> robot.swerveDrive.setOrbitMode(false));
+        new InstantCommand(() -> robot.swerveDrive.setRobotRelative(false));
+
+    }
+
 }
+
+    
