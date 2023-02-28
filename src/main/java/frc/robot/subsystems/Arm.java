@@ -57,6 +57,7 @@ public class Arm extends SubsystemBase {
     armCANEncoder.configFactoryDefault();
     armCANEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
     armCANEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    armCANEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
     
     // armRelativeEncoder = armMotor.getEncoder();
     // armRelativeEncoder.setPosition(0.0);
@@ -121,15 +122,10 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (DriverStation.isEnabled()){
-      // This method will be called once per scheduler run
-      //TODO check directionality probably needs to be negated
-
-      double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);
-      
-      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
-      //TODO: voltage = pid + feedForward
-      voltage =  pid + feedForward; //TODO: add effort to incorporate profiled PID
+    double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);;
+    if (DriverStation.isEnabled()){      
+      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees()));
+      voltage =  pid + feedForward;
 
       MathUtil.clamp(voltage, -12, 12);
       armMotor.setVoltage(voltage);
@@ -137,11 +133,13 @@ public class Arm extends SubsystemBase {
 
       
     }
-    //SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position", getPositionInDegrees());
-    SmartDashboard.putNumber("Arm Voltage", voltage);
+    // SmartDashboard.putNumber("Arm PID Output", pid);
+    // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
-    SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle)));
+    // SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle)));
+    // SmartDashboard.putString("CANCoder Initialization Strategy", armCANEncoder.configGetSensorInitializationStrategy().toString());
     
     // SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
   }
