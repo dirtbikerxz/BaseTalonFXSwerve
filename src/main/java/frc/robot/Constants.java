@@ -28,7 +28,7 @@ public final class Constants {
     public static final double ARM_MID_POSITION = 0.0;
     public static final double ARM_HIGH_POSITION = 35.0;
 
-    public static final double ARM_TOLERANCE = 3.0;
+    public static final double ARM_TOLERANCE = 20.0;
 
     //Feedforward
     public static final double ARM_G = -0.3; //Its negative because the motors move the wrong direction
@@ -38,8 +38,8 @@ public final class Constants {
 
     //PID
     public static final double ARM_P = -0.18;
-    public static final double ARM_I = -0.0;
-    public static final double ARM_D= -0.0;
+    public static final double ARM_I = 0.0;
+    public static final double ARM_D = 0.0;
     
     
     //TODO: Set offset
@@ -59,7 +59,7 @@ public final class Constants {
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;
-    public static final int REVERSE_ELEVATOR_LIMIT = 1;
+    public static final int REVERSE_ELEVATOR_LIMIT = 0;
     public static final int ELEVATOR_MOTOR_ID = 16;
     public static final double ELEVATOR_GEAR_RATIO = 9.0;
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
@@ -73,7 +73,7 @@ public final class Constants {
     public static final double ELEVATOR_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_SAFE_LEVEL = 10.0;
 
-    public static final double ELEVATOR_TOLERANCE = 1.5;
+    public static final double ELEVATOR_TOLERANCE = 20;
 
     public static final int GRYO_OFFSET = 0;
 

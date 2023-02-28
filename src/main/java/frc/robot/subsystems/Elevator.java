@@ -117,8 +117,6 @@ public class Elevator extends SubsystemBase {
     public Boolean isHigh(){
         return getTargetElevatorPosition() == Constants.ELEVATOR_HIGH_LEVEL;
     }
-
-
     
     @Override
     public void periodic() {

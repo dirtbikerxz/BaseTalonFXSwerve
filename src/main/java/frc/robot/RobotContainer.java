@@ -254,8 +254,19 @@ public class RobotContainer {
     public void elevatorHandler() {
 
         //positions
-        operatorY.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
-        operatorB.onTrue(new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)));
+        operatorY.onTrue(new ParallelCommandGroup(
+            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
+            arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
+        ));
+
+        operatorB.onTrue(new SequentialCommandGroup(
+            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
+            elevator.ElevatorAtPosition(),
+            new ParallelCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL), 
+                arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
+            )
+        ));
 
         //elevator manual
         final Trigger elevatorManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) > 0.5);
@@ -268,6 +279,42 @@ public class RobotContainer {
 
     }
 
+    private Command GoToGround() {
+        return new ConditionalCommand(
+            new SequentialCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
+                elevator.ElevatorAtPosition(), 
+                arm.SetArmPosition(Constants.ARM_LOW_POSITION),
+                arm.ArmAtPosition(),
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+            ),
+            new ParallelCommandGroup(
+                arm.SetArmPosition(Constants.ARM_LOW_POSITION),
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+            ),
+            () -> arm.isSafeToGround()
+        );
+    }
+
+    // Might be used later
+    private Command GoToStow() {
+        return new ConditionalCommand(
+            new SequentialCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
+                arm.SetArmPosition(Constants.ARM_STOW_POSITION),
+                elevator.ElevatorAtPosition(), 
+                arm.ArmAtPosition(),
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+            ),
+            new ParallelCommandGroup(
+                arm.SetArmPosition(Constants.ARM_STOW_POSITION),
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+            ),
+            // would need to change this
+            () -> arm.isSafeToGround()
+        );
+    }
+
     public void armHandler() {
 
         //arm manual
@@ -277,10 +324,20 @@ public class RobotContainer {
         // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
         //Stow
-        operatorStart.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_STOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
-        
-        //Ground Intake
-        operatorA.onTrue(new SequentialCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), elevator.ElevatorAtPosition(), arm.SetArmPosition(Constants.ARM_LOW_POSITION), arm.ArmAtPosition(), elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), elevator.ElevatorAtPosition()));
+        operatorStart.onTrue(new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), 
+                arm.SetArmPosition(Constants.ARM_STOW_POSITION)
+            ),
+            elevator.ElevatorAtPosition(), 
+            arm.ArmAtPosition(), 
+            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), 
+            elevator.ElevatorAtPosition()
+        ));
+        // operatorStart.onTrue(GoToStow());
+
+        // Ground
+        operatorA.onTrue(GoToGround());
 
         //Arm Manual
         armManualUpTrigger.whileTrue(new MoveArmUp(arm));

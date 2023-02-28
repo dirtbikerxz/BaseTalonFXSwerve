@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -72,15 +75,14 @@ public class Arm extends SubsystemBase {
   }
 
   /* Always use this method when you want the position of the arm */
-  private double getPositionInDegrees() {
+  public double getPositionInDegrees() {
     return armCANEncoder.getAbsolutePosition() / Constants.ARM_ENCODER_RATIO;
   }
 
-    /* Always use this method when you want the velocity of the arm */
-    private double getVelocityInDegrees() {
-      return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
-    }
-
+  /* Always use this method when you want the velocity of the arm */
+  public double getVelocityInDegrees() {
+    return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
+  }
 
   //Sets the targetArmAngle in degrees */
   public void setTargetArmAngle(double degrees) {
@@ -117,7 +119,11 @@ public class Arm extends SubsystemBase {
         return false;
     }
     
-}
+  }
+
+  public boolean isSafeToGround() {
+    return getPositionInDegrees() < Constants.ARM_REVERSE_LIMIT;
+  }
 
   @Override
   public void periodic() {
