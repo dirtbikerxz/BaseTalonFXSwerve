@@ -8,7 +8,11 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -36,7 +40,13 @@ public class Robot extends TimedRobot {
 
   private Command resetAbsolute;
 
-  private LEDs leds = new LEDs();
+  private static final String auto1 = "station1Auto";
+  private static final String auto2 = "station2Auto";
+  private static final String auto3 = "station3Auto";
+
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  
  
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,8 +58,22 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    //m_AbsoluteEncoder = new AbsoluteEncoder(port);
+
+    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
+    m_chooser.addOption("station1Auto", auto1);
+    m_chooser.addOption("station2Auto", auto2);
+    m_chooser.addOption("station3Auto", auto3);
+
+    m_chooser.setDefaultOption("station2Auto", auto2);
+
+    SmartDashboard.putData("Auto choices", m_chooser);
+
+    // driver camera
+    // final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
+    
+    // usbCamera.setVideoMode(new VideoMode(VideoMode.PixelFormat.kMJPEG, 160, 120, 30));
+
   }
 
   /**
@@ -84,26 +108,49 @@ public class Robot extends TimedRobot {
 
     /*Reset Absolute */
     m_robotContainer.resetAbsolute();
+    //m_robotContainer.MidAuto();
+
+    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+
+    m_autoSelected = m_chooser.getSelected();
+
+    switch (m_autoSelected) {
+
+      case auto1:
+        m_autonomousCommand = m_robotContainer.Station1Auto();
+        break;
+      case auto2:
+        m_autonomousCommand = m_robotContainer.Station2Auto();
+        break;
+      case auto3:
+        m_autonomousCommand = m_robotContainer.Station3Auto();
+        break;
+
+      default:
+        m_autonomousCommand = m_robotContainer.Station2Auto();
+
+    }
+
     
-    PathConstraints pathConstraints = new PathConstraints(4, 3);
+    // PathConstraints pathConstraints = new PathConstraints(4, 3);
     
-    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New Path", pathConstraints);
+    // // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    // PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New Path", pathConstraints);
     
-    // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
-    // Or the path can be sampled at a given point in time for custom path following
+    // // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+    // // Or the path can be sampled at a given point in time for custom path following
       
-    // Sample the state of the path at 1.2 seconds
-    PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
+    // // Sample the state of the path at 1.2 seconds
+    // PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
     
-    // Print the velocity at the sampled time
-    System.out.println(exampleState.velocityMetersPerSecond);
-    System.out.println(exampleState.velocityMetersPerSecond);
-    System.out.println(exampleState.velocityMetersPerSecond);
+    // // Print the velocity at the sampled time
+    // System.out.println(exampleState.velocityMetersPerSecond);
+    // System.out.println(exampleState.velocityMetersPerSecond);
+    // System.out.println(exampleState.velocityMetersPerSecond);
     
-    m_autonomousCommand = m_robotContainer.followTrajectoryCommand(examplePath, true);
+    // m_autonomousCommand = m_robotContainer.followTrajectoryCommand(examplePath, true);
     
-    // schedule the autonomous command (example)
+    // // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -112,10 +159,15 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+
+  }
 
   @Override
   public void teleopInit() {
+
+    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

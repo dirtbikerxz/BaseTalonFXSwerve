@@ -101,7 +101,7 @@ public class Elevator extends SubsystemBase {
         return inches / Constants.ELEVATOR_ROTATIONS_TO_IN;
     }
 
-    public boolean isFinished() {
+    public boolean atPosition() {
 
         double error = Math.abs(elevatorEncoder.getPosition() - targetElevatorPosition);
 
@@ -149,7 +149,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public Command ElevatorAtPosition(){
-        return Commands.waitUntil(() -> isFinished());
+        return Commands.waitUntil(() -> atPosition());
     }
 
 }

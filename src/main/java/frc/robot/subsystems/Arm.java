@@ -34,11 +34,9 @@ public class Arm extends SubsystemBase {
   private CANCoder armCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
-  private double targetArmAngle = 0; //TODO: make not have initialization issue
+  private double targetArmAngle = Constants.ARM_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
   // public RelativeEncoder armRelativeEncoder;
-
-  //private double targetArmAngle;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -106,7 +104,7 @@ public class Arm extends SubsystemBase {
     }
   }
 
-  public boolean isFinished() {
+  public boolean atPosition() {
 
     double error = Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle));
 
@@ -150,11 +148,11 @@ public class Arm extends SubsystemBase {
 
   public Command SetArmPosition (double degrees){
     return new InstantCommand(() -> setTargetArmAngle(degrees), this);
-}
+  }
 
-public Command ArmAtPosition(){
-    return Commands.waitUntil(() -> isFinished());
-}
+  public Command ArmAtPosition(){
+    return Commands.waitUntil(() -> atPosition());
+  }
 
   private State getEncoderAngle() {
     return null;

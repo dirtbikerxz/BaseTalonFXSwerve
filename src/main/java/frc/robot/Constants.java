@@ -65,7 +65,7 @@ public final class Constants {
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
     public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
     public static final double MANUAL_ELEVATOR_SPEED = 0.50;
-    public static final double ELEVATOR_P = 0.5;
+    public static final double ELEVATOR_P = 1.0;
     public static final double ELEVATOR_I = 0.0;
     public static final double ELEVATOR_D = 0.0;
     public static final double ELEVATOR_HIGH_LEVEL = 26;

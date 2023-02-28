@@ -8,14 +8,21 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
-public class DriveForward extends CommandBase {
+public class DriveCommand extends CommandBase {
 
   Swerve swerve;
+  double Xdrive;
+  double Ydrive;
+  double rotation;
 
   /** Creates a new DriveForward. */
-  public DriveForward(Swerve swerve) {
+  public DriveCommand(Swerve swerve, double Xdrive, double Ydrive, double rotation) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
+    this.Xdrive = Xdrive;
+    this.Ydrive = Ydrive;
+    this.rotation = rotation;
+
     addRequirements(swerve);
   }
 
@@ -26,12 +33,14 @@ public class DriveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerve.drive(new Translation2d(0.5, 0), 0, true, true);
+    swerve.drive(new Translation2d(Xdrive, Ydrive), rotation, false, true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override
