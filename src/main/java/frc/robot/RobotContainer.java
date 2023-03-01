@@ -59,9 +59,6 @@ public class RobotContainer {
     private final POVButton driverDpadRight = new POVButton(driver, 90);
     private final POVButton driverDpadDown = new POVButton(driver, 180);
     private final POVButton driverDpadLeft = new POVButton(driver, 270);
-
-    private final int operatorLeftYAxis = XboxController.Axis.kLeftY.value;
-    private final int operatorRightYAxis = XboxController.Axis.kRightY.value;
  
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -81,6 +78,18 @@ public class RobotContainer {
     private final POVButton operatorDpadRight = new POVButton(operator, 90);
     private final POVButton operatorDpadDown = new POVButton(operator, 180);
     private final POVButton operatorDpadLeft = new POVButton(operator, 270);
+
+    /* operator axis */
+    private final int operatorLeftYAxis = XboxController.Axis.kLeftY.value;
+    private final int operatorRightYAxis = XboxController.Axis.kRightY.value;
+    private final int operatorLeftTriggerAxis = XboxController.Axis.kLeftTrigger.value;
+    private final int operatorRightTriggerAxis = XboxController.Axis.kRightTrigger.value;
+
+    /* operator triggers */
+    final Trigger elevatorManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) > 0.5);
+    final Trigger elevatorManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) < -0.5);
+    final Trigger purpleLEDTrigger = new Trigger(() -> operator.getRawAxis(operatorLeftTriggerAxis) > 0.1);
+    final Trigger yellowLEDTrigger = new Trigger(() -> operator.getRawAxis(operatorRightTriggerAxis) > 0.1);
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -336,8 +345,8 @@ public class RobotContainer {
 
     public void lightHandler() {
 
-        operatorLB.whileTrue(new PurpleLED(leds));
-        operatorRB.whileTrue(new YellowLED(leds));
+        purpleLEDTrigger.whileTrue(new PurpleLED(leds));
+        yellowLEDTrigger.whileTrue(new YellowLED(leds));
 
     }
 
@@ -368,10 +377,6 @@ public class RobotContainer {
                 arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
             )
         ));
-
-        //elevator manual
-        final Trigger elevatorManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) > 0.5);
-        final Trigger elevatorManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) < -0.5);
         
         //elevator manual
         elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));

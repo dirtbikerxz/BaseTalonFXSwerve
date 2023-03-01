@@ -27,11 +27,11 @@ public class DisableCompressor extends CommandBase {
   public void initialize() {
     if(pneumaticHub.getCompressor()==true){
       pneumaticHub.disableCompressor();
-      SmartDashboard.putString("Compressor", "DISABLED");
+      SmartDashboard.putBoolean("Compressor", false);
     }
     else{
       pneumaticHub.enableCompressorDigital();
-      SmartDashboard.putString("Compressor", "");
+      SmartDashboard.putBoolean("Compressor", true);
     }
   }
 
