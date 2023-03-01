@@ -53,7 +53,8 @@ public class Swerve extends SubsystemBase {
          */
         Timer.delay(1.0);
         resetModulesToAbsolute();
-        
+
+        current = new SupplyCurrentLimitConfiguration(true, 0, 0, 0);
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
@@ -137,8 +138,10 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
 
         for(SwerveModule mod : mSwerveMods){
-            //mod.mDriveMotor.configGetSupplyCurrentLimit(current);
-            //System.out.println(current.toString());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Current Draw", mod.mDriveMotor.getSupplyCurrent());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Current Draw", mod.mAngleMotor.getSupplyCurrent());
+            // mod.mDriveMotor.configGetSupplyCurrentLimit(current);
+            // SmartDashboard.putString("Mod " + mod.moduleNumber + " Current Limit", current.toString());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
