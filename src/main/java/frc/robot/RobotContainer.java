@@ -188,13 +188,14 @@ public class RobotContainer {
             new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
 
+            GoToStow()
             // move arm to stow position
-            arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
-            arm.ArmAtPosition(),
+            // arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
+            // arm.ArmAtPosition(),
 
-            // move elevator to safe position
-            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
-            elevator.ElevatorAtPosition()
+            // // move elevator to safe position
+            // elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
+            // elevator.ElevatorAtPosition()
             
         );
     }
@@ -393,20 +394,15 @@ public class RobotContainer {
 
     // Might be used later
     private Command GoToStow() {
-        return new ConditionalCommand(
-            new SequentialCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-                arm.SetArmPosition(Constants.ARM_STOW_POSITION),
-                elevator.ElevatorAtPosition(), 
-                arm.ArmAtPosition(),
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
-            ),
+        return new SequentialCommandGroup(
             new ParallelCommandGroup(
-                arm.SetArmPosition(Constants.ARM_STOW_POSITION),
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), 
+                arm.SetArmPosition(Constants.ARM_STOW_POSITION)
             ),
-            // would need to change this
-            () -> arm.isSafeToGround()
+            elevator.ElevatorAtPosition(), 
+            arm.ArmAtPosition(), 
+            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), 
+            elevator.ElevatorAtPosition()
         );
     }
 
@@ -419,17 +415,7 @@ public class RobotContainer {
         // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
         
         //Stow
-        operatorStart.onTrue(new SequentialCommandGroup(
-            new ParallelCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), 
-                arm.SetArmPosition(Constants.ARM_STOW_POSITION)
-            ),
-            elevator.ElevatorAtPosition(), 
-            arm.ArmAtPosition(), 
-            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), 
-            elevator.ElevatorAtPosition()
-        ));
-        // operatorStart.onTrue(GoToStow());
+        operatorStart.onTrue(GoToStow());
 
         // Ground
         operatorA.onTrue(GoToGround());
