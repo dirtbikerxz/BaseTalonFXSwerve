@@ -75,6 +75,14 @@ public final class Constants {
     public static final int DRIVER_PORT = 0;
     public static final int OPERATOR_PORT = 1;
 
+    // auto balancing constants
+    public static final double AUTO_BALANCE_P = 0.05;
+    public static final double AUTO_BALANCE_I = 0.00;
+    public static final double AUTO_BALANCE_D = 0.01;
+    public static final double BALANCE_LEVEL = -2.4;
+    public static final double BALANCE_LEVEL_DEADZONE = 5.0;
+    public static final double WHEEL_LOCK_TIME = 0.1;
+
     public static final class Swerve {
         public static final int pigeonID = 8;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
