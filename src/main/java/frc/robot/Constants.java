@@ -81,7 +81,7 @@ public final class Constants {
     public static final int OPERATOR_PORT = 1;
 
     // auto balancing constants
-    public static final double AUTO_BALANCE_P = 0.05;
+    public static final double AUTO_BALANCE_P = 0.03;
     public static final double AUTO_BALANCE_I = 0.00;
     public static final double AUTO_BALANCE_D = 0.01;
     public static final double BALANCE_LEVEL = -2.4;

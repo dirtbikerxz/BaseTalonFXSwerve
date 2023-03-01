@@ -40,9 +40,10 @@ public class Robot extends TimedRobot {
 
   private Command resetAbsolute;
 
-  private static final String auto1 = "station1Auto";
-  private static final String auto2 = "station2Auto";
-  private static final String auto3 = "station3Auto";
+  private static final String auto1 = "Cube Preload Balance";
+  private static final String auto2 = "Cone Preload Balance";
+  private static final String auto3 = "Cube Preload No Balance";
+  private static final String auto4 = "Cone Preload No Balance";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -61,11 +62,10 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
-    m_chooser.addOption("Cube Preload", auto1);
-    m_chooser.addOption("Cone Preload", auto2);
-    m_chooser.addOption("Auto Balance", auto3);
-
-    m_chooser.setDefaultOption("Cone Preload", auto2);
+    m_chooser.addOption("Cube Preload Balance", auto1);
+    m_chooser.setDefaultOption("Cone Preload Balance", auto2);
+    m_chooser.addOption("Cube Preload No balance", auto3);
+    m_chooser.addOption("Cone Preload No balance", auto4);
 
     SmartDashboard.putData("Auto choices", m_chooser);
 
@@ -117,17 +117,19 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
 
       case auto1:
-        m_autonomousCommand = m_robotContainer.CubeAuto();
+        m_autonomousCommand = m_robotContainer.CubeAutoBalance();
         break;
       case auto2:
-        m_autonomousCommand = m_robotContainer.ConeAuto();
+        m_autonomousCommand = m_robotContainer.ConeAutoBalance();
         break;
       case auto3:
-        m_autonomousCommand = m_robotContainer.AutoBalance();
+        m_autonomousCommand = m_robotContainer.CubeAutoNoBalance();
         break;
-
+      case auto4:
+      m_autonomousCommand = m_robotContainer.ConeAutoNoBalance();
+        break;
       default:
-        m_autonomousCommand = m_robotContainer.ConeAuto();
+        m_autonomousCommand = m_robotContainer.ConeAutoBalance();
 
     }
 

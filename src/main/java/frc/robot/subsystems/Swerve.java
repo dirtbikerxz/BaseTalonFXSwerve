@@ -39,7 +39,7 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
-        zeroGyro();
+        zeroGyro(Constants.GRYO_OFFSET);
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -112,8 +112,8 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(){
-        gyro.setYaw(Constants.GRYO_OFFSET);
+    public void zeroGyro(double target){
+        gyro.setYaw(target);
     }
 
     public Rotation2d getYaw() {

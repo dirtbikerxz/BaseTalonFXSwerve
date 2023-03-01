@@ -148,6 +148,9 @@ public class RobotContainer {
         return new SequentialCommandGroup(
 
             //new CloseIntake(intake).withTimeout(0.1),
+            new InstantCommand(() -> s_Swerve.zeroGyro(180.0)),
+
+            new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
 
             // move elevator to safe position
             elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
@@ -200,6 +203,10 @@ public class RobotContainer {
     public Command ScoreConePreload() {
 
         return new SequentialCommandGroup(
+
+            new InstantCommand(() -> s_Swerve.zeroGyro(180.0)),
+
+            new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
 
             new CloseIntake(intake).withTimeout(0.1),
 
@@ -256,36 +263,55 @@ public class RobotContainer {
 
             // drive backwards
             new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+
+            new AutoBalance(s_Swerve)
 
         );
     }
     
 
-    public Command CubeAuto() {
+    public Command CubeAutoBalance() {
 
         return new SequentialCommandGroup(
 
-        ScoreCubePreload()
+        ScoreCubePreload(),
+        balance()
 
     );
 
     }
 
-    public Command ConeAuto() {
+    public Command ConeAutoBalance() {
 
         return new SequentialCommandGroup(
 
-            ScoreConePreload()
+            ScoreConePreload(),
+            balance()
 
         );
     }
 
-    public Command AutoBalance() {
+    public Command CubeAutoNoBalance() {
 
         return new SequentialCommandGroup(
 
-        balance()
+        ScoreCubePreload(),
+
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+
+    );
+    }
+
+    public Command ConeAutoNoBalance() {
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload(),
+
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
 
     );
     }
@@ -311,7 +337,7 @@ public class RobotContainer {
 
     public void swerveHandler() {
 
-        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
     }
    
