@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDs;
 
@@ -22,6 +23,9 @@ public class IdleLEDS extends CommandBase {
     @Override
     public void initialize() {
       leds.setColor(50,50,255);
+      SmartDashboard.putBoolean("isDefault", true);
+      SmartDashboard.putBoolean("isPurple", false);
+      SmartDashboard.putBoolean("isYellow", false);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

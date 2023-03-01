@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -20,21 +23,23 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
-  private ProfiledPIDController controller;
+  public ProfiledPIDController controller;
   private CANSparkMax armMotor;
   private CANCoder armCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
-  private double targetArmAngle = Constants.ARM_STOW_POSITION;
+  private double targetArmAngle = Constants.ARM_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
   // public RelativeEncoder armRelativeEncoder;
-
-  //private double targetArmAngle;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -55,6 +60,7 @@ public class Arm extends SubsystemBase {
     armCANEncoder.configFactoryDefault();
     armCANEncoder.configMagnetOffset(Constants.ARM_ENCODER_OFFSET);
     armCANEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    armCANEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
     
     // armRelativeEncoder = armMotor.getEncoder();
     // armRelativeEncoder.setPosition(0.0);
@@ -69,15 +75,14 @@ public class Arm extends SubsystemBase {
   }
 
   /* Always use this method when you want the position of the arm */
-  private double getPositionInDegrees() {
+  public double getPositionInDegrees() {
     return armCANEncoder.getAbsolutePosition() / Constants.ARM_ENCODER_RATIO;
   }
 
-    /* Always use this method when you want the velocity of the arm */
-    private double getVelocityInDegrees() {
-      return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
-    }
-
+  /* Always use this method when you want the velocity of the arm */
+  public double getVelocityInDegrees() {
+    return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
+  }
 
   //Sets the targetArmAngle in degrees */
   public void setTargetArmAngle(double degrees) {
@@ -102,29 +107,55 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  public boolean atPosition() {
+
+    double error = Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle));
+
+    if (Constants.ARM_TOLERANCE >= error) {
+
+        return true;
+
+    } else {
+        return false;
+    }
+    
+  }
+
+  public boolean isSafeToGround() {
+    return getPositionInDegrees() < Constants.ARM_REVERSE_LIMIT;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (DriverStation.isEnabled()){
-      // This method will be called once per scheduler run
-      //TODO check directionality probably needs to be negated
-
-      double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);
-      
-      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees())); //Negative due to gear between output and encoder reversing direction
-      //TODO: voltage = pid + feedForward
-      voltage =  pid + feedForward; //TODO: add effort to incorporate profiled PID
+    double pid = controller.calculate(getPositionInDegrees(), targetArmAngle);;
+    if (DriverStation.isEnabled()){      
+      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegrees()), Units.degreesToRadians(getVelocityInDegrees()));
+      voltage =  pid + feedForward;
 
       MathUtil.clamp(voltage, -12, 12);
       armMotor.setVoltage(voltage);
-      SmartDashboard.putNumber("PID VALUE", pid);
+      // SmartDashboard.putNumber("PID VALUE", pid);
 
+      
     }
-    //SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position", getPositionInDegrees());
-    SmartDashboard.putNumber("Arm Voltage", voltage);
+    // SmartDashboard.putNumber("Arm PID Output", pid);
+    // SmartDashboard.putNumber("Arm Voltage", voltage);
+    SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
+    // SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle)));
+    // SmartDashboard.putString("CANCoder Initialization Strategy", armCANEncoder.configGetSensorInitializationStrategy().toString());
     
     // SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
+  }
+
+  public Command SetArmPosition (double degrees){
+    return new InstantCommand(() -> setTargetArmAngle(degrees), this);
+  }
+
+  public Command ArmAtPosition(){
+    return Commands.waitUntil(() -> atPosition());
   }
 
   private State getEncoderAngle() {

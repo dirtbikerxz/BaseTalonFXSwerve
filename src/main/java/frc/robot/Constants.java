@@ -23,28 +23,30 @@ public final class Constants {
     public static final double ARM_GEAR_RATIO = 150.0;
     public static final double MANUAL_ARM_SPEED = 1.0;
     // positions
-    public static final double ARM_STOW_POSITION = 0.0;
-    public static final double ARM_LOW_POSITION = -90.0;
-    public static final double ARM_MID_POSITION = -45.0;
-    public static final double ARM_HIGH_POSITION = 10.0;
+    public static final double ARM_STOW_POSITION = -135;
+    public static final double ARM_LOW_POSITION = -72.2;
+    public static final double ARM_MID_POSITION = 0.0;
+    public static final double ARM_HIGH_POSITION = 35.0;
+
+    public static final double ARM_TOLERANCE = 20.0;
 
     //Feedforward
-    public static final double ARM_G = -0.15; //Its negative because the motors move the wrong direction
+    public static final double ARM_G = -0.3; //Its negative because the motors move the wrong direction
     public static final double ARM_V = 0.0;
     public static final double ARM_A = 0.0;
     public static final double ARM_S = 0.0;
 
     //PID
-    public static final double ARM_P = -0.15;
-    public static final double ARM_I = -0.0;
-    public static final double ARM_D= -0.0;
+    public static final double ARM_P = -0.18;
+    public static final double ARM_I = 0.0;
+    public static final double ARM_D = 0.0;
     
     
     //TODO: Set offset
     public static final double ARM_ENCODER_OFFSET = 360-6.2;
     public static final double TARGET_ARM_ANGLE = 0;
 
-    public static final double INTAKE_SPEED = 0.30;
+    public static final double INTAKE_SPEED = 0.50;
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
     
@@ -57,18 +59,21 @@ public final class Constants {
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;
-    public static final int REVERSE_ELEVATOR_LIMIT = 2;
+    public static final int REVERSE_ELEVATOR_LIMIT = 0;
     public static final int ELEVATOR_MOTOR_ID = 16;
     public static final double ELEVATOR_GEAR_RATIO = 9.0;
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
     public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
     public static final double MANUAL_ELEVATOR_SPEED = 0.50;
-    public static final double ELEVATOR_P = 0.5;
+    public static final double ELEVATOR_P = 1.0;
     public static final double ELEVATOR_I = 0.0;
     public static final double ELEVATOR_D = 0.0;
-    public static final int HIGH_LEVEL = 26;
-    public static final int MID_LEVEL = 15;
-    public static final int LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
+    public static final double ELEVATOR_HIGH_LEVEL = 26;
+    public static final double ELEVATOR_MID_LEVEL = 8.5;
+    public static final double ELEVATOR_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
+    public static final double ELEVATOR_SAFE_LEVEL = 10.0;
+
+    public static final double ELEVATOR_TOLERANCE = 20;
 
     public static final int GRYO_OFFSET = 0;
 
@@ -76,7 +81,7 @@ public final class Constants {
     public static final int OPERATOR_PORT = 1;
 
     // auto balancing constants
-    public static final double AUTO_BALANCE_P = 0.05;
+    public static final double AUTO_BALANCE_P = 0.03;
     public static final double AUTO_BALANCE_I = 0.00;
     public static final double AUTO_BALANCE_D = 0.01;
     public static final double BALANCE_LEVEL = -2.4;
@@ -94,6 +99,7 @@ public final class Constants {
         public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
+
 
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
@@ -122,7 +128,7 @@ public final class Constants {
 
         public static final int driveContinuousCurrentLimit = 35;
         public static final int drivePeakCurrentLimit = 60;
-        public static final double drivePeakCurrentDuration = 0.1;
+        public static final double drivePeakCurrentDuration = 0.0001;
         public static final boolean driveEnableCurrentLimit = true;
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
@@ -150,7 +156,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.5*0.8/* 4.5 */; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 

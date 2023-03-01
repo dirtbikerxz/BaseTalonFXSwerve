@@ -19,6 +19,8 @@ public class RunIntake extends CommandBase {
 
         this.intake = intake;
 
+        addRequirements(intake);
+
     }
 
     // Called when the command is initially scheduled.

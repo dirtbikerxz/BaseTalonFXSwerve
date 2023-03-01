@@ -26,15 +26,8 @@ public class MoveArmManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (driver.getRawButton(3)) {
-      arm.setSpeed(0.25);
-    } else if (driver.getRawButton(2)) {
-      arm.setSpeed(-0.25);
-    } else {
-      arm.setSpeed(0);
-    }
+    
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

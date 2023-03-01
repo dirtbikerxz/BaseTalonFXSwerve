@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -15,6 +17,9 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -41,7 +46,7 @@ public class Elevator extends SubsystemBase {
 
         // double p = SmartDashboard.getNumber("p", 0);
         this.controller = new ProfiledPIDController(Constants.ELEVATOR_P, Constants.ELEVATOR_I, Constants.ELEVATOR_D, new Constraints(80, 1000));
-        this.controller.setTolerance(1, 1);
+        this.controller.setTolerance(100, 100);
         // TODO: Recalculate these constants
         //this.ff = new ElevatorFeedforward(0, 0.16, 0.18, 0.02);
 
@@ -53,6 +58,11 @@ public class Elevator extends SubsystemBase {
     /* Sets the Target Elevator Position in inches.*/
     public void setTargetElevatorPosition(double inches){
         targetElevatorPosition = inches;
+    }
+
+    /* Sets the Target Elevator Position in inches.*/
+    public double getTargetElevatorPosition(){
+        return targetElevatorPosition;
     }
 
     public void extend() {
@@ -90,6 +100,23 @@ public class Elevator extends SubsystemBase {
     private double inchesToMotorRotations(double inches) {
         return inches / Constants.ELEVATOR_ROTATIONS_TO_IN;
     }
+
+    public boolean atPosition() {
+
+        double error = Math.abs(elevatorEncoder.getPosition() - targetElevatorPosition);
+
+        if (Constants.ELEVATOR_TOLERANCE >= error) {
+            return true;
+
+        } else {
+            return false;
+        }
+        
+    }
+
+    public Boolean isHigh(){
+        return getTargetElevatorPosition() == Constants.ELEVATOR_HIGH_LEVEL;
+    }
     
     @Override
     public void periodic() {
@@ -101,13 +128,27 @@ public class Elevator extends SubsystemBase {
             MathUtil.clamp(voltage, -12, 12);
 
             elevatorMotor.setVoltage(voltage);
+
             
-            SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
+            // SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
+
+
         // SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
         //SmartDashboard.putNumber("Elevator feedforward", feedforward);
     }
+
+
+
+    public Command SetElevatorPosition (double inches){
+        return new InstantCommand(() -> setTargetElevatorPosition(inches), this);
+    }
+
+    public Command ElevatorAtPosition(){
+        return Commands.waitUntil(() -> atPosition());
+    }
+
 }
 
