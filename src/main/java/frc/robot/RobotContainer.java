@@ -94,16 +94,16 @@ public class RobotContainer {
     public RobotContainer() {
         //arm.setDefaultCommand(new MoveArmManual(arm, driver));
         leds.setDefaultCommand(new IdleLEDS(leds));
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(driverLeftY), 
-                () -> -driver.getRawAxis(driverLeftX), 
-                () -> -driver.getRawAxis(driverRightX), 
-                () -> driverStart.getAsBoolean()
-            )
-            // new DriveForward(s_Swerve)
-        );
+         s_Swerve.setDefaultCommand(
+             new TeleopSwerve(
+                 s_Swerve, 
+                 () -> -driver.getRawAxis(driverLeftY), 
+                 () -> -driver.getRawAxis(driverLeftX), 
+                 () -> -driver.getRawAxis(driverRightX), 
+                 () -> driverStart.getAsBoolean()
+             )
+             // new DriveForward(s_Swerve)
+         );
 
         // Configure the button bindings
         configureButtonBindings();
