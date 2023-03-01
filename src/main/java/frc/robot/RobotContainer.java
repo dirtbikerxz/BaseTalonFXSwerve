@@ -142,9 +142,12 @@ public class RobotContainer {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
     }
 
-    public Command ScorePreload() {
+    // 25 inches
+    public Command ScoreCubePreload() {
 
         return new SequentialCommandGroup(
+
+            //new CloseIntake(intake).withTimeout(0.1),
 
             // move elevator to safe position
             elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
@@ -156,8 +159,8 @@ public class RobotContainer {
             arm.ArmAtPosition(),
 
             // drive forward
-            new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(0.5).withTimeout(0.5),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1).withTimeout(0.1),
+            new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
 
             new ConfirmScore(arm, elevator).withTimeout(0.1),
             
@@ -169,8 +172,8 @@ public class RobotContainer {
             // open intake
             new ParallelCommandGroup(
                 new InstantCommand(() -> intake.Retract()),
-                new ReverseIntake(intake)
-            ).withTimeout(0.5),
+                new RunIntakeAtSpeed(intake, -0.5)
+            ).withTimeout(0.1),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
@@ -179,7 +182,7 @@ public class RobotContainer {
             arm.ArmAtPosition(),
 
             // drive backward
-            new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(0.5),
+            new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
 
             // move arm to stow position
@@ -193,30 +196,96 @@ public class RobotContainer {
         );
     }
 
-    public Command Station1Auto() {
+    // 27 inches
+    public Command ScoreConePreload() {
 
         return new SequentialCommandGroup(
 
-        ScorePreload()
+            new CloseIntake(intake).withTimeout(0.1),
+
+            // move elevator to safe position
+            elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
+            elevator.ElevatorAtPosition(),
+
+            //move arm and elevator to scoring position
+            new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
+            elevator.ElevatorAtPosition(),
+            arm.ArmAtPosition(),
+
+            // drive forward
+            new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+
+            new ConfirmScore(arm, elevator).withTimeout(0.1),
+            
+            // move down
+            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(arm, elevator)),
+            elevator.ElevatorAtPosition(),
+            arm.ArmAtPosition(),
+
+            // open intake
+            new ParallelCommandGroup(
+                new InstantCommand(() -> intake.Retract()),
+                new RunIntakeAtSpeed(intake, -0.5)
+            ).withTimeout(0.1),
+
+            //move up
+            new ReturnFromScoring(arm, elevator).withTimeout(0.5),
+
+            elevator.ElevatorAtPosition(),
+            arm.ArmAtPosition(),
+
+            // drive backward
+            new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
+
+            // move arm to stow position
+            arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
+            arm.ArmAtPosition(),
+
+            // move elevator to safe position
+            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
+            elevator.ElevatorAtPosition()
+            
+        );
+    }
+
+    public Command balance() {
+
+        return new SequentialCommandGroup(
+
+            // drive backwards
+            new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+
+        );
+    }
+    
+
+    public Command CubeAuto() {
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload()
 
     );
 
     }
 
-    public Command Station2Auto() {
+    public Command ConeAuto() {
 
         return new SequentialCommandGroup(
 
-            ScorePreload()
+            ScoreConePreload()
 
         );
     }
 
-    public Command Station3Auto() {
+    public Command AutoBalance() {
 
         return new SequentialCommandGroup(
 
-        ScorePreload()
+        balance()
 
     );
     }

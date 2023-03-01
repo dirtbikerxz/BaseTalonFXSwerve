@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -30,6 +31,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    private SupplyCurrentLimitConfiguration current;
     
 
     public Swerve() {
@@ -129,6 +131,8 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
 
         for(SwerveModule mod : mSwerveMods){
+            //mod.mDriveMotor.configGetSupplyCurrentLimit(current);
+            //System.out.println(current.toString());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    

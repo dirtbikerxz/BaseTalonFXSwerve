@@ -61,11 +61,11 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
-    m_chooser.addOption("station1Auto", auto1);
-    m_chooser.addOption("station2Auto", auto2);
-    m_chooser.addOption("station3Auto", auto3);
+    m_chooser.addOption("Cube Preload", auto1);
+    m_chooser.addOption("Cone Preload", auto2);
+    m_chooser.addOption("Auto Balance", auto3);
 
-    m_chooser.setDefaultOption("station2Auto", auto2);
+    m_chooser.setDefaultOption("Cone Preload", auto2);
 
     SmartDashboard.putData("Auto choices", m_chooser);
 
@@ -117,17 +117,17 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
 
       case auto1:
-        m_autonomousCommand = m_robotContainer.Station1Auto();
+        m_autonomousCommand = m_robotContainer.CubeAuto();
         break;
       case auto2:
-        m_autonomousCommand = m_robotContainer.Station2Auto();
+        m_autonomousCommand = m_robotContainer.ConeAuto();
         break;
       case auto3:
-        m_autonomousCommand = m_robotContainer.Station3Auto();
+        m_autonomousCommand = m_robotContainer.AutoBalance();
         break;
 
       default:
-        m_autonomousCommand = m_robotContainer.Station2Auto();
+        m_autonomousCommand = m_robotContainer.ConeAuto();
 
     }
 

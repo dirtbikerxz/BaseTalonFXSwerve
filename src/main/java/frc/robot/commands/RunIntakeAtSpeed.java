@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class ReverseIntake extends CommandBase {
+public class RunIntakeAtSpeed extends CommandBase {
   
     private Intake intake;
+    private double speed;
 
-    public ReverseIntake(Intake intake) {
+    public RunIntakeAtSpeed(Intake intake, double speed) {
 
         this.intake = intake;
+        this.speed = speed;
 
         addRequirements(intake);
 
@@ -27,8 +29,8 @@ public class ReverseIntake extends CommandBase {
     @Override
     public void initialize() {
 
-        intake.Run(-Constants.INTAKE_SPEED);
-
+        intake.Run(speed);
+        
     }
 
     // Called every time the scheduler runs while the command is scheduled.

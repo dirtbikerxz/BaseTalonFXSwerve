@@ -14,6 +14,7 @@ import javax.sound.sampled.Port;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -23,9 +24,11 @@ public class SwerveModule {
     private Rotation2d lastAngle;
 
     private TalonFX mAngleMotor;
-    private TalonFX mDriveMotor;
+    public TalonFX mDriveMotor;
     private CANCoder angleEncoder;
     private AbsoluteEncoder absoluteEncoder;
+
+    //private SupplyCurrentLimitConfiguration driveCurrentLimit = new SupplyCurrentLimitConfiguration(true, Constants.Swerve.drivePeakCurrentLimit,0,0);;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -160,6 +163,7 @@ public class SwerveModule {
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
         mDriveMotor.setSelectedSensorPosition(0);
+        //mDriveMotor.configSupplyCurrentLimit(driveCurrentLimit);
     }
 
     public SwerveModuleState getState(){
