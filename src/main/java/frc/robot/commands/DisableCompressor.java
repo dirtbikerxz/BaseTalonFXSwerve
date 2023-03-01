@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -26,9 +27,11 @@ public class DisableCompressor extends CommandBase {
   public void initialize() {
     if(pneumaticHub.getCompressor()==true){
       pneumaticHub.disableCompressor();
+      SmartDashboard.putString("Compressor", "DISABLED");
     }
     else{
       pneumaticHub.enableCompressorDigital();
+      SmartDashboard.putString("Compressor", "");
     }
   }
 

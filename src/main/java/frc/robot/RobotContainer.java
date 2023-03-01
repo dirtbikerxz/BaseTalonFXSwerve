@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -94,6 +95,10 @@ public class RobotContainer {
     public RobotContainer() {
         //arm.setDefaultCommand(new MoveArmManual(arm, driver));
         leds.setDefaultCommand(new IdleLEDS(leds));
+        SmartDashboard.putBoolean("isDefault", true);
+        SmartDashboard.putBoolean("isPurple", false);
+        SmartDashboard.putBoolean("isYellow", false);
+
          s_Swerve.setDefaultCommand(
              new TeleopSwerve(
                  s_Swerve, 
@@ -416,7 +421,6 @@ public class RobotContainer {
         
         //Stow
         operatorStart.onTrue(GoToStow());
-
         // Ground
         operatorA.onTrue(GoToGround());
 

@@ -60,6 +60,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    SmartDashboard.putString("Compressor", "");
+
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
     m_chooser.addOption("Cube Preload Balance", auto1);

@@ -135,7 +135,7 @@ public class Arm extends SubsystemBase {
 
       MathUtil.clamp(voltage, -12, 12);
       armMotor.setVoltage(voltage);
-      SmartDashboard.putNumber("PID VALUE", pid);
+      // SmartDashboard.putNumber("PID VALUE", pid);
 
       
     }
