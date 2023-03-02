@@ -17,70 +17,28 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class AutoBalance extends CommandBase {
+public class GetAngle extends CommandBase {
 
   Swerve swerve;
-  PIDController pid;
-  Alliance alliance;
-  double balanceVar;
 
   /** Creates a new DriveForward. */
-  public AutoBalance(Swerve swerve) {
+  public GetAngle(Swerve swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
 
-    pid = new PIDController(Constants.AUTO_BALANCE_P, Constants.AUTO_BALANCE_I, Constants.AUTO_BALANCE_D);
     addRequirements(this.swerve);
-    alliance = DriverStation.getAlliance();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    if (alliance == Alliance.Red) {
-
-      balanceVar = Constants.RED_BALANCE_LEVEL;
-
-    } else if (alliance == Alliance.Blue) {
-
-      balanceVar = Constants.BLUE_BALANCE_LEVEL;
-
-    }
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double angle = swerve.getRoll().getDegrees();
-    // If we substract Constants.BALANCE_LEVEL that should make our PIDController treat Constants.BALANCE_LEVEL as level
-
-    double pidVar = pid.calculate(angle - balanceVar);
-    Translation2d move = new Translation2d(-pidVar, 0.0);
-
-    if (angle <= balanceVar + Constants.BALANCE_LEVEL_DEADZONE && angle >= balanceVar - Constants.BALANCE_LEVEL_DEADZONE) {
-
-      
-      System.out.println("balanced");
-      // new LockWheels(swerve);
-      // swerve.lockWheels();
-      swerve.drive(new Translation2d(0.0, 0.0), 0.5, true, false);
-      swerve.drive(new Translation2d(0.0, 0.0), 0.0, true, false);
-
-    } else {
-
-      System.out.println("balancing");
-      swerve.drive(move, 0.0, true, false);
-
-    }
-
-    SmartDashboard.putNumber("pidVar", pidVar);
-    SmartDashboard.putNumber("Robot Angle", angle);
+    SmartDashboard.putNumber("Robot Angle", swerve.getRoll().getDegrees());
 
   }
 

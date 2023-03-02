@@ -42,6 +42,7 @@ public class RobotContainer {
     private final int driverLeftX = XboxController.Axis.kLeftX.value;
     private final int driverRightX = XboxController.Axis.kRightX.value;
 
+    private double rotationSpeed = 1.0;
 
 
     /* Driver Buttons */
@@ -114,7 +115,8 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(driverLeftY), 
                  () -> -driver.getRawAxis(driverLeftX), 
                  () -> -driver.getRawAxis(driverRightX), 
-                 () -> driverStart.getAsBoolean()
+                 () -> driverDpadUp.getAsBoolean(),
+                 rotationSpeed
              )
              // new DriveForward(s_Swerve)
          );
@@ -354,6 +356,9 @@ public class RobotContainer {
 
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
+        driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
     }
    
 
@@ -446,6 +451,13 @@ public class RobotContainer {
         // //Auto based on position
         operatorLB.onTrue(new ConfirmScore(arm, elevator));
         operatorLB.onFalse(new ReturnFromScoring(arm, elevator));
+    }
+
+    // Put buttons for testing/configuring/debugging purposes here
+    public void testHandler() {
+
+        //new GetAngle(s_Swerve);
+
     }
 }
 
