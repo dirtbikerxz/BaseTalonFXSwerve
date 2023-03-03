@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -28,6 +29,7 @@ public class RunIntake extends CommandBase {
     public void initialize() {
 
         intake.Run(Constants.INTAKE_SPEED);
+        SmartDashboard.putBoolean("Intake Direction", true);
         
     }
 
