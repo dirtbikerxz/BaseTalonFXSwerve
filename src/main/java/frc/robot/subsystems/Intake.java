@@ -10,6 +10,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -50,7 +51,6 @@ public class Intake extends SubsystemBase {
 
       motor1.set(0.1);
       motor2.set(0.1);
-      
 
     }
 

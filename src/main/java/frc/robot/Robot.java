@@ -40,10 +40,12 @@ public class Robot extends TimedRobot {
 
   private Command resetAbsolute;
 
-  private static final String auto1 = "Cube Preload Balance";
-  private static final String auto2 = "Cone Preload Balance";
-  private static final String auto3 = "Cube Preload No Balance";
-  private static final String auto4 = "Cone Preload No Balance";
+  private static final String auto1 = "Left Auto Cube";
+  private static final String auto2 = "Left Auto Cone";
+  private static final String auto3 = "Mid Auto Cube";
+  private static final String auto4 = "Mid Auto Cone";
+  private static final String auto5 = "Right Auto Cube";
+  private static final String auto6 = "Right Auto Cone";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -64,17 +66,21 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
-    m_chooser.addOption("Cube Preload Balance", auto1);
-    m_chooser.setDefaultOption("Cone Preload Balance", auto2);
-    m_chooser.addOption("Cube Preload No balance", auto3);
-    m_chooser.addOption("Cone Preload No balance", auto4);
+    m_chooser.addOption("Left Auto Cube", auto1);
+    m_chooser.addOption("Left Auto Cone", auto2);
 
-    SmartDashboard.putData("Auto choices", m_chooser);
+    m_chooser.addOption("Mid Auto Cube", auto3);
+    m_chooser.setDefaultOption("Mid Auto Cone", auto4);
+
+    m_chooser.addOption("Right Auto Cube", auto5);
+    m_chooser.addOption("Right Auto Cone", auto6);
+
+    SmartDashboard.putData("Auto Choices", m_chooser);
 
     // driver camera
-    // final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
+    final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
     
-    // usbCamera.setVideoMode(new VideoMode(VideoMode.PixelFormat.kMJPEG, 160, 120, 30));
+    usbCamera.setVideoMode(new VideoMode(VideoMode.PixelFormat.kMJPEG, 160, 120, 30));
 
   }
 
@@ -110,36 +116,43 @@ public class Robot extends TimedRobot {
 
     /*Reset Absolute */
     m_robotContainer.resetAbsolute();
+    m_robotContainer.arm.resetRelative();
     //m_robotContainer.MidAuto();
 
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
 
     m_autoSelected = m_chooser.getSelected();
 
-    switch (m_autoSelected) {
+    // switch (m_autoSelected) {
 
-      case auto1:
-        m_autonomousCommand = m_robotContainer.CubeAutoBalance();
-        break;
-      case auto2:
-        m_autonomousCommand = m_robotContainer.ConeAutoBalance();
-        break;
-      case auto3:
-        m_autonomousCommand = m_robotContainer.CubeAutoNoBalance();
-        break;
-      case auto4:
-      m_autonomousCommand = m_robotContainer.ConeAutoNoBalance();
-        break;
-      default:
-        m_autonomousCommand = m_robotContainer.ConeAutoBalance();
+    //   case auto1:
+    //     m_autonomousCommand = m_robotContainer.LeftAutoCube();
+    //     break;
+    //   case auto2:
+    //     m_autonomousCommand = m_robotContainer.LeftAutoCone();
+    //     break;
+    //   case auto3:
+    //     m_autonomousCommand = m_robotContainer.CubeAutoBalance();
+    //     break;
+    //   case auto4:
+    //     m_autonomousCommand = m_robotContainer.ConeAutoBalance();
+    //     break;
+    //   case auto5:
+    //     m_autonomousCommand = m_robotContainer.RightAutoCube();
+    //     break;
+    //   case auto6:
+    //     m_autonomousCommand = m_robotContainer.RightAutoCone();
+    //     break;
+    //   default:
+    //     m_autonomousCommand = m_robotContainer.ConeAutoBalance();
 
-    }
+    // }
 
     
     // PathConstraints pathConstraints = new PathConstraints(4, 3);
     
     // // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    // PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New Path", pathConstraints);
+    // PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New New Path", pathConstraints);
     
     // // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
     // // Or the path can be sampled at a given point in time for custom path following
@@ -153,8 +166,10 @@ public class Robot extends TimedRobot {
     // System.out.println(exampleState.velocityMetersPerSecond);
     
     // m_autonomousCommand = m_robotContainer.followTrajectoryCommand(examplePath, true);
+
+    m_autonomousCommand = m_robotContainer.pathTest();
     
-    // // schedule the autonomous command (example)
+    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -171,6 +186,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
+    m_robotContainer.arm.resetRelative();
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
     
     // This makes sure that the autonomous stops running when

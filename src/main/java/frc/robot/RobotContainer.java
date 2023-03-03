@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -99,6 +101,13 @@ public class RobotContainer {
     public final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
+    private PathConstraints pathConstraints = new PathConstraints(4, 3);
+    
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    private PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New New Path", pathConstraints);
+    
+    // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+    // Or the path can be sampled at a given point in time for custom path following
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -309,30 +318,68 @@ public class RobotContainer {
         );
     }
 
-    public Command CubeAutoNoBalance() {
+    public Command RightAutoCube() {
 
         return new SequentialCommandGroup(
 
         ScoreCubePreload(),
 
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
+        new DriveCommand(s_Swerve, 0.0, -1.0, 0.0).withTimeout(2),
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
         new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
 
     );
     }
 
-    public Command ConeAutoNoBalance() {
+    public Command RightAutoCone() {
 
         return new SequentialCommandGroup(
 
         ScoreConePreload(),
 
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
+        new DriveCommand(s_Swerve, 0.0, -1.0, 0.0).withTimeout(2),
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+
+    );   
+    }
+
+    public Command LeftAutoCube() {
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload(),
+
+        new DriveCommand(s_Swerve, 0.0, 1.0, 0.0).withTimeout(2),
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
         new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
 
     );
     }
 
+    public Command LeftAutoCone() {
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload(),
+
+        new DriveCommand(s_Swerve, 0.0, 1.0, 0.0).withTimeout(2),
+        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+
+    );   
+    }
+
+    public Command pathTest() {
+
+        return new SequentialCommandGroup(
+            //ScoreConePreload(),
+            GoToGround().withTimeout(2.0),
+
+            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED)),
+            followTrajectoryCommand(examplePath, true)
+        );
+        }
 
     public void intakeHandler() {
 
@@ -382,6 +429,16 @@ public class RobotContainer {
                 arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
             )
         ));
+
+        operatorRB.onTrue(new SequentialCommandGroup(
+            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
+            elevator.ElevatorAtPosition(),
+            new ParallelCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOADING_POSITION), 
+                arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
+            )
+        ));
+
         
         //elevator manual
         elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
@@ -416,7 +473,7 @@ public class RobotContainer {
             ),
             elevator.ElevatorAtPosition(), 
             arm.ArmAtPosition(), 
-            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), 
+            elevator.SetElevatorPosition(Constants.ELEVATOR_STOW_LEVEL), 
             elevator.ElevatorAtPosition()
         );
     }
