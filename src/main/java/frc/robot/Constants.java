@@ -24,7 +24,7 @@ public final class Constants {
     public static final double MANUAL_ARM_SPEED = 1.0;
     // positions
     public static final double ARM_STOW_POSITION = -135;
-    public static final double ARM_LOW_POSITION = -72.2;
+    public static final double ARM_LOW_POSITION = -82.7;
     public static final double ARM_MID_POSITION = 0.0;
     public static final double ARM_HIGH_POSITION = 35.0;
 
@@ -46,7 +46,7 @@ public final class Constants {
     public static final double ARM_ENCODER_OFFSET = 360-6.2;
     public static final double TARGET_ARM_ANGLE = 0;
 
-    public static final double INTAKE_SPEED = 0.50;
+    public static final double INTAKE_SPEED = 0.60;
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
     
@@ -72,6 +72,8 @@ public final class Constants {
     public static final double ELEVATOR_MID_LEVEL = 8.5;
     public static final double ELEVATOR_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_SAFE_LEVEL = 10.0;
+    public static final double ELEVATOR_STOW_LEVEL = 6.0;
+    public static final double ELEVATOR_LOADING_POSITION = 4;
 
     public static final double ELEVATOR_TOLERANCE = 20;
 
@@ -84,7 +86,8 @@ public final class Constants {
     public static final double AUTO_BALANCE_P = 0.03;
     public static final double AUTO_BALANCE_I = 0.00;
     public static final double AUTO_BALANCE_D = 0.01;
-    public static final double BALANCE_LEVEL = -2.4;
+    public static final double RED_BALANCE_LEVEL = -2.4;
+    public static final double BLUE_BALANCE_LEVEL = -2.4;
     public static final double BALANCE_LEVEL_DEADZONE = 5.0;
     public static final double WHEEL_LOCK_TIME = 0.1;
 

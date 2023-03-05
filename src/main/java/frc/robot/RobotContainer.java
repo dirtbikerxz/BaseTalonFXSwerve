@@ -1,7 +1,10 @@
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -42,6 +45,7 @@ public class RobotContainer {
     private final int driverLeftX = XboxController.Axis.kLeftX.value;
     private final int driverRightX = XboxController.Axis.kRightX.value;
 
+    private double rotationSpeed = 1.0;
 
 
     /* Driver Buttons */
@@ -98,6 +102,14 @@ public class RobotContainer {
     public final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
+    private PathConstraints pathConstraints = new PathConstraints(4, 3);
+    private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
+    private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
+    
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    
+    // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+    // Or the path can be sampled at a given point in time for custom path following
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -111,10 +123,11 @@ public class RobotContainer {
          s_Swerve.setDefaultCommand(
              new TeleopSwerve(
                  s_Swerve, 
-                 () -> -driver.getRawAxis(driverLeftY), 
-                 () -> -driver.getRawAxis(driverLeftX), 
+                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
+                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
-                 () -> driverStart.getAsBoolean()
+                 () -> driverDpadUp.getAsBoolean(),
+                 rotationSpeed
              )
              // new DriveForward(s_Swerve)
          );
@@ -290,7 +303,7 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-        ScoreCubePreload(),
+        ScoreCubePreload().withTimeout(8.0),
         balance()
 
     );
@@ -301,37 +314,106 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-            ScoreConePreload(),
+            ScoreConePreload().withTimeout(8.0),
             balance()
 
         );
     }
 
-    public Command CubeAutoNoBalance() {
+    public Command RedLeftAutoCube() {
+
+        PathPlannerTrajectory RedRightAutoCubePath = PathPlanner.loadPath("red left auto cube", pathConstraints);
 
         return new SequentialCommandGroup(
 
         ScoreCubePreload(),
-
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+        followTrajectoryCommand(RedRightAutoCubePath, true)
+        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
+        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
 
     );
     }
+    
+    public Command BlueRightAutoCube() {
 
-    public Command ConeAutoNoBalance() {
+        PathPlannerTrajectory BlueRightAutoCubePath = PathPlanner.loadPath("Blue Right Auto Cube", pathConstraints);
 
         return new SequentialCommandGroup(
 
-        ScoreConePreload(),
-
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(2.5),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+        ScoreCubePreload(),
+        followTrajectoryCommand(BlueRightAutoCubePath, true)
+        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
+        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
 
     );
     }
 
+    public Command RightAutoCone() {
 
+        //PathPlannerTrajectory RightAutoConePath = PathPlanner.loadPath("Right Auto Cone", pathConstraints);
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload().withTimeout(8.0),
+
+        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
+        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
+
+    );   
+    }
+
+    public Command LeftAutoCube() {
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload()
+
+    );
+    }
+
+    public Command LeftAutoCone() {
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload().withTimeout(8.0),
+
+        //followTrajectoryCommand(examplePath, true)
+        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
+        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
+    );   
+    }
+
+    public Command ScoreCone() {
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload()
+
+        //followTrajectoryCommand(examplePath, true)
+    );   
+    }
+
+    public Command ScoreCube() {
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload()
+
+        //followTrajectoryCommand(examplePath, true)
+    );   
+    }
+
+    public Command pathTest() {
+
+        return new SequentialCommandGroup(
+            //ScoreConePreload(),
+            GoToGround().withTimeout(2.0),
+
+            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED))
+            //followTrajectoryCommand(examplePath, true)
+        );
+        }
+    
     public void intakeHandler() {
 
         driverRB.whileTrue(new OpenIntake(intake));
@@ -354,6 +436,9 @@ public class RobotContainer {
 
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
+        driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
     }
    
 
@@ -377,6 +462,16 @@ public class RobotContainer {
                 arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
             )
         ));
+
+        operatorRB.onTrue(new SequentialCommandGroup(
+            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
+            elevator.ElevatorAtPosition(),
+            new ParallelCommandGroup(
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOADING_POSITION), 
+                arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
+            )
+        ));
+
         
         //elevator manual
         elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
@@ -411,7 +506,7 @@ public class RobotContainer {
             ),
             elevator.ElevatorAtPosition(), 
             arm.ArmAtPosition(), 
-            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL), 
+            elevator.SetElevatorPosition(Constants.ELEVATOR_STOW_LEVEL), 
             elevator.ElevatorAtPosition()
         );
     }
@@ -446,6 +541,13 @@ public class RobotContainer {
         // //Auto based on position
         operatorLB.onTrue(new ConfirmScore(arm, elevator));
         operatorLB.onFalse(new ReturnFromScoring(arm, elevator));
+    }
+
+    // Put buttons for testing/configuring/debugging purposes here
+    public void testHandler() {
+
+        //new GetAngle(s_Swerve);
+
     }
 }
 
