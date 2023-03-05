@@ -44,8 +44,11 @@ public class Robot extends TimedRobot {
   private static final String auto2 = "Left Auto Cone";
   private static final String auto3 = "Mid Auto Cube";
   private static final String auto4 = "Mid Auto Cone";
-  private static final String auto5 = "Right Auto Cube";
-  private static final String auto6 = "Right Auto Cone";
+  private static final String auto5 = "Red Left Auto Cube";
+  private static final String auto6 = "Blue Right Auto Cube";
+  private static final String auto7 = "Right Auto Cone";
+  private static final String auto8 = "Cube Preload";
+  private static final String auto9 = "Cone Preload";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -72,8 +75,12 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Mid Auto Cube", auto3);
     m_chooser.setDefaultOption("Mid Auto Cone", auto4);
 
-    m_chooser.addOption("Right Auto Cube", auto5);
-    m_chooser.addOption("Right Auto Cone", auto6);
+    m_chooser.addOption("Red Left Auto Cube", auto5);
+    m_chooser.addOption("Blue Right Auto Cube", auto6);
+    m_chooser.addOption("Right Auto Cone", auto7);
+
+    m_chooser.addOption("Cube Preload", auto8);
+    m_chooser.addOption("Cone Preload", auto9);
 
     SmartDashboard.putData("Auto Choices", m_chooser);
 
@@ -123,30 +130,37 @@ public class Robot extends TimedRobot {
 
     m_autoSelected = m_chooser.getSelected();
 
-    // switch (m_autoSelected) {
+    switch (m_autoSelected) {
 
-    //   case auto1:
-    //     m_autonomousCommand = m_robotContainer.LeftAutoCube();
-    //     break;
-    //   case auto2:
-    //     m_autonomousCommand = m_robotContainer.LeftAutoCone();
-    //     break;
-    //   case auto3:
-    //     m_autonomousCommand = m_robotContainer.CubeAutoBalance();
-    //     break;
-    //   case auto4:
-    //     m_autonomousCommand = m_robotContainer.ConeAutoBalance();
-    //     break;
-    //   case auto5:
-    //     m_autonomousCommand = m_robotContainer.RightAutoCube();
-    //     break;
-    //   case auto6:
-    //     m_autonomousCommand = m_robotContainer.RightAutoCone();
-    //     break;
-    //   default:
-    //     m_autonomousCommand = m_robotContainer.ConeAutoBalance();
+      case auto1:
+        m_autonomousCommand = m_robotContainer.LeftAutoCube();
+        break;
+      case auto2:
+        m_autonomousCommand = m_robotContainer.LeftAutoCone();
+        break;
+      case auto3:
+        m_autonomousCommand = m_robotContainer.CubeAutoBalance();
+        break;
+      case auto4:
+        m_autonomousCommand = m_robotContainer.ConeAutoBalance();
+        break;
+      case auto5:
+        m_autonomousCommand = m_robotContainer.RedLeftAutoCube();
+        break;
+      case auto6:
+        m_autonomousCommand = m_robotContainer. BlueRightAutoCube();
+        break;
+      case auto7:
+        m_autonomousCommand = m_robotContainer.RightAutoCone();
+        break;
+      case auto8:
+        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
+      case auto9:
+        m_autonomousCommand = m_robotContainer.ScoreConePreload();
+      default:
+        m_autonomousCommand = m_robotContainer.ScoreConePreload();
 
-    // }
+    }
 
     
     // PathConstraints pathConstraints = new PathConstraints(4, 3);
@@ -167,7 +181,7 @@ public class Robot extends TimedRobot {
     
     // m_autonomousCommand = m_robotContainer.followTrajectoryCommand(examplePath, true);
 
-    m_autonomousCommand = m_robotContainer.pathTest();
+    //m_autonomousCommand = m_robotContainer.pathTest();
     
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

@@ -49,8 +49,8 @@ public class Intake extends SubsystemBase {
 
     public void Stop() {
 
-      motor1.set(0.1);
-      motor2.set(0.1);
+      motor1.set(0.15);
+      motor2.set(0.15);
 
     }
 

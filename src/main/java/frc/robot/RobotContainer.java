@@ -4,6 +4,7 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -102,9 +103,10 @@ public class RobotContainer {
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
     private PathConstraints pathConstraints = new PathConstraints(4, 3);
+    private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
+    private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
     
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    private PathPlannerTrajectory examplePath = PathPlanner.loadPath("New New New New Path", pathConstraints);
     
     // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
     // Or the path can be sampled at a given point in time for custom path following
@@ -121,8 +123,8 @@ public class RobotContainer {
          s_Swerve.setDefaultCommand(
              new TeleopSwerve(
                  s_Swerve, 
-                 () -> -driver.getRawAxis(driverLeftY), 
-                 () -> -driver.getRawAxis(driverLeftX), 
+                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
+                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
                  rotationSpeed
@@ -301,7 +303,7 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-        ScoreCubePreload(),
+        ScoreCubePreload().withTimeout(8.0),
         balance()
 
     );
@@ -312,34 +314,50 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-            ScoreConePreload(),
+            ScoreConePreload().withTimeout(8.0),
             balance()
 
         );
     }
 
-    public Command RightAutoCube() {
+    public Command RedLeftAutoCube() {
+
+        PathPlannerTrajectory RedRightAutoCubePath = PathPlanner.loadPath("red left auto cube", pathConstraints);
 
         return new SequentialCommandGroup(
 
         ScoreCubePreload(),
+        followTrajectoryCommand(RedRightAutoCubePath, true)
+        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
+        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
 
-        new DriveCommand(s_Swerve, 0.0, -1.0, 0.0).withTimeout(2),
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+    );
+    }
+    
+    public Command BlueRightAutoCube() {
+
+        PathPlannerTrajectory BlueRightAutoCubePath = PathPlanner.loadPath("Blue Right Auto Cube", pathConstraints);
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload(),
+        followTrajectoryCommand(BlueRightAutoCubePath, true)
+        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
+        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
 
     );
     }
 
     public Command RightAutoCone() {
 
+        //PathPlannerTrajectory RightAutoConePath = PathPlanner.loadPath("Right Auto Cone", pathConstraints);
+
         return new SequentialCommandGroup(
 
-        ScoreConePreload(),
+        ScoreConePreload().withTimeout(8.0),
 
-        new DriveCommand(s_Swerve, 0.0, -1.0, 0.0).withTimeout(2),
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
+        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
 
     );   
     }
@@ -348,11 +366,7 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-        ScoreCubePreload(),
-
-        new DriveCommand(s_Swerve, 0.0, 1.0, 0.0).withTimeout(2),
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+        ScoreCubePreload()
 
     );
     }
@@ -361,12 +375,31 @@ public class RobotContainer {
 
         return new SequentialCommandGroup(
 
-        ScoreConePreload(),
+        ScoreConePreload().withTimeout(8.0),
 
-        new DriveCommand(s_Swerve, 0.0, 1.0, 0.0).withTimeout(2),
-        new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(4),
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)
+        //followTrajectoryCommand(examplePath, true)
+        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
+        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
+    );   
+    }
 
+    public Command ScoreCone() {
+
+        return new SequentialCommandGroup(
+
+        ScoreConePreload()
+
+        //followTrajectoryCommand(examplePath, true)
+    );   
+    }
+
+    public Command ScoreCube() {
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload()
+
+        //followTrajectoryCommand(examplePath, true)
     );   
     }
 
@@ -376,11 +409,11 @@ public class RobotContainer {
             //ScoreConePreload(),
             GoToGround().withTimeout(2.0),
 
-            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED)),
-            followTrajectoryCommand(examplePath, true)
+            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED))
+            //followTrajectoryCommand(examplePath, true)
         );
         }
-
+    
     public void intakeHandler() {
 
         driverRB.whileTrue(new OpenIntake(intake));
