@@ -83,6 +83,12 @@ public class RobotContainer {
     private final POVButton operatorDpadDown = new POVButton(operator, 180);
     private final POVButton operatorDpadLeft = new POVButton(operator, 270);
 
+    /* driver axis */
+    private final int driverRightTriggerAxis = XboxController.Axis.kRightTrigger.value;
+    
+    /* driver triggers */
+    final Trigger slowModeTrigger = new Trigger(() -> driver.getRawAxis(driverRightTriggerAxis) > 0.1);
+
     /* operator axis */
     private final int operatorLeftYAxis = XboxController.Axis.kLeftY.value;
     private final int operatorRightYAxis = XboxController.Axis.kRightY.value;
@@ -127,6 +133,7 @@ public class RobotContainer {
                  () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
+                 () -> slowModeTrigger.getAsBoolean(),
                  rotationSpeed
              )
              // new DriveForward(s_Swerve)
