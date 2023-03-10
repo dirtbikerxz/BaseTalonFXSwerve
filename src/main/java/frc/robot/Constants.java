@@ -91,12 +91,13 @@ public final class Constants {
     public static final double BALANCE_LEVEL_DEADZONE = 5.0;
     public static final double WHEEL_LOCK_TIME = 0.1;
 
-     //rotatetoscorebutton
-     public static final double ROTATE_TO_SCORE_BUTTON_KP = 0.0;
-     public static final double ROTATE_TO_SCORE_BUTTON_KI = 0.0;
-     public static final double ROTATE_TO_SCORE_BUTTON_KD = 0.0;
-     public static final double ROTATE_TO_SCORE_BUTTON_VELOCITY = 800;
-     public static final double ROTATE_TO_SCORE_BUTTON_ACCELERATION = 1000;
+     //rotate to score button
+     public static final double ROTATE_TO_SCORE_KP = 0.0222;
+     public static final double ROTATE_TO_SCORE_KI = 0.0;
+     public static final double ROTATE_TO_SCORE_KD = 0.0;
+     public static final double ROTATE_TO_SCORE_VELOCITY = 800;
+     public static final double ROTATE_TO_SCORE_ACCELERATION = 1000;
+     public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
 
     public static final class Swerve {
         public static final int pigeonID = 8;
