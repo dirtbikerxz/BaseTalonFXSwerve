@@ -91,6 +91,14 @@ public final class Constants {
     public static final double BALANCE_LEVEL_DEADZONE = 5.0;
     public static final double WHEEL_LOCK_TIME = 0.1;
 
+     //rotate to score button
+     public static final double ROTATE_TO_SCORE_KP = 0.0222;
+     public static final double ROTATE_TO_SCORE_KI = 0.0;
+     public static final double ROTATE_TO_SCORE_KD = 0.0;
+     public static final double ROTATE_TO_SCORE_VELOCITY = 800;
+     public static final double ROTATE_TO_SCORE_ACCELERATION = 1000;
+     public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
+
     public static final class Swerve {
         public static final int pigeonID = 8;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
@@ -102,6 +110,9 @@ public final class Constants {
         public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
+
+       
+
 
 
         /* Swerve Kinematics 
