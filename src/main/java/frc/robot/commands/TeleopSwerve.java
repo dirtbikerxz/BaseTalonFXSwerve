@@ -41,6 +41,7 @@ public class TeleopSwerve extends CommandBase {
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband) * rotationSpeed;
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
+        /*slowmode*/
         if (slowModeSup.getAsBoolean()) {
             translationVal = translationVal * Constants.SLOW_MODE_PERCENT_TRANSLATION;
             strafeVal = strafeVal * Constants.SLOW_MODE_PERCENT_STRAFE;
