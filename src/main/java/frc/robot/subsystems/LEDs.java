@@ -23,6 +23,7 @@ public class LEDs extends SubsystemBase{
         config.stripType = LEDStripType.RGB; // set the strip type to RGB
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness
         candle.configAllSettings(config);
+        setColor(50,50,255);
 
     }
 
