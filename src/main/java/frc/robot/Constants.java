@@ -92,7 +92,7 @@ public final class Constants {
     public static final double WHEEL_LOCK_TIME = 0.1;
 
      //rotate to score button
-     public static final double ROTATE_TO_SCORE_KP = 0.0222;
+     public static final double ROTATE_TO_SCORE_KP = 0.015; //0.0222
      public static final double ROTATE_TO_SCORE_KI = 0.0;
      public static final double ROTATE_TO_SCORE_KD = 0.0;
      public static final double ROTATE_TO_SCORE_VELOCITY = 800;
@@ -147,7 +147,7 @@ public final class Constants {
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
-        public static final double openLoopRamp = 0.25;
+        public static final double openLoopRamp = 0.5;
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */

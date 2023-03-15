@@ -41,7 +41,7 @@ public class TeleopSwerve extends CommandBase {
             Constants.ROTATE_TO_SCORE_KI, 
             Constants.ROTATE_TO_SCORE_KD, 
             new Constraints(Constants.ROTATE_TO_SCORE_ACCELERATION, Constants.ROTATE_TO_SCORE_VELOCITY)
-        );
+        ); 
     }
 
     @Override
