@@ -494,12 +494,19 @@ public class RobotContainer {
                 elevator.ElevatorAtPosition(), 
                 arm.SetArmPosition(Constants.ARM_LOW_POSITION),
                 arm.ArmAtPosition(),
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
+                new WaitCommand(0.5),
+                arm.SetArmPosition(Constants.ARM_GROUND_POSITION)
             ),
-            new ParallelCommandGroup(
-                arm.SetArmPosition(Constants.ARM_LOW_POSITION),
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+            new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                    arm.SetArmPosition(Constants.ARM_LOW_POSITION),
+                    elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
+                ),
+                elevator.ElevatorAtPosition(),
+                arm.SetArmPosition(Constants.ARM_GROUND_POSITION)
             ),
+
             () -> arm.isSafeToGround()
         );
     }

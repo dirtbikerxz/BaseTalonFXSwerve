@@ -22,6 +22,7 @@ public final class Constants {
     public static final double ARM_REVERSE_LIMIT = -90;
     public static final double ARM_GEAR_RATIO = 150.0;
     public static final double MANUAL_ARM_SPEED = 1.0;
+    public static final double ARM_GROUND_POSITION = -95; //set value
     // positions
     public static final double ARM_STOW_POSITION = -135;
     public static final double ARM_LOW_POSITION = -82.7;
