@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
   public Arm() {
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
-    armMotor.setIdleMode(IdleMode.kBrake);
+    armMotor.setIdleMode(IdleMode.kCoast);
     this.ff = new ArmFeedforward(Constants.ARM_S, Constants.ARM_G, Constants.ARM_V, Constants.ARM_A);
 
     armMotor.setSmartCurrentLimit(40);
@@ -64,7 +64,8 @@ public class Arm extends SubsystemBase {
     
     armRelativeEncoder = armMotor.getEncoder();
     armRelativeEncoder.setPosition(0.0);
-    armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+    //armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+    armRelativeEncoder.setPositionConversionFactor(1);
     armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
   }
 
@@ -83,7 +84,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double getPositionInDegreesIntegrated() {
-    return armRelativeEncoder.getPosition() / 42;
+    return armRelativeEncoder.getPosition() ;
   }
 
   /* Always use this method when you want the velocity of the arm */
@@ -147,7 +148,7 @@ public class Arm extends SubsystemBase {
       
     }
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber("Arm Position", getPositionInDegreesCanCoder());
+    SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
     // SmartDashboard.putNumber("Arm PID Output", pid);
     // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
