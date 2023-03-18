@@ -46,7 +46,7 @@ public class TeleopSwerve extends CommandBase {
             Constants.ROTATE_TO_SCORE_KP, 
             Constants.ROTATE_TO_SCORE_KI, 
             Constants.ROTATE_TO_SCORE_KD, 
-            new Constraints(Constants.ROTATE_TO_SCORE_ACCELERATION, Constants.ROTATE_TO_SCORE_VELOCITY)
+            new Constraints(Constants.ROTATE_TO_SCORE_VELOCITY, Constants.ROTATE_TO_SCORE_ACCELERATION)
         ); 
 
         // timer = new Timer();
@@ -82,8 +82,13 @@ public class TeleopSwerve extends CommandBase {
             // timer.start();
 
             rotating = true;
+
             rotationVal = PID.calculate(robot_angle, target_angle);
             rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
+
+            SmartDashboard.putNumber("Robot Angle", robot_angle);
+            SmartDashboard.putNumber("Target Angle", target_angle);
+            SmartDashboard.putNumber("Rotation Value", rotationVal);
 
             double error = Math.abs(robot_angle - target_angle);
 
@@ -98,7 +103,7 @@ public class TeleopSwerve extends CommandBase {
             // and stop it when it reaches it's destination or after two seconds.
             // Then the timer should restart the next time that the button is pushed.
             // NOTE: I have taken out the timer implementation
-            if (5 >= error) {
+            if (2.5 >= error) {
                 // timer.stop();
                 rotating = false;
             } 

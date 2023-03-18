@@ -93,11 +93,11 @@ public final class Constants {
     public static final double WHEEL_LOCK_TIME = 0.1;
 
      //rotate to score button
-     public static final double ROTATE_TO_SCORE_KP = 0.006; //0.0222
+     public static final double ROTATE_TO_SCORE_KP = 0.01; //0.0222
      public static final double ROTATE_TO_SCORE_KI = 0.0;
      public static final double ROTATE_TO_SCORE_KD = 0.0;
-     public static final double ROTATE_TO_SCORE_VELOCITY = 2.0;
-     public static final double ROTATE_TO_SCORE_ACCELERATION = 4.0;
+     public static final double ROTATE_TO_SCORE_VELOCITY = 20.0;
+     public static final double ROTATE_TO_SCORE_ACCELERATION = 40.0;
      public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
 
      /* slow mode */
