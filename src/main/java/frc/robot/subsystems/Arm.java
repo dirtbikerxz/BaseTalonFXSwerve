@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
   public Arm() {
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
-    armMotor.setIdleMode(IdleMode.kCoast);
+    armMotor.setIdleMode(IdleMode.kBrake);
     this.ff = new ArmFeedforward(Constants.ARM_S, Constants.ARM_G, Constants.ARM_V, Constants.ARM_A);
 
     armMotor.setSmartCurrentLimit(40);
@@ -136,7 +136,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetArmAngle);;
+    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetArmAngle);
     if (DriverStation.isEnabled()){      
       double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegrees()));
       voltage =  pid + feedForward;

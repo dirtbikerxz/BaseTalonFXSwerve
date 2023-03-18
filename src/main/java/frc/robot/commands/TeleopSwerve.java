@@ -22,6 +22,7 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private BooleanSupplier rotateToScoreSup;
+    private BooleanSupplier rotateToLoadSup;
     private BooleanSupplier slowModeSup;
     private double rotationSpeed;
     private ProfiledPIDController PID;
@@ -29,8 +30,9 @@ public class TeleopSwerve extends CommandBase {
     // private Timer timer;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
-            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup,
+            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup, BooleanSupplier rotateToLoadSup,
             BooleanSupplier slowModeSup, double rotationSpeed) {
+        Timer.delay(1.0);
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -39,6 +41,7 @@ public class TeleopSwerve extends CommandBase {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.rotateToScoreSup = rotateToScoreSup;
+        this.rotateToLoadSup = rotateToLoadSup;
         this.slowModeSup = slowModeSup;
         this.rotationSpeed = rotationSpeed;
         
@@ -69,21 +72,29 @@ public class TeleopSwerve extends CommandBase {
         /* Rotate to Score */
         double robot_angle = s_Swerve.getYaw().getDegrees();
         robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
-        double target_angle;
+        double target_angle = 0;
+
+        // if (rotateToScoreSup.getAsBoolean() || rotating) {
         if (robot_angle > 0) {
             target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
         } else {
             target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
         }
+        // } else if (rotateToLoadSup.getAsBoolean() || rotating) {
+        //     target_angle = Constants.ROTATE_TO_LOAD_TARGET_ANGLE;
+        // }
         // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
         // SmartDashboard.putNumber("robot_angle", robot_angle);
-
-        if (rotateToScoreSup.getAsBoolean() || rotating) {
+        
+        double rotateTo = PID.calculate(robot_angle, target_angle);
+        
+        if (rotateToScoreSup.getAsBoolean() || /*rotateToLoadSup.getAsBoolean() ||*/ rotating) {
             // timer.start();
 
             rotating = true;
 
-            rotationVal = PID.calculate(robot_angle, target_angle);
+            rotationVal = rotateTo;
+
             rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
 
             SmartDashboard.putNumber("Robot Angle", robot_angle);

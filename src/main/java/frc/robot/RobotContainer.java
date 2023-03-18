@@ -134,6 +134,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
                  () -> driverRStick.getAsBoolean(),
+                 () -> driverLStick.getAsBoolean(),
                  () -> slowModeTrigger.getAsBoolean(),
                  rotationSpeed
              )
@@ -413,14 +414,13 @@ public class RobotContainer {
 
     public Command pathTest() {
 
-        return new SequentialCommandGroup(
-            //ScoreConePreload(),
-            GoToGround().withTimeout(2.0),
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("Go Back", pathConstraints);
 
-            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED))
-            //followTrajectoryCommand(examplePath, true)
+        return new SequentialCommandGroup(
+            
+            followTrajectoryCommand(examplePath, true)
         );
-        }
+    }
     
     public void intakeHandler() {
 
