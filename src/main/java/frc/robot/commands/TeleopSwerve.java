@@ -21,12 +21,13 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private BooleanSupplier rotateToScoreSup;
+    private BooleanSupplier slowModeSup;
     private double rotationSpeed;
     private ProfiledPIDController PID;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
-            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup, 
-            double rotationSpeed) {
+            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup,
+            BooleanSupplier slowModeSup, double rotationSpeed) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -35,6 +36,7 @@ public class TeleopSwerve extends CommandBase {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.rotateToScoreSup = rotateToScoreSup;
+        this.slowModeSup = slowModeSup;
         this.rotationSpeed = rotationSpeed;
         
         PID = new ProfiledPIDController(
@@ -66,7 +68,14 @@ public class TeleopSwerve extends CommandBase {
         if (rotateToScoreSup.getAsBoolean()) {
             rotationVal = rotateToScoreVal;
         }
+        
         SmartDashboard.putNumber("Angle", s_Swerve.getYaw().getDegrees());
+        /*slowmode*/
+        if (slowModeSup.getAsBoolean()) {
+            translationVal = translationVal * Constants.SLOW_MODE_PERCENT_TRANSLATION;
+            strafeVal = strafeVal * Constants.SLOW_MODE_PERCENT_STRAFE;
+            rotationVal = rotationVal * Constants.SLOW_MODE_PERCENT_ROTATION;
+        }
 
         /* Drive */
         s_Swerve.drive(

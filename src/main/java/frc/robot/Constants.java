@@ -99,6 +99,12 @@ public final class Constants {
      public static final double ROTATE_TO_SCORE_ACCELERATION = 2 * Math.PI;
      public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
 
+     /* slow mode */
+     public static final double SLOW_MODE_PERCENT_TRANSLATION = 0.5;
+     public static final double SLOW_MODE_PERCENT_STRAFE = 0.5;
+     public static final double SLOW_MODE_PERCENT_ROTATION = 0.5;
+
+
     public static final class Swerve {
         public static final int pigeonID = 8;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
