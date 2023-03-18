@@ -10,6 +10,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -24,6 +25,8 @@ public class TeleopSwerve extends CommandBase {
     private BooleanSupplier slowModeSup;
     private double rotationSpeed;
     private ProfiledPIDController PID;
+    private boolean rotating = false;
+    // private Timer timer;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
             DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup,
@@ -45,6 +48,8 @@ public class TeleopSwerve extends CommandBase {
             Constants.ROTATE_TO_SCORE_KD, 
             new Constraints(Constants.ROTATE_TO_SCORE_ACCELERATION, Constants.ROTATE_TO_SCORE_VELOCITY)
         ); 
+
+        // timer = new Timer();
     }
 
     @Override
@@ -54,27 +59,49 @@ public class TeleopSwerve extends CommandBase {
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband) * rotationSpeed;
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-        double robot_angle = s_Swerve.getYaw().getDegrees();
-        robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
-        double rotateToScoreVal;
-        if (robot_angle > 0) {
-            rotateToScoreVal = PID.calculate(robot_angle, Constants.ROTATE_TO_SCORE_TARGET_ANGLE);
-        } else {
-            rotateToScoreVal = PID.calculate(robot_angle, -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE);
-        }
-        SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
-        SmartDashboard.putNumber("robot_angle", robot_angle);
-
-        if (rotateToScoreSup.getAsBoolean()) {
-            rotationVal = rotateToScoreVal;
-        }
-        
-        SmartDashboard.putNumber("Angle", s_Swerve.getYaw().getDegrees());
         /*slowmode*/
         if (slowModeSup.getAsBoolean()) {
             translationVal = translationVal * Constants.SLOW_MODE_PERCENT_TRANSLATION;
             strafeVal = strafeVal * Constants.SLOW_MODE_PERCENT_STRAFE;
             rotationVal = rotationVal * Constants.SLOW_MODE_PERCENT_ROTATION;
+        }
+
+        /* Rotate to Score */
+        double robot_angle = s_Swerve.getYaw().getDegrees();
+        robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
+        double target_angle;
+        if (robot_angle > 0) {
+            target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+        } else {
+            target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+        }
+        // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
+        // SmartDashboard.putNumber("robot_angle", robot_angle);
+
+        if (rotateToScoreSup.getAsBoolean() || rotating) {
+            // timer.start();
+
+            rotating = true;
+            rotationVal = PID.calculate(robot_angle, target_angle);
+            rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
+
+            double error = Math.abs(robot_angle - target_angle);
+
+            // SmartDashboard.putNumber("Current Time", timer.get());
+            // SmartDashboard.putBoolean("rotating", rotating);
+
+            // TODO: Fix this
+            // Currently, it will stop the robot from rotating after 2.0 seconds 
+            // but from that point on, you are forced to hold it down.
+            // This bug persists between enable/disable cycles and is only solved by restarting robot code.
+            // The intended behavior is for it to start a new timer when the button is pushed
+            // and stop it when it reaches it's destination or after two seconds.
+            // Then the timer should restart the next time that the button is pushed.
+            // NOTE: I have taken out the timer implementation
+            if (5 >= error) {
+                // timer.stop();
+                rotating = false;
+            } 
         }
 
         /* Drive */
