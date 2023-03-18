@@ -10,6 +10,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -51,10 +52,21 @@ public class TeleopSwerve extends CommandBase {
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband) * rotationSpeed;
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-        if (rotateToScoreSup.getAsBoolean()) {
-            rotationVal = PID.calculate(s_Swerve.getYaw().getDegrees(), Constants.ROTATE_TO_SCORE_TARGET_ANGLE);
-            // rotationVal = MathUtil.inputModulus(rotationVal, -180.0, 180);
+        double robot_angle = s_Swerve.getYaw().getDegrees();
+        robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
+        double rotateToScoreVal;
+        if (robot_angle > 0) {
+            rotateToScoreVal = PID.calculate(robot_angle, Constants.ROTATE_TO_SCORE_TARGET_ANGLE);
+        } else {
+            rotateToScoreVal = PID.calculate(robot_angle, -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE);
         }
+        SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
+        SmartDashboard.putNumber("robot_angle", robot_angle);
+
+        if (rotateToScoreSup.getAsBoolean()) {
+            rotationVal = rotateToScoreVal;
+        }
+        SmartDashboard.putNumber("Angle", s_Swerve.getYaw().getDegrees());
 
         /* Drive */
         s_Swerve.drive(
