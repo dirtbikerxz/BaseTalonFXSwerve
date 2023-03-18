@@ -42,12 +42,12 @@ public final class Constants {
     public static final double ARM_I = 0.0;
     public static final double ARM_D = 0.0;
 
-    public static final double AUTO_X_P = 32;
+    public static final double AUTO_X_P = 4;
     public static final double AUTO_X_I = 0;
     public static final double AUTO_X_D = 0;
 
-    public static final double AUTO_Y_P = 32;
-    public static final double AUTO_Y_I = 0.1;
+    public static final double AUTO_Y_P = 4;
+    public static final double AUTO_Y_I = 0;
     public static final double AUTO_Y_D = 0;
 
     public static final double AUTO_R_P = 6;
@@ -118,6 +118,9 @@ public final class Constants {
      public static final double SLOW_MODE_PERCENT_STRAFE = 0.5;
      public static final double SLOW_MODE_PERCENT_ROTATION = 0.5;
 
+     /* auto */
+    public static final double AUTO_VEL = 1.0;
+    public static final double AUTO_ACC = 1.0;
 
     public static final class Swerve {
         public static final int pigeonID = 8;

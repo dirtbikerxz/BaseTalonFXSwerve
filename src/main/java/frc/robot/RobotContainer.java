@@ -108,7 +108,6 @@ public class RobotContainer {
     public final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
-    private PathConstraints pathConstraints = new PathConstraints(4, 3);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
     
@@ -210,7 +209,6 @@ public class RobotContainer {
 
             // open intake
             new ParallelCommandGroup(
-                new InstantCommand(() -> intake.Retract()),
                 new RunIntakeAtSpeed(intake, -0.5)
             ).withTimeout(0.1),
 
@@ -271,7 +269,7 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(() -> intake.Retract()),
                 new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.1),
+            ).withTimeout(0.5),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
@@ -294,7 +292,7 @@ public class RobotContainer {
         );
     }
 
-    public Command balance() {
+    public Command ReverseBalance() {
 
         return new SequentialCommandGroup(
 
@@ -313,7 +311,7 @@ public class RobotContainer {
         return new SequentialCommandGroup(
 
         ScoreCubePreload().withTimeout(8.0),
-        balance()
+        ReverseBalance()
 
     );
 
@@ -324,14 +322,14 @@ public class RobotContainer {
         return new SequentialCommandGroup(
 
             ScoreConePreload().withTimeout(8.0),
-            balance()
+            ReverseBalance()
 
         );
     }
 
     public Command RedLeftAutoCube() {
 
-        PathPlannerTrajectory RedRightAutoCubePath = PathPlanner.loadPath("red left auto cube", pathConstraints);
+        PathPlannerTrajectory RedRightAutoCubePath = PathPlanner.loadPath("red left auto cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
 
         return new SequentialCommandGroup(
 
@@ -345,12 +343,26 @@ public class RobotContainer {
     
     public Command BlueRightAutoCube() {
 
-        PathPlannerTrajectory BlueRightAutoCubePath = PathPlanner.loadPath("Blue Right Auto Cube", pathConstraints);
+        PathPlannerTrajectory BlueRightAutoCubePath = PathPlanner.loadPath("Blue Right Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
 
         return new SequentialCommandGroup(
 
         ScoreCubePreload(),
         followTrajectoryCommand(BlueRightAutoCubePath, true)
+        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
+        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
+
+    );
+    }
+
+    public Command BlueLeftAutoCube() {
+
+        PathPlannerTrajectory BlueLeftAutoCubePath = PathPlanner.loadPath("Blue Left Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload(),
+        followTrajectoryCommand(BlueLeftAutoCubePath, true)
         //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
         //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
 
@@ -412,13 +424,16 @@ public class RobotContainer {
     );   
     }
 
+
     public Command pathTest() {
 
-        PathPlannerTrajectory examplePath = PathPlanner.loadPath("Go Back", pathConstraints);
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("Mid Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
 
         return new SequentialCommandGroup(
             
-            followTrajectoryCommand(examplePath, true)
+            ScoreCubePreload().withTimeout(8.0),
+            followTrajectoryCommand(examplePath, true),
+            new AutoBalance(s_Swerve)
         );
     }
     

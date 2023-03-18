@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
   private static final String auto8 = "Cube Preload";
   private static final String auto9 = "Cone Preload";
   private static final String auto10 = "Test Auto";
+  private static final String auto11 = "Blue Left Auto Cube";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -84,6 +85,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Cone Preload", auto9);
 
     m_chooser.addOption("Test Auto", auto10);
+    m_chooser.addOption("Blue Left Auto Cube", auto11);
 
     SmartDashboard.putData("Auto Choices", m_chooser);
 
@@ -162,6 +164,8 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = m_robotContainer.ScoreConePreload();
       case auto10:
         m_autonomousCommand = m_robotContainer.pathTest();
+      case auto11:
+        m_autonomousCommand = m_robotContainer.BlueLeftAutoCube();
       default:
         m_autonomousCommand = m_robotContainer.pathTest();
 
