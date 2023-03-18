@@ -35,6 +35,10 @@ public class Intake extends SubsystemBase {
       motor2.enableSoftLimit(SoftLimitDirection.kForward, false);
       motor2.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
+      /* Current Limits */
+      motor1.setSmartCurrentLimit(10);
+      motor2.setSmartCurrentLimit(10);
+
       pneumaticHub = new PneumaticHub(Constants.PNEUMATIC_HUB_ID);
       solenoid = pneumaticHub.makeDoubleSolenoid(Constants.PNEUMATIC_FORWARD_CHANNEL, Constants.PNEUMATIC_REVERSE_CHANEL);
 
