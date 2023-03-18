@@ -63,6 +63,12 @@ public class RobotContainer {
     private final POVButton driverDpadRight = new POVButton(driver, 90);
     private final POVButton driverDpadDown = new POVButton(driver, 180);
     private final POVButton driverDpadLeft = new POVButton(driver, 270);
+
+    /* driver axis */
+    private final int driverLeftTriggerAxis = XboxController.Axis.kLeftTrigger.value;
+    
+    /* driver triggers */
+    final Trigger slowModeTrigger = new Trigger(() -> driver.getRawAxis(driverLeftTriggerAxis) > 0.1);
  
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -82,12 +88,6 @@ public class RobotContainer {
     private final POVButton operatorDpadRight = new POVButton(operator, 90);
     private final POVButton operatorDpadDown = new POVButton(operator, 180);
     private final POVButton operatorDpadLeft = new POVButton(operator, 270);
-
-    /* driver axis */
-    private final int driverLeftTriggerAxis = XboxController.Axis.kLeftTrigger.value;
-    
-    /* driver triggers */
-    final Trigger rotateToScoreTrigger = new Trigger(() -> driver.getRawAxis(driverLeftTriggerAxis) > 0.1);
 
     /* operator axis */
     private final int operatorLeftYAxis = XboxController.Axis.kLeftY.value;
@@ -133,7 +133,8 @@ public class RobotContainer {
                  () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
-                 () -> rotateToScoreTrigger.getAsBoolean(),
+                 () -> driverRStick.getAsBoolean(),
+                 () -> slowModeTrigger.getAsBoolean(),
                  rotationSpeed
              )
              // new DriveForward(s_Swerve)
