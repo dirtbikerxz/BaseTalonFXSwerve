@@ -210,7 +210,7 @@ public class RobotContainer {
             // open intake
             new ParallelCommandGroup(
                 new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.1),
+            ).withTimeout(0.5),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
@@ -269,7 +269,7 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new InstantCommand(() -> intake.Retract()),
                 new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.5),
+            ).withTimeout(0.1),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),

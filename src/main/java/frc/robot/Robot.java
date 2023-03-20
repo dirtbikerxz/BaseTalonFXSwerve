@@ -167,7 +167,7 @@ public class Robot extends TimedRobot {
       case auto11:
         m_autonomousCommand = m_robotContainer.BlueLeftAutoCube();
       default:
-        m_autonomousCommand = m_robotContainer.pathTest();
+        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
 
     }
 
