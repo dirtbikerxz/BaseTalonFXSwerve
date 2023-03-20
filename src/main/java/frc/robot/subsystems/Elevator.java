@@ -42,6 +42,9 @@ public class Elevator extends SubsystemBase {
         elevatorEncoder = elevatorMotor.getEncoder(); 
         elevatorMotor.setIdleMode(IdleMode.kBrake);
 
+        /* Current Limits */
+        elevatorMotor.setSmartCurrentLimit(40);
+
         /*Rate of Speed (Based on 930 Code) */
 
         // double p = SmartDashboard.getNumber("p", 0);

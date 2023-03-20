@@ -41,6 +41,18 @@ public final class Constants {
     public static final double ARM_P = -0.18;
     public static final double ARM_I = 0.0;
     public static final double ARM_D = 0.0;
+
+    public static final double AUTO_X_P = 4;
+    public static final double AUTO_X_I = 0;
+    public static final double AUTO_X_D = 0;
+
+    public static final double AUTO_Y_P = 4;
+    public static final double AUTO_Y_I = 0;
+    public static final double AUTO_Y_D = 0;
+
+    public static final double AUTO_R_P = 6;
+    public static final double AUTO_R_I = 0;
+    public static final double AUTO_R_D = 0;
     
     
     //TODO: Set offset
@@ -93,18 +105,22 @@ public final class Constants {
     public static final double WHEEL_LOCK_TIME = 0.1;
 
      //rotate to score button
-     public static final double ROTATE_TO_SCORE_KP = 0.006; //0.0222
+     public static final double ROTATE_TO_SCORE_KP = 0.01; //0.0222
      public static final double ROTATE_TO_SCORE_KI = 0.0;
      public static final double ROTATE_TO_SCORE_KD = 0.0;
-     public static final double ROTATE_TO_SCORE_VELOCITY = 2.0;
-     public static final double ROTATE_TO_SCORE_ACCELERATION = 4.0;
+     public static final double ROTATE_TO_SCORE_VELOCITY = 200.0;
+     public static final double ROTATE_TO_SCORE_ACCELERATION = 400.0;
      public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
+     public static final double ROTATE_TO_LOAD_TARGET_ANGLE = 0;
 
      /* slow mode */
      public static final double SLOW_MODE_PERCENT_TRANSLATION = 0.5;
      public static final double SLOW_MODE_PERCENT_STRAFE = 0.5;
      public static final double SLOW_MODE_PERCENT_ROTATION = 0.5;
 
+     /* auto */
+    public static final double AUTO_VEL = 1.0;
+    public static final double AUTO_ACC = 1.0;
 
     public static final class Swerve {
         public static final int pigeonID = 8;
