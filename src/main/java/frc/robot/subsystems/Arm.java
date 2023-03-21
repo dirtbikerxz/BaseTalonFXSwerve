@@ -22,6 +22,12 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.util.datalog.IntegerLogEntry;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,17 +38,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
+  public RelativeEncoder armRelativeEncoder;
   public ProfiledPIDController controller;
+
   private CANSparkMax armMotor;
   private CANCoder armCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
   private double targetArmAngle = Constants.ARM_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
-  public RelativeEncoder armRelativeEncoder;
+
+  // Logging objects
+  private DataLog logger;
+  private DoubleLogEntry armMotorTemperature = new DoubleLogEntry(logger, "arm/temperature");
+  private DoubleLogEntry armMotorAppliedOutput = new DoubleLogEntry(logger, "arm/appliedOutput");
+  private DoubleLogEntry armMotorBusVoltage = new DoubleLogEntry(logger, "arm/busVoltage");
+  private DoubleLogEntry armMotorOutputCurrent = new DoubleLogEntry(logger, "arm/outputCurrent");
+  private DoubleLogEntry armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "arm/closedLoopRampRate");
+  private DoubleLogEntry armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "arm/openLoopRampRate");
+  private IntegerLogEntry armMotorFaults = new IntegerLogEntry(logger, "arm/faults");
+  private StringLogEntry armMotorIdleMode = new StringLogEntry(logger, "arm/idleMode");
+  private BooleanLogEntry armMotorInverted = new BooleanLogEntry(logger, "arm/inverted");
+  private StringLogEntry armMotorLastError = new StringLogEntry(logger, "arm/lastError");
+
 
   /** Creates a new Arm. */
   public Arm() {
+
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
     armMotor.setIdleMode(IdleMode.kCoast);
@@ -67,6 +89,9 @@ public class Arm extends SubsystemBase {
     //armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     armRelativeEncoder.setPositionConversionFactor(1);
     armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
+
+    // Create logger object 
+    logger = DataLogManager.getLog();
   }
 
   public void resetRelative() {
@@ -147,6 +172,8 @@ public class Arm extends SubsystemBase {
 
       
     }
+
+    /* Smart Dashboard printing */
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
     // SmartDashboard.putNumber("Arm PID Output", pid);
@@ -158,6 +185,10 @@ public class Arm extends SubsystemBase {
     //SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
 
     SmartDashboard.putNumber("Integrated Encoder", getPositionInDegreesIntegrated());
+
+    // Logs all relevant data
+    // Any additional data logging should be done in this method
+    logData();
   }
 
   public Command SetArmPosition (double degrees){
@@ -170,5 +201,9 @@ public class Arm extends SubsystemBase {
 
   private State getEncoderAngle() {
     return null;
+  }
+
+  private void logData() {
+    logger.
   }
 }
