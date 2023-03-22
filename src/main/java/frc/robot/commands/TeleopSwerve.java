@@ -27,12 +27,13 @@ public class TeleopSwerve extends CommandBase {
     private double rotationSpeed;
     private ProfiledPIDController PID;
     private boolean rotating = false;
+    private DoubleSupplier targetRotation;
+    private BooleanSupplier isFinishedSup;
     // private Timer timer;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
-            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier rotateToScoreSup, BooleanSupplier rotateToLoadSup,
-            BooleanSupplier slowModeSup, double rotationSpeed) {
-        Timer.delay(1.0);
+            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier targetRotation /*BooleanSupplier rotateToScoreSup,
+            BooleanSupplier slowModeSup*/, double rotationSpeed, BooleanSupplier isFinishedSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -44,6 +45,8 @@ public class TeleopSwerve extends CommandBase {
         this.rotateToLoadSup = rotateToLoadSup;
         this.slowModeSup = slowModeSup;
         this.rotationSpeed = rotationSpeed;
+        this.targetRotation = targetRotation;
+        this.isFinishedSup = isFinishedSup;
         
         PID = new ProfiledPIDController(
             Constants.ROTATE_TO_SCORE_KP, 
@@ -70,55 +73,46 @@ public class TeleopSwerve extends CommandBase {
         }
 
         /* Rotate to Score */
-        double robot_angle = s_Swerve.getYaw().getDegrees();
-        robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
-        double target_angle = 0;
+        if (rotationVal == 0.0) {
+            rotationVal = PID.calculate(s_Swerve.getYaw().getDegrees(), targetRotation.getAsDouble());
+        }
+
+        // double robot_angle = s_Swerve.getYaw().getDegrees();
+        // robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
+        // double target_angle;
+        // if (robot_angle > 0) {
+        //     target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+        // } else {
+        //     target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+        // }
+        // // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
+        // // SmartDashboard.putNumber("robot_angle", robot_angle);
 
         // if (rotateToScoreSup.getAsBoolean() || rotating) {
-        if (robot_angle > 0) {
-            target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        } else {
-            target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        }
-        // } else if (rotateToLoadSup.getAsBoolean() || rotating) {
-        //     target_angle = Constants.ROTATE_TO_LOAD_TARGET_ANGLE;
+        //     // timer.start();
+
+        //     rotating = true;
+        //     rotationVal = PID.calculate(robot_angle, target_angle);
+        //     rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
+
+        //     double error = Math.abs(robot_angle - target_angle);
+
+        //     // SmartDashboard.putNumber("Current Time", timer.get());
+        //     // SmartDashboard.putBoolean("rotating", rotating);
+
+        //     // TODO: Fix this
+        //     // Currently, it will stop the robot from rotating after 2.0 seconds 
+        //     // but from that point on, you are forced to hold it down.
+        //     // This bug persists between enable/disable cycles and is only solved by restarting robot code.
+        //     // The intended behavior is for it to start a new timer when the button is pushed
+        //     // and stop it when it reaches it's destination or after two seconds.
+        //     // Then the timer should restart the next time that the button is pushed.
+        //     // NOTE: I have taken out the timer implementation
+        //     if (5 >= error) {
+        //         // timer.stop();
+        //         rotating = false;
+        //     } 
         // }
-        // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
-        // SmartDashboard.putNumber("robot_angle", robot_angle);
-        
-        double rotateTo = PID.calculate(robot_angle, target_angle);
-        
-        if (rotateToScoreSup.getAsBoolean() || /*rotateToLoadSup.getAsBoolean() ||*/ rotating) {
-            // timer.start();
-
-            rotating = true;
-
-            rotationVal = rotateTo;
-
-            rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
-
-            SmartDashboard.putNumber("Robot Angle", robot_angle);
-            SmartDashboard.putNumber("Target Angle", target_angle);
-            SmartDashboard.putNumber("Rotation Value", rotationVal);
-
-            double error = Math.abs(robot_angle - target_angle);
-
-            // SmartDashboard.putNumber("Current Time", timer.get());
-            // SmartDashboard.putBoolean("rotating", rotating);
-
-            // TODO: Fix this
-            // Currently, it will stop the robot from rotating after 2.0 seconds 
-            // but from that point on, you are forced to hold it down.
-            // This bug persists between enable/disable cycles and is only solved by restarting robot code.
-            // The intended behavior is for it to start a new timer when the button is pushed
-            // and stop it when it reaches it's destination or after two seconds.
-            // Then the timer should restart the next time that the button is pushed.
-            // NOTE: I have taken out the timer implementation
-            if (2.5 >= error) {
-                // timer.stop();
-                rotating = false;
-            } 
-        }
 
         /* Drive */
         s_Swerve.drive(
@@ -127,5 +121,10 @@ public class TeleopSwerve extends CommandBase {
             !robotCentricSup.getAsBoolean(), 
             false
         );
+    }
+
+    @Override
+    public boolean isFinished() {
+        return isFinishedSup.getAsBoolean();
     }
 }

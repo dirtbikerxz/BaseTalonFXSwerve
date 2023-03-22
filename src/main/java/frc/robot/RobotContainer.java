@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -110,6 +112,8 @@ public class RobotContainer {
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
+
+    private double targetRotation;
     
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
     
@@ -132,16 +136,27 @@ public class RobotContainer {
                  () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
-                 () -> driverRStick.getAsBoolean(),
-                 () -> driverLStick.getAsBoolean(),
-                 () -> slowModeTrigger.getAsBoolean(),
-                 rotationSpeed
+                 () -> s_Swerve.getYaw().getDegrees(),
+                 rotationSpeed,
+                 () -> false
              )
-             // new DriveForward(s_Swerve)
          );
 
         // Configure the button bindings
         configureButtonBindings();
+    }
+
+    /**
+     * Calculates the target rotation for the swerve drive and returns it as a DoubleSupplier
+     */
+    private DoubleSupplier calculateTargetRotation() {
+        return () -> {
+            if (driverRStick.getAsBoolean()) {
+                targetRotation = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+            }
+
+            return targetRotation;
+        };
     }
 
     /**
@@ -462,6 +477,19 @@ public class RobotContainer {
 
         driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
         driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
+
+        driverRStick.toggleOnTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
+                () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
+                () -> -driver.getRawAxis(driverRightX), 
+                () -> driverDpadUp.getAsBoolean(),
+                () -> Constants.ROTATE_TO_SCORE_TARGET_ANGLE,
+                rotationSpeed,
+                () -> false
+            )
+        );
     }
    
 
