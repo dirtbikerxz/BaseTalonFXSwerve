@@ -21,19 +21,15 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
-    private BooleanSupplier rotateToScoreSup;
-    private BooleanSupplier rotateToLoadSup;
     private BooleanSupplier slowModeSup;
     private double rotationSpeed;
     private ProfiledPIDController PID;
-    private boolean rotating = false;
     private DoubleSupplier targetRotation;
-    private BooleanSupplier isFinishedSup;
     // private Timer timer;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
-            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier targetRotation /*BooleanSupplier rotateToScoreSup,
-            BooleanSupplier slowModeSup*/, double rotationSpeed, BooleanSupplier isFinishedSup) {
+            DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier targetRotation,
+            BooleanSupplier slowModeSup, double rotationSpeed) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -41,12 +37,9 @@ public class TeleopSwerve extends CommandBase {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
-        this.rotateToScoreSup = rotateToScoreSup;
-        this.rotateToLoadSup = rotateToLoadSup;
         this.slowModeSup = slowModeSup;
         this.rotationSpeed = rotationSpeed;
         this.targetRotation = targetRotation;
-        this.isFinishedSup = isFinishedSup;
         
         PID = new ProfiledPIDController(
             Constants.ROTATE_TO_SCORE_KP, 
@@ -121,10 +114,5 @@ public class TeleopSwerve extends CommandBase {
             !robotCentricSup.getAsBoolean(), 
             false
         );
-    }
-
-    @Override
-    public boolean isFinished() {
-        return isFinishedSup.getAsBoolean();
     }
 }

@@ -137,8 +137,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
                  () -> s_Swerve.getYaw().getDegrees(),
-                 rotationSpeed,
-                 () -> false
+                 rotationSpeed
              )
          );
 
@@ -486,9 +485,8 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(driverRightX), 
                 () -> driverDpadUp.getAsBoolean(),
                 () -> Constants.ROTATE_TO_SCORE_TARGET_ANGLE,
-                rotationSpeed,
-                () -> false
-            )
+                rotationSpeed
+            ).until(() -> s_Swerve.getYaw().getDegrees() - Constants.ROTATE_TO_SCORE_TARGET_ANGLE < 5.0)
         );
     }
    
