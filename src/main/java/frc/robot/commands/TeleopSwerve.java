@@ -42,10 +42,10 @@ public class TeleopSwerve extends CommandBase {
         this.targetRotation = targetRotation;
         
         PID = new ProfiledPIDController(
-            Constants.ROTATE_TO_SCORE_KP, 
-            Constants.ROTATE_TO_SCORE_KI, 
-            Constants.ROTATE_TO_SCORE_KD, 
-            new Constraints(Constants.ROTATE_TO_SCORE_VELOCITY, Constants.ROTATE_TO_SCORE_ACCELERATION)
+            Constants.ROTATE_KP, 
+            Constants.ROTATE_KI, 
+            Constants.ROTATE_KD, 
+            new Constraints(Constants.ROTATE_VELOCITY, Constants.ROTATE_ACCELERATION)
         ); 
 
         // timer = new Timer();

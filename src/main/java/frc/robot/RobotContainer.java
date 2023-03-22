@@ -68,9 +68,11 @@ public class RobotContainer {
 
     /* driver axis */
     private final int driverLeftTriggerAxis = XboxController.Axis.kLeftTrigger.value;
+    private final int driverRightTriggerAxis = XboxController.Axis.kRightTrigger.value;
     
     /* driver triggers */
-    final Trigger slowModeTrigger = new Trigger(() -> driver.getRawAxis(driverLeftTriggerAxis) > 0.1);
+    final Trigger driverLeftTrigger = new Trigger(() -> driver.getRawAxis(driverLeftTriggerAxis) > 0.1);
+    final Trigger driverRightTrigger = new Trigger(() -> driver.getRawAxis(driverRightTriggerAxis) > 0.1);
  
     /* Operator Buttons */
     private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -137,6 +139,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
                  () -> s_Swerve.getYaw().getDegrees(),
+                 () -> driverLeftTrigger.getAsBoolean(),
                  rotationSpeed
              )
          );
@@ -485,8 +488,22 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(driverRightX), 
                 () -> driverDpadUp.getAsBoolean(),
                 () -> Constants.ROTATE_TO_SCORE_TARGET_ANGLE,
+                () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed
             ).until(() -> s_Swerve.getYaw().getDegrees() - Constants.ROTATE_TO_SCORE_TARGET_ANGLE < 5.0)
+        );
+
+        driverRightTrigger.toggleOnTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
+                () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
+                () -> -driver.getRawAxis(driverRightX), 
+                () -> driverDpadUp.getAsBoolean(),
+                () -> Constants.ROTATE_TO_LOAD_TARGET_ANGLE,
+                () -> driverLeftTrigger.getAsBoolean(),
+                rotationSpeed
+            ).until(() -> s_Swerve.getYaw().getDegrees() - Constants.ROTATE_TO_LOAD_TARGET_ANGLE < 5.0)
         );
     }
    
