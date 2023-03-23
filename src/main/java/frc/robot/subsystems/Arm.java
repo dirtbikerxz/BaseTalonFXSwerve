@@ -63,10 +63,11 @@ public class Arm extends SubsystemBase {
     armCANEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
     
     armRelativeEncoder = armMotor.getEncoder();
-    armRelativeEncoder.setPosition(0.0);
     //armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     armRelativeEncoder.setPositionConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
     armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
+
+    armRelativeEncoder.setPosition(getPositionInDegreesCanCoder() / Constants.ARM_MOTOR_ROT_TO_DEG);
   }
 
   public void resetRelative() {
@@ -87,8 +88,12 @@ public class Arm extends SubsystemBase {
     return armRelativeEncoder.getPosition();
   }
 
+  public double getVelocityInDegreesIntegrated() {
+    return armCANEncoder.getVelocity();
+  }
+
   /* Always use this method when you want the velocity of the arm */
-  public double getVelocityInDegrees() {
+  public double getVelocityInDegreesCanCoder() {
     return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
   }
 
@@ -138,7 +143,7 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     double pid = controller.calculate(getPositionInDegreesCanCoder(), targetArmAngle);
     if (DriverStation.isEnabled()){      
-      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegrees()));
+      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegreesCanCoder()));
       voltage =  pid + feedForward;
 
       MathUtil.clamp(voltage, -12, 12);
@@ -149,6 +154,7 @@ public class Arm extends SubsystemBase {
     }
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
+    SmartDashboard.putNumber("Arm Position Absolute", getPositionInDegreesCanCoder());
     // SmartDashboard.putNumber("Arm PID Output", pid);
     // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
@@ -157,7 +163,7 @@ public class Arm extends SubsystemBase {
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
 
-    SmartDashboard.putNumber("Integrated Encoder", getPositionInDegreesIntegrated());
+    //SmartDashboard.putNumber("Integrated Encoder", getPositionInDegreesIntegrated());
   }
 
   public Command SetArmPosition (double degrees){
