@@ -21,6 +21,7 @@ public final class Constants {
     public static final double ARM_FORWARD_LIMIT = 40;
     public static final double ARM_REVERSE_LIMIT = -90;
     public static final double ARM_GEAR_RATIO = 150.0;
+    public static final double ARM_MOTOR_ROT_TO_DEG = 360.0 / ARM_GEAR_RATIO;
     public static final double MANUAL_ARM_SPEED = 1.0;
     public static final double ARM_GROUND_POSITION = -95; //set value
     // positions

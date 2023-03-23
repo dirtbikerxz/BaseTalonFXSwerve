@@ -65,8 +65,8 @@ public class Arm extends SubsystemBase {
     armRelativeEncoder = armMotor.getEncoder();
     armRelativeEncoder.setPosition(0.0);
     //armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
-    armRelativeEncoder.setPositionConversionFactor(1);
-    armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
+    armRelativeEncoder.setPositionConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
+    armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
   }
 
   public void resetRelative() {
@@ -84,7 +84,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double getPositionInDegreesIntegrated() {
-    return armRelativeEncoder.getPosition() ;
+    return armRelativeEncoder.getPosition();
   }
 
   /* Always use this method when you want the velocity of the arm */
