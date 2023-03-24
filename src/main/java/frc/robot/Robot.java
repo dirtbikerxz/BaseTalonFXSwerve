@@ -70,14 +70,14 @@ public class Robot extends TimedRobot {
     
     m_chooser.addOption("Inside Auto", auto1);
     m_chooser.addOption("Outside Auto", auto2);
-    m_chooser.setDefaultOption("Mid Auto", auto3);
+    m_chooser.addOption("Mid Auto", auto3);
 
     m_chooser.addOption("Inside Auto Balance", auto4);
     m_chooser.addOption("Outside Auto Balance", auto5);
 
     m_chooser.addOption("Score Preload", auto6);
 
-    m_chooser.addOption("Duluth Auto", auto7);
+    m_chooser.setDefaultOption("Duluth Auto", auto7);
 
     m_chooser.addOption("Test Auto", autoTest);
 
