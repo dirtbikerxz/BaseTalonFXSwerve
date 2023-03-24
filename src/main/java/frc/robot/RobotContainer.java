@@ -452,11 +452,33 @@ public class RobotContainer {
 
     }
 
+    public Command DuluthAuto() {
+
+        return new SequentialCommandGroup(
+
+        // score preload
+        ScoreCubePreload().withTimeout(8.0),
+
+        // drive backwards
+        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
+        //stop
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+
+        // auto-balance
+        new AutoBalance(s_Swerve)
+
+    );
+    }
+
+    public Command PreloadAuto() {
+
+        return ScoreConePreload().withTimeout(0.8);
+    }
 
 
     
 
-    public Command pathTest() {
+    public Command TestAuto() {
 
         return ScoreConePreload().withTimeout(0.8);
     }

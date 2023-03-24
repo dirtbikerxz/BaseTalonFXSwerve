@@ -120,8 +120,8 @@ public final class Constants {
      public static final double SLOW_MODE_PERCENT_ROTATION = 0.5;
 
      /* auto */
-    public static final double AUTO_VEL = 4.0;
-    public static final double AUTO_ACC = 3.0;
+    public static final double AUTO_VEL = 2.0;
+    public static final double AUTO_ACC = 2.0;
 
     public static final class Swerve {
         public static final int pigeonID = 8;

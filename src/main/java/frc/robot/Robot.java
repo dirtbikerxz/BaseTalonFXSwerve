@@ -45,7 +45,9 @@ public class Robot extends TimedRobot {
   private static final String auto3 = "Mid Auto";
   private static final String auto4 = "Inside Auto Balance";
   private static final String auto5 = "Outside Auto Balance";
-  private static final String auto6 = "Test";
+  private static final String auto6 = "Score Preload";
+  private static final String auto7 = "Duluth Auto";
+  private static final String autoTest = "Test";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -73,7 +75,11 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Inside Auto Balance", auto4);
     m_chooser.addOption("Outside Auto Balance", auto5);
 
-    m_chooser.addOption("Test", auto6);
+    m_chooser.addOption("Score Preload", auto6);
+
+    m_chooser.addOption("Duluth Auto", auto7);
+
+    m_chooser.addOption("Test Auto", autoTest);
 
     SmartDashboard.putData("Auto Choices", m_chooser);
 
@@ -141,7 +147,13 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = m_robotContainer.OutsideAutoBalance();
         break;
       case auto6:
-        m_autonomousCommand = m_robotContainer.pathTest();
+        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
+        break;
+      case auto7:
+        m_autonomousCommand = m_robotContainer.DuluthAuto();
+        break;
+      case autoTest:
+        m_autonomousCommand = m_robotContainer.TestAuto();
         break;
       default:
         m_autonomousCommand = m_robotContainer.ScoreCubePreload();
