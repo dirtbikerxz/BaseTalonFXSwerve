@@ -50,16 +50,18 @@ public class Arm extends SubsystemBase {
 
   // Logging objects
   private DataLog logger;
-  // private DoubleLogEntry armMotorTemperature = new DoubleLogEntry(logger, "arm/temperature");
-  // private DoubleLogEntry armMotorAppliedOutput = new DoubleLogEntry(logger, "arm/appliedOutput");
-  // private DoubleLogEntry armMotorBusVoltage = new DoubleLogEntry(logger, "arm/busVoltage");
+
+  /* Arm Motor Logging */
+  private DoubleLogEntry armMotorTemperature;
+  private DoubleLogEntry armMotorAppliedOutput;
+  private DoubleLogEntry armMotorBusVoltage;
   private DoubleLogEntry armMotorOutputCurrent;
-  // private DoubleLogEntry armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "arm/closedLoopRampRate");
-  // private DoubleLogEntry armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "arm/openLoopRampRate");
-  // private IntegerLogEntry armMotorFaults = new IntegerLogEntry(logger, "arm/faults");
-  // private StringLogEntry armMotorIdleMode = new StringLogEntry(logger, "arm/idleMode");
-  // private BooleanLogEntry armMotorInverted = new BooleanLogEntry(logger, "arm/inverted");
-  // private StringLogEntry armMotorLastError = new StringLogEntry(logger, "arm/lastError");
+  private DoubleLogEntry armMotorClosedLoopRampRate;
+  private DoubleLogEntry armMotorOpenLoopRampRate;
+  private IntegerLogEntry armMotorFaults;
+  private StringLogEntry armMotorIdleMode;
+  private BooleanLogEntry armMotorInverted;
+  private StringLogEntry armMotorLastError;
 
 
   /** Creates a new Arm. */
@@ -92,7 +94,16 @@ public class Arm extends SubsystemBase {
 
     // Create logger object 
     logger = DataLogManager.getLog();
+    armMotorTemperature = new DoubleLogEntry(logger, "arm/temperature");
+    armMotorAppliedOutput = new DoubleLogEntry(logger, "arm/appliedOutput");
+    armMotorBusVoltage = new DoubleLogEntry(logger, "arm/busVoltage");
     armMotorOutputCurrent = new DoubleLogEntry(logger, "arm/outputCurrent");
+    armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "arm/closedLoopRampRate");
+    armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "arm/openLoopRampRate");
+    armMotorFaults = new IntegerLogEntry(logger, "arm/faults");
+    armMotorIdleMode = new StringLogEntry(logger, "arm/idleMode");
+    armMotorInverted = new BooleanLogEntry(logger, "arm/inverted");
+    armMotorLastError = new StringLogEntry(logger, "arm/lastError");
   }
 
   public void resetRelative() {
@@ -205,6 +216,15 @@ public class Arm extends SubsystemBase {
   }
 
   private void logData() {
-    
+    armMotorTemperature.append(armMotor.getMotorTemperature());
+    armMotorAppliedOutput.append(armMotor.getAppliedOutput());
+    armMotorBusVoltage.append(armMotor.getBusVoltage());
+    armMotorOutputCurrent.append(armMotor.getOutputCurrent());
+    armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
+    armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
+    armMotorFaults.append(armMotor.getFaults());
+    armMotorIdleMode.append(armMotor.getIdleMode().toString());
+    armMotorInverted.append(armMotor.getInverted());
+    armMotorLastError.append(armMotor.getLastError().toString());
   }
 }
