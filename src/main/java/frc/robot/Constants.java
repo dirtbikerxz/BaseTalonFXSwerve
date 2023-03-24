@@ -73,7 +73,7 @@ public final class Constants {
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;
-    public static final int REVERSE_ELEVATOR_LIMIT = 0;
+    public static final float REVERSE_ELEVATOR_LIMIT = (float) -0.5;
     public static final int ELEVATOR_MOTOR_ID = 16;
     public static final double ELEVATOR_GEAR_RATIO = 9.0;
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
