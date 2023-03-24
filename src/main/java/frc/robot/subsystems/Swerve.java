@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,7 @@ public class Swerve extends SubsystemBase {
         gyro.configFactoryDefault();
         zeroGyro(Constants.GRYO_OFFSET);
 
+        logger = DataLogManager.getLog();
         //Log Pose
         robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
 
@@ -200,5 +202,8 @@ public class Swerve extends SubsystemBase {
     }
     
     private void logData() {
+        for(SwerveModule mod : mSwerveMods) {
+            mod.logData();
+        }
     }
 }
