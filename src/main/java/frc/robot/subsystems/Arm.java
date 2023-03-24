@@ -69,7 +69,7 @@ public class Arm extends SubsystemBase {
 
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
-    armMotor.setIdleMode(IdleMode.kCoast);
+    armMotor.setIdleMode(IdleMode.kBrake);
     this.ff = new ArmFeedforward(Constants.ARM_S, Constants.ARM_G, Constants.ARM_V, Constants.ARM_A);
 
     armMotor.setSmartCurrentLimit(40);
@@ -87,8 +87,11 @@ public class Arm extends SubsystemBase {
     armCANEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
     
     armRelativeEncoder = armMotor.getEncoder();
-    armRelativeEncoder.setPosition(0.0);
     //armRelativeEncoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+    armRelativeEncoder.setPositionConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
+    armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
+
+    armRelativeEncoder.setPosition(getPositionInDegreesCanCoder() / Constants.ARM_MOTOR_ROT_TO_DEG);
     armRelativeEncoder.setPositionConversionFactor(1);
     armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
 
@@ -121,11 +124,15 @@ public class Arm extends SubsystemBase {
   }
 
   public double getPositionInDegreesIntegrated() {
-    return armRelativeEncoder.getPosition() ;
+    return armRelativeEncoder.getPosition();
+  }
+
+  public double getVelocityInDegreesIntegrated() {
+    return armCANEncoder.getVelocity();
   }
 
   /* Always use this method when you want the velocity of the arm */
-  public double getVelocityInDegrees() {
+  public double getVelocityInDegreesCanCoder() {
     return armCANEncoder.getVelocity() / Constants.ARM_ENCODER_RATIO;
   }
 
@@ -173,9 +180,9 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetArmAngle);;
+    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetArmAngle);
     if (DriverStation.isEnabled()){      
-      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegrees()));
+      double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegreesCanCoder()));
       voltage =  pid + feedForward;
 
       MathUtil.clamp(voltage, -12, 12);
@@ -188,6 +195,7 @@ public class Arm extends SubsystemBase {
     /* Smart Dashboard printing */
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
+    SmartDashboard.putNumber("Arm Position Absolute", getPositionInDegreesCanCoder());
     // SmartDashboard.putNumber("Arm PID Output", pid);
     // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);

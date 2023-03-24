@@ -166,9 +166,9 @@ public class Swerve extends SubsystemBase {
                 traj, 
                 this::getPose, // Pose supplier
                 Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-                new PIDController(5, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-                new PIDController(5, 0, 0), // Y controller (usually the same values as X controller)
-                new PIDController(5, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AUTO_X_P, Constants.AUTO_X_I, Constants.AUTO_X_D), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AUTO_Y_P, Constants.AUTO_Y_I, Constants.AUTO_Y_D), // Y controller (usually the same values as X controller)
+                new PIDController(Constants.AUTO_R_P, Constants.AUTO_R_I, Constants.AUTO_R_D), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 this::setModuleStates, // Module states consumer
                 this // Requires this drive subsystem
             )

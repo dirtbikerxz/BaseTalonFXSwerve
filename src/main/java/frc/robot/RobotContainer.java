@@ -1,11 +1,15 @@
 package frc.robot;
 
+import java.util.HashMap;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -25,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -46,6 +51,8 @@ public class RobotContainer {
     private final int driverRightX = XboxController.Axis.kRightX.value;
 
     private double rotationSpeed = 1.0;
+
+    HashMap<String, Command> eventMap;
 
 
     /* Driver Buttons */
@@ -108,7 +115,6 @@ public class RobotContainer {
     public final Arm arm = new Arm();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
-    private PathConstraints pathConstraints = new PathConstraints(4, 3);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
     
@@ -134,6 +140,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(driverRightX), 
                  () -> driverDpadUp.getAsBoolean(),
                  () -> driverRStick.getAsBoolean(),
+                 () -> driverLStick.getAsBoolean(),
                  () -> slowModeTrigger.getAsBoolean(),
                  rotationSpeed
              )
@@ -142,6 +149,8 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+
+        eventMap = new HashMap<>();
     }
 
     /**
@@ -209,9 +218,8 @@ public class RobotContainer {
 
             // open intake
             new ParallelCommandGroup(
-                new InstantCommand(() -> intake.Retract()),
                 new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.1),
+            ).withTimeout(0.5),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
@@ -293,7 +301,7 @@ public class RobotContainer {
         );
     }
 
-    public Command balance() {
+    public Command ReverseBalance() {
 
         return new SequentialCommandGroup(
 
@@ -312,7 +320,7 @@ public class RobotContainer {
         return new SequentialCommandGroup(
 
         ScoreCubePreload().withTimeout(8.0),
-        balance()
+        ReverseBalance()
 
     );
 
@@ -323,72 +331,9 @@ public class RobotContainer {
         return new SequentialCommandGroup(
 
             ScoreConePreload().withTimeout(8.0),
-            balance()
+            ReverseBalance()
 
         );
-    }
-
-    public Command RedLeftAutoCube() {
-
-        PathPlannerTrajectory RedRightAutoCubePath = PathPlanner.loadPath("red left auto cube", pathConstraints);
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload(),
-        followTrajectoryCommand(RedRightAutoCubePath, true)
-        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
-        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
-
-    );
-    }
-    
-    public Command BlueRightAutoCube() {
-
-        PathPlannerTrajectory BlueRightAutoCubePath = PathPlanner.loadPath("Blue Right Auto Cube", pathConstraints);
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload(),
-        followTrajectoryCommand(BlueRightAutoCubePath, true)
-        //new DriveCommand(s_Swerve, 0.5, -0.5, 0.0).withTimeout(2.0),
-        //new DriveCommand(s_Swerve, -1.0, 0.0, 0.0).withTimeout(3.0)
-
-    );
-    }
-
-    public Command RightAutoCone() {
-
-        //PathPlannerTrajectory RightAutoConePath = PathPlanner.loadPath("Right Auto Cone", pathConstraints);
-
-        return new SequentialCommandGroup(
-
-        ScoreConePreload().withTimeout(8.0),
-
-        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
-        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
-
-    );   
-    }
-
-    public Command LeftAutoCube() {
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload()
-
-    );
-    }
-
-    public Command LeftAutoCone() {
-
-        return new SequentialCommandGroup(
-
-        ScoreConePreload().withTimeout(8.0),
-
-        //followTrajectoryCommand(examplePath, true)
-        new DriveCommand(s_Swerve, -2.0,  0.0, 0.0).withTimeout(1.5),
-        new DriveCommand(s_Swerve, 0.0,  0.0, 0.0).withTimeout(0.1)
-    );   
     }
 
     public Command ScoreCone() {
@@ -411,16 +356,132 @@ public class RobotContainer {
     );   
     }
 
-    public Command pathTest() {
+
+    ////////////////////////////////////
+    
+    public Command OutsideAuto() {
+
+        PathPlannerTrajectory path = PathPlanner.loadPath("Outside Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
 
         return new SequentialCommandGroup(
-            //ScoreConePreload(),
+
+        ScoreCubePreload(),
+        followTrajectoryCommand(path, true)
+
+    );
+    }
+
+    public Command InsideAuto() {
+
+        PathPlannerTrajectory path = PathPlanner.loadPath("Inside Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
+
+        return new SequentialCommandGroup(
+
+        ScoreCubePreload(),
+        followTrajectoryCommand(path, true)
+
+    );
+    }
+
+    public Command MidAuto() {
+
+        PathPlannerTrajectory path = PathPlanner.loadPath("Mid Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
+
+        return new SequentialCommandGroup(
+
+            ScoreCubePreload(),
+            followTrajectoryCommand(path, true),
+            new AutoBalance(s_Swerve)
+
+        );
+    }
+
+    public Command InsideAutoBalance() {
+
+        PathPlannerTrajectory path = PathPlanner.loadPath("Inside Auto Balance", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
+
+        return new SequentialCommandGroup(
+
+            ScoreCubePreload().withTimeout(8.0),
+
+            // followPathWithEvents = new FollowPathWithEvents(
+            //     followTrajectoryCommand(path, true),
+            //     path.getMarkers(),
+            //     eventMap
+            // ),
             GoToGround().withTimeout(2.0),
 
-            new InstantCommand(() -> intake.Run(Constants.INTAKE_SPEED))
-            //followTrajectoryCommand(examplePath, true)
+            new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
+
+            new AutoBalance(s_Swerve)
+
         );
-        }
+
+    }
+
+    public Command OutsideAutoBalance() {
+
+        PathPlannerTrajectory path = PathPlanner.loadPath("Outside Auto Balance", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
+
+        return new SequentialCommandGroup(
+
+            ScoreCubePreload().withTimeout(8.0),
+
+            // followPathWithEvents = new FollowPathWithEvents(
+            //     followTrajectoryCommand(path, true),
+            //     path.getMarkers(),
+            //     eventMap
+            // ),
+            GoToGround().withTimeout(2.0),
+
+            new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
+
+            new AutoBalance(s_Swerve)
+
+        );
+
+    }
+
+    public Command DuluthAuto() {
+
+        return new SequentialCommandGroup(
+
+        // score preload
+        ScoreCubePreload().withTimeout(8.0),
+
+        // drive backwards
+        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
+        //stop
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+
+        // auto-balance
+        new AutoBalance(s_Swerve)
+
+    );
+    }
+
+    public Command PreloadAuto() {
+
+        return ScoreConePreload().withTimeout(0.8);
+    }
+
+
+    
+
+    public Command TestAuto() {
+
+        return ScoreConePreload().withTimeout(0.8);
+    }
     
     public void intakeHandler() {
 
