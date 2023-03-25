@@ -65,6 +65,7 @@ public class Arm extends SubsystemBase {
 
   /* Arm CANCoder Logging */
   private DoubleLogEntry armCANCoderAbsolutePosition;
+  private DoubleLogEntry armCANCoderAbsoluteVelocity;
 
 
   /** Creates a new Arm. */
@@ -111,6 +112,7 @@ public class Arm extends SubsystemBase {
     armMotorInverted = new BooleanLogEntry(logger, "armMotor/inverted");
     armMotorLastError = new StringLogEntry(logger, "armMotor/lastError");
     armCANCoderAbsolutePosition = new DoubleLogEntry(logger, "armCANCoder/absolutePosition");
+    armCANCoderAbsoluteVelocity = new DoubleLogEntry(logger, "armCANCoder/absoluteVelocity");
   }
 
   public void resetRelative() {
@@ -242,5 +244,6 @@ public class Arm extends SubsystemBase {
 
     /* Arm CANCoder */
     armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
+    armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
   }
 }
