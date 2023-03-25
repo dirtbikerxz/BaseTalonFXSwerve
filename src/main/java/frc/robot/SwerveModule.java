@@ -4,6 +4,9 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.AbsoluteEncoder;
@@ -27,6 +30,10 @@ public class SwerveModule {
     public TalonFX mDriveMotor;
     private CANCoder angleEncoder;
     private AbsoluteEncoder absoluteEncoder;
+
+    private DataLog logger;
+    private DoubleLogEntry driveMotorSpeed;
+    private DoubleLogEntry driveMotorOutputCurrent;
 
     //private SupplyCurrentLimitConfiguration driveCurrentLimit = new SupplyCurrentLimitConfiguration(true, Constants.Swerve.drivePeakCurrentLimit,0,0);;
 
@@ -55,6 +62,10 @@ public class SwerveModule {
         configDriveMotor();
 
         lastAngle = getState().angle;
+
+        logger = DataLogManager.getLog();
+        driveMotorSpeed = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorSpeed");
+        driveMotorOutputCurrent = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorOutputCurrent");
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
@@ -178,5 +189,10 @@ public class SwerveModule {
             Conversions.falconToMeters(mDriveMotor.getSelectedSensorPosition(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
             getAngle()
         );
+    }
+
+    public void logData() {
+        driveMotorSpeed.append(mDriveMotor.getSelectedSensorVelocity());
+        driveMotorOutputCurrent.append((mDriveMotor.getStatorCurrent()));
     }
 }

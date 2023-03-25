@@ -20,6 +20,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,12 +37,19 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     private SupplyCurrentLimitConfiguration current;
+    // Logging objects
+  private DataLog logger;
+  private DoubleLogEntry robotPose2D;
     
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro(Constants.GRYO_OFFSET);
+
+        logger = DataLogManager.getLog();
+        //Log Pose
+        robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -134,8 +144,10 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());
+       logData();
         SmartDashboard.putNumber("RobotCoordinatesX",swerveOdometry.getPoseMeters().getX());
         SmartDashboard.putNumber("RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
+      
 
         for(SwerveModule mod : mSwerveMods){
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Current Draw", mod.mDriveMotor.getSupplyCurrent());
@@ -187,5 +199,11 @@ public class Swerve extends SubsystemBase {
             new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
             new SwerveModuleState(0.0, Rotation2d.fromDegrees(90))
         });
+    }
+    
+    private void logData() {
+        for(SwerveModule mod : mSwerveMods) {
+            mod.logData();
+        }
     }
 }

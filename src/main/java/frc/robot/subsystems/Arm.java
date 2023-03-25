@@ -22,6 +22,12 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.util.datalog.IntegerLogEntry;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,17 +38,38 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
+  public RelativeEncoder armRelativeEncoder;
   public ProfiledPIDController controller;
+
   private CANSparkMax armMotor;
   private CANCoder armCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
   private double targetArmAngle = Constants.ARM_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
-  public RelativeEncoder armRelativeEncoder;
+
+  // Logging objects
+  private DataLog logger;
+
+  /* Arm Motor Logging */
+  private DoubleLogEntry armMotorTemperature;
+  private DoubleLogEntry armMotorAppliedOutput;
+  private DoubleLogEntry armMotorBusVoltage;
+  private DoubleLogEntry armMotorOutputCurrent;
+  private DoubleLogEntry armMotorClosedLoopRampRate;
+  private DoubleLogEntry armMotorOpenLoopRampRate;
+  private IntegerLogEntry armMotorFaults;
+  private StringLogEntry armMotorIdleMode;
+  private BooleanLogEntry armMotorInverted;
+  private StringLogEntry armMotorLastError;
+
+  /* Arm CANCoder Logging */
+  private DoubleLogEntry armCANCoderAbsolutePosition;
+
 
   /** Creates a new Arm. */
   public Arm() {
+
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
     armMotor.setIdleMode(IdleMode.kBrake);
@@ -68,6 +95,22 @@ public class Arm extends SubsystemBase {
     armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_MOTOR_ROT_TO_DEG);
 
     armRelativeEncoder.setPosition(getPositionInDegreesCanCoder() / Constants.ARM_MOTOR_ROT_TO_DEG);
+    armRelativeEncoder.setPositionConversionFactor(1);
+    armRelativeEncoder.setVelocityConversionFactor(Constants.ARM_GEAR_RATIO);
+
+    // Create logger object 
+    logger = DataLogManager.getLog();
+    armMotorTemperature = new DoubleLogEntry(logger, "armMotor/temperature");
+    armMotorAppliedOutput = new DoubleLogEntry(logger, "armMotor/appliedOutput");
+    armMotorBusVoltage = new DoubleLogEntry(logger, "armMotor/busVoltage");
+    armMotorOutputCurrent = new DoubleLogEntry(logger, "armMotor/outputCurrent");
+    armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "armMotor/closedLoopRampRate");
+    armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "armMotor/openLoopRampRate");
+    armMotorFaults = new IntegerLogEntry(logger, "armMotor/faults");
+    armMotorIdleMode = new StringLogEntry(logger, "armMotor/idleMode");
+    armMotorInverted = new BooleanLogEntry(logger, "armMotor/inverted");
+    armMotorLastError = new StringLogEntry(logger, "armMotor/lastError");
+    armCANCoderAbsolutePosition = new DoubleLogEntry(logger, "armCANCoder/absolutePosition");
   }
 
   public void resetRelative() {
@@ -152,6 +195,8 @@ public class Arm extends SubsystemBase {
 
       
     }
+
+    /* Smart Dashboard printing */
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
     SmartDashboard.putNumber("Arm Position Absolute", getPositionInDegreesCanCoder());
@@ -163,7 +208,11 @@ public class Arm extends SubsystemBase {
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
 
-    //SmartDashboard.putNumber("Integrated Encoder", getPositionInDegreesIntegrated());
+    SmartDashboard.putNumber("Integrated Encoder", getPositionInDegreesIntegrated());
+
+    // Logs all relevant data
+    // Any additional data logging should be done in this method
+    logData();
   }
 
   public Command SetArmPosition (double degrees){
@@ -176,5 +225,22 @@ public class Arm extends SubsystemBase {
 
   private State getEncoderAngle() {
     return null;
+  }
+
+  private void logData() {
+    /* Arm Motor */
+    armMotorTemperature.append(armMotor.getMotorTemperature());
+    armMotorAppliedOutput.append(armMotor.getAppliedOutput());
+    armMotorBusVoltage.append(armMotor.getBusVoltage());
+    armMotorOutputCurrent.append(armMotor.getOutputCurrent());
+    armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
+    armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
+    armMotorFaults.append(armMotor.getFaults());
+    armMotorIdleMode.append(armMotor.getIdleMode().toString());
+    armMotorInverted.append(armMotor.getInverted());
+    armMotorLastError.append(armMotor.getLastError().toString());
+
+    /* Arm CANCoder */
+    armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
   }
 }
