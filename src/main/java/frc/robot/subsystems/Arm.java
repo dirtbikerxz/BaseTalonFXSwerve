@@ -66,6 +66,7 @@ public class Arm extends SubsystemBase {
   /* Arm CANCoder Logging */
   private DoubleLogEntry armCANCoderAbsolutePosition;
   private DoubleLogEntry armCANCoderAbsoluteVelocity;
+  private DoubleLogEntry armCANCoderBusVoltage;
 
 
   /** Creates a new Arm. */
@@ -111,8 +112,9 @@ public class Arm extends SubsystemBase {
     armMotorIdleMode = new StringLogEntry(logger, "armMotor/idleMode");
     armMotorInverted = new BooleanLogEntry(logger, "armMotor/inverted");
     armMotorLastError = new StringLogEntry(logger, "armMotor/lastError");
-    armCANCoderAbsolutePosition = new DoubleLogEntry(logger, "armCANCoder/absolutePosition");
-    armCANCoderAbsoluteVelocity = new DoubleLogEntry(logger, "armCANCoder/absoluteVelocity");
+    armCANCoderAbsolutePosition = new DoubleLogEntry(logger, "armCANCoder/position");
+    armCANCoderAbsoluteVelocity = new DoubleLogEntry(logger, "armCANCoder/velocity");
+    armCANCoderBusVoltage = new DoubleLogEntry(logger, "armCANCoder/busVoltage");
   }
 
   public void resetRelative() {
@@ -202,11 +204,11 @@ public class Arm extends SubsystemBase {
     // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
     SmartDashboard.putNumber("Arm Position Absolute", getPositionInDegreesCanCoder());
-    // SmartDashboard.putNumber("Arm PID Output", pid);
+    SmartDashboard.putNumber("Arm PID Output", pid);
     // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
-    // SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegrees()) - Math.abs(targetArmAngle)));
-    // SmartDashboard.putString("CANCoder Initialization Strategy", armCANEncoder.configGetSensorInitializationStrategy().toString());
+    SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetArmAngle)));
+    SmartDashboard.putString("CANCoder Initialization Strategy", armCANEncoder.configGetSensorInitializationStrategy().toString());
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
 
@@ -245,5 +247,6 @@ public class Arm extends SubsystemBase {
     /* Arm CANCoder */
     armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
     armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
+    armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
   }
 }
