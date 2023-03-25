@@ -106,7 +106,7 @@ public final class Constants {
     public static final double WHEEL_LOCK_TIME = 0.1;
 
      //rotate to score button
-     public static final double ROTATE_TO_SCORE_KP = 0.01; //0.0222
+     public static final double ROTATE_TO_SCORE_KP = 0.01;
      public static final double ROTATE_TO_SCORE_KI = 0.0;
      public static final double ROTATE_TO_SCORE_KD = 0.0;
      public static final double ROTATE_TO_SCORE_VELOCITY = 200.0;
