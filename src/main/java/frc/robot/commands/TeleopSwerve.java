@@ -114,7 +114,7 @@ public class TeleopSwerve extends CommandBase {
             // and stop it when it reaches it's destination or after two seconds.
             // Then the timer should restart the next time that the button is pushed.
             // NOTE: I have taken out the timer implementation
-            if (2.5 >= error) {
+            if (error <= 2.5 && error >= -2.5)  {
                 // timer.stop();
                 rotating = false;
             } 
