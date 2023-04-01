@@ -57,7 +57,7 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-6.2;
+    public static final double ARM_ENCODER_OFFSET = 360-47;
     public static final double TARGET_ARM_ANGLE = 0;
 
     public static final double INTAKE_SPEED = 0.60;
@@ -131,8 +131,8 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: 2023 More robot 18.75in
+        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: 2023 More robot 18.75in
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
        
