@@ -46,6 +46,10 @@ public class Swerve extends SubsystemBase {
     private DataLog logger;
     private DoubleLogEntry robotPose2D;
     
+    private DoubleLogEntry loopTime;
+    private Timer timer;
+    private double previousTime;
+    
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -72,6 +76,13 @@ public class Swerve extends SubsystemBase {
         current = new SupplyCurrentLimitConfiguration(true, 0, 0, 0);
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+
+        logger = DataLogManager.getLog();
+        loopTime = new DoubleLogEntry(logger, "swerve/loopTime");
+
+        timer = new Timer();
+        timer.start();
+        previousTime = timer.get();
 
         SmartDashboard.putData("Field", m_field);
     }
@@ -166,6 +177,9 @@ public class Swerve extends SubsystemBase {
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
         }
+
+        loopTime.append(timer.get() - previousTime);
+        previousTime = timer.get();
     }
 
 
