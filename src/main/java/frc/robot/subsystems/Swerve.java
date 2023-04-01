@@ -40,6 +40,9 @@ public class Swerve extends SubsystemBase {
     // Logging objects
   private DataLog logger;
   private DoubleLogEntry robotPose2D;
+  private DoubleLogEntry loopTime;
+  private Timer timer;
+  private double previousTime;
     
 
     public Swerve() {
@@ -50,6 +53,10 @@ public class Swerve extends SubsystemBase {
         logger = DataLogManager.getLog();
         //Log Pose
         robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
+        loopTime = new DoubleLogEntry(logger, "Swerve/loopTime");
+        timer = new Timer();
+        timer.start();
+        previousTime = timer.get();
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -158,6 +165,9 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
         }
+
+        loopTime.append(timer.get() - previousTime);
+        previousTime = timer.get();
     }
 
 
