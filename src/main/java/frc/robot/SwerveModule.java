@@ -94,6 +94,8 @@ public class SwerveModule {
         angle = optimizeTurn(oldAngle, angle);  
         mAngleMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle.getDegrees(), Constants.Swerve.angleGearRatio));
         lastAngle = angle;
+
+        SmartDashboard.putNumber("debug/Mod " + moduleNumber + " desiredAngle", angle.getDegrees());
     }
 
         // https://www.chiefdelphi.com/t/5013-the-trobots-2023-charged-up-open-alliance-build-thread/419112/37
