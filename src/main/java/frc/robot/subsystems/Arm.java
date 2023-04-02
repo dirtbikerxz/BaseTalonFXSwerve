@@ -75,6 +75,7 @@ public class Arm extends SubsystemBase {
     armMotor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     armCANEncoder = new CANCoder(Constants.ARM_ENCODER_ID);
     armMotor.setIdleMode(IdleMode.kBrake);
+    armMotor.setInverted(true);
     this.ff = new ArmFeedforward(Constants.ARM_S, Constants.ARM_G, Constants.ARM_V, Constants.ARM_A);
 
     armMotor.setSmartCurrentLimit(40);
@@ -201,7 +202,7 @@ public class Arm extends SubsystemBase {
     }
 
     /* Smart Dashboard printing */
-    // SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber("CANCoder", armCANEncoder.getAbsolutePosition());
     SmartDashboard.putNumber("Arm Position Integrated", getPositionInDegreesIntegrated());
     SmartDashboard.putNumber("Arm Position Absolute", getPositionInDegreesCanCoder());
     SmartDashboard.putNumber("Arm PID Output", pid);
@@ -233,20 +234,20 @@ public class Arm extends SubsystemBase {
 
   private void logData() {
     /* Arm Motor */
-    armMotorTemperature.append(armMotor.getMotorTemperature());
-    armMotorAppliedOutput.append(armMotor.getAppliedOutput());
-    armMotorBusVoltage.append(armMotor.getBusVoltage());
-    armMotorOutputCurrent.append(armMotor.getOutputCurrent());
-    armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
-    armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
-    armMotorFaults.append(armMotor.getFaults());
-    armMotorIdleMode.append(armMotor.getIdleMode().toString());
-    armMotorInverted.append(armMotor.getInverted());
-    armMotorLastError.append(armMotor.getLastError().toString());
+    // armMotorTemperature.append(armMotor.getMotorTemperature());
+    // armMotorAppliedOutput.append(armMotor.getAppliedOutput());
+    // armMotorBusVoltage.append(armMotor.getBusVoltage());
+    // armMotorOutputCurrent.append(armMotor.getOutputCurrent());
+    // armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
+    // armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
+    // armMotorFaults.append(armMotor.getFaults());
+    // armMotorIdleMode.append(armMotor.getIdleMode().toString());
+    // armMotorInverted.append(armMotor.getInverted());
+    // armMotorLastError.append(armMotor.getLastError().toString());
 
-    /* Arm CANCoder */
-    armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
-    armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
-    armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
+    // /* Arm CANCoder */
+    // armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
+    // armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
+    // armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
   }
 }

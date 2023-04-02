@@ -57,7 +57,7 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-6.2;
+    public static final double ARM_ENCODER_OFFSET = 360-87.45;
     public static final double TARGET_ARM_ANGLE = 0;
 
     public static final double INTAKE_SPEED = 0.60;

@@ -210,7 +210,7 @@ public class Swerve extends SubsystemBase {
     
     private void logData() {
         for(SwerveModule mod : mSwerveMods) {
-            mod.logData();
+            //mod.logData();
         }
     }
 }

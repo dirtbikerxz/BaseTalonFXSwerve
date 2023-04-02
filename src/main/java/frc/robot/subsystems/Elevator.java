@@ -198,20 +198,20 @@ public class Elevator extends SubsystemBase {
 
     private void logData() {
         /* Elevator Motor */
-        elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
-        elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
-        elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
-        elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
-        elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
-        elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
-        elevatorMotorFaults.append(elevatorMotor.getFaults());
-        elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
-        elevatorMotorInverted.append(elevatorMotor.getInverted());
-        elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
+        // elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
+        // elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
+        // elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
+        // elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
+        // elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
+        // elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
+        // elevatorMotorFaults.append(elevatorMotor.getFaults());
+        // elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
+        // elevatorMotorInverted.append(elevatorMotor.getInverted());
+        // elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
 
-        /* Elevator Encoder */
-        elevatorEncoderPosition.append(getEncoderPosition());
-        elevatorEncoderVelocity.append(elevatorEncoder.getVelocity());
+        // /* Elevator Encoder */
+        // elevatorEncoderPosition.append(getEncoderPosition());
+        // elevatorEncoderVelocity.append(elevatorEncoder.getVelocity());
       }
 }
 
