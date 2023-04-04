@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 import java.util.function.BooleanSupplier;
 
-import com.ctre.phoenix.Logger;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -16,12 +15,6 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.util.datalog.BooleanLogEntry;
-import edu.wpi.first.util.datalog.DataLog;
-import edu.wpi.first.util.datalog.DoubleLogEntry;
-import edu.wpi.first.util.datalog.IntegerLogEntry;
-import edu.wpi.first.util.datalog.StringLogEntry;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,25 +31,6 @@ public class Elevator extends SubsystemBase {
     private ProfiledPIDController controller;
     private ElevatorFeedforward ff;
     private double targetElevatorPosition;
-
-    /* Logging */
-    private DataLog logger;
-
-    /* Elevator Motor */
-    private DoubleLogEntry elevatorMotorTemperature;
-    private DoubleLogEntry elevatorMotorAppliedOutput;
-    private DoubleLogEntry elevatorMotorBusVoltage;
-    private DoubleLogEntry elevatorMotorOutputCurrent;
-    private DoubleLogEntry elevatorMotorClosedLoopRampRate;
-    private DoubleLogEntry elevatorMotorOpenLoopRampRate;
-    private IntegerLogEntry elevatorMotorFaults;
-    private StringLogEntry elevatorMotorIdleMode;
-    private BooleanLogEntry elevatorMotorInverted;
-    private StringLogEntry elevatorMotorLastError;
-
-    /* Elevator Motor Internal Encoder  */
-    private DoubleLogEntry elevatorEncoderPosition;
-    private DoubleLogEntry elevatorEncoderVelocity;
 
     public Elevator() {
         elevatorMotor = new CANSparkMax(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
@@ -81,25 +55,6 @@ public class Elevator extends SubsystemBase {
 
         elevatorEncoder.setPositionConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
         elevatorEncoder.setVelocityConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
-
-        // Create logger object 
-        logger = DataLogManager.getLog();
-
-        // Create log entries for elevator motor
-        elevatorMotorTemperature = new DoubleLogEntry(logger, "elevatorMotor/temperature");
-        elevatorMotorAppliedOutput = new DoubleLogEntry(logger, "elevatorMotor/appliedOutput");
-        elevatorMotorBusVoltage = new DoubleLogEntry(logger, "elevatorMotor/busVoltage");
-        elevatorMotorOutputCurrent = new DoubleLogEntry(logger, "elevatorMotor/outputCurrent");
-        elevatorMotorClosedLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/closedLoopRampRate");
-        elevatorMotorOpenLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/openLoopRampRate");
-        elevatorMotorFaults = new IntegerLogEntry(logger, "elevatorMotor/faults");
-        elevatorMotorIdleMode = new StringLogEntry(logger, "elevatorMotor/idleMode");
-        elevatorMotorInverted = new BooleanLogEntry(logger, "elevatorMotor/inverted");
-        elevatorMotorLastError = new StringLogEntry(logger, "elevatorMotor/lastError");
-
-        // Create log entries for elevator encoder
-        elevatorEncoderPosition = new DoubleLogEntry(logger, "elevatorEncoder/position");
-        elevatorEncoderVelocity = new DoubleLogEntry(logger, "elevatorEncoder/velocity");
     }
     
     
@@ -198,22 +153,5 @@ public class Elevator extends SubsystemBase {
         return Commands.waitUntil(() -> atPosition());
     }
 
-    private void logData() {
-        /* Elevator Motor */
-        elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
-        elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
-        elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
-        elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
-        elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
-        elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
-        elevatorMotorFaults.append(elevatorMotor.getFaults());
-        elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
-        elevatorMotorInverted.append(elevatorMotor.getInverted());
-        elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
-
-        /* Elevator Encoder */
-        elevatorEncoderPosition.append(getEncoderPosition());
-        elevatorEncoderVelocity.append(elevatorEncoder.getVelocity());
-      }
 }
 
