@@ -31,9 +31,9 @@ public class SwerveModule {
     private CANCoder angleEncoder;
     private AbsoluteEncoder absoluteEncoder;
 
-    private DataLog logger;
-    private DoubleLogEntry driveMotorSpeed;
-    private DoubleLogEntry driveMotorOutputCurrent;
+    // private DataLog logger;
+    // private DoubleLogEntry driveMotorSpeed;
+    // private DoubleLogEntry driveMotorOutputCurrent;
 
     //private SupplyCurrentLimitConfiguration driveCurrentLimit = new SupplyCurrentLimitConfiguration(true, Constants.Swerve.drivePeakCurrentLimit,0,0);;
 
@@ -63,9 +63,9 @@ public class SwerveModule {
 
         lastAngle = getState().angle;
 
-        logger = DataLogManager.getLog();
-        driveMotorSpeed = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorSpeed");
-        driveMotorOutputCurrent = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorOutputCurrent");
+        // logger = DataLogManager.getLog();
+        // driveMotorSpeed = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorSpeed");
+        // driveMotorOutputCurrent = new DoubleLogEntry(logger, "mod" + moduleNumber + "/driveMotorOutputCurrent");
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
@@ -192,7 +192,7 @@ public class SwerveModule {
     }
 
     public void logData() {
-        driveMotorSpeed.append(mDriveMotor.getSelectedSensorVelocity());
-        driveMotorOutputCurrent.append((mDriveMotor.getStatorCurrent()));
+        // driveMotorSpeed.append(mDriveMotor.getSelectedSensorVelocity());
+        // driveMotorOutputCurrent.append((mDriveMotor.getStatorCurrent()));
     }
 }
