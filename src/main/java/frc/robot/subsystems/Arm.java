@@ -234,20 +234,20 @@ public class Arm extends SubsystemBase {
 
   private void logData() {
     /* Arm Motor */
-    // armMotorTemperature.append(armMotor.getMotorTemperature());
-    // armMotorAppliedOutput.append(armMotor.getAppliedOutput());
-    // armMotorBusVoltage.append(armMotor.getBusVoltage());
-    // armMotorOutputCurrent.append(armMotor.getOutputCurrent());
-    // armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
-    // armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
-    // armMotorFaults.append(armMotor.getFaults());
-    // armMotorIdleMode.append(armMotor.getIdleMode().toString());
-    // armMotorInverted.append(armMotor.getInverted());
-    // armMotorLastError.append(armMotor.getLastError().toString());
+    armMotorTemperature.append(armMotor.getMotorTemperature());
+    armMotorAppliedOutput.append(armMotor.getAppliedOutput());
+    armMotorBusVoltage.append(armMotor.getBusVoltage());
+    armMotorOutputCurrent.append(armMotor.getOutputCurrent());
+    armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
+    armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
+    armMotorFaults.append(armMotor.getFaults());
+    armMotorIdleMode.append(armMotor.getIdleMode().toString());
+    armMotorInverted.append(armMotor.getInverted());
+    armMotorLastError.append(armMotor.getLastError().toString());
 
-    // /* Arm CANCoder */
-    // armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
-    // armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
-    // armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
+    /* Arm CANCoder */
+    armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
+    armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
+    armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
   }
 }
