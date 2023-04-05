@@ -12,10 +12,13 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.IntegerLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import javax.xml.crypto.Data;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -77,7 +80,7 @@ public class Intake extends SubsystemBase {
       solenoid = pneumaticHub.makeDoubleSolenoid(Constants.PNEUMATIC_FORWARD_CHANNEL, Constants.PNEUMATIC_REVERSE_CHANEL);
 
       /* Logging */
-      logger = new DataLog();
+      logger = DataLogManager.getLog();
 
       /* Intake Motor 1 */
       intakeMotor1Temperature = new DoubleLogEntry(logger, "intake/motor1/temperature");
