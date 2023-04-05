@@ -43,12 +43,12 @@ public class Swerve extends SubsystemBase {
 
 
     // Logging objects
-    private DataLog logger;
-    private DoubleLogEntry robotPose2D;
+    // private DataLog logger;
+    // private DoubleLogEntry robotPose2D;
     
-    private DoubleLogEntry loopTime;
-    private Timer timer;
-    private double previousTime;
+    // private DoubleLogEntry loopTime;
+    // private Timer timer;
+    // private double previousTime;
     
 
     public Swerve() {
@@ -56,9 +56,9 @@ public class Swerve extends SubsystemBase {
         gyro.configFactoryDefault();
         zeroGyro(Constants.GRYO_OFFSET);
 
-        logger = DataLogManager.getLog();
-        //Log Pose
-        robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
+        // logger = DataLogManager.getLog();
+        // //Log Pose
+        // robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -77,12 +77,12 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
-        logger = DataLogManager.getLog();
-        loopTime = new DoubleLogEntry(logger, "swerve/loopTime");
+        // logger = DataLogManager.getLog();
+        // loopTime = new DoubleLogEntry(logger, "swerve/loopTime");
 
-        timer = new Timer();
-        timer.start();
-        previousTime = timer.get();
+        // timer = new Timer();
+        // timer.start();
+        // previousTime = timer.get();
 
         SmartDashboard.putData("Field", m_field);
     }
@@ -178,8 +178,8 @@ public class Swerve extends SubsystemBase {
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
         }
 
-        loopTime.append(timer.get() - previousTime);
-        previousTime = timer.get();
+        // loopTime.append(timer.get() - previousTime);
+        // previousTime = timer.get();
     }
 
 
@@ -224,7 +224,7 @@ public class Swerve extends SubsystemBase {
     
     private void logData() {
         for(SwerveModule mod : mSwerveMods) {
-            mod.logData();
+            // mod.logData();
         }
     }
 }
