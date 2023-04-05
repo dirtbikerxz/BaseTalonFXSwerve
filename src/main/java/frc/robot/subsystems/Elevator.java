@@ -180,6 +180,7 @@ public class Elevator extends SubsystemBase {
             
             // SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
+        logData();
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
 
