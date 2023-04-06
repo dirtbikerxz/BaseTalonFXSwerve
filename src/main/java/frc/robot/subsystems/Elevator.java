@@ -40,19 +40,19 @@ public class Elevator extends SubsystemBase {
     private double targetElevatorPosition;
 
     /* Logging */
-    // private DataLog logger;
+    private DataLog logger;
 
     // /* Elevator Motor */
-    // private DoubleLogEntry elevatorMotorTemperature;
-    // private DoubleLogEntry elevatorMotorAppliedOutput;
-    // private DoubleLogEntry elevatorMotorBusVoltage;
-    // private DoubleLogEntry elevatorMotorOutputCurrent;
-    // private DoubleLogEntry elevatorMotorClosedLoopRampRate;
-    // private DoubleLogEntry elevatorMotorOpenLoopRampRate;
-    // private IntegerLogEntry elevatorMotorFaults;
-    // private StringLogEntry elevatorMotorIdleMode;
-    // private BooleanLogEntry elevatorMotorInverted;
-    // private StringLogEntry elevatorMotorLastError;
+    private DoubleLogEntry elevatorMotorTemperature;
+    private DoubleLogEntry elevatorMotorAppliedOutput;
+    private DoubleLogEntry elevatorMotorBusVoltage;
+    private DoubleLogEntry elevatorMotorOutputCurrent;
+    private DoubleLogEntry elevatorMotorClosedLoopRampRate;
+    private DoubleLogEntry elevatorMotorOpenLoopRampRate;
+    private IntegerLogEntry elevatorMotorFaults;
+    private StringLogEntry elevatorMotorIdleMode;
+    private BooleanLogEntry elevatorMotorInverted;
+    private StringLogEntry elevatorMotorLastError;
 
     // /* Elevator Motor Internal Encoder  */
     // private DoubleLogEntry elevatorEncoderPosition;
@@ -83,19 +83,19 @@ public class Elevator extends SubsystemBase {
         elevatorEncoder.setVelocityConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
 
         // Create logger object 
-        // logger = DataLogManager.getLog();
+        logger = DataLogManager.getLog();
 
         // // Create log entries for elevator motor
-        // elevatorMotorTemperature = new DoubleLogEntry(logger, "elevatorMotor/temperature");
-        // elevatorMotorAppliedOutput = new DoubleLogEntry(logger, "elevatorMotor/appliedOutput");
-        // elevatorMotorBusVoltage = new DoubleLogEntry(logger, "elevatorMotor/busVoltage");
-        // elevatorMotorOutputCurrent = new DoubleLogEntry(logger, "elevatorMotor/outputCurrent");
-        // elevatorMotorClosedLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/closedLoopRampRate");
-        // elevatorMotorOpenLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/openLoopRampRate");
-        // elevatorMotorFaults = new IntegerLogEntry(logger, "elevatorMotor/faults");
-        // elevatorMotorIdleMode = new StringLogEntry(logger, "elevatorMotor/idleMode");
-        // elevatorMotorInverted = new BooleanLogEntry(logger, "elevatorMotor/inverted");
-        // elevatorMotorLastError = new StringLogEntry(logger, "elevatorMotor/lastError");
+        elevatorMotorTemperature = new DoubleLogEntry(logger, "elevatorMotor/temperature");
+        elevatorMotorAppliedOutput = new DoubleLogEntry(logger, "elevatorMotor/appliedOutput");
+        elevatorMotorBusVoltage = new DoubleLogEntry(logger, "elevatorMotor/busVoltage");
+        elevatorMotorOutputCurrent = new DoubleLogEntry(logger, "elevatorMotor/outputCurrent");
+        elevatorMotorClosedLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/closedLoopRampRate");
+        elevatorMotorOpenLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/openLoopRampRate");
+        elevatorMotorFaults = new IntegerLogEntry(logger, "elevatorMotor/faults");
+        elevatorMotorIdleMode = new StringLogEntry(logger, "elevatorMotor/idleMode");
+        elevatorMotorInverted = new BooleanLogEntry(logger, "elevatorMotor/inverted");
+        elevatorMotorLastError = new StringLogEntry(logger, "elevatorMotor/lastError");
 
         // // Create log entries for elevator encoder
         // elevatorEncoderPosition = new DoubleLogEntry(logger, "elevatorEncoder/position");
@@ -180,6 +180,7 @@ public class Elevator extends SubsystemBase {
             
             SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
+        logData();
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
         
@@ -197,17 +198,17 @@ public class Elevator extends SubsystemBase {
     }
 
     private void logData() {
-        // /* Elevator Motor */
-        // elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
-        // elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
-        // elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
-        // elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
-        // elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
-        // elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
-        // elevatorMotorFaults.append(elevatorMotor.getFaults());
-        // elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
-        // elevatorMotorInverted.append(elevatorMotor.getInverted());
-        // elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
+        /* Elevator Motor */
+        elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
+        elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
+       // elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
+        elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
+      //  elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
+    //    elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
+        elevatorMotorFaults.append(elevatorMotor.getFaults());
+    //    elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
+    //    elevatorMotorInverted.append(elevatorMotor.getInverted());
+     //   elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
 
         // /* Elevator Encoder */
         // elevatorEncoderPosition.append(getEncoderPosition());

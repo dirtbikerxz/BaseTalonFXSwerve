@@ -192,7 +192,7 @@ public class SwerveModule {
     }
 
     public void logData() {
-        // driveMotorSpeed.append(mDriveMotor.getSelectedSensorVelocity());
-        // driveMotorOutputCurrent.append((mDriveMotor.getStatorCurrent()));
+        //driveMotorSpeed.append(mDriveMotor.getSelectedSensorVelocity());
+        //driveMotorOutputCurrent.append((mDriveMotor.getStatorCurrent()));
     }
 }

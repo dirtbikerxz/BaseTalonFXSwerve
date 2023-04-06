@@ -24,6 +24,9 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,9 +49,9 @@ public class Swerve extends SubsystemBase {
     // private DataLog logger;
     // private DoubleLogEntry robotPose2D;
     
-    // private DoubleLogEntry loopTime;
-    // private Timer timer;
-    // private double previousTime;
+    private DoubleLogEntry loopTime;
+    private Timer timer;
+    private double previousTime;
     
 
     public Swerve() {
@@ -77,14 +80,12 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
-        // logger = DataLogManager.getLog();
-        // loopTime = new DoubleLogEntry(logger, "swerve/loopTime");
+        logger = DataLogManager.getLog();
+        loopTime = new DoubleLogEntry(logger, "swerve/loopTime");
 
-        // timer = new Timer();
-        // timer.start();
-        // previousTime = timer.get();
-
-        SmartDashboard.putData("Field", m_field);
+        timer = new Timer();
+        timer.start();
+        previousTime = timer.get();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -178,8 +179,8 @@ public class Swerve extends SubsystemBase {
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
         }
 
-        // loopTime.append(timer.get() - previousTime);
-        // previousTime = timer.get();
+        loopTime.append(timer.get() - previousTime);
+        previousTime = timer.get();
     }
 
 

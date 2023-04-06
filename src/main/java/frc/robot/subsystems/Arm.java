@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix.Logger;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
@@ -54,13 +55,15 @@ public class Arm extends SubsystemBase {
   /* Arm Motor Logging */
   private DoubleLogEntry armMotorTemperature;
   private DoubleLogEntry armMotorAppliedOutput;
-  private DoubleLogEntry armMotorBusVoltage;
-  private DoubleLogEntry armMotorOutputCurrent;
-  private DoubleLogEntry armMotorClosedLoopRampRate;
-  private DoubleLogEntry armMotorOpenLoopRampRate;
+  private DoubleLogEntry armRelativeEncoderVelocity;
+  //private DoubleLogEntry armMotorBusVoltage;
+  //private DoubleLogEntry armMotorOutputCurrent;
+ // private DoubleLogEntry armMotorClosedLoopRampRate;
+ // private DoubleLogEntry armMotorOpenLoopRampRate;
   private IntegerLogEntry armMotorFaults;
-  private StringLogEntry armMotorIdleMode;
-  private BooleanLogEntry armMotorInverted;
+  private IntegerLogEntry armMotorStickyFaults;
+ // private StringLogEntry armMotorIdleMode;
+ // private BooleanLogEntry armMotorInverted;
   private StringLogEntry armMotorLastError;
 
   /* Arm CANCoder Logging */
@@ -105,13 +108,15 @@ public class Arm extends SubsystemBase {
     logger = DataLogManager.getLog();
     armMotorTemperature = new DoubleLogEntry(logger, "armMotor/temperature");
     armMotorAppliedOutput = new DoubleLogEntry(logger, "armMotor/appliedOutput");
-    armMotorBusVoltage = new DoubleLogEntry(logger, "armMotor/busVoltage");
-    armMotorOutputCurrent = new DoubleLogEntry(logger, "armMotor/outputCurrent");
-    armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "armMotor/closedLoopRampRate");
-    armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "armMotor/openLoopRampRate");
+    //armMotorBusVoltage = new DoubleLogEntry(logger, "armMotor/busVoltage");
+    //armMotorOutputCurrent = new DoubleLogEntry(logger, "armMotor/outputCurrent");
+    //armMotorClosedLoopRampRate = new DoubleLogEntry(logger, "armMotor/closedLoopRampRate");
+    //armMotorOpenLoopRampRate = new DoubleLogEntry(logger, "armMotor/openLoopRampRate");
     armMotorFaults = new IntegerLogEntry(logger, "armMotor/faults");
-    armMotorIdleMode = new StringLogEntry(logger, "armMotor/idleMode");
-    armMotorInverted = new BooleanLogEntry(logger, "armMotor/inverted");
+    armMotorStickyFaults = new IntegerLogEntry (logger, "armMotor/stickyfaults");
+    armRelativeEncoderVelocity = new DoubleLogEntry (logger, "armMotor/velocity");
+   // armMotorIdleMode = new StringLogEntry(logger, "armMotor/idleMode");
+  //  armMotorInverted = new BooleanLogEntry(logger, "armMotor/inverted");
     armMotorLastError = new StringLogEntry(logger, "armMotor/lastError");
     armCANCoderAbsolutePosition = new DoubleLogEntry(logger, "armCANCoder/position");
     armCANCoderAbsoluteVelocity = new DoubleLogEntry(logger, "armCANCoder/velocity");
@@ -236,18 +241,20 @@ public class Arm extends SubsystemBase {
     /* Arm Motor */
     armMotorTemperature.append(armMotor.getMotorTemperature());
     armMotorAppliedOutput.append(armMotor.getAppliedOutput());
-    armMotorBusVoltage.append(armMotor.getBusVoltage());
-    armMotorOutputCurrent.append(armMotor.getOutputCurrent());
-    armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
-    armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
+    //armMotorBusVoltage.append(armMotor.getBusVoltage());
+    //armMotorOutputCurrent.append(armMotor.getOutputCurrent());
+    //armMotorClosedLoopRampRate.append(armMotor.getClosedLoopRampRate());
+    //armMotorOpenLoopRampRate.append(armMotor.getOpenLoopRampRate());
     armMotorFaults.append(armMotor.getFaults());
-    armMotorIdleMode.append(armMotor.getIdleMode().toString());
-    armMotorInverted.append(armMotor.getInverted());
-    armMotorLastError.append(armMotor.getLastError().toString());
+    armMotorStickyFaults.append(armMotor.getStickyFaults());
+    armRelativeEncoderVelocity.append(armRelativeEncoder.getVelocity());
+
+   // armMotorIdleMode.append(armMotor.getIdleMode().toString());
+    //armMotorInverted.append(armMotor.getInverted());
+    //armMotorLastError.append(armMotor.getLastError().toString());
 
     /* Arm CANCoder */
-    armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
-    armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
-    armCANCoderBusVoltage.append(armCANEncoder.getBusVoltage());
+    // armCANCoderAbsolutePosition.append(getPositionInDegreesCanCoder());
+    // armCANCoderAbsoluteVelocity.append(getVelocityInDegreesCanCoder());
   }
 }
