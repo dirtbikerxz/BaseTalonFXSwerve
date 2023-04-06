@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     /*Reset Absolute */
-    m_robotContainer.resetAbsolute();
+    // m_robotContainer.resetAbsolute();
     m_robotContainer.arm.resetRelative();
     //m_robotContainer.MidAuto();
 
@@ -223,7 +223,7 @@ public class Robot extends TimedRobot {
   
     
     /*Reset Absolute */
-    m_robotContainer.resetAbsolute();
+    // m_robotContainer.resetAbsolute();
     
     
     //arm.getPositionInDegrees();
