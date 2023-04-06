@@ -46,12 +46,8 @@ public class Swerve extends SubsystemBase {
 
 
     // Logging objects
-  private DataLog logger;
-  private DoubleLogEntry robotPose2D;
-  private DoubleLogEntry loopTime;
-  private Timer timer;
-  private double previousTime;
-    
+    private DataLog logger;
+    private DoubleLogEntry robotPose2D;
     private DoubleLogEntry loopTime;
     private Timer timer;
     private double previousTime;
