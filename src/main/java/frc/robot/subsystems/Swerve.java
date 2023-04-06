@@ -46,8 +46,11 @@ public class Swerve extends SubsystemBase {
 
 
     // Logging objects
-    // private DataLog logger;
-    // private DoubleLogEntry robotPose2D;
+  private DataLog logger;
+  private DoubleLogEntry robotPose2D;
+  private DoubleLogEntry loopTime;
+  private Timer timer;
+  private double previousTime;
     
     private DoubleLogEntry loopTime;
     private Timer timer;
@@ -59,9 +62,13 @@ public class Swerve extends SubsystemBase {
         gyro.configFactoryDefault();
         zeroGyro(Constants.GRYO_OFFSET);
 
-        // logger = DataLogManager.getLog();
-        // //Log Pose
-        // robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
+        logger = DataLogManager.getLog();
+        //Log Pose
+        robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
+        loopTime = new DoubleLogEntry(logger, "Swerve/loopTime");
+        timer = new Timer();
+        timer.start();
+        previousTime = timer.get();
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -173,10 +180,9 @@ public class Swerve extends SubsystemBase {
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Current Draw", mod.mAngleMotor.getSupplyCurrent());
             // mod.mDriveMotor.configGetSupplyCurrentLimit(current);
             // SmartDashboard.putString("Mod " + mod.moduleNumber + " Current Limit", current.toString());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
+            SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
         }
 
         loopTime.append(timer.get() - previousTime);
