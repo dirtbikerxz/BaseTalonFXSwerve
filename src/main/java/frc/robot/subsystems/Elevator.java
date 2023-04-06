@@ -42,7 +42,7 @@ public class Elevator extends SubsystemBase {
     /* Logging */
     private DataLog logger;
 
-    /* Elevator Motor */
+    // /* Elevator Motor */
     private DoubleLogEntry elevatorMotorTemperature;
     private DoubleLogEntry elevatorMotorAppliedOutput;
     private DoubleLogEntry elevatorMotorBusVoltage;
@@ -54,9 +54,9 @@ public class Elevator extends SubsystemBase {
     private BooleanLogEntry elevatorMotorInverted;
     private StringLogEntry elevatorMotorLastError;
 
-    /* Elevator Motor Internal Encoder  */
-    private DoubleLogEntry elevatorEncoderPosition;
-    private DoubleLogEntry elevatorEncoderVelocity;
+    // /* Elevator Motor Internal Encoder  */
+    // private DoubleLogEntry elevatorEncoderPosition;
+    // private DoubleLogEntry elevatorEncoderVelocity;
 
     public Elevator() {
         elevatorMotor = new CANSparkMax(Constants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
@@ -85,7 +85,7 @@ public class Elevator extends SubsystemBase {
         // Create logger object 
         logger = DataLogManager.getLog();
 
-        // Create log entries for elevator motor
+        // // Create log entries for elevator motor
         elevatorMotorTemperature = new DoubleLogEntry(logger, "elevatorMotor/temperature");
         elevatorMotorAppliedOutput = new DoubleLogEntry(logger, "elevatorMotor/appliedOutput");
         elevatorMotorBusVoltage = new DoubleLogEntry(logger, "elevatorMotor/busVoltage");
@@ -97,9 +97,9 @@ public class Elevator extends SubsystemBase {
         elevatorMotorInverted = new BooleanLogEntry(logger, "elevatorMotor/inverted");
         elevatorMotorLastError = new StringLogEntry(logger, "elevatorMotor/lastError");
 
-        // Create log entries for elevator encoder
-        elevatorEncoderPosition = new DoubleLogEntry(logger, "elevatorEncoder/position");
-        elevatorEncoderVelocity = new DoubleLogEntry(logger, "elevatorEncoder/velocity");
+        // // Create log entries for elevator encoder
+        // elevatorEncoderPosition = new DoubleLogEntry(logger, "elevatorEncoder/position");
+        // elevatorEncoderVelocity = new DoubleLogEntry(logger, "elevatorEncoder/velocity");
     }
     
     
@@ -178,15 +178,13 @@ public class Elevator extends SubsystemBase {
             elevatorMotor.setVoltage(voltage);
 
             
-            // SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
+            SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
         logData();
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
-
-
-        // SmartDashboard.putNumber("Elevator Encoder Value (Inches): ", Units.metersToInches(elevatorEncoder.getPosition()));
-        //SmartDashboard.putNumber("Elevator feedforward", feedforward);
+        
+        logData();
     }
 
 
@@ -212,9 +210,9 @@ public class Elevator extends SubsystemBase {
     //    elevatorMotorInverted.append(elevatorMotor.getInverted());
      //   elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
 
-        /* Elevator Encoder */
-        elevatorEncoderPosition.append(getEncoderPosition());
-        elevatorEncoderVelocity.append(elevatorEncoder.getVelocity());
+        // /* Elevator Encoder */
+        // elevatorEncoderPosition.append(getEncoderPosition());
+        // elevatorEncoderVelocity.append(elevatorEncoder.getVelocity());
       }
 }
 

@@ -57,7 +57,7 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-6.2;
+    public static final double ARM_ENCODER_OFFSET = 360-87.45;
     public static final double TARGET_ARM_ANGLE = 0;
 
     public static final double INTAKE_SPEED = 0.60;
@@ -218,7 +218,7 @@ public final class Constants {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 3;
             public static final int encoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(276.05); //89.22,265
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(274.412); //89.22,265
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, encoderID, angleOffset);
         }
@@ -228,7 +228,7 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int encoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(203.30); //18.80,192.48
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(201.62); //18.80,192.48
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, encoderID, angleOffset);
         }

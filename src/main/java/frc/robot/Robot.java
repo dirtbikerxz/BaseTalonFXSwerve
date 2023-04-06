@@ -95,7 +95,9 @@ public class Robot extends TimedRobot {
     // driver camera
     final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
     
-    usbCamera.setVideoMode(new VideoMode(VideoMode.PixelFormat.kMJPEG, 160, 120, 30));
+    if (isReal()) {
+      usbCamera.setVideoMode(new VideoMode(VideoMode.PixelFormat.kMJPEG, 160, 120, 30));
+    }
 
   }
 

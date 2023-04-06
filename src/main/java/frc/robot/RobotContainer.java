@@ -583,7 +583,8 @@ public class RobotContainer {
             elevator.ElevatorAtPosition(), 
             arm.ArmAtPosition(), 
             elevator.SetElevatorPosition(Constants.ELEVATOR_STOW_LEVEL), 
-            elevator.ElevatorAtPosition()
+            elevator.ElevatorAtPosition(),
+            new RedLED(leds).withTimeout(1.0)
         );
     }
 

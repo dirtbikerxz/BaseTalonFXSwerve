@@ -18,6 +18,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.datalog.DataLog;
@@ -27,6 +28,7 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -40,9 +42,12 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     private SupplyCurrentLimitConfiguration current;
+    private final Field2d m_field = new Field2d();
+
+
     // Logging objects
-  private DataLog logger;
-  private DoubleLogEntry robotPose2D;
+    // private DataLog logger;
+    // private DoubleLogEntry robotPose2D;
     
     private DoubleLogEntry loopTime;
     private Timer timer;
@@ -54,9 +59,9 @@ public class Swerve extends SubsystemBase {
         gyro.configFactoryDefault();
         zeroGyro(Constants.GRYO_OFFSET);
 
-        logger = DataLogManager.getLog();
-        //Log Pose
-        robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
+        // logger = DataLogManager.getLog();
+        // //Log Pose
+        // robotPose2D = new DoubleLogEntry(logger, "Swerve/getPose");
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -158,17 +163,17 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());
-       logData();
+        logData();
         SmartDashboard.putNumber("RobotCoordinatesX",swerveOdometry.getPoseMeters().getX());
         SmartDashboard.putNumber("RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
-      
+        m_field.setRobotPose(swerveOdometry.getPoseMeters());
 
         for(SwerveModule mod : mSwerveMods){
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Current Draw", mod.mDriveMotor.getSupplyCurrent());
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Current Draw", mod.mAngleMotor.getSupplyCurrent());
             // mod.mDriveMotor.configGetSupplyCurrentLimit(current);
             // SmartDashboard.putString("Mod " + mod.moduleNumber + " Current Limit", current.toString());
-            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + "target angle", mod.getAngle().getDegrees());
@@ -220,7 +225,7 @@ public class Swerve extends SubsystemBase {
     
     private void logData() {
         for(SwerveModule mod : mSwerveMods) {
-            mod.logData();
+            // mod.logData();
         }
     }
 }
