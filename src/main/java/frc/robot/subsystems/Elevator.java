@@ -203,14 +203,14 @@ public class Elevator extends SubsystemBase {
         /* Elevator Motor */
         elevatorMotorTemperature.append(elevatorMotor.getMotorTemperature());
         elevatorMotorAppliedOutput.append(elevatorMotor.getAppliedOutput());
-        elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
+       // elevatorMotorBusVoltage.append(elevatorMotor.getBusVoltage());
         elevatorMotorOutputCurrent.append(elevatorMotor.getOutputCurrent());
-        elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
-        elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
+      //  elevatorMotorClosedLoopRampRate.append(elevatorMotor.getClosedLoopRampRate());
+    //    elevatorMotorOpenLoopRampRate.append(elevatorMotor.getOpenLoopRampRate());
         elevatorMotorFaults.append(elevatorMotor.getFaults());
-        elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
-        elevatorMotorInverted.append(elevatorMotor.getInverted());
-        elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
+    //    elevatorMotorIdleMode.append(elevatorMotor.getIdleMode().toString());
+    //    elevatorMotorInverted.append(elevatorMotor.getInverted());
+     //   elevatorMotorLastError.append(elevatorMotor.getLastError().toString());
 
         /* Elevator Encoder */
         elevatorEncoderPosition.append(getEncoderPosition());

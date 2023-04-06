@@ -149,26 +149,14 @@ public class Intake extends SubsystemBase {
       /* Intake Motor 1 */
       intakeMotor1Temperature.append(motor1.getMotorTemperature());
       intakeMotor1AppliedOutput.append(motor1.getAppliedOutput());
-      intakeMotor1BusVoltage.append(motor1.getBusVoltage());
-      intakeMotor1OutputCurrent.append(motor1.getOutputCurrent());
-      intakeMotor1ClosedLoopRampRate.append(motor1.getClosedLoopRampRate());
-      intakeMotor1OpenLoopRampRate.append(motor1.getOpenLoopRampRate());
+      //intakeMotor1BusVoltage.append(motor1.getBusVoltage());
+      //intakeMotor1OutputCurrent.append(motor1.getOutputCurrent());
+     // intakeMotor1ClosedLoopRampRate.append(motor1.getClosedLoopRampRate());
+     // intakeMotor1OpenLoopRampRate.append(motor1.getOpenLoopRampRate());
       intakeMotor1Faults.append(motor1.getFaults());
-      intakeMotor1IdleMode.append(motor1.getIdleMode().toString());
-      intakeMotor1Inverted.append(motor1.getInverted());
-      intakeMotor1LastError.append(motor1.getLastError().toString());
-
-      /* Intake Motor 2 */
-      intakeMotor2Temperature.append(motor2.getMotorTemperature());
-      intakeMotor2AppliedOutput.append(motor2.getAppliedOutput());
-      intakeMotor2BusVoltage.append(motor2.getBusVoltage());
-      intakeMotor2OutputCurrent.append(motor2.getOutputCurrent());
-      intakeMotor2ClosedLoopRampRate.append(motor2.getClosedLoopRampRate());
-      intakeMotor2OpenLoopRampRate.append(motor2.getOpenLoopRampRate());
-      intakeMotor2Faults.append(motor2.getFaults());
-      intakeMotor2IdleMode.append(motor2.getIdleMode().toString());
-      intakeMotor2Inverted.append(motor2.getInverted());
-      intakeMotor2LastError.append(motor2.getLastError().toString());
+     // intakeMotor1IdleMode.append(motor1.getIdleMode().toString());
+     // intakeMotor1Inverted.append(motor1.getInverted());
+     // intakeMotor1LastError.append(motor1.getLastError().toString());
     }
 
 }
