@@ -178,10 +178,6 @@ public class RobotContainer {
         return new exampleAuto(s_Swerve);
     }
 
-    public void resetAbsolute() {
-        s_Swerve.resetModulesToAbsolute();
-    }
-
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
     }
