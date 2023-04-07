@@ -21,6 +21,7 @@ public final class Constants {
     public static final double ARM_FORWARD_LIMIT = 40;
     public static final double ARM_REVERSE_LIMIT = -90;
     public static final double ARM_GEAR_RATIO = 150.0;
+    public static final double ARM_MOTOR_ROT_TO_DEG = 360.0 / ARM_GEAR_RATIO;
     public static final double MANUAL_ARM_SPEED = 1.0;
     public static final double ARM_GROUND_POSITION = -95; //set value
     // positions
@@ -56,7 +57,7 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-6.2;
+    public static final double ARM_ENCODER_OFFSET = 360-87.45;
     public static final double TARGET_ARM_ANGLE = 0;
 
     public static final double INTAKE_SPEED = 0.60;
@@ -72,7 +73,7 @@ public final class Constants {
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;
-    public static final int REVERSE_ELEVATOR_LIMIT = 0;
+    public static final float REVERSE_ELEVATOR_LIMIT = (float) -0.5;
     public static final int ELEVATOR_MOTOR_ID = 16;
     public static final double ELEVATOR_GEAR_RATIO = 9.0;
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
@@ -120,8 +121,8 @@ public final class Constants {
      public static final double SLOW_MODE_PERCENT_ROTATION = 0.5;
 
      /* auto */
-    public static final double AUTO_VEL = 1.0;
-    public static final double AUTO_ACC = 1.0;
+    public static final double AUTO_VEL = 2.0;
+    public static final double AUTO_ACC = 2.0;
 
     public static final class Swerve {
         public static final int pigeonID = 8;
@@ -131,8 +132,8 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: 2023 More robot 18.75in
+        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: 2023 More robot 18.75in
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
        
@@ -218,7 +219,7 @@ public final class Constants {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 3;
             public static final int encoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(276.05); //89.22,265
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(274.412); //89.22,265
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, encoderID, angleOffset);
         }
@@ -228,7 +229,7 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int encoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(203.30); //18.80,192.48
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(201.62); //18.80,192.48
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, encoderID, angleOffset);
         }
