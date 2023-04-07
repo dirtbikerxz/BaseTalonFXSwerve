@@ -140,7 +140,8 @@ public class RobotContainer {
                  () -> driverDpadUp.getAsBoolean(),
                  () -> s_Swerve.getYaw().getDegrees(),
                  () -> driverLeftTrigger.getAsBoolean(),
-                 rotationSpeed
+                 rotationSpeed,
+                 false
              )
          );
 
@@ -148,18 +149,18 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
-    /**
-     * Calculates the target rotation for the swerve drive and returns it as a DoubleSupplier
-     */
-    private DoubleSupplier calculateTargetRotation() {
-        return () -> {
-            if (driverRStick.getAsBoolean()) {
-                targetRotation = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-            }
+    // /**
+    //  * Calculates the target rotation for the swerve drive and returns it as a DoubleSupplier
+    //  */
+    // private DoubleSupplier calculateTargetRotation() {
+    //     return () -> {
+    //         if (driverRStick.getAsBoolean()) {
+    //             targetRotation = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
+    //         }
 
-            return targetRotation;
-        };
-    }
+    //         return targetRotation;
+    //     };
+    // }
 
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
@@ -480,7 +481,7 @@ public class RobotContainer {
         driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
         driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
 
-        driverRStick.toggleOnTrue(
+        driverDpadLeft.toggleOnTrue(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
@@ -489,8 +490,10 @@ public class RobotContainer {
                 () -> driverDpadUp.getAsBoolean(),
                 () -> Constants.ROTATE_TO_SCORE_TARGET_ANGLE,
                 () -> driverLeftTrigger.getAsBoolean(),
-                rotationSpeed
-            ).until(() -> s_Swerve.getYaw().getDegrees() - Constants.ROTATE_TO_SCORE_TARGET_ANGLE < 5.0 && s_Swerve.getYaw().getDegrees() + Constants.ROTATE_TO_LOAD_TARGET_ANGLE > -5.0)
+                rotationSpeed,
+                true
+            ).until(() -> s_Swerve.getYaw().getDegrees() < Constants.ROTATE_TO_SCORE_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
+                s_Swerve.getYaw().getDegrees() > Constants.ROTATE_TO_SCORE_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
 
         driverRightTrigger.toggleOnTrue(
@@ -502,8 +505,10 @@ public class RobotContainer {
                 () -> driverDpadUp.getAsBoolean(),
                 () -> Constants.ROTATE_TO_LOAD_TARGET_ANGLE,
                 () -> driverLeftTrigger.getAsBoolean(),
-                rotationSpeed
-            ).until(() -> s_Swerve.getYaw().getDegrees() - Constants.ROTATE_TO_LOAD_TARGET_ANGLE < 5.0 && s_Swerve.getYaw().getDegrees() + Constants.ROTATE_TO_LOAD_TARGET_ANGLE > -5.0)
+                rotationSpeed,
+                true
+            ).until(() -> s_Swerve.getYaw().getDegrees() < Constants.ROTATE_TO_LOAD_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
+                s_Swerve.getYaw().getDegrees() > Constants.ROTATE_TO_LOAD_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
     }
    

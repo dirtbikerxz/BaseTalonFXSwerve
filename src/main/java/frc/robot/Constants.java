@@ -112,6 +112,7 @@ public final class Constants {
      public static final double ROTATE_ACCELERATION = 400.0;
      public static final double ROTATE_TO_SCORE_TARGET_ANGLE = 180.0;
      public static final double ROTATE_TO_LOAD_TARGET_ANGLE = 0.0;
+     public static final double AUTO_ROTATE_DEADBAND = 5.0;
 
      /* slow mode */
      public static final double SLOW_MODE_PERCENT_TRANSLATION = 0.5;

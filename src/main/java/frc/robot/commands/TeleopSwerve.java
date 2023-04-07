@@ -25,11 +25,13 @@ public class TeleopSwerve extends CommandBase {
     private double rotationSpeed;
     private ProfiledPIDController PID;
     private DoubleSupplier targetRotation;
+    private boolean isAutoRotating;
+    private static final double AUTO_ROTATE_DEADBAND = 0.3;
     // private Timer timer;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, 
             DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier targetRotation,
-            BooleanSupplier slowModeSup, double rotationSpeed) {
+            BooleanSupplier slowModeSup, double rotationSpeed, boolean isAutoRotating) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -40,6 +42,7 @@ public class TeleopSwerve extends CommandBase {
         this.slowModeSup = slowModeSup;
         this.rotationSpeed = rotationSpeed;
         this.targetRotation = targetRotation;
+        this.isAutoRotating = isAutoRotating;
         
         PID = new ProfiledPIDController(
             Constants.ROTATE_KP, 
@@ -64,13 +67,14 @@ public class TeleopSwerve extends CommandBase {
             strafeVal = strafeVal * Constants.SLOW_MODE_PERCENT_STRAFE;
             rotationVal = rotationVal * Constants.SLOW_MODE_PERCENT_ROTATION;
         }
-
+        
         /* Rotate to Score */
-        if (rotationVal == 0.0) {
+        if (-AUTO_ROTATE_DEADBAND <= rotationVal && rotationVal <= AUTO_ROTATE_DEADBAND && isAutoRotating) {
             rotationVal = PID.calculate(s_Swerve.getYaw().getDegrees(), targetRotation.getAsDouble());
         }
-
-        // double robot_angle = s_Swerve.getYaw().getDegrees();
+        SmartDashboard.putNumber("debug/RotationVal", rotationVal);
+        SmartDashboard.putNumber("debug/TargetRotations", targetRotation.getAsDouble());
+        //double robot_angle = s_Swerve.getYaw().getDegrees();
         // robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
         // double target_angle;
         // if (robot_angle > 0) {
