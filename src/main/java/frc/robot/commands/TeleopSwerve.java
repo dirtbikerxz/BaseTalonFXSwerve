@@ -70,7 +70,15 @@ public class TeleopSwerve extends CommandBase {
         
         /* Rotate to Score */
         if (-AUTO_ROTATE_DEADBAND <= rotationVal && rotationVal <= AUTO_ROTATE_DEADBAND && isAutoRotating) {
-            rotationVal = PID.calculate(s_Swerve.getYaw().getDegrees(), targetRotation.getAsDouble());
+            double yaw = s_Swerve.getYaw().getDegrees() % 360;
+            double targetRotationVal = targetRotation.getAsDouble();
+            double error = yaw - targetRotationVal;
+            if (error > 180) {
+                yaw = -1 * (360 - yaw);
+            }
+            SmartDashboard.putNumber("debug/calculated yaw", yaw);
+
+            rotationVal = PID.calculate(yaw, targetRotation.getAsDouble());
         }
         SmartDashboard.putNumber("debug/RotationVal", rotationVal);
         SmartDashboard.putNumber("debug/TargetRotations", targetRotation.getAsDouble());
