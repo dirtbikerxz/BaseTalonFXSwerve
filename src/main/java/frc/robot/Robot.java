@@ -12,6 +12,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -43,6 +44,13 @@ public class Robot extends TimedRobot {
 
   private Command resetAbsolute;
 
+  
+    /* Logging objects */
+    private DataLog logger;
+    private DoubleLogEntry loopTime;
+    private Timer timer;
+    private double previousTime;
+
   private static final String auto1 = "Inside Auto";
   private static final String auto2 = "Outside Auto";
   private static final String auto3 = "Mid Auto";
@@ -65,8 +73,14 @@ public class Robot extends TimedRobot {
     // Start recording all network table data
     DataLogManager.start();
 
+    logger = DataLogManager.getLog();
+
     // Start recording all DS control and joystick data
-    DriverStation.startDataLog(DataLogManager.getLog());
+    DriverStation.startDataLog(logger);
+
+    loopTime = new DoubleLogEntry(logger, "Swerve/loopTime");
+    timer = new Timer();
+    previousTime = 0;
 
     ctreConfigs = new CTREConfigs();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -110,12 +124,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if (previousTime == 0) { // If it is the first loop
+      timer.start();
+      previousTime = timer.get();
+    }
+
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
+
+    loopTime.append(timer.get() - previousTime);
+    previousTime = timer.get();
 
   }
 
