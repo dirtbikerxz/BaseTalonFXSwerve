@@ -152,12 +152,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    /*Reset Absolute */
-    // m_robotContainer.resetAbsolute();
     m_robotContainer.arm.resetRelative();
-    //m_robotContainer.MidAuto();
-
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+    m_robotContainer.setSingleSubstationTargetAngle();
 
     m_autoSelected = m_chooser.getSelected();
 
@@ -233,6 +230,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.arm.resetRelative();
     m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+    m_robotContainer.setSingleSubstationTargetAngle();
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
