@@ -82,12 +82,14 @@ public final class Constants {
     public static final double ELEVATOR_P = 1.0;
     public static final double ELEVATOR_I = 0.0;
     public static final double ELEVATOR_D = 0.0;
+
     public static final double ELEVATOR_HIGH_LEVEL = 26;
     public static final double ELEVATOR_MID_LEVEL = 8.5;
     public static final double ELEVATOR_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_STOW_LEVEL = 6.0;
-    public static final double ELEVATOR_LOADING_POSITION = 4;
+    public static final double ELEVATOR_SINGLE_POSITION = 4;
+    public static final double ELEVATOR_DOUBLE_POSITION = 4;
 
     public static final double ELEVATOR_TOLERANCE = 20;
 

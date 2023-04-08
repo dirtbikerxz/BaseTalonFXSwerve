@@ -33,7 +33,7 @@ public class ReturnFromScoring extends CommandBase {
     if (elevator.isHigh()) {
       arm.setTargetArmAngle(Constants.ARM_HIGH_POSITION);
     } else {
-        elevator.setTargetElevatorPosition(Constants.ELEVATOR_MID_LEVEL);
+        //elevator.setTargetElevatorPosition(Constants.ELEVATOR_MID_LEVEL);
     }
   }
   

@@ -23,12 +23,16 @@ import edu.wpi.first.util.datalog.IntegerLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMode;
+import frc.robot.RobotMode.ModeOptions;
+import frc.robot.RobotMode.StateOptions;
 
 
 public class Elevator extends SubsystemBase {
@@ -45,14 +49,8 @@ public class Elevator extends SubsystemBase {
     // /* Elevator Motor */
     private DoubleLogEntry elevatorMotorTemperature;
     private DoubleLogEntry elevatorMotorAppliedOutput;
-    private DoubleLogEntry elevatorMotorBusVoltage;
     private DoubleLogEntry elevatorMotorOutputCurrent;
-    private DoubleLogEntry elevatorMotorClosedLoopRampRate;
-    private DoubleLogEntry elevatorMotorOpenLoopRampRate;
     private IntegerLogEntry elevatorMotorFaults;
-    private StringLogEntry elevatorMotorIdleMode;
-    private BooleanLogEntry elevatorMotorInverted;
-    private StringLogEntry elevatorMotorLastError;
 
     // /* Elevator Motor Internal Encoder  */
     // private DoubleLogEntry elevatorEncoderPosition;
@@ -88,14 +86,8 @@ public class Elevator extends SubsystemBase {
         // // Create log entries for elevator motor
         elevatorMotorTemperature = new DoubleLogEntry(logger, "elevatorMotor/temperature");
         elevatorMotorAppliedOutput = new DoubleLogEntry(logger, "elevatorMotor/appliedOutput");
-        elevatorMotorBusVoltage = new DoubleLogEntry(logger, "elevatorMotor/busVoltage");
         elevatorMotorOutputCurrent = new DoubleLogEntry(logger, "elevatorMotor/outputCurrent");
-        elevatorMotorClosedLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/closedLoopRampRate");
-        elevatorMotorOpenLoopRampRate = new DoubleLogEntry(logger, "elevatorMotor/openLoopRampRate");
         elevatorMotorFaults = new IntegerLogEntry(logger, "elevatorMotor/faults");
-        elevatorMotorIdleMode = new StringLogEntry(logger, "elevatorMotor/idleMode");
-        elevatorMotorInverted = new BooleanLogEntry(logger, "elevatorMotor/inverted");
-        elevatorMotorLastError = new StringLogEntry(logger, "elevatorMotor/lastError");
 
         // // Create log entries for elevator encoder
         // elevatorEncoderPosition = new DoubleLogEntry(logger, "elevatorEncoder/position");
@@ -104,8 +96,33 @@ public class Elevator extends SubsystemBase {
     
     
     /* Sets the Target Elevator Position in inches.*/
-    public void setTargetElevatorPosition(double inches){
-        targetElevatorPosition = inches;
+    public void SetTargetElevatorPosition(){
+        
+        ModeOptions mode = RobotMode.mode;
+        StateOptions state = RobotMode.state;
+
+        if (mode == RobotMode.ModeOptions.CUBE) {
+
+            if (state == RobotMode.StateOptions.LOW) {
+                targetElevatorPosition = Constants.ELEVATOR_LOW_LEVEL;
+            } else if (state == RobotMode.StateOptions.MID) {
+                targetElevatorPosition = Constants.ELEVATOR_MID_LEVEL;
+            } else if (state == RobotMode.StateOptions.HIGH) {
+                targetElevatorPosition = Constants.ELEVATOR_HIGH_LEVEL;
+            } else if (state == RobotMode.StateOptions.SINGLE) {
+                targetElevatorPosition = Constants.ELEVATOR_SINGLE_POSITION;
+            } else if (state == RobotMode.StateOptions.DOUBLE) {
+                targetElevatorPosition = Constants.ELEVATOR_DOUBLE_POSITION;
+            } else {
+                targetElevatorPosition = Constants.ELEVATOR_STOW_LEVEL;
+            }
+
+        } else {
+
+
+        }
+
+
     }
 
     /* Sets the Target Elevator Position in inches.*/
@@ -171,6 +188,7 @@ public class Elevator extends SubsystemBase {
         if (DriverStation.isEnabled()){
             // This method will be called once per scheduler run
             // TODO: Test that .getPosition() gives us the elevator position in inches
+            SetTargetElevatorPosition();
             double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
             // double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
             MathUtil.clamp(voltage, -12, 12);
@@ -180,7 +198,7 @@ public class Elevator extends SubsystemBase {
             
             SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
-        logData();
+
         SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("Elevator Encoder Value: ", getEncoderPosition());
         
@@ -188,7 +206,7 @@ public class Elevator extends SubsystemBase {
     }
 
 
-
+    /*
     public Command SetElevatorPosition (double inches){
         return new InstantCommand(() -> setTargetElevatorPosition(inches), this);
     }
@@ -196,6 +214,7 @@ public class Elevator extends SubsystemBase {
     public Command ElevatorAtPosition(){
         return Commands.waitUntil(() -> atPosition());
     }
+    */
 
     private void logData() {
         /* Elevator Motor */

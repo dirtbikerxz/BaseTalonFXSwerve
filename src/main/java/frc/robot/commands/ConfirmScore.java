@@ -33,7 +33,7 @@ public class ConfirmScore extends CommandBase {
     if (elevator.isHigh()) {
       arm.setTargetArmAngle(Constants.ARM_MID_POSITION);
     } else {
-        elevator.setTargetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL);
+        //elevator.setTargetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL);
     }
   }
 

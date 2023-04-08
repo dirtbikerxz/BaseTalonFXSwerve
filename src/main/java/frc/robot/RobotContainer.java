@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.event.EventLoop;
@@ -179,11 +180,9 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        swerveHandler();
-        intakeHandler();
-        lightHandler();
-        elevatorHandler();
-        armHandler();
+        SwerveHandler();
+        DriverHandler();
+        OperatorHandler();
 
     }
     /**
@@ -211,12 +210,12 @@ public class RobotContainer {
             new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
 
             // move elevator to safe position
-            elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-            elevator.ElevatorAtPosition(),
+            //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
+            //elevator.ElevatorAtPosition(),
 
             //move arm and elevator to scoring position
-            new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
-            elevator.ElevatorAtPosition(),
+            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // drive forward
@@ -227,7 +226,7 @@ public class RobotContainer {
             
             // move down
             // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(arm, elevator)),
-            elevator.ElevatorAtPosition(),
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // open intake
@@ -238,14 +237,14 @@ public class RobotContainer {
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
 
-            elevator.ElevatorAtPosition(),
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // drive backward
             new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
+            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)       
 
-            GoToStow()
+            //GoToStow()
             // move arm to stow position
             // arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
             // arm.ArmAtPosition(),
@@ -266,15 +265,15 @@ public class RobotContainer {
 
             new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
 
-            new CloseIntake(intake).withTimeout(0.1),
+            //new CloseIntake(intake).withTimeout(0.1),
 
             // move elevator to safe position
-            elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-            elevator.ElevatorAtPosition(),
+            //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
+            //elevator.ElevatorAtPosition(),
 
             //move arm and elevator to scoring position
-            new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
-            elevator.ElevatorAtPosition(),
+            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // drive forward
@@ -285,19 +284,19 @@ public class RobotContainer {
             
             // move down
             // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(arm, elevator)),
-            elevator.ElevatorAtPosition(),
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // open intake
             new ParallelCommandGroup(
-                new InstantCommand(() -> intake.Retract()),
+                //new InstantCommand(() -> intake.Retract()),
                 new RunIntakeAtSpeed(intake, -0.5)
             ).withTimeout(0.1),
 
             //move up
             new ReturnFromScoring(arm, elevator).withTimeout(0.5),
 
-            elevator.ElevatorAtPosition(),
+            //elevator.ElevatorAtPosition(),
             arm.ArmAtPosition(),
 
             // drive backward
@@ -306,11 +305,11 @@ public class RobotContainer {
 
             // move arm to stow position
             arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
-            arm.ArmAtPosition(),
+            arm.ArmAtPosition()
 
             // move elevator to safe position
-            elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
-            elevator.ElevatorAtPosition()
+            //elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
+            //elevator.ElevatorAtPosition()
             
         );
     }
@@ -431,7 +430,7 @@ public class RobotContainer {
             //     path.getMarkers(),
             //     eventMap
             // ),
-            GoToGround().withTimeout(2.0),
+            //GoToGround().withTimeout(2.0),
 
             new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
 
@@ -456,7 +455,7 @@ public class RobotContainer {
             //     path.getMarkers(),
             //     eventMap
             // ),
-            GoToGround().withTimeout(2.0),
+            //GoToGround().withTimeout(2.0),
 
             new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
 
@@ -497,25 +496,33 @@ public class RobotContainer {
         return ScoreConePreload().withTimeout(0.8);
     }
     
-    public void intakeHandler() {
 
-        driverRB.whileTrue(new OpenIntake(intake));
-        driverLB.whileTrue(new CloseIntake(intake));
+    public void DriverHandler() {
 
-        driverX.whileTrue(new RunIntake(intake));
-        driverA.whileTrue(new ReverseIntake(intake));
-        // compressor
-        operatorBack.onTrue(new DisableCompressor());
-    }
-
-    public void lightHandler() {
-
-        purpleLEDTrigger.whileTrue(new PurpleLED(leds));
-        yellowLEDTrigger.whileTrue(new YellowLED(leds));
+        driverX.onTrue(new RunIntake(intake));
+        driverA.onTrue(new ReverseIntake(intake));
 
     }
 
-    public void swerveHandler() {
+    public void OperatorHandler() {
+
+        operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
+        operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
+
+        operatorA.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.LOW)));
+        operatorB.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.MID)));
+        operatorY.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.HIGH)));
+        operatorBack.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.SINGLE)));
+        operatorStart.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.DOUBLE)));
+        operatorX.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.STOW)));
+        
+    }
+
+
+
+
+
+    public void SwerveHandler() {
 
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
@@ -559,110 +566,10 @@ public class RobotContainer {
         new InstantCommand(() -> new IdleLEDS(leds));
     }
 
-    public void elevatorHandler() {
-
-        //positions
-        operatorY.onTrue(new ParallelCommandGroup(
-            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
-            arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
-        ));
-
-        operatorB.onTrue(new SequentialCommandGroup(
-            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
-            elevator.ElevatorAtPosition(),
-            new ParallelCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL), 
-                arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
-            )
-        ));
-
-        operatorRB.onTrue(new SequentialCommandGroup(
-            elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), 
-            elevator.ElevatorAtPosition(),
-            new ParallelCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOADING_POSITION), 
-                arm.SetArmPosition(Constants.ARM_HIGH_POSITION)
-            )
-        ));
-
-        
-        //elevator manual
-        elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
-        elevatorManualDownTrigger.whileTrue(new ManualDown(elevator));
 
 
-    }
 
-    private Command GoToGround() {
-        return new ConditionalCommand(
-            new SequentialCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-                elevator.ElevatorAtPosition(), 
-                arm.SetArmPosition(Constants.ARM_LOW_POSITION),
-                arm.ArmAtPosition(),
-                elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
-                new WaitCommand(0.5),
-                arm.SetArmPosition(Constants.ARM_GROUND_POSITION)
-            ),
-            new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                    arm.SetArmPosition(Constants.ARM_LOW_POSITION),
-                    elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL)
-                ),
-                elevator.ElevatorAtPosition(),
-                arm.SetArmPosition(Constants.ARM_GROUND_POSITION)
-            ),
-
-            () -> arm.isSafeToGround()
-        );
-    }
-
-    // Might be used later
-    private Command GoToStow() {
-        return new SequentialCommandGroup(
-            new ParallelCommandGroup(
-                elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL), 
-                arm.SetArmPosition(Constants.ARM_STOW_POSITION)
-            ),
-            elevator.ElevatorAtPosition(), 
-            arm.ArmAtPosition(), 
-            elevator.SetElevatorPosition(Constants.ELEVATOR_STOW_LEVEL), 
-            elevator.ElevatorAtPosition(),
-            new RedLED(leds).withTimeout(1.0)
-        );
-    }
-
-    public void armHandler() {
-
-        //arm manual
-        final Trigger armManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorRightYAxis) > 0.5);
-        final Trigger armManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorRightYAxis) < -0.5);
-
-        // arm.setDefaultCommand(new SetArmPosition(arm, Constants.ARM_STOW_POSITION));
-        
-        //Stow
-        operatorStart.onTrue(GoToStow());
-        // Ground
-        operatorA.onTrue(GoToGround());
-
-        //Arm Manual
-        armManualUpTrigger.whileTrue(new MoveArmUp(arm));
-        armManualDownTrigger.whileTrue(new MoveArmDown(arm));
-
-        //Confirming Scores
-        
-        //High Score
-        // operatorLB.onTrue(arm.SetArmPosition(Constants.ARM_MID_POSITION));
-        // operatorLB.onFalse(arm.SetArmPosition(Constants.ARM_HIGH_POSITION));
-
-        // //Mid Score
-        // operatorRB.onTrue(elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL));
-        // operatorRB.onFalse(elevator.SetElevatorPosition(Constants.ELEVATOR_MID_LEVEL));
-
-        // //Auto based on position
-        operatorLB.onTrue(new ConfirmScore(arm, elevator));
-        operatorLB.onFalse(new ReturnFromScoring(arm, elevator));
-    }
+ 
 
     // Put buttons for testing/configuring/debugging purposes here
     public void testHandler() {

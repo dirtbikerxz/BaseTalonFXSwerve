@@ -11,6 +11,8 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMode;
+import frc.robot.commands.YellowLED;
 
 public class LEDs extends SubsystemBase{
    
@@ -48,6 +50,18 @@ public class LEDs extends SubsystemBase{
         ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 308, Direction.Forward);
 
         System.out.println(candle.animate(animation));
+    }
+
+    @Override
+    public void periodic() {
+        if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
+
+            setColor(255,150,0);
+
+        } else {
+
+            setColor(120,0,120);
+        }
     }
     
 }
