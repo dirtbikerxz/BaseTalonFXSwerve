@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
@@ -71,53 +72,36 @@ public class TeleopSwerve extends CommandBase {
         /* Rotate to Score */
         if (-AUTO_ROTATE_DEADBAND <= rotationVal && rotationVal <= AUTO_ROTATE_DEADBAND && isAutoRotating) {
             double yaw = s_Swerve.getYaw().getDegrees() % 360;
-            double targetRotationVal = targetRotation.getAsDouble();
-            double error = yaw - targetRotationVal;
-            if (error > 180) {
-                yaw = -1 * (360 - yaw);
+
+            // convert the yaw from [-360, 360] to [-180, 180]
+            if (yaw > 180) {
+                yaw = yaw - 360;
+            } else if (yaw < -180) {
+                yaw = yaw + 360;
             }
-            SmartDashboard.putNumber("debug/calculated yaw", yaw);
 
-            rotationVal = PID.calculate(yaw, targetRotation.getAsDouble());
+            // Convert to Rotation2d for rotate command
+            Rotation2d rotationYaw = Rotation2d.fromDegrees(yaw);
+
+            // Get the target rotationVal as a Rotation2d object
+            Rotation2d targetRotationVal = Rotation2d.fromDegrees(targetRotation.getAsDouble());
+
+            // Rotate rotationYaw to make the 0 of it at the target angle
+            // If targetRotationVal is 180 degrees the rotationYaw's 0 will be pointing towards 180
+            rotationYaw = rotationYaw.rotateBy(targetRotationVal);
+
+            // double error = yaw - targetRotationVal;
+            // SmartDashboard.putNumber("debug/yaw", yaw);
+            // SmartDashboard.putNumber("debug/targetRotationVal", targetRotationVal);
+            // SmartDashboard.putNumber("debug/error", error);
+            // if (Math.abs(error) > 180) {
+            //     yaw = Math.abs(360 - yaw);
+            // }
+            // SmartDashboard.putNumber("debug/calculated yaw", yaw);
+
+            SmartDashboard.putNumber("debug/calculated yaw", rotationYaw.getDegrees());
+            rotationVal = PID.calculate(rotationYaw.getDegrees(), 0.0); 
         }
-        SmartDashboard.putNumber("debug/RotationVal", rotationVal);
-        SmartDashboard.putNumber("debug/TargetRotations", targetRotation.getAsDouble());
-        //double robot_angle = s_Swerve.getYaw().getDegrees();
-        // robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
-        // double target_angle;
-        // if (robot_angle > 0) {
-        //     target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        // } else {
-        //     target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        // }
-        // // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
-        // // SmartDashboard.putNumber("robot_angle", robot_angle);
-
-        // if (rotateToScoreSup.getAsBoolean() || rotating) {
-        //     // timer.start();
-
-        //     rotating = true;
-        //     rotationVal = PID.calculate(robot_angle, target_angle);
-        //     rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
-
-        //     double error = Math.abs(robot_angle - target_angle);
-
-        //     // SmartDashboard.putNumber("Current Time", timer.get());
-        //     // SmartDashboard.putBoolean("rotating", rotating);
-
-        //     // TODO: Fix this
-        //     // Currently, it will stop the robot from rotating after 2.0 seconds 
-        //     // but from that point on, you are forced to hold it down.
-        //     // This bug persists between enable/disable cycles and is only solved by restarting robot code.
-        //     // The intended behavior is for it to start a new timer when the button is pushed
-        //     // and stop it when it reaches it's destination or after two seconds.
-        //     // Then the timer should restart the next time that the button is pushed.
-        //     // NOTE: I have taken out the timer implementation
-        //     if (5 >= error) {
-        //         // timer.stop();
-        //         rotating = false;
-        //     } 
-        // }
 
         /* Drive */
         s_Swerve.drive(
