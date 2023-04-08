@@ -18,7 +18,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
@@ -37,6 +36,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMode.ModeOptions;
+import frc.robot.RobotMode.StateOptions;
+import frc.robot.RobotMode;
 
 public class Wrist extends SubsystemBase {
   public RelativeEncoder wristRelativeEncoder;
@@ -46,7 +48,7 @@ public class Wrist extends SubsystemBase {
   private CANCoder wristCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
-  private double targetwristAngle = Constants.WRIST_STOW_POSITION; //TODO: make not have initialization issue
+  private double targetWristAngle = Constants.WRIST_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
 
   // Logging objects
@@ -64,12 +66,6 @@ public class Wrist extends SubsystemBase {
   private IntegerLogEntry wristMotorStickyFaults;
  // private StringLogEntry wristMotorIdleMode;
  // private BooleanLogEntry wristMotorInverted;
-  private StringLogEntry wristMotorLastError;
-
-  /* wrist CANCoder Logging */
-  private DoubleLogEntry wristCANCoderAbsolutePosition;
-  private DoubleLogEntry wristCANCoderAbsoluteVelocity;
-  private DoubleLogEntry wristCANCoderBusVoltage;
 
 
   /** Creates a new wrist. */
@@ -117,10 +113,6 @@ public class Wrist extends SubsystemBase {
     wristRelativeEncoderVelocity = new DoubleLogEntry (logger, "wristMotor/velocity");
    // wristMotorIdleMode = new StringLogEntry(logger, "wristMotor/idleMode");
   //  wristMotorInverted = new BooleanLogEntry(logger, "wristMotor/inverted");
-    wristMotorLastError = new StringLogEntry(logger, "wristMotor/lastError");
-    wristCANCoderAbsolutePosition = new DoubleLogEntry(logger, "wristCANCoder/position");
-    wristCANCoderAbsoluteVelocity = new DoubleLogEntry(logger, "wristCANCoder/velocity");
-    wristCANCoderBusVoltage = new DoubleLogEntry(logger, "wristCANCoder/busVoltage");
   }
 
   public void resetRelative() {
@@ -150,32 +142,68 @@ public class Wrist extends SubsystemBase {
     return wristCANEncoder.getVelocity() / Constants.WRIST_ENCODER_RATIO;
   }
 
-  //Sets the targetwristAngle in degrees */
-  public void setTargetWristAngle(double degrees) {
-    targetwristAngle = degrees;
+  //Sets the targetWristAngle in degrees */
+  public void setTargetWristAngle() {
+
+    ModeOptions mode = RobotMode.mode;
+    StateOptions state = RobotMode.state;
+
+    if (mode == RobotMode.ModeOptions.CUBE) {
+
+      if (state == RobotMode.StateOptions.LOW) {
+        targetWristAngle = Constants.WRIST_LOW_POSITION;
+      } else if (state == RobotMode.StateOptions.MID) {
+          targetWristAngle = Constants.WRIST_MID_POSITION;
+      } else if (state == RobotMode.StateOptions.HIGH) {
+          targetWristAngle = Constants.WRIST_HIGH_POSITION;
+      } else if (state == RobotMode.StateOptions.SINGLE) {
+          targetWristAngle = Constants.WRIST_SINGLE_POSITION;
+      } else if (state == RobotMode.StateOptions.DOUBLE) {
+          targetWristAngle = Constants.WRIST_DOUBLE_POSITION;
+      } else {
+          targetWristAngle = Constants.WRIST_STOW_POSITION;
+      }
+  } else {
+      if (state == RobotMode.StateOptions.LOW) {
+          targetWristAngle = Constants.WRIST_LOW_POSITION;
+      } else if (state == RobotMode.StateOptions.MID) {
+          targetWristAngle = Constants.WRIST_MID_POSITION;
+      } else if (state == RobotMode.StateOptions.HIGH) {
+          targetWristAngle = Constants.WRIST_HIGH_POSITION;
+      } else if (state == RobotMode.StateOptions.SINGLE) {
+          targetWristAngle = Constants.WRIST_SINGLE_POSITION;
+      } else if (state == RobotMode.StateOptions.DOUBLE) {
+          targetWristAngle = Constants.WRIST_DOUBLE_POSITION;
+      } else {
+          targetWristAngle = Constants.WRIST_STOW_POSITION;
+      }
+        }
+
+
+    
   }
 
   public void moveWristUp() {
     
-    targetwristAngle = targetwristAngle + Constants.MANUAL_WRIST_SPEED;
+    targetWristAngle = targetWristAngle + Constants.MANUAL_WRIST_SPEED;
 
-    if (targetwristAngle >= Constants.WRIST_FORWARD_LIMIT) {
-        targetwristAngle = Constants.WRIST_FORWARD_LIMIT;
+    if (targetWristAngle >= Constants.WRIST_FORWARD_LIMIT) {
+        targetWristAngle = Constants.WRIST_FORWARD_LIMIT;
     }
 
   }
 
   public void moveWristDown() {
-    targetwristAngle = targetwristAngle - Constants.MANUAL_WRIST_SPEED;
+    targetWristAngle = targetWristAngle - Constants.MANUAL_WRIST_SPEED;
 
-    if (targetwristAngle <= Constants.WRIST_REVERSE_LIMIT) {
-        targetwristAngle = Constants.WRIST_REVERSE_LIMIT;
+    if (targetWristAngle <= Constants.WRIST_REVERSE_LIMIT) {
+        targetWristAngle = Constants.WRIST_REVERSE_LIMIT;
     }
   }
 
   public boolean atPosition() {
 
-    double error = Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetwristAngle));
+    double error = Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetWristAngle));
 
     if (Constants.WRIST_TOLERANCE >= error) {
 
@@ -194,8 +222,9 @@ public class Wrist extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetwristAngle);
+    double pid = controller.calculate(getPositionInDegreesCanCoder(), targetWristAngle);
     if (DriverStation.isEnabled()){      
+      setTargetWristAngle();
       double feedForward = ff.calculate(Units.degreesToRadians(getPositionInDegreesCanCoder()), Units.degreesToRadians(getVelocityInDegreesCanCoder()));
       voltage =  pid + feedForward;
 
@@ -212,8 +241,8 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("wrist Position Absolute", getPositionInDegreesCanCoder());
     SmartDashboard.putNumber("wrist PID Output", pid);
     // SmartDashboard.putNumber("wrist Voltage", voltage);
-    SmartDashboard.putNumber("Target wrist Angle", targetwristAngle);
-    SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetwristAngle)));
+    SmartDashboard.putNumber("Target wrist Angle", targetWristAngle);
+    SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetWristAngle)));
     SmartDashboard.putString("CANCoder Initialization Strategy", wristCANEncoder.configGetSensorInitializationStrategy().toString());
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", wristRelativeEncoder.getPosition());
@@ -225,9 +254,11 @@ public class Wrist extends SubsystemBase {
     logData();
   }
 
+  
   public Command SetWristPosition (double degrees){
-    return new InstantCommand(() -> setTargetWristAngle(degrees), this);
+    return new InstantCommand(() -> RobotMode.state = StateOptions.STOW);
   }
+  
 
   public Command WristAtPosition(){
     return Commands.waitUntil(() -> atPosition());

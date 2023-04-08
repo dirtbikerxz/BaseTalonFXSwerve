@@ -29,6 +29,9 @@ public final class Constants {
     public static final double WRIST_LOW_POSITION = -82.7;
     public static final double WRIST_MID_POSITION = 0.0;
     public static final double WRIST_HIGH_POSITION = 35.0;
+    public static final double WRIST_SINGLE_POSITION = 0.0;
+    public static final double WRIST_DOUBLE_POSITION = 0.0;
+    
 
     public static final double WRIST_TOLERANCE = 20.0;
 

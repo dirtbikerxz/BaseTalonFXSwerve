@@ -6,8 +6,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import frc.robot.Constants;
+import frc.robot.RobotMode.StateOptions;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Elevator;
+import frc.robot.RobotMode;
 
 public class ReturnFromScoring extends CommandBase {
   Wrist Wrist;
@@ -31,7 +33,7 @@ public class ReturnFromScoring extends CommandBase {
   @Override
   public void execute() {
     if (elevator.isHigh()) {
-      Wrist.setTargetWristAngle(Constants.WRIST_HIGH_POSITION);
+      StateOptions state = RobotMode.StateOptions.HIGH;
     } else {
         //elevator.setTargetElevatorPosition(Constants.ELEVATOR_MID_LEVEL);
     }
