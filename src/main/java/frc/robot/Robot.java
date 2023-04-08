@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("Compressor", true);
 
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     
     m_chooser.addOption("Inside Auto", auto1);
     m_chooser.addOption("Outside Auto", auto2);
@@ -157,7 +157,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.Wrist.resetRelative();
     //m_robotContainer.MidAuto();
 
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
 
     m_autoSelected = m_chooser.getSelected();
 
@@ -232,7 +232,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     m_robotContainer.Wrist.resetRelative();
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

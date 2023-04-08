@@ -304,7 +304,7 @@ public class RobotContainer {
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
 
             // move Wrist to stow position
-            Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION), 
+            Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION), 
             Wrist.WristAtPosition()
 
             // move elevator to safe position

@@ -104,33 +104,33 @@ public class Elevator extends SubsystemBase {
         if (mode == RobotMode.ModeOptions.CUBE) {
 
             if (state == RobotMode.StateOptions.LOW) {
-                targetElevatorPosition = Constants.ELEVATOR_LOW_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_LOW_LEVEL;
             } else if (state == RobotMode.StateOptions.MID) {
-                targetElevatorPosition = Constants.ELEVATOR_MID_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_MID_LEVEL;
             } else if (state == RobotMode.StateOptions.HIGH) {
-                targetElevatorPosition = Constants.ELEVATOR_HIGH_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_HIGH_LEVEL;
             } else if (state == RobotMode.StateOptions.SINGLE) {
-                targetElevatorPosition = Constants.ELEVATOR_SINGLE_POSITION;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_SINGLE_POSITION;
             } else if (state == RobotMode.StateOptions.DOUBLE) {
-                targetElevatorPosition = Constants.ELEVATOR_DOUBLE_POSITION;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_DOUBLE_POSITION;
             } else {
-                targetElevatorPosition = Constants.ELEVATOR_STOW_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CUBE_STOW_LEVEL;
             }
 
         } else {
 
             if (state == RobotMode.StateOptions.LOW) {
-                targetElevatorPosition = Constants.ELEVATOR_LOW_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_LOW_LEVEL;
             } else if (state == RobotMode.StateOptions.MID) {
-                targetElevatorPosition = Constants.ELEVATOR_MID_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_MID_LEVEL;
             } else if (state == RobotMode.StateOptions.HIGH) {
-                targetElevatorPosition = Constants.ELEVATOR_HIGH_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_HIGH_LEVEL;
             } else if (state == RobotMode.StateOptions.SINGLE) {
-                targetElevatorPosition = Constants.ELEVATOR_SINGLE_POSITION;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_SINGLE_POSITION;
             } else if (state == RobotMode.StateOptions.DOUBLE) {
-                targetElevatorPosition = Constants.ELEVATOR_DOUBLE_POSITION;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_DOUBLE_POSITION;
             } else {
-                targetElevatorPosition = Constants.ELEVATOR_STOW_LEVEL;
+                targetElevatorPosition = Constants.ELEVATOR_CONE_STOW_LEVEL;
             }
         }
 
@@ -192,7 +192,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public Boolean isHigh(){
-        return getTargetElevatorPosition() == Constants.ELEVATOR_HIGH_LEVEL;
+        return getTargetElevatorPosition() == Constants.ELEVATOR_DEFUALT_HIGH_LEVEL;
     }
     
     @Override

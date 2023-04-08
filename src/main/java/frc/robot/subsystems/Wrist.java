@@ -48,7 +48,7 @@ public class Wrist extends SubsystemBase {
   private CANCoder wristCANEncoder;
   private ArmFeedforward ff;
   private double netPosition;
-  private double targetWristAngle = Constants.WRIST_STOW_POSITION; //TODO: make not have initialization issue
+  private double targetWristAngle = Constants.WRIST_DEFAULT_STOW_POSITION; //TODO: make not have initialization issue
   private double voltage;
 
   // Logging objects
@@ -151,31 +151,31 @@ public class Wrist extends SubsystemBase {
     if (mode == RobotMode.ModeOptions.CUBE) {
 
       if (state == RobotMode.StateOptions.LOW) {
-        targetWristAngle = Constants.WRIST_LOW_POSITION;
+        targetWristAngle = Constants.WRIST_CUBE_LOW_POSITION;
       } else if (state == RobotMode.StateOptions.MID) {
-          targetWristAngle = Constants.WRIST_MID_POSITION;
+          targetWristAngle = Constants.WRIST_CUBE_MID_POSITION;
       } else if (state == RobotMode.StateOptions.HIGH) {
-          targetWristAngle = Constants.WRIST_HIGH_POSITION;
+          targetWristAngle = Constants.WRIST_CUBE_HIGH_POSITION;
       } else if (state == RobotMode.StateOptions.SINGLE) {
-          targetWristAngle = Constants.WRIST_SINGLE_POSITION;
+          targetWristAngle = Constants.WRIST_CUBE_SINGLE_POSITION;
       } else if (state == RobotMode.StateOptions.DOUBLE) {
-          targetWristAngle = Constants.WRIST_DOUBLE_POSITION;
+          targetWristAngle = Constants.WRIST_CUBE_DOUBLE_POSITION;
       } else {
-          targetWristAngle = Constants.WRIST_STOW_POSITION;
+          targetWristAngle = Constants.WRIST_CUBE_STOW_POSITION;
       }
   } else {
       if (state == RobotMode.StateOptions.LOW) {
-          targetWristAngle = Constants.WRIST_LOW_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_LOW_POSITION;
       } else if (state == RobotMode.StateOptions.MID) {
-          targetWristAngle = Constants.WRIST_MID_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_MID_POSITION;
       } else if (state == RobotMode.StateOptions.HIGH) {
-          targetWristAngle = Constants.WRIST_HIGH_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_HIGH_POSITION;
       } else if (state == RobotMode.StateOptions.SINGLE) {
-          targetWristAngle = Constants.WRIST_SINGLE_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_SINGLE_POSITION;
       } else if (state == RobotMode.StateOptions.DOUBLE) {
-          targetWristAngle = Constants.WRIST_DOUBLE_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_DOUBLE_POSITION;
       } else {
-          targetWristAngle = Constants.WRIST_STOW_POSITION;
+          targetWristAngle = Constants.WRIST_CONE_STOW_POSITION;
       }
         }
 
