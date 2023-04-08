@@ -76,48 +76,9 @@ public class TeleopSwerve extends CommandBase {
             if (error > 180) {
                 yaw = -1 * (360 - yaw);
             }
-            SmartDashboard.putNumber("debug/calculated yaw", yaw);
 
             rotationVal = PID.calculate(yaw, targetRotation.getAsDouble());
         }
-        SmartDashboard.putNumber("debug/RotationVal", rotationVal);
-        SmartDashboard.putNumber("debug/TargetRotations", targetRotation.getAsDouble());
-        //double robot_angle = s_Swerve.getYaw().getDegrees();
-        // robot_angle = MathUtil.inputModulus(robot_angle, 0, 360);
-        // double target_angle;
-        // if (robot_angle > 0) {
-        //     target_angle = Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        // } else {
-        //     target_angle = -1 * Constants.ROTATE_TO_SCORE_TARGET_ANGLE;
-        // }
-        // // SmartDashboard.putNumber("rotateToScoreVal", rotateToScoreVal);
-        // // SmartDashboard.putNumber("robot_angle", robot_angle);
-
-        // if (rotateToScoreSup.getAsBoolean() || rotating) {
-        //     // timer.start();
-
-        //     rotating = true;
-        //     rotationVal = PID.calculate(robot_angle, target_angle);
-        //     rotationVal += MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.10;
-
-        //     double error = Math.abs(robot_angle - target_angle);
-
-        //     // SmartDashboard.putNumber("Current Time", timer.get());
-        //     // SmartDashboard.putBoolean("rotating", rotating);
-
-        //     // TODO: Fix this
-        //     // Currently, it will stop the robot from rotating after 2.0 seconds 
-        //     // but from that point on, you are forced to hold it down.
-        //     // This bug persists between enable/disable cycles and is only solved by restarting robot code.
-        //     // The intended behavior is for it to start a new timer when the button is pushed
-        //     // and stop it when it reaches it's destination or after two seconds.
-        //     // Then the timer should restart the next time that the button is pushed.
-        //     // NOTE: I have taken out the timer implementation
-        //     if (5 >= error) {
-        //         // timer.stop();
-        //         rotating = false;
-        //     } 
-        // }
 
         /* Drive */
         s_Swerve.drive(

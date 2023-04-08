@@ -152,9 +152,8 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());
         logData();
-        SmartDashboard.putNumber("RobotCoordinatesX",swerveOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
-        SmartDashboard.putNumber("debug/Yaw", getYaw().getDegrees());
+        SmartDashboard.putNumber("debug/RobotCoordinatesX",swerveOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("debug/RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
         m_field.setRobotPose(swerveOdometry.getPoseMeters());
 
         for(SwerveModule mod : mSwerveMods){
@@ -162,9 +161,9 @@ public class Swerve extends SubsystemBase {
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Current Draw", mod.mAngleMotor.getSupplyCurrent());
             // mod.mDriveMotor.configGetSupplyCurrentLimit(current);
             // SmartDashboard.putString("Mod " + mod.moduleNumber + " Current Limit", current.toString());
-            SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
+            // SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            // SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("debug/Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
         }
     }
 

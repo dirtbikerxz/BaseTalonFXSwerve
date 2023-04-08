@@ -214,7 +214,6 @@ public class Arm extends SubsystemBase {
     // SmartDashboard.putNumber("Arm Voltage", voltage);
     SmartDashboard.putNumber("Target Arm Angle", targetArmAngle);
     SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetArmAngle)));
-    // SmartDashboard.putString("CANCoder Initialization Strategy", armCANEncoder.configGetSensorInitializationStrategy().toString());
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", armRelativeEncoder.getPosition());
 
