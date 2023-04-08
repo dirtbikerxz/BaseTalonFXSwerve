@@ -119,7 +119,19 @@ public class Elevator extends SubsystemBase {
 
         } else {
 
-
+            if (state == RobotMode.StateOptions.LOW) {
+                targetElevatorPosition = Constants.ELEVATOR_LOW_LEVEL;
+            } else if (state == RobotMode.StateOptions.MID) {
+                targetElevatorPosition = Constants.ELEVATOR_MID_LEVEL;
+            } else if (state == RobotMode.StateOptions.HIGH) {
+                targetElevatorPosition = Constants.ELEVATOR_HIGH_LEVEL;
+            } else if (state == RobotMode.StateOptions.SINGLE) {
+                targetElevatorPosition = Constants.ELEVATOR_SINGLE_POSITION;
+            } else if (state == RobotMode.StateOptions.DOUBLE) {
+                targetElevatorPosition = Constants.ELEVATOR_DOUBLE_POSITION;
+            } else {
+                targetElevatorPosition = Constants.ELEVATOR_STOW_LEVEL;
+            }
         }
 
 
