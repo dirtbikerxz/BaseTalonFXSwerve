@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -124,6 +125,7 @@ public class RobotContainer {
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
 
     private double targetRotation;
+    private double singleSubstationTargetAngle;
     
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
     
@@ -137,7 +139,7 @@ public class RobotContainer {
         leds.setDefaultCommand(new IdleLEDS(leds));
         SmartDashboard.putBoolean("isDefault", true);
         SmartDashboard.putBoolean("isPurple", false);
-        SmartDashboard.putBoolean("isYellow", false);
+        SmartDashboard.putBoolean("isYellow", false);;
 
          s_Swerve.setDefaultCommand(
              new TeleopSwerve(
@@ -193,6 +195,14 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new exampleAuto(s_Swerve);
+    }
+
+    public void setSingleSubstationTargetAngle() {
+        if (DriverStation.getAlliance() == Alliance.Red) {
+            singleSubstationTargetAngle = Constants.ROTATE_TO_SINGLE_SUBSTATION_RED_TARGET_ANGLE;
+        } else {
+            singleSubstationTargetAngle = Constants.ROTATE_TO_SINGLE_SUBSTATION_BLUE_TARGET_ANGLE;
+        }
     }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
@@ -524,6 +534,7 @@ public class RobotContainer {
 
     public void SwerveHandler() {
 
+
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
 
@@ -545,20 +556,39 @@ public class RobotContainer {
                 Math.abs(s_Swerve.getYaw().getDegrees() % 360) > Constants.ROTATE_TO_SCORE_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
 
-        driverRightTrigger.toggleOnTrue(
+        driverRStick.toggleOnTrue(
+
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                 () -> -driver.getRawAxis(driverRightX), 
                 () -> driverDpadUp.getAsBoolean(),
-                () -> Constants.ROTATE_TO_LOAD_TARGET_ANGLE,
+                () -> Constants.ROTATE_TO_DOUBLE_SUBSTATION_TARGET_ANGLE,
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,
                 true
-            ).until(() -> s_Swerve.getYaw().getDegrees() % 360 < Constants.ROTATE_TO_LOAD_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
-                s_Swerve.getYaw().getDegrees() % 360 > Constants.ROTATE_TO_LOAD_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
+            ).until(() -> Math.abs(s_Swerve.getYaw().getDegrees() % 360) < Constants.ROTATE_TO_DOUBLE_SUBSTATION_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
+                Math.abs(s_Swerve.getYaw().getDegrees() % 360) > Constants.ROTATE_TO_DOUBLE_SUBSTATION_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
+
+        driverLStick.toggleOnTrue(
+
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
+                () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
+                () -> -driver.getRawAxis(driverRightX), 
+                () -> driverDpadUp.getAsBoolean(),
+                () -> singleSubstationTargetAngle,
+                () -> driverLeftTrigger.getAsBoolean(),
+                rotationSpeed,
+                true
+            ).until(() -> Math.abs(s_Swerve.getYaw().getDegrees() % 360) < singleSubstationTargetAngle + Constants.AUTO_ROTATE_DEADBAND && 
+                Math.abs(s_Swerve.getYaw().getDegrees() % 360) > singleSubstationTargetAngle - Constants.AUTO_ROTATE_DEADBAND)
+        );
+
+
     }
    
 
