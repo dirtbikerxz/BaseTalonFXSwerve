@@ -4,14 +4,14 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
-public class MoveArmDown extends CommandBase {
-  Arm arm;
-  /** Creates a new MoveArmDown. */
-  public MoveArmDown(Arm arm) {
-    this.arm = arm;
-    addRequirements(this.arm);
+public class MoveWristDown extends CommandBase {
+  Wrist Wrist;
+  /** Creates a new MoveWristDown. */
+  public MoveWristDown(Wrist Wrist) {
+    this.Wrist = Wrist;
+    addRequirements(this.Wrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,13 +24,13 @@ public class MoveArmDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.moveArmDown();
+    Wrist.moveWristDown();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setSpeed(0);
+    Wrist.setSpeed(0);
   }
 
   // Returns true when the command should end.

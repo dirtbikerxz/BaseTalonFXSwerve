@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 
-public class MoveArmUp extends CommandBase {
-  Arm arm;
+public class MoveWristUp extends CommandBase {
+  Wrist Wrist;
 
-  /** Creates a new MoveArmUp. */
-  public MoveArmUp(Arm arm) {
-    this.arm = arm;
-    addRequirements(this.arm);
+  /** Creates a new MoveWristUp. */
+  public MoveWristUp(Wrist Wrist) {
+    this.Wrist = Wrist;
+    addRequirements(this.Wrist);
   }
 
   // Called when the command is initially scheduled.
@@ -26,13 +26,13 @@ public class MoveArmUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.moveArmUp();
+    Wrist.moveWristUp();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setSpeed(0);
+    Wrist.setSpeed(0);
   }
 
   // Returns true when the command should end.

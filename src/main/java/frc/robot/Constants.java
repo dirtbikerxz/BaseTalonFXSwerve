@@ -14,34 +14,34 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double MAX_ENCODER_VOLTAGE = 4.926;
 
-    /* Arm Constants */
+    /* WRIST Constants */
     // TODO: Change later when we have actual robot
-    public static final int ARM_MOTOR_ID = 20;
-    public static final int ARM_ENCODER_ID = 1;
-    public static final double ARM_FORWARD_LIMIT = 40;
-    public static final double ARM_REVERSE_LIMIT = -90;
-    public static final double ARM_GEAR_RATIO = 150.0;
-    public static final double ARM_MOTOR_ROT_TO_DEG = 360.0 / ARM_GEAR_RATIO;
-    public static final double MANUAL_ARM_SPEED = 1.0;
-    public static final double ARM_GROUND_POSITION = -95; //set value
+    public static final int WRIST_MOTOR_ID = 20;
+    public static final int WRIST_ENCODER_ID = 1;
+    public static final double WRIST_FORWARD_LIMIT = 40;
+    public static final double WRIST_REVERSE_LIMIT = -90;
+    public static final double WRIST_GEAR_RATIO = 150.0;
+    public static final double WRIST_MOTOR_ROT_TO_DEG = 360.0 / WRIST_GEAR_RATIO;
+    public static final double MANUAL_WRIST_SPEED = 1.0;
+    public static final double WRIST_GROUND_POSITION = -95; //set value
     // positions
-    public static final double ARM_STOW_POSITION = -135;
-    public static final double ARM_LOW_POSITION = -82.7;
-    public static final double ARM_MID_POSITION = 0.0;
-    public static final double ARM_HIGH_POSITION = 35.0;
+    public static final double WRIST_STOW_POSITION = -135;
+    public static final double WRIST_LOW_POSITION = -82.7;
+    public static final double WRIST_MID_POSITION = 0.0;
+    public static final double WRIST_HIGH_POSITION = 35.0;
 
-    public static final double ARM_TOLERANCE = 20.0;
+    public static final double WRIST_TOLERANCE = 20.0;
 
     //Feedforward
-    public static final double ARM_G = -0.3; //Its negative because the motors move the wrong direction
-    public static final double ARM_V = 0.0;
-    public static final double ARM_A = 0.0;
-    public static final double ARM_S = 0.0;
+    public static final double WRIST_G = -0.3; //Its negative because the motors move the wrong direction
+    public static final double WRIST_V = 0.0;
+    public static final double WRIST_A = 0.0;
+    public static final double WRIST_S = 0.0;
 
     //PID
-    public static final double ARM_P = -0.18;
-    public static final double ARM_I = 0.0;
-    public static final double ARM_D = 0.0;
+    public static final double WRIST_P = -0.18;
+    public static final double WRIST_I = 0.0;
+    public static final double WRIST_D = 0.0;
 
     public static final double AUTO_X_P = 4;
     public static final double AUTO_X_I = 0;
@@ -57,8 +57,8 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double ARM_ENCODER_OFFSET = 360-87.45;
-    public static final double TARGET_ARM_ANGLE = 0;
+    public static final double WRIST_ENCODER_OFFSET = 360-87.45;
+    public static final double TARGET_WRIST_ANGLE = 0;
 
     public static final double INTAKE_SPEED = 0.60;
     public static int INTAKE_MOTOR_1_ID = 12;
@@ -69,7 +69,7 @@ public final class Constants {
     public static final int PNEUMATIC_REVERSE_CHANEL = 15;
 
     public static final int CANDLE_PORT = 9;
-    public static final double ARM_ENCODER_RATIO = 1.2;
+    public static final double WRIST_ENCODER_RATIO = 1.2;
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;

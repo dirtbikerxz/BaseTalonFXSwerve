@@ -6,17 +6,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Elevator;
 
 public class ConfirmScore extends CommandBase {
-  Arm arm;
+  Wrist Wrist;
   Elevator elevator;
   /** Creates a new Confirm Score. */
-  public ConfirmScore(Arm arm, Elevator elevator) {
-    this.arm = arm;
+  public ConfirmScore(Wrist Wrist, Elevator elevator) {
+    this.Wrist = Wrist;
     this.elevator = elevator;
-    addRequirements(this.arm);
+    addRequirements(this.Wrist);
     addRequirements(this.elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,7 +31,7 @@ public class ConfirmScore extends CommandBase {
   @Override
   public void execute() {
     if (elevator.isHigh()) {
-      arm.setTargetArmAngle(Constants.ARM_MID_POSITION);
+      Wrist.setTargetWristAngle(Constants.WRIST_MID_POSITION);
     } else {
         //elevator.setTargetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL);
     }

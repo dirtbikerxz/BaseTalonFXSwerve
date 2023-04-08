@@ -27,7 +27,7 @@ import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("Compressor", true);
 
-    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
     
     m_chooser.addOption("Inside Auto", auto1);
     m_chooser.addOption("Outside Auto", auto2);
@@ -154,10 +154,10 @@ public class Robot extends TimedRobot {
 
     /*Reset Absolute */
     // m_robotContainer.resetAbsolute();
-    m_robotContainer.arm.resetRelative();
+    m_robotContainer.Wrist.resetRelative();
     //m_robotContainer.MidAuto();
 
-    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
 
     m_autoSelected = m_chooser.getSelected();
 
@@ -231,8 +231,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    m_robotContainer.arm.resetRelative();
-    m_robotContainer.arm.SetArmPosition(Constants.ARM_STOW_POSITION);
+    m_robotContainer.Wrist.resetRelative();
+    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION);
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -247,7 +247,7 @@ public class Robot extends TimedRobot {
     // m_robotContainer.resetAbsolute();
     
     
-    //arm.getPositionInDegrees();
+    //Wrist.getPositionInDegrees();
 
  
 

@@ -6,16 +6,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
-public class MoveArmManual extends CommandBase {
-  Arm arm;
+public class MoveWristManual extends CommandBase {
+  Wrist Wrist;
   Joystick driver;
-  /** Creates a new MoveArmManual. */
-  public MoveArmManual(Arm arm, Joystick driver) {
-    this.arm = arm;
+  /** Creates a new MoveWristManual. */
+  public MoveWristManual(Wrist Wrist, Joystick driver) {
+    this.Wrist = Wrist;
     this.driver = driver;
-    addRequirements(this.arm);
+    addRequirements(this.Wrist);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

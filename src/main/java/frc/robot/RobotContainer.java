@@ -117,7 +117,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     public final LEDs leds = new LEDs();
     private final Intake intake = new Intake();
-    public final Arm arm = new Arm();
+    public final Wrist Wrist = new Wrist();
     private final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
@@ -133,7 +133,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        //arm.setDefaultCommand(new MoveArmManual(arm, driver));
+        //Wrist.setDefaultCommand(new MoveWristManual(Wrist, driver));
         leds.setDefaultCommand(new IdleLEDS(leds));
         SmartDashboard.putBoolean("isDefault", true);
         SmartDashboard.putBoolean("isPurple", false);
@@ -213,21 +213,21 @@ public class RobotContainer {
             //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
             //elevator.ElevatorAtPosition(),
 
-            //move arm and elevator to scoring position
-            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
+            //move Wrist and elevator to scoring position
+            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), Wrist.SetWristPosition(Constants.Wrist_HIGH_POSITION)),    
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // drive forward
             new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
 
-            new ConfirmScore(arm, elevator).withTimeout(0.1),
+            new ConfirmScore(Wrist, elevator).withTimeout(0.1),
             
             // move down
-            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(arm, elevator)),
+            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(Wrist, elevator)),
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // open intake
             new ParallelCommandGroup(
@@ -235,19 +235,19 @@ public class RobotContainer {
             ).withTimeout(0.5),
 
             //move up
-            new ReturnFromScoring(arm, elevator).withTimeout(0.5),
+            new ReturnFromScoring(Wrist, elevator).withTimeout(0.5),
 
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // drive backward
             new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)       
 
             //GoToStow()
-            // move arm to stow position
-            // arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
-            // arm.ArmAtPosition(),
+            // move Wrist to stow position
+            // Wrist.SetWristPosition(Constants.Wrist_STOW_POSITION), 
+            // Wrist.WristAtPosition(),
 
             // // move elevator to safe position
             // elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
@@ -271,21 +271,21 @@ public class RobotContainer {
             //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
             //elevator.ElevatorAtPosition(),
 
-            //move arm and elevator to scoring position
-            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), arm.SetArmPosition(Constants.ARM_HIGH_POSITION)),    
+            //move Wrist and elevator to scoring position
+            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), Wrist.SetWristPosition(Constants.Wrist_HIGH_POSITION)),    
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // drive forward
             new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
 
-            new ConfirmScore(arm, elevator).withTimeout(0.1),
+            new ConfirmScore(Wrist, elevator).withTimeout(0.1),
             
             // move down
-            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(arm, elevator)),
+            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(Wrist, elevator)),
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // open intake
             new ParallelCommandGroup(
@@ -294,18 +294,18 @@ public class RobotContainer {
             ).withTimeout(0.1),
 
             //move up
-            new ReturnFromScoring(arm, elevator).withTimeout(0.5),
+            new ReturnFromScoring(Wrist, elevator).withTimeout(0.5),
 
             //elevator.ElevatorAtPosition(),
-            arm.ArmAtPosition(),
+            Wrist.WristAtPosition(),
 
             // drive backward
             new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
             new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
 
-            // move arm to stow position
-            arm.SetArmPosition(Constants.ARM_STOW_POSITION), 
-            arm.ArmAtPosition()
+            // move Wrist to stow position
+            Wrist.SetWristPosition(Constants.WRIST_STOW_POSITION), 
+            Wrist.WristAtPosition()
 
             // move elevator to safe position
             //elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
