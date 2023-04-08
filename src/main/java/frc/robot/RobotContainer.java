@@ -534,8 +534,8 @@ public class RobotContainer {
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,
                 true
-            ).until(() -> s_Swerve.getYaw().getDegrees() % 360 < Constants.ROTATE_TO_SCORE_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
-                s_Swerve.getYaw().getDegrees() % 360 > Constants.ROTATE_TO_SCORE_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
+            ).until(() -> Math.abs(s_Swerve.getYaw().getDegrees() % 360) < Constants.ROTATE_TO_SCORE_TARGET_ANGLE + Constants.AUTO_ROTATE_DEADBAND && 
+                Math.abs(s_Swerve.getYaw().getDegrees() % 360) > Constants.ROTATE_TO_SCORE_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
 
         driverRightTrigger.toggleOnTrue(

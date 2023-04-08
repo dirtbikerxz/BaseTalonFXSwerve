@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
@@ -71,13 +72,35 @@ public class TeleopSwerve extends CommandBase {
         /* Rotate to Score */
         if (-AUTO_ROTATE_DEADBAND <= rotationVal && rotationVal <= AUTO_ROTATE_DEADBAND && isAutoRotating) {
             double yaw = s_Swerve.getYaw().getDegrees() % 360;
-            double targetRotationVal = targetRotation.getAsDouble();
-            double error = yaw - targetRotationVal;
-            if (error > 180) {
-                yaw = -1 * (360 - yaw);
+
+            // convert the yaw from [-360, 360] to [-180, 180]
+            if (yaw > 180) {
+                yaw = yaw - 360;
+            } else if (yaw < -180) {
+                yaw = yaw + 360;
             }
 
-            rotationVal = PID.calculate(yaw, targetRotation.getAsDouble());
+            // Convert to Rotation2d for rotate command
+            Rotation2d rotationYaw = Rotation2d.fromDegrees(yaw);
+
+            // Get the target rotationVal as a Rotation2d object
+            Rotation2d targetRotationVal = Rotation2d.fromDegrees(targetRotation.getAsDouble());
+
+            // Rotate rotationYaw to make the 0 of it at the target angle
+            // If targetRotationVal is 180 degrees the rotationYaw's 0 will be pointing towards 180
+            rotationYaw = rotationYaw.rotateBy(targetRotationVal);
+
+            // double error = yaw - targetRotationVal;
+            // SmartDashboard.putNumber("debug/yaw", yaw);
+            // SmartDashboard.putNumber("debug/targetRotationVal", targetRotationVal);
+            // SmartDashboard.putNumber("debug/error", error);
+            // if (Math.abs(error) > 180) {
+            //     yaw = Math.abs(360 - yaw);
+            // }
+            // SmartDashboard.putNumber("debug/calculated yaw", yaw);
+
+            SmartDashboard.putNumber("debug/calculated yaw", rotationYaw.getDegrees());
+            rotationVal = PID.calculate(rotationYaw.getDegrees(), 0.0); 
         }
 
         /* Drive */
