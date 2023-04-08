@@ -35,6 +35,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.AutoCommands.GameAutos.ConePreloadAuto;
+import frc.robot.commands.AutoCommands.GameAutos.CubePreloadAuto;
+import frc.robot.commands.AutoCommands.GameAutos.DuluthAuto;
+import frc.robot.commands.AutoCommands.GameAutos.InsideAuto;
+import frc.robot.commands.AutoCommands.GameAutos.InsideAutoBalance;
+import frc.robot.commands.AutoCommands.GameAutos.MidAuto;
+import frc.robot.commands.AutoCommands.GameAutos.OutsideAuto;
+import frc.robot.commands.AutoCommands.GameAutos.OutsideAutoBalance;
+import frc.robot.commands.AutoCommands.GameAutos.TestAuto;
 import frc.robot.subsystems.*;
 
 /**
@@ -199,301 +208,49 @@ public class RobotContainer {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
     }
 
-    // 25 inches
-    public Command ScoreCubePreload() {
+    public Command InsideAutoSelect() {
 
-        return new SequentialCommandGroup(
-
-            //new CloseIntake(intake).withTimeout(0.1),
-            new InstantCommand(() -> s_Swerve.zeroGyro(180.0)),
-
-            new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
-
-            // move elevator to safe position
-            //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-            //elevator.ElevatorAtPosition(),
-
-            //move Wrist and elevator to scoring position
-            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), Wrist.SetWristPosition(Constants.Wrist_HIGH_POSITION)),    
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // drive forward
-            new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
-
-            new ConfirmScore(Wrist, elevator).withTimeout(0.1),
-            
-            // move down
-            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(Wrist, elevator)),
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // open intake
-            new ParallelCommandGroup(
-                new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.5),
-
-            //move up
-            new ReturnFromScoring(Wrist, elevator).withTimeout(0.5),
-
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // drive backward
-            new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1)       
-
-            //GoToStow()
-            // move Wrist to stow position
-            // Wrist.SetWristPosition(Constants.Wrist_STOW_POSITION), 
-            // Wrist.WristAtPosition(),
-
-            // // move elevator to safe position
-            // elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
-            // elevator.ElevatorAtPosition()
-            
-        );
+        return new InsideAuto(elevator, Wrist, intake, s_Swerve);
     }
 
-    // 27 inches
-    public Command ScoreConePreload() {
+    public Command OutsideAutoSelect() {
 
-        return new SequentialCommandGroup(
-
-            new InstantCommand(() -> s_Swerve.zeroGyro(180.0)),
-
-            new RunIntakeAtSpeed(intake, 0.5).withTimeout(0.1),
-
-            //new CloseIntake(intake).withTimeout(0.1),
-
-            // move elevator to safe position
-            //elevator.SetElevatorPosition(Constants.ELEVATOR_SAFE_LEVEL),
-            //elevator.ElevatorAtPosition(),
-
-            //move Wrist and elevator to scoring position
-            //new ParallelCommandGroup(elevator.SetElevatorPosition(Constants.ELEVATOR_HIGH_LEVEL), Wrist.SetWristPosition(Constants.Wrist_HIGH_POSITION)),    
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // drive forward
-            new DriveCommand(s_Swerve, 0.5, 0.0, 0.0).withTimeout(1.4),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
-
-            new ConfirmScore(Wrist, elevator).withTimeout(0.1),
-            
-            // move down
-            // new ParallelDeadlineGroup(new WaitCommand(0.1), new ConfirmScore(Wrist, elevator)),
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // open intake
-            new ParallelCommandGroup(
-                //new InstantCommand(() -> intake.Retract()),
-                new RunIntakeAtSpeed(intake, -0.5)
-            ).withTimeout(0.1),
-
-            //move up
-            new ReturnFromScoring(Wrist, elevator).withTimeout(0.5),
-
-            //elevator.ElevatorAtPosition(),
-            Wrist.WristAtPosition(),
-
-            // drive backward
-            new DriveCommand(s_Swerve, -0.5, 0.0, 0.0).withTimeout(1.4),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),        
-
-            // move Wrist to stow position
-            Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION), 
-            Wrist.WristAtPosition()
-
-            // move elevator to safe position
-            //elevator.SetElevatorPosition(Constants.ELEVATOR_LOW_LEVEL),
-            //elevator.ElevatorAtPosition()
-            
-        );
+        return new OutsideAuto(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command ReverseBalance() {
+    public Command MidAutoSelect() {
 
-        return new SequentialCommandGroup(
-
-            // drive backwards
-            new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
-            new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
-
-            new AutoBalance(s_Swerve)
-
-        );
-    }
-    
-
-    public Command CubeAutoBalance() {
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload().withTimeout(8.0),
-        ReverseBalance()
-
-    );
-
+        return new MidAuto(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command ConeAutoBalance() {
+    public Command InsideAutoBalanceSelect() {
 
-        return new SequentialCommandGroup(
-
-            ScoreConePreload().withTimeout(8.0),
-            ReverseBalance()
-
-        );
+        return new InsideAutoBalance(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command ScoreCone() {
+    public Command OutsideAutoBalanceSelect() {
 
-        return new SequentialCommandGroup(
-
-        ScoreConePreload()
-
-        //followTrajectoryCommand(examplePath, true)
-    );   
+        return new OutsideAutoBalance(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command ScoreCube() {
+    public Command CubePreloadAutoSelect() {
 
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload()
-
-        //followTrajectoryCommand(examplePath, true)
-    );   
+        return new CubePreloadAuto(elevator, Wrist, intake, s_Swerve);
     }
 
+    public Command ConePreloadAutoSelect() {
 
-    ////////////////////////////////////
-    
-    public Command OutsideAuto() {
-
-        PathPlannerTrajectory path = PathPlanner.loadPath("Outside Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
-
-        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload(),
-        followTrajectoryCommand(path, true)
-
-    );
+        return new ConePreloadAuto(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command InsideAuto() {
+    public Command DuluthAutoSelect() {
 
-        PathPlannerTrajectory path = PathPlanner.loadPath("Inside Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
-
-        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
-
-        return new SequentialCommandGroup(
-
-        ScoreCubePreload(),
-        followTrajectoryCommand(path, true)
-
-    );
+        return new DuluthAuto(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command MidAuto() {
+    public Command TestAutoSelect() {
 
-        PathPlannerTrajectory path = PathPlanner.loadPath("Mid Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
-
-        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
-
-        return new SequentialCommandGroup(
-
-            ScoreCubePreload(),
-            followTrajectoryCommand(path, true),
-            new AutoBalance(s_Swerve)
-
-        );
-    }
-
-    public Command InsideAutoBalance() {
-
-        PathPlannerTrajectory path = PathPlanner.loadPath("Inside Auto Balance", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
-
-        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
-
-        return new SequentialCommandGroup(
-
-            ScoreCubePreload().withTimeout(8.0),
-
-            // followPathWithEvents = new FollowPathWithEvents(
-            //     followTrajectoryCommand(path, true),
-            //     path.getMarkers(),
-            //     eventMap
-            // ),
-            //GoToGround().withTimeout(2.0),
-
-            new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
-
-            new AutoBalance(s_Swerve)
-
-        );
-
-    }
-
-    public Command OutsideAutoBalance() {
-
-        PathPlannerTrajectory path = PathPlanner.loadPath("Outside Auto Balance", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
-
-        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
-
-        return new SequentialCommandGroup(
-
-            ScoreCubePreload().withTimeout(8.0),
-
-            // followPathWithEvents = new FollowPathWithEvents(
-            //     followTrajectoryCommand(path, true),
-            //     path.getMarkers(),
-            //     eventMap
-            // ),
-            //GoToGround().withTimeout(2.0),
-
-            new ParallelCommandGroup(new RunIntake(intake), followTrajectoryCommand(path, true)).withTimeout(6.0),
-
-            new AutoBalance(s_Swerve)
-
-        );
-
-    }
-
-    public Command DuluthAuto() {
-
-        return new SequentialCommandGroup(
-
-        // score preload
-        ScoreCubePreload().withTimeout(8.0),
-
-        // drive backwards
-        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
-        //stop
-        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
-
-        // auto-balance
-        new AutoBalance(s_Swerve)
-
-    );
-    }
-
-    public Command PreloadAuto() {
-
-        return ScoreConePreload().withTimeout(0.8);
-    }
-
-
-    
-
-    public Command TestAuto() {
-
-        return ScoreConePreload().withTimeout(0.8);
+        return new TestAuto(elevator, Wrist, intake, s_Swerve);
     }
     
 
@@ -517,7 +274,6 @@ public class RobotContainer {
         operatorX.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.STOW)));
         
     }
-
 
 
 

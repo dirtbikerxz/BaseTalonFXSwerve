@@ -56,8 +56,9 @@ public class Robot extends TimedRobot {
   private static final String auto3 = "Mid Auto";
   private static final String auto4 = "Inside Auto Balance";
   private static final String auto5 = "Outside Auto Balance";
-  private static final String auto6 = "Score Preload";
-  private static final String auto7 = "Duluth Auto";
+  private static final String auto6 = "Score Cube Preload";
+  private static final String auto7 = "Score Cone Preload";
+  private static final String auto8 = "Duluth Auto";
   private static final String autoTest = "Test";
 
   private String m_autoSelected;
@@ -98,9 +99,10 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Inside Auto Balance", auto4);
     m_chooser.addOption("Outside Auto Balance", auto5);
 
-    m_chooser.addOption("Score Preload", auto6);
+    m_chooser.addOption("Score Cube Preload", auto6);
+    m_chooser.addOption("Score Cone Preload", auto7);
 
-    m_chooser.setDefaultOption("Duluth Auto", auto7);
+    m_chooser.setDefaultOption("Duluth Auto", auto8);
 
     m_chooser.addOption("Test Auto", autoTest);
 
@@ -164,31 +166,33 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
 
       case auto1:
-        m_autonomousCommand = m_robotContainer.InsideAuto();
+        m_autonomousCommand = m_robotContainer.InsideAutoSelect();
         break;
       case auto2:
-        m_autonomousCommand = m_robotContainer.OutsideAuto();
+        m_autonomousCommand = m_robotContainer.OutsideAutoSelect();
         break;
       case auto3:
-        m_autonomousCommand = m_robotContainer.MidAuto();
+        m_autonomousCommand = m_robotContainer.MidAutoSelect();
         break;
       case auto4:
-        m_autonomousCommand = m_robotContainer.InsideAutoBalance();
+        m_autonomousCommand = m_robotContainer.InsideAutoBalanceSelect();
         break;
       case auto5:
-        m_autonomousCommand = m_robotContainer.OutsideAutoBalance();
+        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceSelect();
         break;
       case auto6:
-        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
+        m_autonomousCommand = m_robotContainer.CubePreloadAutoSelect();
         break;
       case auto7:
-        m_autonomousCommand = m_robotContainer.DuluthAuto();
+        m_autonomousCommand = m_robotContainer.ConePreloadAutoSelect();
+      case auto8:
+        m_autonomousCommand = m_robotContainer.DuluthAutoSelect();
         break;
       case autoTest:
-        m_autonomousCommand = m_robotContainer.TestAuto();
+        m_autonomousCommand = m_robotContainer.TestAutoSelect();
         break;
       default:
-        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
+        m_autonomousCommand = m_robotContainer.CubePreloadAutoSelect();
         break;
 
     }
