@@ -51,15 +51,28 @@ public class Robot extends TimedRobot {
     private Timer timer;
     private double previousTime;
 
-  private static final String auto1 = "Inside Auto";
-  private static final String auto2 = "Outside Auto";
-  private static final String auto3 = "Mid Auto";
-  private static final String auto4 = "Inside Auto Balance";
-  private static final String auto5 = "Outside Auto Balance";
-  private static final String auto6 = "Score Cube Preload";
-  private static final String auto7 = "Score Cone Preload";
-  private static final String auto8 = "Duluth Auto";
-  private static final String autoTest = "Test";
+  private static final String auto1 = "Cone Preload";
+  private static final String auto2 = "Cube Preload";
+
+  private static final String auto3 = "Inside Auto Cone";
+  private static final String auto4 = "Inside Auto Cube";
+
+  private static final String auto5 = "Mid Auto Balance Cone";
+  private static final String auto6 = "Mid Auto Balance Cube";
+
+  private static final String auto7 = "Outside Auto Cone";
+  private static final String auto8 = "Outside Auto Cube";
+
+  private static final String auto9 = "Inside Auto Balance Cone";
+  private static final String auto10 = "Inside Auto Balance Cube";
+
+  private static final String auto11 = "Outside Auto Balance Cone";
+  private static final String auto12 = "Outside Auto Balance Cube";
+
+  private static final String auto13 = "Duluth Auto Cone";
+  private static final String auto14 = "Duluth Auto Cube";
+
+  private static final String testAuto = "Test Auto";
 
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -92,19 +105,28 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     
-    m_chooser.addOption("Inside Auto", auto1);
-    m_chooser.addOption("Outside Auto", auto2);
-    m_chooser.addOption("Mid Auto", auto3);
+    m_chooser.addOption("Cone Preload", auto1);
+    m_chooser.addOption("Cube Preload", auto2);
 
-    m_chooser.addOption("Inside Auto Balance", auto4);
-    m_chooser.addOption("Outside Auto Balance", auto5);
+    m_chooser.addOption("Inside Auto Cone", auto3);
+    m_chooser.addOption("Inside Auto Cube", auto4);
 
-    m_chooser.addOption("Score Cube Preload", auto6);
-    m_chooser.addOption("Score Cone Preload", auto7);
+    m_chooser.addOption("Mid Auto Balance Cone", auto5);
+    m_chooser.addOption("Mid Auto Balance Cube", auto6);
 
-    m_chooser.setDefaultOption("Duluth Auto", auto8);
+    m_chooser.addOption("Outside Auto Cone", auto7);
+    m_chooser.addOption("Outside Auto Cube", auto8);
 
-    m_chooser.addOption("Test Auto", autoTest);
+    m_chooser.addOption("Inside Auto Balance Cone", auto9);
+    m_chooser.addOption("Inside Auto Balance Cube", auto10);
+
+    m_chooser.addOption("Outside Auto Balance Cone", auto11);
+    m_chooser.addOption("Outside Auto Balance Cube", auto12);
+
+    m_chooser.addOption("Duluth Auto Cone", auto13);
+    m_chooser.setDefaultOption("Duluth Auto Cube", auto14);
+
+    m_chooser.addOption("Test Auto", testAuto);
 
     SmartDashboard.putData("Auto Choices", m_chooser);
 
@@ -166,33 +188,51 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
 
       case auto1:
-        m_autonomousCommand = m_robotContainer.InsideAutoSelect();
+        m_autonomousCommand = m_robotContainer.ConePreloadSelect();
         break;
       case auto2:
-        m_autonomousCommand = m_robotContainer.OutsideAutoSelect();
+        m_autonomousCommand = m_robotContainer.CubePreloadSelect();
         break;
       case auto3:
-        m_autonomousCommand = m_robotContainer.MidAutoSelect();
+        m_autonomousCommand = m_robotContainer.InsideAutoConeSelect();
         break;
       case auto4:
-        m_autonomousCommand = m_robotContainer.InsideAutoBalanceSelect();
+        m_autonomousCommand = m_robotContainer.InsideAutoCubeSelect();
         break;
       case auto5:
-        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceSelect();
+        m_autonomousCommand = m_robotContainer.MidAutoConeSelect();
         break;
       case auto6:
-        m_autonomousCommand = m_robotContainer.CubePreloadAutoSelect();
+        m_autonomousCommand = m_robotContainer.MidAutoCubeSelect();
         break;
       case auto7:
-        m_autonomousCommand = m_robotContainer.ConePreloadAutoSelect();
+        m_autonomousCommand = m_robotContainer.OutsideAutoConeSelect();
+        break;
       case auto8:
-        m_autonomousCommand = m_robotContainer.DuluthAutoSelect();
+        m_autonomousCommand = m_robotContainer.OutsideAutoCubeSelect();
         break;
-      case autoTest:
+      case auto9:
+        m_autonomousCommand = m_robotContainer.InsideAutoBalanceConeSelect();
+        break;
+      case auto10:
+        m_autonomousCommand = m_robotContainer.InsideAutoBalanceCubeSelect();
+        break;
+      case auto11:
+        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceConeSelect();
+        break;
+      case auto12:
+        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceCubeSelect();
+        break;
+      case auto13:
+        m_autonomousCommand = m_robotContainer.DuluthAutoConeSelect();
+        break;
+      case auto14:
+        m_autonomousCommand = m_robotContainer.DuluthAutoCubeSelect();
+        break;
+      case testAuto:
         m_autonomousCommand = m_robotContainer.TestAutoSelect();
-        break;
       default:
-        m_autonomousCommand = m_robotContainer.CubePreloadAutoSelect();
+        m_autonomousCommand = m_robotContainer.DuluthAutoCubeSelect();
         break;
 
     }

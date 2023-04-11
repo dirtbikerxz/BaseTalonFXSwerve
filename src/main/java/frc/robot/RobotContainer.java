@@ -35,15 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
-import frc.robot.commands.AutoCommands.GameAutos.ConePreloadAuto;
-import frc.robot.commands.AutoCommands.GameAutos.CubePreloadAuto;
-import frc.robot.commands.AutoCommands.GameAutos.DuluthAuto;
-import frc.robot.commands.AutoCommands.GameAutos.InsideAuto;
-import frc.robot.commands.AutoCommands.GameAutos.InsideAutoBalance;
-import frc.robot.commands.AutoCommands.GameAutos.MidAuto;
-import frc.robot.commands.AutoCommands.GameAutos.OutsideAuto;
-import frc.robot.commands.AutoCommands.GameAutos.OutsideAutoBalance;
-import frc.robot.commands.AutoCommands.GameAutos.TestAuto;
+import frc.robot.commands.AutoCommands.GameAutos.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -208,44 +200,77 @@ public class RobotContainer {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
     }
 
-    public Command InsideAutoSelect() {
+    // autos
 
-        return new InsideAuto(elevator, Wrist, intake, s_Swerve);
+    public Command ConePreloadSelect() {
+
+        return new ConePreloadAuto(elevator, Wrist, intake);
     }
 
-    public Command OutsideAutoSelect() {
+    public Command CubePreloadSelect() {
 
-        return new OutsideAuto(elevator, Wrist, intake, s_Swerve);
+        return new CubePreloadAuto(elevator, Wrist, intake);
+    
     }
 
-    public Command MidAutoSelect() {
+    public Command InsideAutoConeSelect() {
 
-        return new MidAuto(elevator, Wrist, intake, s_Swerve);
+        return new InsideAutoCone(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command InsideAutoBalanceSelect() {
+    public Command InsideAutoCubeSelect() {
 
-        return new InsideAutoBalance(elevator, Wrist, intake, s_Swerve);
+        return new InsideAutoCube(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command OutsideAutoBalanceSelect() {
+    public Command MidAutoConeSelect() {
 
-        return new OutsideAutoBalance(elevator, Wrist, intake, s_Swerve);
+        return new MidAutoCone(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command CubePreloadAutoSelect() {
+    public Command MidAutoCubeSelect() {
 
-        return new CubePreloadAuto(elevator, Wrist, intake, s_Swerve);
+        return new MidAutoCube(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command ConePreloadAutoSelect() {
+    public Command OutsideAutoConeSelect() {
 
-        return new ConePreloadAuto(elevator, Wrist, intake, s_Swerve);
+        return new OutsideAutoCone(elevator, Wrist, intake, s_Swerve);
     }
 
-    public Command DuluthAutoSelect() {
+    public Command OutsideAutoCubeSelect() {
 
-        return new DuluthAuto(elevator, Wrist, intake, s_Swerve);
+        return new OutsideAutoCube(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command InsideAutoBalanceConeSelect() {
+
+        return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command InsideAutoBalanceCubeSelect() {
+
+        return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command OutsideAutoBalanceConeSelect() {
+
+        return new OutsideAutoBalanceCone(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command OutsideAutoBalanceCubeSelect() {
+
+        return new OutsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command DuluthAutoConeSelect() {
+
+        return new DuluthAutoCone(elevator, Wrist, intake, s_Swerve);
+    }
+
+    public Command DuluthAutoCubeSelect() {
+
+        return new DuluthAutoCube(elevator, Wrist, intake, s_Swerve);
     }
 
     public Command TestAutoSelect() {

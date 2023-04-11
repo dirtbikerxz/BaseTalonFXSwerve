@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.RobotMode;
 import frc.robot.commands.ConfirmScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReturnFromScoring;
+import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.RunIntakeAtSpeed;
 import frc.robot.subsystems.*;
 
@@ -21,22 +23,30 @@ public class ScoreConePreload extends CommandBase {
     private Elevator elevator;
     private Wrist wrist;
     private Intake intake;
-    private Swerve swerve;
 
-    public ScoreConePreload(Elevator elevator, Wrist wrist, Intake intake, Swerve swerve) {
+    public ScoreConePreload(Elevator elevator, Wrist wrist, Intake intake) {
 
         // Use addRequirements() here to declare subsystem dependencies.
         this.elevator = elevator;
         this.wrist = wrist;
         this.intake = intake;
-        this.swerve = swerve;
 
-        addRequirements(wrist, elevator, intake, swerve);
+        addRequirements(wrist, elevator, intake);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+
+      new SequentialCommandGroup(
+
+        new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)),
+        new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.STOW)).withTimeout(1.0),
+        new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.HIGH)).withTimeout(4.0),
+        new ReverseIntake(intake).withTimeout(1.0),
+        new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.STOW)).withTimeout(3.0)
+
+      );
         
     }
 
