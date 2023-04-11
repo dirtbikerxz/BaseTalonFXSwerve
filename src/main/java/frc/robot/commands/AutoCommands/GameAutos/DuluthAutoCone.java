@@ -5,15 +5,22 @@
 package frc.robot.commands.AutoCommands.GameAutos;
 
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.ConfirmScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReturnFromScoring;
 import frc.robot.commands.RunIntakeAtSpeed;
+import frc.robot.commands.AutoCommands.FollowTrajectoryCommand;
 import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
 import frc.robot.commands.AutoCommands.AutoParts.ScoreConePreload;
 import frc.robot.subsystems.*;
@@ -40,11 +47,14 @@ public class DuluthAutoCone extends CommandBase {
     @Override
     public void initialize() {
 
-      new SequentialCommandGroup(
-        new ScoreConePreload(elevator, wrist, intake),
-        new DriveCommand(swerve, -0.5, 0, 0).withTimeout(2.0),
-        new AutoBalance(swerve)
-      );
+        PathPlannerTrajectory path = PathPlanner.loadPath("Duluth Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC));
+        path = PathPlannerTrajectory.transformTrajectoryForAlliance(path, DriverStation.getAlliance());
+
+        new SequentialCommandGroup(
+            new ScoreConePreload(elevator, wrist, intake),
+            new FollowTrajectoryCommand(swerve, path, true),
+            new AutoBalance(swerve)
+        );
         
     }
 
