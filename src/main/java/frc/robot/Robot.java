@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
 
     m_chooser.addOption("Test Auto", testAuto);
 
-    SmartDashboard.putData("Auto Choices", m_chooser);
+    SmartDashboard.putData("driver/ Auto Choices", m_chooser);
 
     // driver camera
     final UsbCamera usbCamera = CameraServer.startAutomaticCapture();

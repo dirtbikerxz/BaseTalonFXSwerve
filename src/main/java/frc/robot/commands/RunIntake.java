@@ -29,7 +29,7 @@ public class RunIntake extends CommandBase {
     public void initialize() {
 
         intake.Run(Constants.INTAKE_SPEED);
-        SmartDashboard.putBoolean("Intake Direction", true);
+        SmartDashboard.putBoolean("driver/ Intake Direction", true);
         
     }
 

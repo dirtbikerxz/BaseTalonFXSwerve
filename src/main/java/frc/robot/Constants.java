@@ -20,44 +20,44 @@ public final class Constants {
     public static final int WRIST_ENCODER_ID = 1;
     public static final double WRIST_FORWARD_LIMIT = 40;
     public static final double WRIST_REVERSE_LIMIT = -90;
-    public static final double WRIST_GEAR_RATIO = 150.0;
+    public static final double WRIST_GEAR_RATIO = 87.27;
     public static final double WRIST_MOTOR_ROT_TO_DEG = 360.0 / WRIST_GEAR_RATIO;
     public static final double MANUAL_WRIST_SPEED = 1.0;
     public static final double WRIST_GROUND_POSITION = -95; //set value
 
     // positions
-    public static final double WRIST_CONE_STOW_POSITION = -135;
-    public static final double WRIST_CONE_LOW_POSITION = -82.7;
-    public static final double WRIST_CONE_MID_POSITION = 0.0;
-    public static final double WRIST_CONE_HIGH_POSITION = 35.0;
-    public static final double WRIST_CONE_SINGLE_POSITION = 0.0;
-    public static final double WRIST_CONE_DOUBLE_POSITION = 0.0;
+    public static final double WRIST_CONE_STOW_POSITION = 68.82;
+    public static final double WRIST_CONE_LOW_POSITION = -25.8;
+    public static final double WRIST_CONE_MID_POSITION = 0;
+    public static final double WRIST_CONE_HIGH_POSITION = 50;
+    public static final double WRIST_CONE_SINGLE_POSITION = 0;
+    public static final double WRIST_CONE_DOUBLE_POSITION = 0;
 
-    public static final double WRIST_CUBE_STOW_POSITION = -135;
-    public static final double WRIST_CUBE_LOW_POSITION = -82.7;
-    public static final double WRIST_CUBE_MID_POSITION = 0.0;
-    public static final double WRIST_CUBE_HIGH_POSITION = 35.0;
-    public static final double WRIST_CUBE_SINGLE_POSITION = 0.0;
-    public static final double WRIST_CUBE_DOUBLE_POSITION = 0.0;
+    public static final double WRIST_CUBE_STOW_POSITION = 68.82;
+    public static final double WRIST_CUBE_LOW_POSITION = -25.8;
+    public static final double WRIST_CUBE_MID_POSITION = 0;
+    public static final double WRIST_CUBE_HIGH_POSITION = 50;
+    public static final double WRIST_CUBE_SINGLE_POSITION = 0;
+    public static final double WRIST_CUBE_DOUBLE_POSITION = 0;
 
-    public static final double WRIST_DEFAULT_STOW_POSITION = -135;
-    public static final double WRIST_DEFAULT_LOW_POSITION = -82.7;
-    public static final double WRIST_DEFAULT_MID_POSITION = 0.0;
-    public static final double WRIST_DEFAULT_HIGH_POSITION = 35.0;
-    public static final double WRIST_DEFAULT_SINGLE_POSITION = 0.0;
-    public static final double WRIST_DEFAULT_DOUBLE_POSITION = 0.0;
+    public static final double WRIST_DEFAULT_STOW_POSITION = 68.82;
+    public static final double WRIST_DEFAULT_LOW_POSITION = -25.8;
+    public static final double WRIST_DEFAULT_MID_POSITION = 0;
+    public static final double WRIST_DEFAULT_HIGH_POSITION = 50;
+    public static final double WRIST_DEFAULT_SINGLE_POSITION = 0;
+    public static final double WRIST_DEFAULT_DOUBLE_POSITION = 0;
     
 
     public static final double WRIST_TOLERANCE = 20.0;
 
     //Feedforward
-    public static final double WRIST_G = -0.3; //Its negative because the motors move the wrong direction
+    public static final double WRIST_G = 0.2; //Its negative because the motors move the wrong direction
     public static final double WRIST_V = 0.0;
     public static final double WRIST_A = 0.0;
     public static final double WRIST_S = 0.0;
 
     //PID
-    public static final double WRIST_P = -0.18;
+    public static final double WRIST_P = 0.5;
     public static final double WRIST_I = 0.0;
     public static final double WRIST_D = 0.0;
 
@@ -75,10 +75,10 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = 360-87.45;
+    public static final double WRIST_ENCODER_OFFSET = 3.14;
     public static final double TARGET_WRIST_ANGLE = 0;
 
-    public static final double INTAKE_SPEED = 0.60;
+    public static final double INTAKE_SPEED = 1.0;
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
     
@@ -87,7 +87,7 @@ public final class Constants {
     public static final int PNEUMATIC_REVERSE_CHANEL = 15;
 
     public static final int CANDLE_PORT = 9;
-    public static final double WRIST_ENCODER_RATIO = 1.2;
+    public static final double WRIST_ENCODER_RATIO = 1.4545;
 
     /* Elevator Constants */
     public static final int FORWARD_ELEVATOR_LIMIT = 26;

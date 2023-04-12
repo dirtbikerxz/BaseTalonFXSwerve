@@ -29,7 +29,7 @@ public class ReverseIntake extends CommandBase {
     public void initialize() {
 
         intake.Run(-Constants.INTAKE_SPEED);
-        SmartDashboard.putBoolean("Intake Direction", false);
+        SmartDashboard.putBoolean("driver/ Intake Direction", false);
 
     }
 

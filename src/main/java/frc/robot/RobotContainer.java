@@ -281,8 +281,8 @@ public class RobotContainer {
 
     public void DriverHandler() {
 
-        driverX.onTrue(new RunIntake(intake));
-        driverA.onTrue(new ReverseIntake(intake));
+        driverX.whileTrue(new RunIntake(intake));
+        driverA.whileTrue(new ReverseIntake(intake));
 
     }
 

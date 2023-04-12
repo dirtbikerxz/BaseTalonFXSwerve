@@ -90,6 +90,7 @@ public class Wrist extends SubsystemBase {
     wristCANEncoder.configMagnetOffset(Constants.WRIST_ENCODER_OFFSET);
     wristCANEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     wristCANEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+    wristCANEncoder.configSensorDirection(true);
     
     wristRelativeEncoder = wristMotor.getEncoder();
     //wristRelativeEncoder.setPositionConversionFactor(Constants.wrist_GEAR_RATIO);
@@ -237,8 +238,8 @@ public class Wrist extends SubsystemBase {
 
     /* Smart Dashboard printing */
     SmartDashboard.putNumber("CANCoder", wristCANEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber("wrist Position Integrated", getPositionInDegreesIntegrated());
-    SmartDashboard.putNumber("wrist Position Absolute", getPositionInDegreesCanCoder());
+    SmartDashboard.putNumber("debug/wrist Position Integrated", getPositionInDegreesIntegrated());
+    SmartDashboard.putNumber("debug/wrist Position Absolute", getPositionInDegreesCanCoder());
     SmartDashboard.putNumber("wrist PID Output", pid);
     // SmartDashboard.putNumber("wrist Voltage", voltage);
     SmartDashboard.putNumber("Target wrist Angle", targetWristAngle);
