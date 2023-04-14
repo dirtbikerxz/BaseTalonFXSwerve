@@ -36,6 +36,12 @@ import com.pathplanner.lib.commands.FollowPathWithEvents;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCommands.GameAutos.*;
+import frc.robot.commands.MovementCommands.GoToDouble;
+import frc.robot.commands.MovementCommands.GoToHigh;
+import frc.robot.commands.MovementCommands.GoToLow;
+import frc.robot.commands.MovementCommands.GoToMid;
+import frc.robot.commands.MovementCommands.GoToSingle;
+import frc.robot.commands.MovementCommands.GoToStow;
 import frc.robot.subsystems.*;
 
 /**
@@ -291,12 +297,12 @@ public class RobotContainer {
         operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
         operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
 
-        operatorA.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.LOW)));
-        operatorB.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.MID)));
-        operatorY.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.HIGH)));
-        operatorBack.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.SINGLE)));
-        operatorStart.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.DOUBLE)));
-        operatorX.onTrue(new InstantCommand(() -> RobotMode.SetState(RobotMode.StateOptions.STOW)));
+        operatorA.onTrue(new GoToLow(Wrist, elevator));
+        operatorB.onTrue(new GoToMid(Wrist, elevator));
+        operatorY.onTrue(new GoToHigh(Wrist, elevator));
+        operatorBack.onTrue(new GoToSingle(Wrist, elevator));
+        operatorStart.onTrue(new GoToDouble(Wrist, elevator));
+        operatorX.onTrue(new GoToStow(Wrist, elevator));
         
     }
 

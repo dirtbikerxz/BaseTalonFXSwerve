@@ -26,21 +26,21 @@ public final class Constants {
     public static final double WRIST_GROUND_POSITION = -95; //set value
 
     // positions
-    public static final double WRIST_CONE_STOW_POSITION = 68.82;
+    public static final double WRIST_CONE_STOW_POSITION = 58.58;
     public static final double WRIST_CONE_LOW_POSITION = -25.8;
-    public static final double WRIST_CONE_MID_POSITION = 0;
+    public static final double WRIST_CONE_MID_POSITION = -30;
     public static final double WRIST_CONE_HIGH_POSITION = 50;
     public static final double WRIST_CONE_SINGLE_POSITION = 0;
     public static final double WRIST_CONE_DOUBLE_POSITION = 0;
 
-    public static final double WRIST_CUBE_STOW_POSITION = 68.82;
+    public static final double WRIST_CUBE_STOW_POSITION = 58.58;
     public static final double WRIST_CUBE_LOW_POSITION = -25.8;
-    public static final double WRIST_CUBE_MID_POSITION = 0;
-    public static final double WRIST_CUBE_HIGH_POSITION = 50;
+    public static final double WRIST_CUBE_MID_POSITION = 9.5;
+    public static final double WRIST_CUBE_HIGH_POSITION = 0;
     public static final double WRIST_CUBE_SINGLE_POSITION = 0;
     public static final double WRIST_CUBE_DOUBLE_POSITION = 0;
 
-    public static final double WRIST_DEFAULT_STOW_POSITION = 68.82;
+    public static final double WRIST_DEFAULT_STOW_POSITION = 58.58;
     public static final double WRIST_DEFAULT_LOW_POSITION = -25.8;
     public static final double WRIST_DEFAULT_MID_POSITION = 0;
     public static final double WRIST_DEFAULT_HIGH_POSITION = 50;
@@ -51,13 +51,13 @@ public final class Constants {
     public static final double WRIST_TOLERANCE = 20.0;
 
     //Feedforward
-    public static final double WRIST_G = 0.2; //Its negative because the motors move the wrong direction
+    public static final double WRIST_G = 0.2;
     public static final double WRIST_V = 0.0;
     public static final double WRIST_A = 0.0;
     public static final double WRIST_S = 0.0;
 
     //PID
-    public static final double WRIST_P = 0.5;
+    public static final double WRIST_P = 0.3;
     public static final double WRIST_I = 0.0;
     public static final double WRIST_D = 0.0;
 
@@ -75,10 +75,12 @@ public final class Constants {
     
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = 3.14;
+    public static final double WRIST_ENCODER_OFFSET = -1.3;
     public static final double TARGET_WRIST_ANGLE = 0;
 
-    public static final double INTAKE_SPEED = 1.0;
+    public static final double INTAKE_CONE_SPEED = -0.5;
+    public static final double INTAKE_CUBE_SPEED = 0.5;
+
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
     
@@ -97,23 +99,25 @@ public final class Constants {
     public static final double ELEVATOR_SPROCKET_DIAMETER = 1.751;
     public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
     public static final double MANUAL_ELEVATOR_SPEED = 0.50;
-    public static final double ELEVATOR_P = 1.0;
+
+    public static final double ELEVATOR_P = 0.75;
     public static final double ELEVATOR_I = 0.0;
     public static final double ELEVATOR_D = 0.0;
+    public static final double ELEVATOR_G = 0.32;
 
     public static final double ELEVATOR_CONE_HIGH_LEVEL = 26;
-    public static final double ELEVATOR_CONE_MID_LEVEL = 8.5;
+    public static final double ELEVATOR_CONE_MID_LEVEL = ELEVATOR_CONE_HIGH_LEVEL;
     public static final double ELEVATOR_CONE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_CONE_STOW_LEVEL = 6.0;
+    public static final double ELEVATOR_CONE_STOW_LEVEL = 0;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 4;
     public static final double ELEVATOR_CONE_DOUBLE_POSITION = 4;
 
     public static final double ELEVATOR_CUBE_HIGH_LEVEL = 26;
-    public static final double ELEVATOR_CUBE_MID_LEVEL = 8.5;
+    public static final double ELEVATOR_CUBE_MID_LEVEL = 14.45;
     public static final double ELEVATOR_CUBE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_CUBE_STOW_LEVEL = 6.0;
+    public static final double ELEVATOR_CUBE_STOW_LEVEL = 0;
     public static final double ELEVATOR_CUBE_SINGLE_POSITION = 4;
     public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 4;
 
@@ -121,11 +125,11 @@ public final class Constants {
     public static final double ELEVATOR_DEFUALT_MID_LEVEL = 8.5;
     public static final double ELEVATOR_DEFUALT_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_DEFUALT_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_DEFUALT_STOW_LEVEL = 6.0;
+    public static final double ELEVATOR_DEFUALT_STOW_LEVEL = 0;
     public static final double ELEVATOR_DEFUALT_SINGLE_POSITION = 4;
     public static final double ELEVATOR_DEFUALT_DOUBLE_POSITION = 4;
 
-    public static final double ELEVATOR_TOLERANCE = 20;
+    public static final double ELEVATOR_TOLERANCE = 5;
 
     public static final int GRYO_OFFSET = 0;
 

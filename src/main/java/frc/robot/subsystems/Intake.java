@@ -64,12 +64,7 @@ public class Intake extends SubsystemBase {
 
     public void Run(double speed) {
 
-      if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
-        motor.set(speed);
-      } else {
-        motor.set(-speed);
-      }
-      
+      motor.set(speed);
 
     }
 

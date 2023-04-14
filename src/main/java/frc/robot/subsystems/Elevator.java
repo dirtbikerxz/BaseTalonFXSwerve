@@ -41,7 +41,7 @@ public class Elevator extends SubsystemBase {
     private CANSparkMax elevatorMotor;
     private ProfiledPIDController controller;
     private ElevatorFeedforward ff;
-    private double targetElevatorPosition;
+    public double targetElevatorPosition = Constants.ELEVATOR_DEFUALT_STOW_LEVEL;
 
     /* Logging */
     private DataLog logger;
@@ -75,7 +75,7 @@ public class Elevator extends SubsystemBase {
         this.controller = new ProfiledPIDController(Constants.ELEVATOR_P, Constants.ELEVATOR_I, Constants.ELEVATOR_D, new Constraints(80, 1000));
         this.controller.setTolerance(100, 100);
         // TODO: Recalculate these constants
-        //this.ff = new ElevatorFeedforward(0, 0.16, 0.18, 0.02);
+        this.ff = new ElevatorFeedforward(0, Constants.ELEVATOR_G, 0.0, 0.0);
 
         elevatorEncoder.setPositionConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
         elevatorEncoder.setVelocityConversionFactor(Constants.ELEVATOR_ROTATIONS_TO_IN);
@@ -95,47 +95,7 @@ public class Elevator extends SubsystemBase {
     }
     
     
-    /* Sets the Target Elevator Position in inches.*/
-    public void SetTargetElevatorPosition(){
-        
-        ModeOptions mode = RobotMode.mode;
-        StateOptions state = RobotMode.state;
 
-        if (mode == RobotMode.ModeOptions.CUBE) {
-
-            if (state == RobotMode.StateOptions.LOW) {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_LOW_LEVEL;
-            } else if (state == RobotMode.StateOptions.MID) {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_MID_LEVEL;
-            } else if (state == RobotMode.StateOptions.HIGH) {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_HIGH_LEVEL;
-            } else if (state == RobotMode.StateOptions.SINGLE) {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_SINGLE_POSITION;
-            } else if (state == RobotMode.StateOptions.DOUBLE) {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_DOUBLE_POSITION;
-            } else {
-                targetElevatorPosition = Constants.ELEVATOR_CUBE_STOW_LEVEL;
-            }
-
-        } else {
-
-            if (state == RobotMode.StateOptions.LOW) {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_LOW_LEVEL;
-            } else if (state == RobotMode.StateOptions.MID) {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_MID_LEVEL;
-            } else if (state == RobotMode.StateOptions.HIGH) {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_HIGH_LEVEL;
-            } else if (state == RobotMode.StateOptions.SINGLE) {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_SINGLE_POSITION;
-            } else if (state == RobotMode.StateOptions.DOUBLE) {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_DOUBLE_POSITION;
-            } else {
-                targetElevatorPosition = Constants.ELEVATOR_CONE_STOW_LEVEL;
-            }
-        }
-
-
-    }
 
     /* Sets the Target Elevator Position in inches.*/
     public double getTargetElevatorPosition(){
@@ -178,9 +138,9 @@ public class Elevator extends SubsystemBase {
         return inches / Constants.ELEVATOR_ROTATIONS_TO_IN;
     }
 
-    public boolean atPosition() {
+    public boolean atPosition(double position) {
 
-        double error = Math.abs(elevatorEncoder.getPosition() - targetElevatorPosition);
+        double error = Math.abs(elevatorEncoder.getPosition() - position);
 
         if (Constants.ELEVATOR_TOLERANCE >= error) {
             return true;
@@ -200,9 +160,11 @@ public class Elevator extends SubsystemBase {
         if (DriverStation.isEnabled()){
             // This method will be called once per scheduler run
             // TODO: Test that .getPosition() gives us the elevator position in inches
-            SetTargetElevatorPosition();
+            
+            //double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
+            //System.out.println(feedforward);
             double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
-            // double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
+
             MathUtil.clamp(voltage, -12, 12);
 
             elevatorMotor.setVoltage(voltage);
@@ -222,11 +184,12 @@ public class Elevator extends SubsystemBase {
     public Command SetElevatorPosition (double inches){
         return new InstantCommand(() -> setTargetElevatorPosition(inches), this);
     }
-
-    public Command ElevatorAtPosition(){
-        return Commands.waitUntil(() -> atPosition());
-    }
     */
+
+    public Command ElevatorAtPosition(double position){
+        return Commands.waitUntil(() -> atPosition(position));
+    }
+    
 
     private void logData() {
         /* Elevator Motor */
