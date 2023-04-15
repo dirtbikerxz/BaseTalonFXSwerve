@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Score Cone Preload"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -49,15 +51,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.105501390489961,
-        "y": 4.716116440779891
+        "x": 7.09408222235248,
+        "y": 4.579086423130112
       },
       "prevControl": {
-        "x": 6.105501390489961,
-        "y": 4.716116440779891
+        "x": 6.09408222235248,
+        "y": 4.579086423130112
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -70,5 +72,13 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 1.8,
+      "names": [
+        "Go To Ground",
+        "Run Intake"
+      ]
+    }
+  ]
 }

@@ -34,11 +34,10 @@ public class GoToStandingCone extends SequentialCommandGroup {
           new SequentialCommandGroup(
             new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)
               .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_MID_LEVEL)),
-            // new ParallelCommandGroup(
             new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_STANDING_POSITION)
               .until(() -> true),
             new SetWristPosition(wrist, Constants.WRIST_CONE_STANDING_POSITION)
-            // )
+              .until(() -> wrist.atPosition(Constants.WRIST_CONE_STANDING_POSITION))
           )
         );
 

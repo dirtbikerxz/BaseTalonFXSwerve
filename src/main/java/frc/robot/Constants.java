@@ -33,6 +33,7 @@ public final class Constants {
     public static final double WRIST_CONE_SINGLE_POSITION = 0;
     public static final double WRIST_CONE_DOUBLE_POSITION = 0;
     public static final double WRIST_CONE_STANDING_POSITION = -37.4;
+    public static final double WRIST_CONE_SAFE_POSITION = 115;
 
     public static final double WRIST_CUBE_STOW_POSITION = 58.58;
     public static final double WRIST_CUBE_LOW_POSITION = -25.8;
@@ -40,6 +41,7 @@ public final class Constants {
     public static final double WRIST_CUBE_HIGH_POSITION = 0;
     public static final double WRIST_CUBE_SINGLE_POSITION = 0;
     public static final double WRIST_CUBE_DOUBLE_POSITION = 0;
+    public static final double WRIST_CUBE_SAFE_POSITION = 115;
 
     public static final double WRIST_DEFAULT_STOW_POSITION = 58.58;
     public static final double WRIST_DEFAULT_LOW_POSITION = -25.8;
@@ -47,6 +49,7 @@ public final class Constants {
     public static final double WRIST_DEFAULT_HIGH_POSITION = 50;
     public static final double WRIST_DEFAULT_SINGLE_POSITION = 0;
     public static final double WRIST_DEFAULT_DOUBLE_POSITION = 0;
+    public static final double WRIST_DEFAULT_SAFE_POSITION = 115;
     
 
     public static final double WRIST_TOLERANCE = 20.0;
@@ -114,8 +117,8 @@ public final class Constants {
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CONE_STOW_LEVEL = 0;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 4;
-    public static final double ELEVATOR_CONE_DOUBLE_POSITION = 4;
-    public static final double ELEVATOR_CONE_STANDING_POSITION = 8.5;
+    public static final double ELEVATOR_CONE_DOUBLE_POSITION = ELEVATOR_CONE_HIGH_LEVEL;
+    public static final double ELEVATOR_CONE_STANDING_POSITION = 7.75;
 
     public static final double ELEVATOR_CUBE_HIGH_LEVEL = 26;
     public static final double ELEVATOR_CUBE_MID_LEVEL = 14.45;
@@ -123,7 +126,7 @@ public final class Constants {
     public static final double ELEVATOR_CUBE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CUBE_STOW_LEVEL = 0;
     public static final double ELEVATOR_CUBE_SINGLE_POSITION = 4;
-    public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 4;
+    public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 26;
 
     public static final double ELEVATOR_DEFUALT_HIGH_LEVEL = 26;
     public static final double ELEVATOR_DEFUALT_MID_LEVEL = 8.5;

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.IdleLEDS;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.MovementCommands.GoToStow;
 import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
@@ -51,32 +52,6 @@ public class Robot extends TimedRobot {
     private Timer timer;
     private double previousTime;
 
-  private static final String auto1 = "Cone Preload";
-  private static final String auto2 = "Cube Preload";
-
-  private static final String auto3 = "Inside Auto Cone";
-  private static final String auto4 = "Inside Auto Cube";
-
-  private static final String auto5 = "Mid Auto Balance Cone";
-  private static final String auto6 = "Mid Auto Balance Cube";
-
-  private static final String auto7 = "Outside Auto Cone";
-  private static final String auto8 = "Outside Auto Cube";
-
-  private static final String auto9 = "Inside Auto Balance Cone";
-  private static final String auto10 = "Inside Auto Balance Cube";
-
-  private static final String auto11 = "Outside Auto Balance Cone";
-  private static final String auto12 = "Outside Auto Balance Cube";
-
-  private static final String auto13 = "Duluth Auto Cone";
-  private static final String auto14 = "Duluth Auto Cube";
-
-  private static final String testAuto = "Test Auto";
-
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  
  
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -105,30 +80,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     
-    m_chooser.addOption("Cone Preload", auto1);
-    m_chooser.addOption("Cube Preload", auto2);
 
-    m_chooser.addOption("Inside Auto Cone", auto3);
-    m_chooser.addOption("Inside Auto Cube", auto4);
-
-    m_chooser.addOption("Mid Auto Balance Cone", auto5);
-    m_chooser.addOption("Mid Auto Balance Cube", auto6);
-
-    m_chooser.addOption("Outside Auto Cone", auto7);
-    m_chooser.addOption("Outside Auto Cube", auto8);
-
-    m_chooser.addOption("Inside Auto Balance Cone", auto9);
-    m_chooser.addOption("Inside Auto Balance Cube", auto10);
-
-    m_chooser.addOption("Outside Auto Balance Cone", auto11);
-    m_chooser.addOption("Outside Auto Balance Cube", auto12);
-
-    m_chooser.addOption("Duluth Auto Cone", auto13);
-    m_chooser.setDefaultOption("Duluth Auto Cube", auto14);
-
-    m_chooser.addOption("Test Auto", testAuto);
-
-    SmartDashboard.putData("driver/ Auto Choices", m_chooser);
 
     // driver camera
     final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
@@ -181,62 +133,9 @@ public class Robot extends TimedRobot {
     m_robotContainer.Wrist.resetRelative();
     //m_robotContainer.MidAuto();
 
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
+    //m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
 
-    m_autoSelected = m_chooser.getSelected();
-
-    switch (m_autoSelected) {
-
-      case auto1:
-        m_autonomousCommand = m_robotContainer.ConePreloadSelect();
-        break;
-      case auto2:
-        m_autonomousCommand = m_robotContainer.CubePreloadSelect();
-        break;
-      case auto3:
-        m_autonomousCommand = m_robotContainer.InsideAutoConeSelect();
-        break;
-      case auto4:
-        m_autonomousCommand = m_robotContainer.InsideAutoCubeSelect();
-        break;
-      case auto5:
-        m_autonomousCommand = m_robotContainer.MidAutoConeSelect();
-        break;
-      case auto6:
-        m_autonomousCommand = m_robotContainer.MidAutoCubeSelect();
-        break;
-      case auto7:
-        m_autonomousCommand = m_robotContainer.OutsideAutoConeSelect();
-        break;
-      case auto8:
-        m_autonomousCommand = m_robotContainer.OutsideAutoCubeSelect();
-        break;
-      case auto9:
-        m_autonomousCommand = m_robotContainer.InsideAutoBalanceConeSelect();
-        break;
-      case auto10:
-        m_autonomousCommand = m_robotContainer.InsideAutoBalanceCubeSelect();
-        break;
-      case auto11:
-        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceConeSelect();
-        break;
-      case auto12:
-        m_autonomousCommand = m_robotContainer.OutsideAutoBalanceCubeSelect();
-        break;
-      case auto13:
-        m_autonomousCommand = m_robotContainer.DuluthAutoConeSelect();
-        break;
-      case auto14:
-        m_autonomousCommand = m_robotContainer.DuluthAutoCubeSelect();
-        break;
-      case testAuto:
-        m_autonomousCommand = m_robotContainer.TestAutoSelect();
-      default:
-        m_autonomousCommand = m_robotContainer.DuluthAutoCubeSelect();
-        break;
-
-    }
-
+    m_autonomousCommand = m_robotContainer.autoChooser.getSelected();
     
     // PathConstraints pathConstraints = new PathConstraints(4, 3);
     
@@ -276,7 +175,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     m_robotContainer.Wrist.resetRelative();
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
+    m_robotContainer.Wrist.setStow();
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

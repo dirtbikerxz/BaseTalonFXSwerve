@@ -7,6 +7,7 @@ package frc.robot.commands.MovementCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -24,35 +25,32 @@ public class GoToDouble extends SequentialCommandGroup {
     /** Creates a new DriveForward. */
     public GoToDouble(Wrist wrist, Elevator elevator) {
       // Use addRequirements() here to declare subsystem dependencies.
-      this.wrist = wrist;
-      this.elevator = elevator;
-      addRequirements(wrist, elevator);
-
-      if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
-
-        addCommands(
-        
-            new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
-                .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_DOUBLE_POSITION)
-                .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_DOUBLE_POSITION)),
-            new SetWristPosition(wrist, Constants.WRIST_CONE_DOUBLE_POSITION)
-
-        );
-
-      } else {
+        this.wrist = wrist;
+        this.elevator = elevator;
+        addRequirements(wrist, elevator);
 
         addCommands(
 
-            new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
-                .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_DOUBLE_POSITION)
-                .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_DOUBLE_POSITION)),
-            new SetWristPosition(wrist, Constants.WRIST_CUBE_DOUBLE_POSITION)
+            new ConditionalCommand(
+                new SequentialCommandGroup(
+                    new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+                    new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_DOUBLE_POSITION)
+                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_DOUBLE_POSITION)),
+                    new SetWristPosition(wrist, Constants.WRIST_CONE_DOUBLE_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_DOUBLE_POSITION))
+                ),
 
+                new SequentialCommandGroup(
+                    new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
+                    new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_DOUBLE_POSITION)
+                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_DOUBLE_POSITION)),
+                    new SetWristPosition(wrist, Constants.WRIST_CUBE_DOUBLE_POSITION))
+                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_DOUBLE_POSITION)),
+
+                () -> RobotMode.IsCone()
+            )
         );
-
-      }
-
     }
 }

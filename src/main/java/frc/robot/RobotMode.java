@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotMode {
     
@@ -36,6 +38,11 @@ public class RobotMode {
     public static boolean IsCone() {
 
         return (mode == ModeOptions.CONE);
+    }
+
+    public static Command ChangeMode(ModeOptions selectedMode) {
+
+        return new InstantCommand(() -> mode = selectedMode);
     }
 
 }

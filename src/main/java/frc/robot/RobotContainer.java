@@ -1,12 +1,14 @@
 package frc.robot;
 
 import java.util.function.DoubleSupplier;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -19,6 +21,7 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -35,6 +38,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
+import frc.robot.commands.AutoCommands.AutoParts.ScoreConePreload;
 import frc.robot.commands.AutoCommands.GameAutos.*;
 import frc.robot.commands.MovementCommands.GoToDouble;
 import frc.robot.commands.MovementCommands.GoToHigh;
@@ -126,12 +131,15 @@ public class RobotContainer {
     public final LEDs leds = new LEDs();
     private final Intake intake = new Intake();
     public final Wrist Wrist = new Wrist();
-    private final Elevator elevator = new Elevator();
+    public final Elevator elevator = new Elevator();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
 
     private double targetRotation;
+
+    private String m_autoSelected;
+    public final SendableChooser<CommandBase> autoChooser = new SendableChooser<>();
     
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
     
@@ -165,6 +173,49 @@ public class RobotContainer {
         configureButtonBindings();
 
         eventMap = new HashMap<>();
+
+        SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+            s_Swerve::getPose,
+            s_Swerve::resetOdometry,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0),
+            new PIDConstants(Constants.AutoConstants.kPYController, 0.0, 0.0),
+            s_Swerve::setModuleStates,
+            eventMap,
+            true,
+            s_Swerve
+        );
+
+        eventMap.put("Score Cone Preload", new ScoreConePreload(elevator, Wrist, intake));
+        eventMap.put("Score Cube Preload", new ScoreConePreload(elevator, Wrist, intake));
+        eventMap.put("Auto Balance", new AutoBalance(s_Swerve));
+        eventMap.put("Go To Ground", new GoToLow(Wrist, elevator));
+        eventMap.put("Run Intake", new RunIntake(intake));
+
+        autoChooser.addOption("Cone Preload Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cone Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Cube Preload Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cube Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Inside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Inside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Mid Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Mid Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Outside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Outside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Inside Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Balance Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Inside Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Balance Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Outside Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Balance Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Outside Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Balance Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Duluth Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Duluth Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Duluth Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Duluth Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        autoChooser.addOption("Test Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Test Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+
+        SmartDashboard.putData("driver/auto",autoChooser);
     }
 
     // /**

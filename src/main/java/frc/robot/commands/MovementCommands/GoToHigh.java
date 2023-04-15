@@ -7,6 +7,7 @@ package frc.robot.commands.MovementCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -28,32 +29,29 @@ public class GoToHigh extends SequentialCommandGroup {
       this.elevator = elevator;
       addRequirements(wrist, elevator);
 
-      if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
+      addCommands(
 
-        addCommands(
-        
-            new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
-                .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_HIGH_LEVEL)
-                .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_HIGH_LEVEL)),
-            new SetWristPosition(wrist, Constants.WRIST_CONE_HIGH_POSITION)
+      new ConditionalCommand(
+          new SequentialCommandGroup(
+              new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+              new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_HIGH_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_HIGH_LEVEL)),
+              new SetWristPosition(wrist, Constants.WRIST_CONE_HIGH_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CONE_HIGH_POSITION))
+          ),
 
-        );
+          new SequentialCommandGroup(
+              new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
+              new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_HIGH_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_HIGH_LEVEL)),
+              new SetWristPosition(wrist, Constants.WRIST_CUBE_HIGH_POSITION))
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_HIGH_POSITION)),
 
-      } else {
-
-        addCommands(
-
-            new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
-                .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_HIGH_LEVEL)
-                .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_HIGH_LEVEL)),
-            new SetWristPosition(wrist, Constants.WRIST_CUBE_HIGH_POSITION)
-
-        );
-
-      }
-
+          () -> RobotMode.IsCone()
+        )
+    );
     }
 }
 

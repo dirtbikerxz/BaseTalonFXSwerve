@@ -146,6 +146,11 @@ public class Wrist extends SubsystemBase {
     return wristCANEncoder.getVelocity() / Constants.WRIST_ENCODER_RATIO;
   }
 
+  public void setStow() {
+
+    targetWristAngle = Constants.WRIST_CONE_STOW_POSITION;
+  }
+
 
   public void moveWristUp() {
     
