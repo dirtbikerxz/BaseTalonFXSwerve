@@ -30,9 +30,9 @@ public class ReverseIntake extends CommandBase {
     public void initialize() {
 
         if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
-            intake.Run(Constants.INTAKE_CONE_SPEED);
+            intake.Run(Constants.INTAKE_CONE_REVERSE_SPEED);
         } else {
-            intake.Run(Constants.INTAKE_CUBE_SPEED);
+            intake.Run(Constants.INTAKE_CUBE_REVERSE_SPEED);
         }
         
         SmartDashboard.putBoolean("driver/ Intake Direction", false);

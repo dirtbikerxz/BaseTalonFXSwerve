@@ -41,6 +41,7 @@ import frc.robot.commands.MovementCommands.GoToHigh;
 import frc.robot.commands.MovementCommands.GoToLow;
 import frc.robot.commands.MovementCommands.GoToMid;
 import frc.robot.commands.MovementCommands.GoToSingle;
+import frc.robot.commands.MovementCommands.GoToStandingCone;
 import frc.robot.commands.MovementCommands.GoToStow;
 import frc.robot.subsystems.*;
 
@@ -302,7 +303,9 @@ public class RobotContainer {
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
         operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         operatorStart.onTrue(new GoToDouble(Wrist, elevator));
-        operatorX.onTrue(new GoToStow(Wrist, elevator));
+       operatorX.onTrue(new GoToStow(Wrist, elevator));
+       operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
+
         
     }
 

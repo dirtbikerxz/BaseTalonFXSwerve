@@ -30,9 +30,9 @@ public class RunIntake extends CommandBase {
     public void initialize() {
 
         if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
-            intake.Run(-Constants.INTAKE_CONE_SPEED);
+            intake.Run(Constants.INTAKE_CONE_RUN_SPEED);
         } else {
-            intake.Run(-Constants.INTAKE_CUBE_SPEED);
+            intake.Run(Constants.INTAKE_CUBE_RUN_SPEED);
         }
         
         SmartDashboard.putBoolean("driver/ Intake Direction", true);
