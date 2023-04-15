@@ -49,7 +49,7 @@ public class LEDs extends SubsystemBase{
         //System.out.println(candle.setLEDs(red, green, blue));
         ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 308, Direction.Forward);
 
-        System.out.println(candle.animate(animation));
+        candle.animate(animation);
     }
 
     @Override

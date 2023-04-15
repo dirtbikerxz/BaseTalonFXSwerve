@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.2295165957853285,
-        "y": 1.061982636785786
+        "x": 1.8983607197983627,
+        "y": 0.39967088481185487
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2295165957853285,
-        "y": 0.787684805315418
+        "x": 1.8983607197983627,
+        "y": 0.39967088481185487
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -49,15 +49,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.60794478853915,
-        "y": 0.673730920111413
+        "x": 7.082663054214997,
+        "y": 0.9249526191360088
       },
       "prevControl": {
-        "x": 6.200268827172683,
-        "y": 0.673730920111413
+        "x": 5.6749870928485295,
+        "y": 0.9249526191360088
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -77,7 +77,14 @@
     {
       "position": 0.0,
       "names": [
-        "event"
+        "Score Cone Preload"
+      ]
+    },
+    {
+      "position": 1.8,
+      "names": [
+        "Go To Ground",
+        "Run Intake"
       ]
     }
   ]

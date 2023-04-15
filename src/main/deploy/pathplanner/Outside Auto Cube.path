@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.2180974276478467,
-        "y": 4.442056405480333
+        "x": 1.9097798879358443,
+        "y": 1.061982636785786
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.218097427647847,
-        "y": 4.442056405480333
+        "x": 1.9097798879358443,
+        "y": 0.787684805315418
       },
-      "holonomicAngle": -180.0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,19 +24,19 @@
     },
     {
       "anchorPoint": {
-        "x": 4.136517674744751,
-        "y": 4.716116440779891
+        "x": 2.7091216575595545,
+        "y": 0.6508925838364495
       },
       "prevControl": {
-        "x": 3.41268291665045,
-        "y": 4.716116440779891
+        "x": 2.05893062879445,
+        "y": 0.6508925838364495
       },
       "nextControl": {
-        "x": 3.41268291665045,
-        "y": 4.716116440779891
+        "x": 3.431423534346018,
+        "y": 0.6508925838364495
       },
       "holonomicAngle": 180.0,
-      "isReversal": true,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
@@ -49,15 +49,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.105501390489961,
-        "y": 4.716116440779891
+        "x": 7.071243886077517,
+        "y": 0.9249526191360088
       },
       "prevControl": {
-        "x": 6.105501390489961,
-        "y": 4.716116440779891
+        "x": 5.6635679247110495,
+        "y": 0.9249526191360088
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -70,5 +70,22 @@
       }
     }
   ],
-  "markers": []
+  "maxVelocity": 3.0,
+  "maxAcceleration": 4.0,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.0,
+      "names": [
+        "Score Cube Preload"
+      ]
+    },
+    {
+      "position": 1.8,
+      "names": [
+        "Go To Ground",
+        "Run Intake"
+      ]
+    }
+  ]
 }

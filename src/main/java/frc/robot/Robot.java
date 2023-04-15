@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.IdleLEDS;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.MovementCommands.GoToStow;
 import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.Timer;
 //import frc.lib.util.AbsoluteEncoder;
@@ -51,18 +52,6 @@ public class Robot extends TimedRobot {
     private Timer timer;
     private double previousTime;
 
-  private static final String auto1 = "Inside Auto";
-  private static final String auto2 = "Outside Auto";
-  private static final String auto3 = "Mid Auto";
-  private static final String auto4 = "Inside Auto Balance";
-  private static final String auto5 = "Outside Auto Balance";
-  private static final String auto6 = "Score Preload";
-  private static final String auto7 = "Duluth Auto";
-  private static final String autoTest = "Test";
-
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  
  
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -91,20 +80,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     
-    m_chooser.addOption("Inside Auto", auto1);
-    m_chooser.addOption("Outside Auto", auto2);
-    m_chooser.addOption("Mid Auto", auto3);
 
-    m_chooser.addOption("Inside Auto Balance", auto4);
-    m_chooser.addOption("Outside Auto Balance", auto5);
-
-    m_chooser.addOption("Score Preload", auto6);
-
-    m_chooser.setDefaultOption("Duluth Auto", auto7);
-
-    m_chooser.addOption("Test Auto", autoTest);
-
-    SmartDashboard.putData("Auto Choices", m_chooser);
 
     // driver camera
     final UsbCamera usbCamera = CameraServer.startAutomaticCapture();
@@ -153,43 +129,10 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     m_robotContainer.Wrist.resetRelative();
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
+    //m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     m_robotContainer.setSingleSubstationTargetAngle();
 
-    m_autoSelected = m_chooser.getSelected();
-
-    switch (m_autoSelected) {
-
-      case auto1:
-        m_autonomousCommand = m_robotContainer.InsideAuto();
-        break;
-      case auto2:
-        m_autonomousCommand = m_robotContainer.OutsideAuto();
-        break;
-      case auto3:
-        m_autonomousCommand = m_robotContainer.MidAuto();
-        break;
-      case auto4:
-        m_autonomousCommand = m_robotContainer.InsideAutoBalance();
-        break;
-      case auto5:
-        m_autonomousCommand = m_robotContainer.OutsideAutoBalance();
-        break;
-      case auto6:
-        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
-        break;
-      case auto7:
-        m_autonomousCommand = m_robotContainer.DuluthAuto();
-        break;
-      case autoTest:
-        m_autonomousCommand = m_robotContainer.TestAuto();
-        break;
-      default:
-        m_autonomousCommand = m_robotContainer.ScoreCubePreload();
-        break;
-
-    }
-
+    m_autonomousCommand = m_robotContainer.autoChooser.getSelected();
     
     // PathConstraints pathConstraints = new PathConstraints(4, 3);
     
@@ -229,7 +172,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     m_robotContainer.Wrist.resetRelative();
-    m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
+    m_robotContainer.Wrist.setStow();
     m_robotContainer.setSingleSubstationTargetAngle();
     
     // This makes sure that the autonomous stops running when

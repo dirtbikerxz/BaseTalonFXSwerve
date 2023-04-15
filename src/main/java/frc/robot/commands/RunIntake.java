@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotMode;
 import frc.robot.subsystems.Intake;
 
 public class RunIntake extends CommandBase {
@@ -28,8 +29,13 @@ public class RunIntake extends CommandBase {
     @Override
     public void initialize() {
 
-        intake.Run(Constants.INTAKE_SPEED);
-        SmartDashboard.putBoolean("Intake Direction", true);
+        if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
+            intake.Run(Constants.INTAKE_CONE_RUN_SPEED);
+        } else {
+            intake.Run(Constants.INTAKE_CUBE_RUN_SPEED);
+        }
+        
+        SmartDashboard.putBoolean("driver/ Intake Direction", true);
         
     }
 

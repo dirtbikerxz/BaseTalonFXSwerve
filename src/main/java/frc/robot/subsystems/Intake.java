@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMode;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -69,7 +70,11 @@ public class Intake extends SubsystemBase {
 
     public void Stop() {
 
-      motor.set(0.15);
+      if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
+        motor.set(0.15);
+      } else {
+        motor.set(-0.15);
+      }
 
     }
 
