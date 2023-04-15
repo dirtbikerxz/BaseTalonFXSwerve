@@ -46,8 +46,9 @@ public class GoToDouble extends SequentialCommandGroup {
                         .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
                     new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_DOUBLE_POSITION)
                         .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_DOUBLE_POSITION)),
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_DOUBLE_POSITION))
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_DOUBLE_POSITION)),
+                    new SetWristPosition(wrist, Constants.WRIST_CUBE_DOUBLE_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_DOUBLE_POSITION))
+                ),
 
                 () -> RobotMode.IsCone()
             )

@@ -46,9 +46,9 @@ public class GoToSingle extends SequentialCommandGroup {
                         .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
                     new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_SINGLE_POSITION)
                         .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_SINGLE_POSITION)),
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_SINGLE_POSITION))
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_SINGLE_POSITION)),
-
+                    new SetWristPosition(wrist, Constants.WRIST_CUBE_SINGLE_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_SINGLE_POSITION))
+                ),
                 () -> RobotMode.IsCone()
             )
         );

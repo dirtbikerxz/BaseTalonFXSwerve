@@ -46,9 +46,9 @@ public class GoToMid extends SequentialCommandGroup {
                         .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
                     new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)
                         .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_MID_LEVEL)),
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_MID_POSITION))
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_MID_POSITION)),
-
+                    new SetWristPosition(wrist, Constants.WRIST_CUBE_MID_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_MID_POSITION))
+                ),
                 () -> RobotMode.IsCone()
             )
         );

@@ -270,81 +270,81 @@ public class RobotContainer {
 
     // autos
 
-    public Command ConePreloadSelect() {
+    // public Command ConePreloadSelect() {
 
-        return new ConePreloadAuto(elevator, Wrist, intake);
-    }
+    //     return new ConePreloadAuto(elevator, Wrist, intake);
+    // }
 
-    public Command CubePreloadSelect() {
+    // public Command CubePreloadSelect() {
 
-        return new CubePreloadAuto(elevator, Wrist, intake);
+    //     return new CubePreloadAuto(elevator, Wrist, intake);
     
-    }
+    // }
 
-    public Command InsideAutoConeSelect() {
+    // public Command InsideAutoConeSelect() {
 
-        return new InsideAutoCone(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new InsideAutoCone(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command InsideAutoCubeSelect() {
+    // public Command InsideAutoCubeSelect() {
 
-        return new InsideAutoCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new InsideAutoCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command MidAutoConeSelect() {
+    // public Command MidAutoConeSelect() {
 
-        return new MidAutoCone(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new MidAutoCone(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command MidAutoCubeSelect() {
+    // public Command MidAutoCubeSelect() {
 
-        return new MidAutoCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new MidAutoCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command OutsideAutoConeSelect() {
+    // public Command OutsideAutoConeSelect() {
 
-        return new OutsideAutoCone(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new OutsideAutoCone(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command OutsideAutoCubeSelect() {
+    // public Command OutsideAutoCubeSelect() {
 
-        return new OutsideAutoCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new OutsideAutoCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command InsideAutoBalanceConeSelect() {
+    // public Command InsideAutoBalanceConeSelect() {
 
-        return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command InsideAutoBalanceCubeSelect() {
+    // public Command InsideAutoBalanceCubeSelect() {
 
-        return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command OutsideAutoBalanceConeSelect() {
+    // public Command OutsideAutoBalanceConeSelect() {
 
-        return new OutsideAutoBalanceCone(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new OutsideAutoBalanceCone(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command OutsideAutoBalanceCubeSelect() {
+    // public Command OutsideAutoBalanceCubeSelect() {
 
-        return new OutsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new OutsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command DuluthAutoConeSelect() {
+    // public Command DuluthAutoConeSelect() {
 
-        return new DuluthAutoCone(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new DuluthAutoCone(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command DuluthAutoCubeSelect() {
+    // public Command DuluthAutoCubeSelect() {
 
-        return new DuluthAutoCube(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new DuluthAutoCube(elevator, Wrist, intake, s_Swerve);
+    // }
 
-    public Command TestAutoSelect() {
+    // public Command TestAutoSelect() {
 
-        return new TestAuto(elevator, Wrist, intake, s_Swerve);
-    }
+    //     return new TestAuto(elevator, Wrist, intake, s_Swerve);
+    // }
     
 
     public void DriverHandler() {

@@ -46,9 +46,9 @@ public class GoToHigh extends SequentialCommandGroup {
                     .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
               new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_HIGH_LEVEL)
                     .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_HIGH_LEVEL)),
-              new SetWristPosition(wrist, Constants.WRIST_CUBE_HIGH_POSITION))
-                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_HIGH_POSITION)),
-
+              new SetWristPosition(wrist, Constants.WRIST_CUBE_HIGH_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_HIGH_POSITION))
+            ),
           () -> RobotMode.IsCone()
         )
     );
