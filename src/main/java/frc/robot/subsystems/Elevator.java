@@ -94,9 +94,6 @@ public class Elevator extends SubsystemBase {
         // elevatorEncoderVelocity = new DoubleLogEntry(logger, "elevatorEncoder/velocity");
     }
     
-    
-
-
     /* Sets the Target Elevator Position in inches.*/
     public double getTargetElevatorPosition(){
         return targetElevatorPosition;
@@ -123,7 +120,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void stop() {
-        elevatorMotor.set(0);
+        targetElevatorPosition = getEncoderPosition();
     } 
     
     public double getEncoderPosition() {

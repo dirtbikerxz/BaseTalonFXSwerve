@@ -26,30 +26,34 @@ public final class Constants {
     public static final double WRIST_GROUND_POSITION = -95; //set value
 
     // positions
-    public static final double WRIST_CONE_STOW_POSITION = 58.58;
+    public static final double WRIST_CONE_STOW_POSITION = 48.58;
     public static final double WRIST_CONE_LOW_POSITION = -25.8;
     public static final double WRIST_CONE_MID_POSITION = -20;
     public static final double WRIST_CONE_HIGH_POSITION = 50;
-    public static final double WRIST_CONE_SINGLE_POSITION = 0;
+    public static final double WRIST_CONE_SINGLE_POSITION = 88.58;
     public static final double WRIST_CONE_DOUBLE_POSITION = 0;
     public static final double WRIST_CONE_STANDING_POSITION = -37.4;
     public static final double WRIST_CONE_SAFE_POSITION = 115;
+    public static final double WRIST_CONE_HYBRID_POSITION = 58.58;
 
-    public static final double WRIST_CUBE_STOW_POSITION = 58.58;
+    public static final double WRIST_CUBE_STOW_POSITION = 48.58;
     public static final double WRIST_CUBE_LOW_POSITION = -25.8;
     public static final double WRIST_CUBE_MID_POSITION = 9.5;
     public static final double WRIST_CUBE_HIGH_POSITION = 0;
-    public static final double WRIST_CUBE_SINGLE_POSITION = 0;
+    public static final double WRIST_CUBE_SINGLE_POSITION = 88.58;
     public static final double WRIST_CUBE_DOUBLE_POSITION = 0;
     public static final double WRIST_CUBE_SAFE_POSITION = 115;
+    public static final double WRIST_CUBE_HYBRID_POSITION = 58.58;
+    public static final double WRIST_CUBE_NODE_SAFE = 68.85;
 
-    public static final double WRIST_DEFAULT_STOW_POSITION = 58.58;
+    public static final double WRIST_DEFAULT_STOW_POSITION = 48.58;
     public static final double WRIST_DEFAULT_LOW_POSITION = -25.8;
     public static final double WRIST_DEFAULT_MID_POSITION = 0;
     public static final double WRIST_DEFAULT_HIGH_POSITION = 50;
-    public static final double WRIST_DEFAULT_SINGLE_POSITION = 0;
+    public static final double WRIST_DEFAULT_SINGLE_POSITION = 58.58;
     public static final double WRIST_DEFAULT_DOUBLE_POSITION = 0;
     public static final double WRIST_DEFAULT_SAFE_POSITION = 115;
+    public static final double WRIST_DEFAULT_HYBRID_POSITION = 58.58;
     
 
     public static final double WRIST_TOLERANCE = 20.0;
@@ -78,7 +82,7 @@ public final class Constants {
     public static final double AUTO_R_D = 0;
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = -1.3;
+    public static final double WRIST_ENCODER_OFFSET = -22.6+7.8-2.5;
     public static final double TARGET_WRIST_ANGLE = 0.0;
 
     public static final double INTAKE_CONE_RUN_SPEED = 1.0;
@@ -116,7 +120,7 @@ public final class Constants {
     public static final double ELEVATOR_CONE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CONE_STOW_LEVEL = 0;
-    public static final double ELEVATOR_CONE_SINGLE_POSITION = 4;
+    public static final double ELEVATOR_CONE_SINGLE_POSITION = 0;
     public static final double ELEVATOR_CONE_DOUBLE_POSITION = ELEVATOR_CONE_HIGH_LEVEL;
     public static final double ELEVATOR_CONE_STANDING_POSITION = 7.75;
 
@@ -125,7 +129,7 @@ public final class Constants {
     public static final double ELEVATOR_CUBE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CUBE_STOW_LEVEL = 0;
-    public static final double ELEVATOR_CUBE_SINGLE_POSITION = 4;
+    public static final double ELEVATOR_CUBE_SINGLE_POSITION = 0;
     public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 26;
 
     public static final double ELEVATOR_DEFUALT_HIGH_LEVEL = 26;
@@ -133,7 +137,7 @@ public final class Constants {
     public static final double ELEVATOR_DEFUALT_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_DEFUALT_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_DEFUALT_STOW_LEVEL = 0;
-    public static final double ELEVATOR_DEFUALT_SINGLE_POSITION = 4;
+    public static final double ELEVATOR_DEFUALT_SINGLE_POSITION = 0;
     public static final double ELEVATOR_DEFUALT_DOUBLE_POSITION = 4;
 
     public static final double ELEVATOR_TOLERANCE = 5;

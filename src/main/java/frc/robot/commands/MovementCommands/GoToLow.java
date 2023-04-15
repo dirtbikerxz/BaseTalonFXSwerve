@@ -31,25 +31,28 @@ public class GoToLow extends SequentialCommandGroup {
 
     addCommands(
 
-      new ConditionalCommand(
-          new SequentialCommandGroup(
-              new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
-                  .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
-              new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_LOW_LEVEL)
-                  .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_LOW_LEVEL)),
-              new SetWristPosition(wrist, Constants.WRIST_CONE_LOW_POSITION)
-                  .until(() -> wrist.atPosition(Constants.WRIST_CONE_LOW_POSITION))
-          ),
+        new InstantCommand(wrist::stop),
+        new InstantCommand(elevator::stop),
 
-          new SequentialCommandGroup(
-              new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
-                  .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
-              new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_LOW_LEVEL)
-                  .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_LOW_LEVEL)),
-              new SetWristPosition(wrist, Constants.WRIST_CUBE_LOW_POSITION))
-                  .until(() -> wrist.atPosition(Constants.WRIST_CUBE_LOW_POSITION)),
+        new ConditionalCommand(
+            new SequentialCommandGroup(
+                new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+                new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_LOW_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_LOW_LEVEL)),
+                new SetWristPosition(wrist, Constants.WRIST_CONE_LOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CONE_LOW_POSITION))
+            ),
 
-          () -> RobotMode.IsCone()
+            new SequentialCommandGroup(
+                new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
+                new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_LOW_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_LOW_LEVEL)),
+                new SetWristPosition(wrist, Constants.WRIST_CUBE_LOW_POSITION))
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_LOW_POSITION)),
+
+            () -> RobotMode.IsCone()
         )
     );
   }

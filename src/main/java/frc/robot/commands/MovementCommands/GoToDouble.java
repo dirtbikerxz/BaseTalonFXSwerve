@@ -31,10 +31,17 @@ public class GoToDouble extends SequentialCommandGroup {
 
         addCommands(
 
+            new InstantCommand(wrist::stop),
+            new InstantCommand(elevator::stop),
+
             new ConditionalCommand(
                 new SequentialCommandGroup(
-                    new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                    new ConditionalCommand(
+                        new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
                         .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+                        new InstantCommand(), 
+                        () -> wrist.getPositionInDegreesCanCoder() > Constants.WRIST_CONE_STOW_POSITION),
+                    
                     new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_DOUBLE_POSITION)
                         .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_DOUBLE_POSITION)),
                     new SetWristPosition(wrist, Constants.WRIST_CONE_DOUBLE_POSITION)
@@ -42,8 +49,12 @@ public class GoToDouble extends SequentialCommandGroup {
                 ),
 
                 new SequentialCommandGroup(
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
+                    new ConditionalCommand(
+                        new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+                        new InstantCommand(), 
+                        () -> wrist.getPositionInDegreesCanCoder() > Constants.WRIST_CONE_STOW_POSITION),
+                        
                     new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_DOUBLE_POSITION)
                         .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_DOUBLE_POSITION)),
                     new SetWristPosition(wrist, Constants.WRIST_CUBE_DOUBLE_POSITION)

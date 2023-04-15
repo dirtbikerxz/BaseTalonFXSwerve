@@ -131,6 +131,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.Wrist.resetRelative();
     //m_robotContainer.Wrist.SetWristPosition(Constants.WRIST_DEFAULT_STOW_POSITION);
     m_robotContainer.setSingleSubstationTargetAngle();
+    // m_robotContainer.s_Swerve.zeroGyro(180);
 
     m_autonomousCommand = m_robotContainer.autoChooser.getSelected();
     
@@ -164,7 +165,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-
 
   }
 

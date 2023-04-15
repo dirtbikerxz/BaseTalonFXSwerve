@@ -119,6 +119,10 @@ public class Wrist extends SubsystemBase {
   //  wristMotorInverted = new BooleanLogEntry(logger, "wristMotor/inverted");
   }
 
+  public void stop() {
+    targetWristAngle = getPositionInDegreesCanCoder();
+  }
+
   public void resetRelative() {
 
     wristRelativeEncoder.setPosition(getPositionInDegreesCanCoder());

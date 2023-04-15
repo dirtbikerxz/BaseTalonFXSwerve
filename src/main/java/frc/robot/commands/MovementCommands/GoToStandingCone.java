@@ -20,28 +20,34 @@ import frc.robot.subsystems.Wrist;
 
 public class GoToStandingCone extends SequentialCommandGroup {
 
-    Wrist wrist;
-    Elevator elevator;
-    /** Creates a new DriveForward. */
-    public GoToStandingCone(Wrist wrist, Elevator elevator) {
-      // Use addRequirements() here to declare subsystem dependencies.
-      this.wrist = wrist;
-      this.elevator = elevator;
-      addRequirements(wrist, elevator);
+  Wrist wrist;
+  Elevator elevator;
+  /** Creates a new DriveForward. */
+  public GoToStandingCone(Wrist wrist, Elevator elevator) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.wrist = wrist;
+    this.elevator = elevator;
+    addRequirements(wrist, elevator);
 
 
-        addCommands(
-          new SequentialCommandGroup(
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)
-              .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_MID_LEVEL)),
-            new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_STANDING_POSITION)
-              .until(() -> true),
-            new SetWristPosition(wrist, Constants.WRIST_CONE_STANDING_POSITION)
-              .until(() -> wrist.atPosition(Constants.WRIST_CONE_STANDING_POSITION))
-          )
-        );
+    addCommands(
 
-    }
+      new InstantCommand(wrist::stop),
+      new InstantCommand(elevator::stop),
+      
+      new SequentialCommandGroup(
+        new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+          .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+        new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)
+          .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_MID_LEVEL)),
+        new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_STANDING_POSITION)
+          .until(() -> true),
+        new SetWristPosition(wrist, Constants.WRIST_CONE_STANDING_POSITION)
+          .until(() -> wrist.atPosition(Constants.WRIST_CONE_STANDING_POSITION))
+      )
+    );
+
+  }
 }
 
     

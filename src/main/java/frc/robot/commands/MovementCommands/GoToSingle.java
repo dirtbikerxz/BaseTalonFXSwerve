@@ -31,6 +31,9 @@ public class GoToSingle extends SequentialCommandGroup {
 
         addCommands(
 
+            new InstantCommand(wrist::stop),
+            new InstantCommand(elevator::stop),
+
             new ConditionalCommand(
                 new SequentialCommandGroup(
                     new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)

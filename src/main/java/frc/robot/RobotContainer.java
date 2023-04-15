@@ -41,9 +41,11 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
 import frc.robot.commands.AutoCommands.AutoParts.ScoreConePreload;
+import frc.robot.commands.AutoCommands.AutoParts.ScoreCubePreload;
 import frc.robot.commands.AutoCommands.GameAutos.*;
 import frc.robot.commands.MovementCommands.GoToDouble;
 import frc.robot.commands.MovementCommands.GoToHigh;
+import frc.robot.commands.MovementCommands.GoToHybrid;
 import frc.robot.commands.MovementCommands.GoToLow;
 import frc.robot.commands.MovementCommands.GoToMid;
 import frc.robot.commands.MovementCommands.GoToSingle;
@@ -128,7 +130,7 @@ public class RobotContainer {
     final Trigger yellowLEDTrigger = new Trigger(() -> operator.getRawAxis(operatorRightTriggerAxis) > 0.1);
     
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    public final Swerve s_Swerve = new Swerve();
     public final LEDs leds = new LEDs();
     private final Intake intake = new Intake();
     public final Wrist Wrist = new Wrist();
@@ -189,7 +191,7 @@ public class RobotContainer {
         );
 
         eventMap.put("Score Cone Preload", new ScoreConePreload(elevator, Wrist, intake));
-        eventMap.put("Score Cube Preload", new ScoreConePreload(elevator, Wrist, intake));
+        eventMap.put("Score Cube Preload", new ScoreCubePreload(elevator, Wrist, intake));
         eventMap.put("Auto Balance", new AutoBalance(s_Swerve));
         eventMap.put("Go To Ground", new GoToLow(Wrist, elevator));
         eventMap.put("Run Intake", new RunIntake(intake));
@@ -200,8 +202,8 @@ public class RobotContainer {
         autoChooser.addOption("Inside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Inside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
 
-        autoChooser.addOption("Mid Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-        autoChooser.addOption("Mid Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Mid Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cone", new PathConstraints(1.5, 4)))));
+        autoChooser.addOption("Mid Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cube", new PathConstraints(1.5, 4)))));
 
         autoChooser.addOption("Outside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Outside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
@@ -268,83 +270,6 @@ public class RobotContainer {
         return s_Swerve.followTrajectoryCommand(traj, isFirstPath);
     }
 
-    // autos
-
-    // public Command ConePreloadSelect() {
-
-    //     return new ConePreloadAuto(elevator, Wrist, intake);
-    // }
-
-    // public Command CubePreloadSelect() {
-
-    //     return new CubePreloadAuto(elevator, Wrist, intake);
-    
-    // }
-
-    // public Command InsideAutoConeSelect() {
-
-    //     return new InsideAutoCone(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command InsideAutoCubeSelect() {
-
-    //     return new InsideAutoCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command MidAutoConeSelect() {
-
-    //     return new MidAutoCone(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command MidAutoCubeSelect() {
-
-    //     return new MidAutoCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command OutsideAutoConeSelect() {
-
-    //     return new OutsideAutoCone(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command OutsideAutoCubeSelect() {
-
-    //     return new OutsideAutoCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command InsideAutoBalanceConeSelect() {
-
-    //     return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command InsideAutoBalanceCubeSelect() {
-
-    //     return new InsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command OutsideAutoBalanceConeSelect() {
-
-    //     return new OutsideAutoBalanceCone(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command OutsideAutoBalanceCubeSelect() {
-
-    //     return new OutsideAutoBalanceCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command DuluthAutoConeSelect() {
-
-    //     return new DuluthAutoCone(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command DuluthAutoCubeSelect() {
-
-    //     return new DuluthAutoCube(elevator, Wrist, intake, s_Swerve);
-    // }
-
-    // public Command TestAutoSelect() {
-
-    //     return new TestAuto(elevator, Wrist, intake, s_Swerve);
-    // }
     
 
     public void DriverHandler() {
@@ -364,8 +289,9 @@ public class RobotContainer {
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
         operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         operatorStart.onTrue(new GoToDouble(Wrist, elevator));
-       operatorX.onTrue(new GoToStow(Wrist, elevator));
-       operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
+        operatorX.onTrue(new GoToStow(Wrist, elevator));
+        operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
+        operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
         
     }
@@ -382,7 +308,7 @@ public class RobotContainer {
         driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
         driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
 
-        driverDpadLeft.toggleOnTrue(
+        driverRStick.toggleOnTrue(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
@@ -397,7 +323,7 @@ public class RobotContainer {
                 Math.abs(s_Swerve.getYaw().getDegrees() % 360) > Constants.ROTATE_TO_SCORE_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
 
-        driverRStick.toggleOnTrue(
+        driverRB.toggleOnTrue(
 
             new TeleopSwerve(
                 s_Swerve, 
@@ -413,7 +339,7 @@ public class RobotContainer {
                 Math.abs(s_Swerve.getYaw().getDegrees() % 360) > Constants.ROTATE_TO_DOUBLE_SUBSTATION_TARGET_ANGLE - Constants.AUTO_ROTATE_DEADBAND)
         );
 
-        driverLStick.toggleOnTrue(
+        driverLB.toggleOnTrue(
 
             new TeleopSwerve(
                 s_Swerve, 
@@ -425,8 +351,8 @@ public class RobotContainer {
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,
                 true
-            ).until(() -> Math.abs(s_Swerve.getYaw().getDegrees() % 360) < singleSubstationTargetAngle + Constants.AUTO_ROTATE_DEADBAND && 
-                Math.abs(s_Swerve.getYaw().getDegrees() % 360) > singleSubstationTargetAngle - Constants.AUTO_ROTATE_DEADBAND)
+            ).until(() -> Math.abs(s_Swerve.getYaw().getDegrees() % 360) < ((singleSubstationTargetAngle + 180) % 360) + Constants.AUTO_ROTATE_DEADBAND && 
+                Math.abs(s_Swerve.getYaw().getDegrees() % 360) > ((singleSubstationTargetAngle + 180) % 360) - Constants.AUTO_ROTATE_DEADBAND)
         );
 
 

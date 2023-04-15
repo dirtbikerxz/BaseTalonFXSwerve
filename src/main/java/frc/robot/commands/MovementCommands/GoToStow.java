@@ -25,33 +25,37 @@ public class GoToStow extends SequentialCommandGroup {
     /** Creates a new DriveForward. */
     public GoToStow(Wrist wrist, Elevator elevator) {
       // Use addRequirements() here to declare subsystem dependencies.
-      this.wrist = wrist;
-      this.elevator = elevator;
-      addRequirements(wrist, elevator);
+    this.wrist = wrist;
+    this.elevator = elevator;
+    addRequirements(wrist, elevator);
 
-      addCommands(
+    addCommands(
 
-            new ConditionalCommand(
-                new SequentialCommandGroup(
-                    new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
-                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
-                    new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_STOW_LEVEL)
-                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_STOW_LEVEL)),
-                    new SetWristPosition(wrist, Constants.WRIST_CONE_SAFE_POSITION)
-                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_SAFE_POSITION))
-                ),
+        new InstantCommand(wrist::stop),
+        new InstantCommand(elevator::stop),
 
-                new SequentialCommandGroup(
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
-                    new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_STOW_LEVEL)
-                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_STOW_LEVEL)),
-                    new SetWristPosition(wrist, Constants.WRIST_CUBE_SAFE_POSITION))
-                        .until(() -> wrist.atPosition(Constants.WRIST_CUBE_SAFE_POSITION)),
+        new ConditionalCommand(
+            new SequentialCommandGroup(
+                new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
+                new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_STOW_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_STOW_LEVEL))
+                // new SetWristPosition(wrist, Constants.WRIST_CONE_SAFE_POSITION)
+                //     .until(() -> wrist.atPosition(Constants.WRIST_CONE_SAFE_POSITION))
+            ),
 
-                () -> RobotMode.IsCone()
-            )
-        );
+            new SequentialCommandGroup(
+                new SetWristPosition(wrist, Constants.WRIST_CUBE_STOW_POSITION)
+                    .until(() -> wrist.atPosition(Constants.WRIST_CUBE_STOW_POSITION)),
+                new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_STOW_LEVEL)
+                    .until(() -> elevator.atPosition(Constants.ELEVATOR_CUBE_STOW_LEVEL))
+                // new SetWristPosition(wrist, Constants.WRIST_CUBE_SAFE_POSITION)
+                //     .until(() -> wrist.atPosition(Constants.WRIST_CUBE_SAFE_POSITION))
+
+            ),
+            () -> RobotMode.IsCone()
+        )
+    );
 
 
     }

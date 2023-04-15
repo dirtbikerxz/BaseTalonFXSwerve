@@ -6,6 +6,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import frc.robot.SwerveModule;
+import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
 import frc.robot.Constants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -154,6 +155,10 @@ public class Swerve extends SubsystemBase {
         logData();
         SmartDashboard.putNumber("debug/RobotCoordinatesX",swerveOdometry.getPoseMeters().getX());
         SmartDashboard.putNumber("debug/RobotCoordinatesY",swerveOdometry.getPoseMeters().getY());
+        //SmartDashboard.putNumber("debug/modulus yaw", Math.abs(getYaw().getDegrees() % 360));
+        SmartDashboard.putNumber("debug/pitch", getRoll().getDegrees());
+        SmartDashboard.putNumber("debug/yaw", getYaw().getDegrees());
+        System.out.println(getYaw().getDegrees());
         m_field.setRobotPose(swerveOdometry.getPoseMeters());
 
         for(SwerveModule mod : mSwerveMods){
