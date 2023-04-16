@@ -387,6 +387,9 @@ public class RobotContainer {
         //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
+        elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
+        elevatorManualDownTrigger.whileTrue(new ManualDown(elevator));
+
         
     }
 
