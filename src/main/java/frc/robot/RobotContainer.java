@@ -165,7 +165,7 @@ public class RobotContainer {
                  () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
                  () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                  () -> -driver.getRawAxis(driverRightX), 
-                 () -> driverDpadUp.getAsBoolean(),
+                 () -> driverRightTrigger.getAsBoolean(),
                  () -> s_Swerve.getYaw().getDegrees(),
                  () -> driverLeftTrigger.getAsBoolean(),
                  rotationSpeed,
@@ -196,30 +196,34 @@ public class RobotContainer {
         eventMap.put("Go To Ground", new GoToLow(Wrist, elevator));
         eventMap.put("Run Intake", new RunIntake(intake));
 
-        autoChooser.addOption("Cone Preload Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cone Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-        autoChooser.addOption("Cube Preload Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cube Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
 
+        autoChooser.addOption("Duluth Auto Timed", DuluthAuto());
+        autoChooser.addOption("Community Auto Timed", LeaveCommunityAuto());
+        autoChooser.addOption("Duluth Auto 2 Timed", DuluthAuto2());
+        autoChooser.addOption("Score Preload Timed", new ScoreCubePreload(elevator, Wrist, intake)); 
+
+        autoChooser.addOption("Score Cone Preload", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cone Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Score Cube Preload", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cube Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        
         autoChooser.addOption("Inside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Inside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-
-        autoChooser.addOption("Mid Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cone", new PathConstraints(1.5, 4)))));
-        autoChooser.addOption("Mid Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cube", new PathConstraints(1.5, 4)))));
-
+        
+        autoChooser.addOption("Mid Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        autoChooser.addOption("Mid Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Mid Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
+        
         autoChooser.addOption("Outside Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Outside Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-
+        
         autoChooser.addOption("Inside Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Balance Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Inside Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Inside Auto Balance Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-
-        autoChooser.addOption("Outside Auto Balance Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Balance Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-        autoChooser.addOption("Outside Auto Balance Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Outside Auto Balance Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
-
+        
         autoChooser.addOption("Duluth Auto Cone", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Duluth Auto Cone", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
         autoChooser.addOption("Duluth Auto Cube", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Duluth Auto Cube", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
 
         autoChooser.addOption("Test Auto", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Test Auto", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
 
-        SmartDashboard.putData("driver/auto",autoChooser);
+
+        SmartDashboard.putData("driver/auto", autoChooser);
     }
 
     // /**
@@ -258,6 +262,56 @@ public class RobotContainer {
         return new exampleAuto(s_Swerve);
     }
 
+    public CommandBase DuluthAuto() {
+
+        return new SequentialCommandGroup(
+
+        // score preload
+        new ScoreCubePreload(elevator, Wrist, intake),
+
+        // drive backwards
+        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(1.25),
+        //stop
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+
+        // auto-balance
+        new AutoBalance(s_Swerve)
+
+    );
+    }
+
+    public CommandBase LeaveCommunityAuto() {
+
+        return new SequentialCommandGroup(
+
+        // score preload
+        new ScoreCubePreload(elevator, Wrist, intake),
+
+        // drive backwards
+        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(8)
+
+    );
+    }
+
+    public CommandBase DuluthAuto2() {
+
+        return new SequentialCommandGroup(
+
+        // score preload
+        new ScoreCubePreload(elevator, Wrist, intake),
+
+        // drive backwards
+        new DriveCommand(s_Swerve, -1.0,  0.0, 0.0).withTimeout(4),
+        //stop
+        new DriveCommand(s_Swerve, 0.0,0.0,0.0).withTimeout(0.1),
+        //drive forwards
+        new DriveCommand(s_Swerve, 1.0,0.0,0.0).withTimeout(2),
+        // auto-balance
+        new AutoBalance(s_Swerve)
+
+    );
+    }
+
     public void setSingleSubstationTargetAngle() {
         if (DriverStation.getAlliance() == Alliance.Red) {
             singleSubstationTargetAngle = Constants.ROTATE_TO_SINGLE_SUBSTATION_RED_TARGET_ANGLE;
@@ -287,9 +341,11 @@ public class RobotContainer {
         operatorA.onTrue(new GoToLow(Wrist, elevator));
         operatorB.onTrue(new GoToMid(Wrist, elevator));
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
+        operatorX.onTrue(new GoToStow(Wrist, elevator));
+        
         operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         operatorStart.onTrue(new GoToDouble(Wrist, elevator));
-        operatorX.onTrue(new GoToStow(Wrist, elevator));
+        
         operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
@@ -302,7 +358,7 @@ public class RobotContainer {
     public void SwerveHandler() {
 
 
-        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(Constants.GRYO_OFFSET)));
+        driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(180)));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
 
         driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
@@ -314,7 +370,7 @@ public class RobotContainer {
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                 () -> -driver.getRawAxis(driverRightX), 
-                () -> driverDpadUp.getAsBoolean(),
+                () -> driverRightTrigger.getAsBoolean(),
                 () -> Constants.ROTATE_TO_SCORE_TARGET_ANGLE,
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,
@@ -330,7 +386,7 @@ public class RobotContainer {
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                 () -> -driver.getRawAxis(driverRightX), 
-                () -> driverDpadUp.getAsBoolean(),
+                () -> driverRightTrigger.getAsBoolean(),
                 () -> Constants.ROTATE_TO_DOUBLE_SUBSTATION_TARGET_ANGLE,
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,
@@ -346,7 +402,7 @@ public class RobotContainer {
                 () -> -slewRateLimiterY.calculate(driver.getRawAxis(driverLeftY)), 
                 () -> -slewRateLimiterX.calculate(driver.getRawAxis(driverLeftX)), 
                 () -> -driver.getRawAxis(driverRightX), 
-                () -> driverDpadUp.getAsBoolean(),
+                () -> driverRightTrigger.getAsBoolean(),
                 () -> singleSubstationTargetAngle,
                 () -> driverLeftTrigger.getAsBoolean(),
                 rotationSpeed,

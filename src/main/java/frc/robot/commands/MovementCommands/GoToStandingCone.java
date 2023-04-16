@@ -34,8 +34,9 @@ public class GoToStandingCone extends SequentialCommandGroup {
 
       new InstantCommand(wrist::stop),
       new InstantCommand(elevator::stop),
-      
+
       new SequentialCommandGroup(
+        new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)),
         new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
           .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
         new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)

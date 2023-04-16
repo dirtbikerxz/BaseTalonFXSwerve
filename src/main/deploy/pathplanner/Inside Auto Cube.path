@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Score Cube Preload"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -72,7 +74,7 @@
   ],
   "markers": [
     {
-      "position": 1.7,
+      "position": 1.5,
       "names": [
         "Go To Ground",
         "Run Intake"

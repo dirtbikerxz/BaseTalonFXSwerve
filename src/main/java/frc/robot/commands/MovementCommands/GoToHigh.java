@@ -38,10 +38,10 @@ public class GoToHigh extends SequentialCommandGroup {
             new SequentialCommandGroup(
                   new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
                         .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
-                  new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_HIGH_LEVEL)
-                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_HIGH_LEVEL)),
-                  new SetWristPosition(wrist, Constants.WRIST_CONE_HIGH_POSITION)
-                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_HIGH_POSITION))
+                  new SetElevatorPosition(elevator, Constants.ELEVATOR_CONE_MID_LEVEL)
+                        .until(() -> elevator.atPosition(Constants.ELEVATOR_CONE_MID_LEVEL)),
+                  new SetWristPosition(wrist, Constants.WRIST_CONE_MID_POSITION)
+                        .until(() -> wrist.atPosition(Constants.WRIST_CONE_MID_POSITION))
             ),
 
             new SequentialCommandGroup(

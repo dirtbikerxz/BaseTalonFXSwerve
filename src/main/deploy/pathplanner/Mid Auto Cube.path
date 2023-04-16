@@ -21,7 +21,7 @@
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
-        "waitTime": 0
+        "waitTime": 2.0
       }
     },
     {
@@ -55,7 +55,7 @@
         "y": 2.7748578574080227
       },
       "prevControl": {
-        "x": 4.879375149885065,
+        "x": 2.9597318103801378,
         "y": 2.7748578574080227
       },
       "nextControl": null,

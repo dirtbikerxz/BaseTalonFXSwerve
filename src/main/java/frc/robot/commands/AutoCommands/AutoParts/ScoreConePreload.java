@@ -35,11 +35,11 @@ public class ScoreConePreload extends SequentialCommandGroup {
         addRequirements(wrist, elevator, intake);
 
         addCommands(
-          // RobotMode.ChangeMode(RobotMode.ModeOptions.CONE),
-          // new InstantCommand(() -> intake.Stop()),
-          // new GoToMid(wrist, elevator),
-          // new ReverseIntake(intake).withTimeout(0.5),
-          // new GoToStow(wrist, elevator)
+          RobotMode.ChangeMode(RobotMode.ModeOptions.CONE),
+          new InstantCommand(() -> intake.Stop()),
+          new GoToMid(wrist, elevator),
+          new ReverseIntake(intake).withTimeout(0.5),
+          new GoToStow(wrist, elevator)
         );
     }
 

@@ -8,7 +8,7 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import frc.robot.SwerveModule;
 import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
 import frc.robot.Constants;
-
+import frc.robot.FieldCentricOffset;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -83,9 +83,9 @@ public class Swerve extends SubsystemBase {
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
-                                    rotation, 
-                                    getYaw()
-                                )
+                                    rotation,
+                                    getYaw().minus(Rotation2d.fromDegrees(FieldCentricOffset.getInstance().getOffset())))
+                                
                                 : new ChassisSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
@@ -158,7 +158,7 @@ public class Swerve extends SubsystemBase {
         //SmartDashboard.putNumber("debug/modulus yaw", Math.abs(getYaw().getDegrees() % 360));
         SmartDashboard.putNumber("debug/pitch", getRoll().getDegrees());
         SmartDashboard.putNumber("debug/yaw", getYaw().getDegrees());
-        System.out.println(getYaw().getDegrees());
+        //System.out.println(getYaw().getDegrees());
         m_field.setRobotPose(swerveOdometry.getPoseMeters());
 
         for(SwerveModule mod : mSwerveMods){
