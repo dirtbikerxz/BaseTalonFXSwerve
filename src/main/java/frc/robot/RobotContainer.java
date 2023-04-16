@@ -128,8 +128,8 @@ public class RobotContainer {
     /* operator triggers */
     final Trigger elevatorManualUpTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) > 0.5);
     final Trigger elevatorManualDownTrigger = new Trigger(() -> -operator.getRawAxis(operatorLeftYAxis) < -0.5);
-    final Trigger purpleLEDTrigger = new Trigger(() -> operator.getRawAxis(operatorLeftTriggerAxis) > 0.1);
-    final Trigger yellowLEDTrigger = new Trigger(() -> operator.getRawAxis(operatorRightTriggerAxis) > 0.1);
+    final Trigger operatorLeftTrigger = new Trigger(() -> operator.getRawAxis(operatorLeftTriggerAxis) > 0.1);
+    final Trigger operatorRightTrigger = new Trigger(() -> operator.getRawAxis(operatorRightTriggerAxis) > 0.1);
     
     /* Subsystems */
     public final Swerve s_Swerve = new Swerve();
@@ -360,9 +360,30 @@ public class RobotContainer {
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
         operatorX.onTrue(new GoToStow(Wrist, elevator));
 
-        operatorBack.onTrue(new GoToSingle(Wrist, elevator));
-        operatorStart.onTrue(new GoToDouble(Wrist, elevator));
+        // operatorBack.onTrue(new GoToSingle(Wrist, elevator));
+        // operatorStart.onTrue(new GoToDouble(Wrist, elevator));
         
+        operatorRightTrigger.onTrue(new ConditionalCommand(
+            new GoToSingle(Wrist, elevator),
+            new GoToDouble(Wrist, elevator),
+            () -> {
+                if (DriverStation.getAlliance() == Alliance.Red) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }));
+
+        operatorLeftTrigger.onTrue(new ConditionalCommand(
+            new GoToSingle(Wrist, elevator),
+            new GoToDouble(Wrist, elevator),
+            () -> {
+                if (DriverStation.getAlliance() == Alliance.Blue) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }));
         //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
