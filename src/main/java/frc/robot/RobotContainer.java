@@ -363,7 +363,7 @@ public class RobotContainer {
         operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         operatorStart.onTrue(new GoToDouble(Wrist, elevator));
         
-        operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
+        //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
         
