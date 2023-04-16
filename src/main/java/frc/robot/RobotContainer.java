@@ -37,6 +37,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
+
+import frc.robot.RobotMode.ModeOptions;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
@@ -335,19 +337,34 @@ public class RobotContainer {
 
     public void OperatorHandler() {
 
-        operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
-        operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
+        // operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
+        // operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
+
+        operatorRB.onTrue(new ConditionalCommand(
+            new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)), 
+            new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)),
+            () -> {
+                if (RobotMode.mode == ModeOptions.CUBE) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            
+            )
+        );
 
         operatorA.onTrue(new GoToLow(Wrist, elevator));
         operatorB.onTrue(new GoToMid(Wrist, elevator));
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
         operatorX.onTrue(new GoToStow(Wrist, elevator));
-        
+
         operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         operatorStart.onTrue(new GoToDouble(Wrist, elevator));
         
         operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
-        operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
+        //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 
         
     }
