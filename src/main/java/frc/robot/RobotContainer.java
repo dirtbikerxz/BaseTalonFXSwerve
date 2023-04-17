@@ -377,27 +377,10 @@ public class RobotContainer {
         // operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         // operatorStart.onTrue(new GoToDouble(Wrist, elevator));
         
-        operatorRightTrigger.onTrue(new ConditionalCommand(
-            new GoToSingle(Wrist, elevator),
-            new GoToDouble(Wrist, elevator),
-            () -> {
-                if (DriverStation.getAlliance() == Alliance.Red) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }));
+        operatorLeftTrigger.onTrue(new GoToSingle(Wrist, elevator));
+   
 
-        operatorLeftTrigger.onTrue(new ConditionalCommand(
-            new GoToSingle(Wrist, elevator),
-            new GoToDouble(Wrist, elevator),
-            () -> {
-                if (DriverStation.getAlliance() == Alliance.Blue) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }));
+        operatorLB.onTrue(new GoToDouble(Wrist, elevator));
         //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 

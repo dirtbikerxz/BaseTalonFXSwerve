@@ -87,8 +87,8 @@ public final class Constants {
 
     public static final double INTAKE_CONE_RUN_SPEED = 1.0;
     public static final double INTAKE_CONE_REVERSE_SPEED = -1.0;
-    public static final double INTAKE_CUBE_RUN_SPEED = -0.5;
-    public static final double INTAKE_CUBE_REVERSE_SPEED = 0.5;
+    public static final double INTAKE_CUBE_RUN_SPEED = -0.6;
+    public static final double INTAKE_CUBE_REVERSE_SPEED = 0.6;
 
     public static int INTAKE_MOTOR_1_ID = 12;
     public static int INTAKE_MOTOR_2_ID = 11;
