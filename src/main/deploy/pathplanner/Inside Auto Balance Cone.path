@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Score Cone Preload"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -99,16 +101,16 @@
   ],
   "markers": [
     {
-      "position": 0.0,
-      "names": [
-        "Score Cone Preload"
-      ]
-    },
-    {
       "position": 1.7018181818181781,
       "names": [
         "Go To Ground",
         "Run Intake"
+      ]
+    },
+    {
+      "position": 2.7,
+      "names": [
+        "Go To Stow"
       ]
     }
   ]

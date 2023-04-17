@@ -53,7 +53,7 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
-        zeroGyro(Constants.GRYO_OFFSET);
+        zeroGyro();
 
         logger = DataLogManager.getLog();
         //Log Pose
@@ -131,8 +131,8 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(double target){
-        gyro.setYaw(target);
+    public void zeroGyro(){
+        gyro.setYaw(FieldCentricOffset.getInstance().getOffset());
     }
 
     public Rotation2d getYaw() {

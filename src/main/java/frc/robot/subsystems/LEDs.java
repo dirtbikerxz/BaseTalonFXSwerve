@@ -4,6 +4,7 @@ import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.StrobeAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
@@ -47,7 +48,7 @@ public class LEDs extends SubsystemBase{
     public void setColor(int red, int green, int blue) {
 
         //System.out.println(candle.setLEDs(red, green, blue));
-        ColorFlowAnimation animation = new ColorFlowAnimation(red, green, blue, 0, 1, 308, Direction.Forward);
+        StrobeAnimation animation = new StrobeAnimation(red, green, blue);
 
         candle.animate(animation);
     }

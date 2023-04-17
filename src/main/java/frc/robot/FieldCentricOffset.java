@@ -7,7 +7,7 @@ public class FieldCentricOffset {
 
     private static FieldCentricOffset instance = null;
 
-    private double m_offset = 180.0;
+    private double m_offset = 0.0;
 
     /**
      * <h3>setOffset</h3>

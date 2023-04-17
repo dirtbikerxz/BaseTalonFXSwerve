@@ -106,6 +106,12 @@
         "Go To Ground",
         "Run Intake"
       ]
+    },
+    {
+      "position": 2.5,
+      "names": [
+        "Go To Stow"
+      ]
     }
   ]
 }
