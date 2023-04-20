@@ -349,7 +349,7 @@ public class RobotContainer {
 
         driverX.whileTrue(new RunIntake(intake));
         driverA.whileTrue(new ReverseIntake(intake));
-        driverDpadDown.onTrue(new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap).withTimeout(15.0));
+        //driverDpadDown.onTrue(new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap).withTimeout(15.0));
 
     }
 
