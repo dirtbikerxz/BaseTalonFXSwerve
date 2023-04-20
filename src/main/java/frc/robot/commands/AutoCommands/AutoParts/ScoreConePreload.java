@@ -15,6 +15,7 @@ import frc.robot.commands.ConfirmScore;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ReturnFromScoring;
 import frc.robot.commands.ReverseIntake;
+import frc.robot.commands.MovementCommands.GoToHigh;
 import frc.robot.commands.MovementCommands.GoToMid;
 import frc.robot.commands.MovementCommands.GoToStow;
 import frc.robot.subsystems.*;
@@ -37,7 +38,7 @@ public class ScoreConePreload extends SequentialCommandGroup {
         addCommands(
           RobotMode.ChangeMode(RobotMode.ModeOptions.CONE),
           new InstantCommand(() -> intake.Stop()),
-          new GoToMid(wrist, elevator),
+          new GoToHigh(wrist, elevator),
           new ReverseIntake(intake).withTimeout(0.5),
           new GoToStow(wrist, elevator)
         );

@@ -122,7 +122,7 @@ public final class Constants {
     public static final double ELEVATOR_CONE_STOW_LEVEL = 0;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 0;
     public static final double ELEVATOR_CONE_DOUBLE_POSITION = ELEVATOR_CONE_HIGH_LEVEL;
-    public static final double ELEVATOR_CONE_STANDING_POSITION = 7.75;
+    public static final double ELEVATOR_CONE_STANDING_POSITION = 7.0;
 
     public static final double ELEVATOR_CUBE_HIGH_LEVEL = 26;
     public static final double ELEVATOR_CUBE_MID_LEVEL = 14.45;

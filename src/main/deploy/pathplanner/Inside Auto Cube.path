@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.490620382665945,
-        "y": 4.998259402694577
+        "x": 3.130647409620179,
+        "y": 5.126824033552373
       },
       "holonomicAngle": -180.0,
       "isReversal": false,
@@ -34,11 +34,11 @@
         "y": 4.588878156378641
       },
       "nextControl": {
-        "x": 8.071014770938737,
-        "y": 4.546262167190809
+        "x": 6.080542897427838,
+        "y": 4.588878156378641
       },
       "holonomicAngle": 0.0,
-      "isReversal": false,
+      "isReversal": true,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
@@ -51,22 +51,50 @@
     },
     {
       "anchorPoint": {
-        "x": 1.910566481465506,
-        "y": 4.398468274371228
+        "x": 1.9160631622698656,
+        "y": 4.513139361206952
       },
       "prevControl": {
-        "x": 2.834054409201457,
-        "y": 4.903054461690869
+        "x": 3.1306474096201784,
+        "y": 5.254675006957667
+      },
+      "nextControl": {
+        "x": 3.1306474096201784,
+        "y": 5.254675006957667
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Score Cube",
+          "Go To Stow"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.09408222235248,
+        "y": 3.3686546005570643
+      },
+      "prevControl": {
+        "x": 5.837973727229507,
+        "y": 4.78463144960478
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": -40.91438322002528,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Score Cube"
+          "Go To Stow"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
@@ -74,6 +102,9 @@
       }
     }
   ],
+  "maxVelocity": 4.0,
+  "maxAcceleration": 3.5,
+  "isReversed": null,
   "markers": [
     {
       "position": 0.5,
@@ -83,9 +114,16 @@
       ]
     },
     {
-      "position": 1.4981818181817717,
+      "position": 1.25,
       "names": [
         "Go To Stow"
+      ]
+    },
+    {
+      "position": 2.8,
+      "names": [
+        "Go To Ground",
+        "Run Intake"
       ]
     }
   ]
