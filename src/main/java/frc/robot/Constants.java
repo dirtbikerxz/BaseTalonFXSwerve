@@ -82,7 +82,7 @@ public final class Constants {
     public static final double AUTO_R_D = 0;
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = 17;
+    public static final double WRIST_ENCODER_OFFSET = -44;
     public static final double TARGET_WRIST_ANGLE = 0.0;
 
     public static final double INTAKE_CONE_RUN_SPEED = 1.0;

@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.921199056073326,
-        "y": 4.4077989010678875
+        "x": 4.490620382665945,
+        "y": 4.998259402694577
       },
       "holonomicAngle": -180.0,
       "isReversal": false,
@@ -26,19 +26,19 @@
     },
     {
       "anchorPoint": {
-        "x": 4.136517674744751,
-        "y": 4.716116440779891
+        "x": 7.071243886077517,
+        "y": 4.56766725499263
       },
       "prevControl": {
-        "x": 4.136517674744751,
-        "y": 4.716116440779891
+        "x": 6.080542897427838,
+        "y": 4.588878156378641
       },
       "nextControl": {
-        "x": 4.136517674744751,
-        "y": 4.716116440779891
+        "x": 8.071014770938737,
+        "y": 4.546262167190809
       },
-      "holonomicAngle": 180.0,
-      "isReversal": true,
+      "holonomicAngle": 0.0,
+      "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
@@ -51,21 +51,23 @@
     },
     {
       "anchorPoint": {
-        "x": 7.071243886077517,
-        "y": 4.56766725499263
+        "x": 1.910566481465506,
+        "y": 4.398468274371228
       },
       "prevControl": {
-        "x": 6.071243886077517,
-        "y": 4.56766725499263
+        "x": 2.834054409201457,
+        "y": 4.903054461690869
       },
       "nextControl": null,
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "Score Cube"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -74,10 +76,16 @@
   ],
   "markers": [
     {
-      "position": 1.5,
+      "position": 0.5,
       "names": [
         "Go To Ground",
         "Run Intake"
+      ]
+    },
+    {
+      "position": 1.4981818181817717,
+      "names": [
+        "Go To Stow"
       ]
     }
   ]

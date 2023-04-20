@@ -44,6 +44,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.AutoCommands.AutoCommand;
 import frc.robot.commands.AutoCommands.AutoParts.AutoBalance;
 import frc.robot.commands.AutoCommands.AutoParts.ScoreConePreload;
+import frc.robot.commands.AutoCommands.AutoParts.ScoreCube;
 import frc.robot.commands.AutoCommands.AutoParts.ScoreCubePreload;
 import frc.robot.commands.AutoCommands.GameAutos.*;
 import frc.robot.commands.MovementCommands.GoToDouble;
@@ -176,18 +177,17 @@ public class RobotContainer {
              )
          );
 
-        // Configure the button bindings
-        configureButtonBindings();
-
         eventMap = new HashMap<>();
 
 
 
         eventMap.put("Score Cone Preload", new ScoreConePreload(elevator, Wrist, intake));
         eventMap.put("Score Cube Preload", new ScoreCubePreload(elevator, Wrist, intake));
+        eventMap.put("Score Cube", new ScoreCube(elevator, Wrist, intake));
         eventMap.put("Auto Balance", new AutoBalance(s_Swerve));
         eventMap.put("Go To Ground", new GoToLow(Wrist, elevator));
         eventMap.put("Run Intake", new RunIntake(intake));
+        eventMap.put("Reverse Intake", new ReverseIntake(intake));
         eventMap.put("Go To Stow", new GoToStow(Wrist, elevator));
 
 
@@ -240,6 +240,9 @@ public class RobotContainer {
 
 
         SmartDashboard.putData("driver/auto", autoChooser);
+
+        // Configure the button bindings
+        configureButtonBindings();
     }
 
     // /**
@@ -346,6 +349,7 @@ public class RobotContainer {
 
         driverX.whileTrue(new RunIntake(intake));
         driverA.whileTrue(new ReverseIntake(intake));
+        driverDpadDown.onTrue(new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap).withTimeout(15.0));
 
     }
 

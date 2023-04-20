@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9097798879358443,
-        "y": 0.787684805315418
+        "x": 1.6439926466551282,
+        "y": 0.1999303761077844
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -19,31 +19,6 @@
         "names": [
           "Score Cube Preload"
         ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 2.7091216575595545,
-        "y": 0.6508925838364495
-      },
-      "prevControl": {
-        "x": 2.05893062879445,
-        "y": 0.6508925838364495
-      },
-      "nextControl": {
-        "x": 3.431423534346018,
-        "y": 0.6508925838364495
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -77,7 +52,7 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 1.5,
+      "position": 0.7,
       "names": [
         "Go To Ground",
         "Run Intake"
