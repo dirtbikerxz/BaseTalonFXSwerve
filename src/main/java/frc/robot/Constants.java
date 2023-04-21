@@ -151,8 +151,8 @@ public final class Constants {
     public static final double AUTO_BALANCE_P = 0.03;
     public static final double AUTO_BALANCE_I = 0.00;
     public static final double AUTO_BALANCE_D = 0.01;
-    public static final double RED_BALANCE_LEVEL = -2.4;
-    public static final double BLUE_BALANCE_LEVEL = -2.4;
+    public static final double RED_BALANCE_LEVEL = 0.0;
+    public static final double BLUE_BALANCE_LEVEL = 0.0;
     public static final double BALANCE_LEVEL_DEADZONE = 5.0;
     public static final double WHEEL_LOCK_TIME = 0.1;
 
