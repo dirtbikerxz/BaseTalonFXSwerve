@@ -61,7 +61,7 @@ public class AutoBalance extends CommandBase {
     // If we substract Constants.BALANCE_LEVEL that should make our PIDController treat Constants.BALANCE_LEVEL as level
 
     double pidVar = pid.calculate(angle - balanceVar);
-    Translation2d move = new Translation2d(-pidVar, 0.0);
+    Translation2d move = new Translation2d(pidVar, 0.0);
 
     if (angle <= balanceVar + Constants.BALANCE_LEVEL_DEADZONE && angle >= balanceVar - Constants.BALANCE_LEVEL_DEADZONE) {
 

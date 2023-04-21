@@ -161,7 +161,7 @@ public class RobotContainer {
         leds.setDefaultCommand(new IdleLEDS(leds));
         SmartDashboard.putBoolean("isDefault", true);
         SmartDashboard.putBoolean("isPurple", false);
-        SmartDashboard.putBoolean("isYellow", false);;
+        SmartDashboard.putBoolean("isYellow", false);
 
          s_Swerve.setDefaultCommand(
              new TeleopSwerve(
