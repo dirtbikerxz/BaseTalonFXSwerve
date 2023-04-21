@@ -51,18 +51,18 @@
     },
     {
       "anchorPoint": {
-        "x": 7.0598247179400335,
-        "y": 0.9021142828610453
+        "x": 7.304601935936545,
+        "y": 0.9788827498447067
       },
       "prevControl": {
-        "x": 5.72378204585469,
-        "y": 0.5823775750115614
+        "x": 5.968559263851201,
+        "y": 0.6591460419952228
       },
       "nextControl": {
-        "x": 5.72378204585469,
-        "y": 0.5823775750115614
+        "x": 5.968559263851201,
+        "y": 0.6591460419952228
       },
-      "holonomicAngle": 0.0,
+      "holonomicAngle": 12.99461679191675,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
@@ -103,22 +103,74 @@
     },
     {
       "anchorPoint": {
-        "x": 1.9097798879358443,
-        "y": 1.073401804923269
+        "x": 1.9207468117906519,
+        "y": 1.2699019457444853
       },
       "prevControl": {
-        "x": 2.0353907374481413,
-        "y": 0.6280542475614856
+        "x": 2.046357661302949,
+        "y": 0.824554388382702
+      },
+      "nextControl": {
+        "x": 2.046357661302949,
+        "y": 0.824554388382702
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "Score Cube"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.740891818417299,
+        "y": 0.687863553944928
+      },
+      "prevControl": {
+        "x": 1.768133258962271,
+        "y": 0.788000464477061
+      },
+      "nextControl": {
+        "x": 3.6404056966529765,
+        "y": 0.595266537067728
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.995015554387543,
+        "y": 0.7407761350176162
+      },
+      "prevControl": {
+        "x": 4.751569899179401,
+        "y": 0.5555821012632116
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "Score Cube"
+          "Go To Stow"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
@@ -155,6 +207,12 @@
       "names": [
         "Go To Ground",
         "Run Intake"
+      ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "event"
       ]
     }
   ]

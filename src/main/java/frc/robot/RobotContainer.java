@@ -205,6 +205,7 @@ public class RobotContainer {
 
         autoChooser.addOption("Mid Auto Cone",new AutoCommand(s_Swerve, "Mid Auto Cone", eventMap));
         autoChooser.addOption("Mid Auto Cube",new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap));
+        autoChooser.addOption("Mid Auto 2",new AutoCommand(s_Swerve, "Mid Auto Cube 2", eventMap));
 
         autoChooser.addOption("Outside Auto Cone",new AutoCommand(s_Swerve, "Outside Auto Cone", eventMap));
         autoChooser.addOption("Outside Auto Cube",new AutoCommand(s_Swerve, "Outside Auto Cube", eventMap));
