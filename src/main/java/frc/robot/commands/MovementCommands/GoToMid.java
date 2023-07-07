@@ -31,6 +31,7 @@ public class GoToMid extends SequentialCommandGroup {
 
         addCommands(
 
+            new InstantCommand(() -> System.out.println("GoToMid")),
             new InstantCommand(wrist::stop),
             new InstantCommand(elevator::stop),
 

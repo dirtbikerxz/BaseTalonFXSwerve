@@ -82,7 +82,7 @@ public final class Constants {
     public static final double AUTO_R_D = 0;
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = -44;
+    public static final double WRIST_ENCODER_OFFSET = -5.61;
     public static final double TARGET_WRIST_ANGLE = 0.0;
 
     public static final double INTAKE_CONE_RUN_SPEED = 1.0;
@@ -110,7 +110,7 @@ public final class Constants {
     public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
     public static final double MANUAL_ELEVATOR_SPEED = 0.50;
 
-    public static final double ELEVATOR_P = 0.85; //0.75
+    public static final double ELEVATOR_P = 2.0;
     public static final double ELEVATOR_I = 0.000;
     public static final double ELEVATOR_D = 0.0;
     public static final double ELEVATOR_G = 0.32;
