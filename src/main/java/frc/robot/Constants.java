@@ -27,9 +27,9 @@ public final class Constants {
 
     // positions
     public static final double WRIST_CONE_STOW_POSITION = 48.58;
-    public static final double WRIST_CONE_LOW_POSITION = -25.8;
-    public static final double WRIST_CONE_MID_POSITION = -20;
-    public static final double WRIST_CONE_HIGH_POSITION = 50;
+    public static final double WRIST_CONE_LOW_POSITION = -41.27;
+    public static final double WRIST_CONE_MID_POSITION = -76.68;
+    public static final double WRIST_CONE_HIGH_POSITION = -38.97;
     public static final double WRIST_CONE_SINGLE_POSITION = 88.58;
     public static final double WRIST_CONE_DOUBLE_POSITION = 0;
     public static final double WRIST_CONE_STANDING_POSITION = -37.4;
@@ -37,7 +37,7 @@ public final class Constants {
     public static final double WRIST_CONE_HYBRID_POSITION = 58.58;
 
     public static final double WRIST_CUBE_STOW_POSITION = 48.58;
-    public static final double WRIST_CUBE_LOW_POSITION = -25.8;
+    public static final double WRIST_CUBE_LOW_POSITION = -41.27;
     public static final double WRIST_CUBE_MID_POSITION = 9.5;
     public static final double WRIST_CUBE_HIGH_POSITION = 0;
     public static final double WRIST_CUBE_SINGLE_POSITION = 88.58;
@@ -101,8 +101,8 @@ public final class Constants {
     public static final double WRIST_ENCODER_RATIO = 1.4545;
 
     /* Elevator Constants */
-    public static final int FORWARD_ELEVATOR_LIMIT = 26;
-    public static final float REVERSE_ELEVATOR_LIMIT = (float) -0.5;
+    public static final float FORWARD_ELEVATOR_LIMIT = (float) 27.9;
+    public static final float REVERSE_ELEVATOR_LIMIT = (float) 0.5;
     public static final int ELEVATOR_MOTOR_ID = 16;
 
     public static final double ELEVATOR_GEAR_RATIO = 9.0;
@@ -110,16 +110,16 @@ public final class Constants {
     public static final double ELEVATOR_ROTATIONS_TO_IN = 1.0/ELEVATOR_GEAR_RATIO * ELEVATOR_SPROCKET_DIAMETER * Math.PI;
     public static final double MANUAL_ELEVATOR_SPEED = 0.50;
 
-    public static final double ELEVATOR_P = 2.0;
+    public static final double ELEVATOR_P = 1.25;
     public static final double ELEVATOR_I = 0.000;
     public static final double ELEVATOR_D = 0.0;
-    public static final double ELEVATOR_G = 0.32;
+    public static final double ELEVATOR_G = 0.5;
 
-    public static final double ELEVATOR_CONE_HIGH_LEVEL = 26;
-    public static final double ELEVATOR_CONE_MID_LEVEL = ELEVATOR_CONE_HIGH_LEVEL;
+    public static final double ELEVATOR_CONE_HIGH_LEVEL = 27.85;
+    public static final double ELEVATOR_CONE_MID_LEVEL = 23.42;
     public static final double ELEVATOR_CONE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_CONE_STOW_LEVEL = 0;
+    public static final double ELEVATOR_CONE_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 0;
     public static final double ELEVATOR_CONE_DOUBLE_POSITION = ELEVATOR_CONE_HIGH_LEVEL;
     public static final double ELEVATOR_CONE_STANDING_POSITION = 7.0;
@@ -128,7 +128,7 @@ public final class Constants {
     public static final double ELEVATOR_CUBE_MID_LEVEL = 14.45;
     public static final double ELEVATOR_CUBE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_CUBE_STOW_LEVEL = 0;
+    public static final double ELEVATOR_CUBE_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SINGLE_POSITION = 0;
     public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 26;
 
@@ -136,7 +136,7 @@ public final class Constants {
     public static final double ELEVATOR_DEFUALT_MID_LEVEL = 8.5;
     public static final double ELEVATOR_DEFUALT_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_DEFUALT_SAFE_LEVEL = 10.0;
-    public static final double ELEVATOR_DEFUALT_STOW_LEVEL = 0;
+    public static final double ELEVATOR_DEFUALT_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_DEFUALT_SINGLE_POSITION = 0;
     public static final double ELEVATOR_DEFUALT_DOUBLE_POSITION = 4;
 

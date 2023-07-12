@@ -375,9 +375,9 @@ public class RobotContainer {
         );
 
         operatorA.onTrue(new GoToLow(Wrist, elevator));
-        operatorB.onTrue(new GoToMid(Wrist, elevator));
+        operatorX.onTrue(new GoToMid(Wrist, elevator));
         operatorY.onTrue(new GoToHigh(Wrist, elevator));
-        operatorX.onTrue(new GoToStow(Wrist, elevator));
+        operatorB.onTrue(new GoToStow(Wrist, elevator));
 
         // operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         // operatorStart.onTrue(new GoToDouble(Wrist, elevator));

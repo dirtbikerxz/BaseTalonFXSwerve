@@ -158,9 +158,9 @@ public class Elevator extends SubsystemBase {
             // This method will be called once per scheduler run
             // TODO: Test that .getPosition() gives us the elevator position in inches
             
-           // double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
+            double feedforward = ff.calculate(/*double */elevatorEncoder.getVelocity());
             //System.out.println(feedforward);
-            double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition);
+            double voltage = controller.calculate(elevatorEncoder.getPosition(), targetElevatorPosition) + feedforward;
 
             MathUtil.clamp(voltage, -12, 12);
 
@@ -170,7 +170,7 @@ public class Elevator extends SubsystemBase {
             SmartDashboard.putNumber("ELEVATOR PID VOLTAGE", voltage);
         }
 
-        SmartDashboard.putNumber("ELEVATOR TARGET POSITION", targetElevatorPosition);
+        SmartDashboard.putNumber("debug/ELEVATOR TARGET POSITION", targetElevatorPosition);
         SmartDashboard.putNumber("debug/Elevator Encoder Value: ", getEncoderPosition());
         
         logData();

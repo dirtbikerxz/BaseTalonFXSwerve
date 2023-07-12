@@ -218,6 +218,7 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("Target wrist Angle", targetWristAngle);
     SmartDashboard.putNumber("Error", Math.abs(Math.abs(getPositionInDegreesCanCoder()) - Math.abs(targetWristAngle)));
     SmartDashboard.putString("CANCoder Initialization Strategy", wristCANEncoder.configGetSensorInitializationStrategy().toString());
+    SmartDashboard.putNumber("debug/Wrist Voltage", voltage);
     
     //SmartDashboard.putNumber("NEO (Relative) Encoder", wristRelativeEncoder.getPosition());
 
