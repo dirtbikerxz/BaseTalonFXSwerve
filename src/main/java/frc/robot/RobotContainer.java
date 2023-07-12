@@ -356,9 +356,16 @@ public class RobotContainer {
 
     public void OperatorHandler() {
 
-        // operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
-        // operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
+        // scoring and loading positions
+        operatorA.onTrue(new GoToLow(Wrist, elevator));
+        operatorX.onTrue(new GoToMid(Wrist, elevator));
+        operatorY.onTrue(new GoToHigh(Wrist, elevator));
+        operatorB.onTrue(new GoToStow(Wrist, elevator));
+        operatorLB.onTrue(new GoToSingle(Wrist, elevator));
+        operatorLeftTrigger.onTrue(new GoToDouble(Wrist, elevator));
+        operatorRightTrigger.onTrue(new GoToStandingCone(Wrist, elevator));
 
+        // change game piece mode
         operatorRB.onTrue(new ConditionalCommand(
             new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)), 
             new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)),
@@ -372,26 +379,11 @@ public class RobotContainer {
             }
             
             )
-        );
+        );    
 
-        operatorA.onTrue(new GoToLow(Wrist, elevator));
-        operatorX.onTrue(new GoToMid(Wrist, elevator));
-        operatorY.onTrue(new GoToHigh(Wrist, elevator));
-        operatorB.onTrue(new GoToStow(Wrist, elevator));
-
-        // operatorBack.onTrue(new GoToSingle(Wrist, elevator));
-        // operatorStart.onTrue(new GoToDouble(Wrist, elevator));
-        
-        operatorLeftTrigger.onTrue(new GoToSingle(Wrist, elevator));
-   
-
-        operatorLB.onTrue(new GoToDouble(Wrist, elevator));
-        //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
-        //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
-
+        // manual elevator control (left stick)
         elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
         elevatorManualDownTrigger.whileTrue(new ManualDown(elevator));
-
         
     }
 
