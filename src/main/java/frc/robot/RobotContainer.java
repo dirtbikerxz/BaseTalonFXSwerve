@@ -55,6 +55,7 @@ import frc.robot.commands.MovementCommands.GoToMid;
 import frc.robot.commands.MovementCommands.GoToSingle;
 import frc.robot.commands.MovementCommands.GoToStandingCone;
 import frc.robot.commands.MovementCommands.GoToStow;
+import frc.robot.RobotMode;
 import frc.robot.subsystems.*;
 
 /**
@@ -139,6 +140,7 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     public final Wrist Wrist = new Wrist();
     public final Elevator elevator = new Elevator();
+    public final RobotMode robotMode = new RobotMode();
     private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
     private final SlewRateLimiter slewRateLimiterX = new SlewRateLimiter(15);
     private final SlewRateLimiter slewRateLimiterY = new SlewRateLimiter(15);
@@ -158,7 +160,6 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         //Wrist.setDefaultCommand(new MoveWristManual(Wrist, driver));
-        leds.setDefaultCommand(new IdleLEDS(leds));
         SmartDashboard.putBoolean("isDefault", true);
         SmartDashboard.putBoolean("isPurple", false);
         SmartDashboard.putBoolean("isYellow", false);
@@ -192,32 +193,33 @@ public class RobotContainer {
 
 
 
-        autoChooser.addOption("Duluth Auto Timed", new AutoCommand(DuluthAuto()));
-        autoChooser.addOption("Leave Community Auto Timed", new AutoCommand(LeaveCommunityAuto()));
-        autoChooser.addOption("Mid Auto Timed", new AutoCommand(DuluthAuto2()));
-        autoChooser.addOption("Score Preload Timed", new AutoCommand(new ScoreCubePreload(elevator, Wrist, intake))); 
 
-        autoChooser.addOption("Score Cone Preload",new AutoCommand(s_Swerve, "Score Cone Preload", eventMap));
-        autoChooser.addOption("Score Cube Preload",new AutoCommand(s_Swerve, "Score Cube Preload", eventMap));
+        //autoChooser.addOption("Mid Auto Timed", new AutoCommand(DuluthAuto2()));
+        //autoChooser.addOption("Score Preload Timed", new AutoCommand(new ScoreCubePreload(elevator, Wrist, intake))); 
 
-        autoChooser.addOption("Inside Auto Cone",new AutoCommand(s_Swerve, "Inside Auto Cone", eventMap));
+        //autoChooser.addOption("Score Cone Preload",new AutoCommand(s_Swerve, "Score Cone Preload", eventMap));
+
+        //autoChooser.addOption("Inside Auto Cone",new AutoCommand(s_Swerve, "Inside Auto Cone", eventMap));
         autoChooser.addOption("Inside Auto Cube",new AutoCommand(s_Swerve, "Inside Auto Cube", eventMap));
 
-        autoChooser.addOption("Mid Auto Cone",new AutoCommand(s_Swerve, "Mid Auto Cone", eventMap));
-        autoChooser.addOption("Mid Auto Cube",new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap));
-        autoChooser.addOption("Mid Auto 2",new AutoCommand(s_Swerve, "Mid Auto Cube 2", eventMap));
+        //autoChooser.addOption("Mid Auto Cone",new AutoCommand(s_Swerve, "Mid Auto Cone", eventMap));
+        //autoChooser.addOption("Mid Auto Cube",new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap));
+        autoChooser.setDefaultOption("Mid Auto Cube",new AutoCommand(s_Swerve, "Mid Auto Cube 2", eventMap)); //NOTE: mid auto 2
 
-        autoChooser.addOption("Outside Auto Cone",new AutoCommand(s_Swerve, "Outside Auto Cone", eventMap));
+        //autoChooser.addOption("Outside Auto Cone",new AutoCommand(s_Swerve, "Outside Auto Cone", eventMap));
         autoChooser.addOption("Outside Auto Cube",new AutoCommand(s_Swerve, "Outside Auto Cube", eventMap));
 
-        autoChooser.addOption("Inside Auto Balance Cone",new AutoCommand(s_Swerve, "Inside Auto Balance Cone", eventMap));
-        autoChooser.addOption("Inside Auto Balance Cube",new AutoCommand(s_Swerve, "Inside Auto Balance Cube", eventMap));
+        //autoChooser.addOption("Inside Auto Balance Cone",new AutoCommand(s_Swerve, "Inside Auto Balance Cone", eventMap));
+        //autoChooser.addOption("Inside Auto Balance Cube",new AutoCommand(s_Swerve, "Inside Auto Balance Cube", eventMap));
 
-        autoChooser.addOption("Outside Auto Balance Cone",new AutoCommand(s_Swerve, "Outside Auto Balance Cone", eventMap));
-        autoChooser.addOption("Outside Auto Balance Cube",new AutoCommand(s_Swerve, "Outside Auto Balance Cube", eventMap));
+        //autoChooser.addOption("Outside Auto Balance Cone",new AutoCommand(s_Swerve, "Outside Auto Balance Cone", eventMap));
+        //autoChooser.addOption("Outside Auto Balance Cube",new AutoCommand(s_Swerve, "Outside Auto Balance Cube", eventMap));
 
-        autoChooser.addOption("Duluth Auto Cone",new AutoCommand(s_Swerve, "Duluth Auto Cone", eventMap));
-        autoChooser.addOption("Duluth Auto Cube",new AutoCommand(s_Swerve, "Duluth Auto Cube", eventMap));
+        //autoChooser.addOption("Duluth Auto Cone",new AutoCommand(s_Swerve, "Duluth Auto Cone", eventMap));
+        autoChooser.addOption("Score Cube Preload",new AutoCommand(s_Swerve, "Score Cube Preload", eventMap));
+        autoChooser.addOption("Duluth Auto Path",new AutoCommand(s_Swerve, "Duluth Auto Cube", eventMap));
+        autoChooser.addOption("Duluth Auto Timed", new AutoCommand(DuluthAuto()));
+        autoChooser.addOption("Leave Community Auto Timed", new AutoCommand(LeaveCommunityAuto()));
 
 
         // autoChooser.addOption("Score Cube Preload", autoBuilder.fullAuto(new ArrayList<PathPlannerTrajectory>(PathPlanner.loadPathGroup("Score Cube Preload", new PathConstraints(Constants.AUTO_VEL, Constants.AUTO_ACC)))));
@@ -348,7 +350,35 @@ public class RobotContainer {
 
     public void DriverHandler() {
 
-        driverX.whileTrue(new RunIntake(intake));
+        driverX.whileTrue(new ParallelCommandGroup(
+            new RunIntake(intake), 
+            new WaitCommand(0.5)
+            .andThen(intake.waitUntilCurrentPast(17.0, 0.1))
+                .andThen(new GreenLED(leds))
+                .andThen(new WaitCommand(0.5))
+                .andThen(new ConditionalCommand(
+                    new YellowLED(leds), 
+                    new PurpleLED(leds), 
+                    () -> {
+                        if (RobotMode.mode == ModeOptions.CONE) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                }))
+            )
+        ).onFalse(new ConditionalCommand(
+            new YellowLED(leds), 
+            new PurpleLED(leds), 
+            () -> {
+                if (RobotMode.mode == ModeOptions.CONE) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+        }));
         driverA.whileTrue(new ReverseIntake(intake));
         //driverDpadDown.onTrue(new AutoCommand(s_Swerve, "Mid Auto Cube", eventMap).withTimeout(15.0));
 
@@ -360,8 +390,15 @@ public class RobotContainer {
         // operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
 
         operatorRB.onTrue(new ConditionalCommand(
-            new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)), 
-            new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)),
+                new YellowLED(leds)
+            ),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)),
+                new PurpleLED(leds)
+            ),
+            
             () -> {
                 if (RobotMode.mode == ModeOptions.CUBE) {
                     return true;
@@ -382,10 +419,11 @@ public class RobotContainer {
         // operatorBack.onTrue(new GoToSingle(Wrist, elevator));
         // operatorStart.onTrue(new GoToDouble(Wrist, elevator));
         
-        operatorLeftTrigger.onTrue(new GoToSingle(Wrist, elevator));
-   
+        operatorLeftTrigger.onTrue(new GoToSingle(Wrist, elevator)).onFalse(new GoToStow(Wrist, elevator));
+        operatorRightTrigger.onTrue(new GoToStandingCone(Wrist, elevator));
 
-        operatorLB.onTrue(new GoToDouble(Wrist, elevator));
+        operatorLB.onTrue(new GoToDouble(Wrist, elevator)).onFalse(new GoToStow(Wrist, elevator));
+
         //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
         //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
 

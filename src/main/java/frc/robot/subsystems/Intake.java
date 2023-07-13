@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMode;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -102,5 +105,17 @@ public class Intake extends SubsystemBase {
      // intakeMotor1Inverted.append(motor1.getInverted());
      // intakeMotor1LastError.append(motor1.getLastError().toString());
     }
+
+    public Command waitUntilCurrentPast(double amps, double wait) { 
+      Debouncer debouncer = new Debouncer(wait); //Creates a debouncer to confirm amps are greater than value for
+      return Commands.waitUntil(() -> debouncer.calculate(this.getRollerCurrent() > amps));
+  }
+
+    private double getRollerCurrent() {
+      double outputCurrent = motor.getOutputCurrent();
+      SmartDashboard.putNumber("debug/IntakeOutputCurrent", outputCurrent);
+      return outputCurrent;
+    }
+
 
 }

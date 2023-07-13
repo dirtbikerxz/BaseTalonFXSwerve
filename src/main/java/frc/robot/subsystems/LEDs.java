@@ -55,14 +55,14 @@ public class LEDs extends SubsystemBase{
 
     @Override
     public void periodic() {
-        if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
+        // if (RobotMode.mode == RobotMode.ModeOptions.CONE) {
 
-            setColor(255,150,0);
+        //     setColor(255,150,0);
 
-        } else {
+        // } else {
 
-            setColor(120,0,120);
-        }
+        //     setColor(120,0,120);
+        // }
     }
     
 }

@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDs;
 
-public class RedLED extends CommandBase {
+public class GreenLED extends CommandBase {
 
     LEDs leds; 
     /** Creates a new DriveForward. */
-    public RedLED(LEDs leds) {
+    public GreenLED(LEDs leds) {
       // Use addRequirements() here to declare subsystem dependencies.
       this.leds = leds;
       addRequirements(leds);
@@ -22,7 +22,7 @@ public class RedLED extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      leds.setColor(255,0,0);
+      leds.setColor(0,255,0);
       SmartDashboard.putBoolean("isDefault", false);
       SmartDashboard.putBoolean("isPurple", false);
       SmartDashboard.putBoolean("isYellow", false);
@@ -39,6 +39,6 @@ public class RedLED extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return false;
+      return true;
     }
 }   

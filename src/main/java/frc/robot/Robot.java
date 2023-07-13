@@ -159,7 +159,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-  
+    RobotMode.ChangeMode(RobotMode.ModeOptions.CUBE);
+    m_robotContainer.leds.setColor(120, 0, 120);
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -191,7 +193,8 @@ public class Robot extends TimedRobot {
     //Wrist.getPositionInDegrees();
 
  
-
+    RobotMode.ChangeMode(RobotMode.ModeOptions.CUBE);
+    m_robotContainer.leds.setColor(120, 0, 120);
 
   }
 

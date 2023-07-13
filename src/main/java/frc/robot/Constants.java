@@ -31,17 +31,17 @@ public final class Constants {
     public static final double WRIST_CONE_MID_POSITION = -76.68;
     public static final double WRIST_CONE_HIGH_POSITION = -38.97;
     public static final double WRIST_CONE_SINGLE_POSITION = 88.58;
-    public static final double WRIST_CONE_DOUBLE_POSITION = 0;
-    public static final double WRIST_CONE_STANDING_POSITION = -37.4;
+    public static final double WRIST_CONE_DOUBLE_POSITION = -44.41;
+    public static final double WRIST_CONE_STANDING_POSITION = -55.0;
     public static final double WRIST_CONE_SAFE_POSITION = 115;
     public static final double WRIST_CONE_HYBRID_POSITION = 58.58;
 
     public static final double WRIST_CUBE_STOW_POSITION = 48.58;
     public static final double WRIST_CUBE_LOW_POSITION = -41.27;
-    public static final double WRIST_CUBE_MID_POSITION = 9.5;
-    public static final double WRIST_CUBE_HIGH_POSITION = 0;
+    public static final double WRIST_CUBE_MID_POSITION = -51.7;
+    public static final double WRIST_CUBE_HIGH_POSITION = -20.7;
     public static final double WRIST_CUBE_SINGLE_POSITION = 88.58;
-    public static final double WRIST_CUBE_DOUBLE_POSITION = 0;
+    public static final double WRIST_CUBE_DOUBLE_POSITION = WRIST_CONE_DOUBLE_POSITION;
     public static final double WRIST_CUBE_SAFE_POSITION = 115;
     public static final double WRIST_CUBE_HYBRID_POSITION = 58.58;
     public static final double WRIST_CUBE_NODE_SAFE = 68.85;
@@ -121,16 +121,16 @@ public final class Constants {
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CONE_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 0;
-    public static final double ELEVATOR_CONE_DOUBLE_POSITION = ELEVATOR_CONE_HIGH_LEVEL;
-    public static final double ELEVATOR_CONE_STANDING_POSITION = 7.0;
+    public static final double ELEVATOR_CONE_DOUBLE_POSITION = 23.0;
+    public static final double ELEVATOR_CONE_STANDING_POSITION = 6.5;
 
-    public static final double ELEVATOR_CUBE_HIGH_LEVEL = 26;
-    public static final double ELEVATOR_CUBE_MID_LEVEL = 14.45;
+    public static final double ELEVATOR_CUBE_HIGH_LEVEL = 23.1;
+    public static final double ELEVATOR_CUBE_MID_LEVEL = 17.0;
     public static final double ELEVATOR_CUBE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CUBE_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CUBE_SINGLE_POSITION = 0;
-    public static final double ELEVATOR_CUBE_DOUBLE_POSITION = 26;
+    public static final double ELEVATOR_CUBE_DOUBLE_POSITION = ELEVATOR_CONE_DOUBLE_POSITION;
 
     public static final double ELEVATOR_DEFUALT_HIGH_LEVEL = 26;
     public static final double ELEVATOR_DEFUALT_MID_LEVEL = 8.5;
