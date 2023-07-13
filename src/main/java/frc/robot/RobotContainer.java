@@ -386,9 +386,7 @@ public class RobotContainer {
 
     public void OperatorHandler() {
 
-        // operatorLB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)));
-        // operatorRB.onTrue(new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CUBE)));
-
+        // change game piece mode
         operatorRB.onTrue(new ConditionalCommand(
             new ParallelCommandGroup(
                 new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)),
@@ -425,11 +423,11 @@ public class RobotContainer {
         operatorLB.onTrue(new GoToDouble(Wrist, elevator)).onFalse(new GoToStow(Wrist, elevator));
 
         //operatorDpadLeft.onTrue(new GoToStandingCone(Wrist, elevator));
-        //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));
+        //operatorDpadRight.onTrue(new GoToHybrid(Wrist, elevator));  
 
+        // manual elevator control (left stick)
         elevatorManualUpTrigger.whileTrue(new ManualUp(elevator));
         elevatorManualDownTrigger.whileTrue(new ManualDown(elevator));
-
         
     }
 
