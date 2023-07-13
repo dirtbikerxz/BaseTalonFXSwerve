@@ -22,12 +22,14 @@ public class GoToStandingCone extends SequentialCommandGroup {
 
   Wrist wrist;
   Elevator elevator;
+  LEDs leds;
   /** Creates a new DriveForward. */
-  public GoToStandingCone(Wrist wrist, Elevator elevator) {
+  public GoToStandingCone(Wrist wrist, Elevator elevator, LEDs leds) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.wrist = wrist;
     this.elevator = elevator;
-    addRequirements(wrist, elevator);
+    this.leds = leds;
+    addRequirements(wrist, elevator, leds);
 
 
     addCommands(
@@ -37,6 +39,7 @@ public class GoToStandingCone extends SequentialCommandGroup {
 
       new SequentialCommandGroup(
         new InstantCommand(() -> RobotMode.SetMode(RobotMode.ModeOptions.CONE)),
+        new InstantCommand(() -> leds.setColor(255, 150, 0)),
         new SetWristPosition(wrist, Constants.WRIST_CONE_STOW_POSITION)
           .until(() -> wrist.atPosition(Constants.WRIST_CONE_STOW_POSITION)),
         new SetElevatorPosition(elevator, Constants.ELEVATOR_CUBE_MID_LEVEL)
