@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
-import frc.robot.subsystems.swerve.Swerve;
+import frc.robot.subsystems.swerve.CTRESwerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,7 +30,7 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final CTRESwerve s_Swerve = new CTRESwerve();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
