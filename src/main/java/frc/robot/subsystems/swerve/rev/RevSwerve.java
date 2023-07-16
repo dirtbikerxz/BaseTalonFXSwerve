@@ -73,7 +73,7 @@ public class RevSwerve extends SubsystemBase {
                 translation.getY(),
                 rotation);
         desiredChassisSpeeds = correctForDynamics(desiredChassisSpeeds);
-        SwerveModuleState[] swerveModuleStates = RevSwerveConstants.Swerve.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
+        SwerveModuleState[] swerveModuleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveConfig.maxSpeed);
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()], isOpenLoop);
