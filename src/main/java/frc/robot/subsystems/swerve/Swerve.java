@@ -122,10 +122,6 @@ public class Swerve extends SubsystemBase {
                 : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
-    // TODO Remove
-    public void hack() {
-        gyro.setYaw(gyro.getYaw() + 180);
-    }
 
     public void resetModulesToAbsolute() {
         for (SwerveModule mod : mSwerveMods) {
@@ -133,31 +129,6 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public void enableSpeedLimit() {
-        speedLimit = true;
-    }
-
-    public void disableSpeedLimit() {
-        speedLimit = false;
-    }
-
-    public double getSpeedLimitXY() {
-        return speedLimit ? 0.45 : 1.0;
-    }
-
-    public double getSpeedLimitRot() {
-        return speedLimit ? 0.15 : 1.0;
-    }
-
-    public double getPitch(){
-        // The gyro is rotated 90 degrees, so the gyro roll is the robot pitch
-        return gyro.getRoll();
-    }
-
-    public double getRoll(){
-        // The gyro is rotated 90 degrees, so the gyro pitch is the robot roll
-        return gyro.getPitch();
-    }
 
     public double gyroTemp(){
         return gyro.getTemp();
@@ -165,15 +136,10 @@ public class Swerve extends SubsystemBase {
     
     @Override
     public void periodic() {
-        if (swerveDebug) {
-            for (SwerveModule mod : mSwerveMods) {
-                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-            }
-            SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
-            SmartDashboard.putNumber("Robot Pitch", getPitch());
-            // SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
+        for (SwerveModule mod : mSwerveMods) {
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
     }
 }
