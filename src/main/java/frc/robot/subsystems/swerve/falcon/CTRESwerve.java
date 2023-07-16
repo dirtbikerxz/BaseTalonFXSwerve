@@ -1,4 +1,4 @@
-package frc.robot.subsystems.swerve;
+package frc.robot.subsystems.swerve.falcon;
 
 import frc.lib.math.GeometryUtils;
 import frc.robot.Constants;
@@ -20,18 +20,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CTRESwerve extends SubsystemBase {
-    public static boolean swerveDebug = false;
-    private boolean speedLimit = false;
     
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
     public CTRESwerve() {
-        gyro = new Pigeon2(CTRESwerveConstants.Swerve.pigeonID, "CANivore");
+        gyro = new Pigeon2(CTRESwerveConstants.Swerve.pigeonID, "CANivore"); //"rio" (default), or the name of your CANivore
         gyro.configFactoryDefault();
         zeroGyro();
-
-        Dashboard.watchBoolean("Swerve debug", swerveDebug, (val) -> swerveDebug = val.booleanValue());
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, CTRESwerveConstants.Swerve.Mod0.constants),

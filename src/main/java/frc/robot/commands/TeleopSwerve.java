@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.constants.CTRESwerveConstants;
-import frc.robot.subsystems.swerve.CTRESwerve;
+import frc.robot.subsystems.swerve.falcon.CTRESwerve;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
