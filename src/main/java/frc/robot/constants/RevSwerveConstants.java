@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import frc.lib.util.RevSwerveModuleConstants;
+import frc.lib.util.swerveUtil.RevSwerveModuleConstants;
 
 
 /**

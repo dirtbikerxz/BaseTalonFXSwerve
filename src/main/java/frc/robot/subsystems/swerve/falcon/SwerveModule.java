@@ -6,8 +6,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import frc.lib.math.Conversions;
-import frc.lib.util.CTREModuleState;
-import frc.lib.util.SwerveModuleConstants;
+import frc.lib.util.swerveUtil.CTREModuleState;
+import frc.lib.util.swerveUtil.SwerveModuleConstants;
 import frc.robot.Robot;
 import frc.robot.constants.CTRESwerveConstants;
 
@@ -24,6 +24,7 @@ public class SwerveModule {
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
     private CANCoder angleEncoder;
+    private SwerveModuleState m_desiredState;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(CTRESwerveConstants.Swerve.driveKS, CTRESwerveConstants.Swerve.driveKV, CTRESwerveConstants.Swerve.driveKA);
 
@@ -49,6 +50,7 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         /* This is a custom optimize function, since default WPILib optimize assumes continuous controller which CTRE and Rev onboard is not */
         desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
+        m_desiredState = desiredState;
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }
@@ -71,8 +73,18 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    private Rotation2d getAngle(){
+    public Rotation2d getAngle(){
         return Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), CTRESwerveConstants.Swerve.angleGearRatio));
+    }
+
+    public SwerveModuleState getDesiredState() {
+        return m_desiredState; //TODO questionable
+    }
+    public Rotation2d getDesiredAngle() {
+        return getDesiredState().angle;
+    }
+    public double getDesiredVelocity() {
+        return getDesiredState().speedMetersPerSecond;
     }
 
     public Rotation2d getCanCoder(){

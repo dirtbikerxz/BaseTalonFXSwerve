@@ -5,8 +5,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.lib.util.CTREModuleState;
-import frc.lib.util.RevSwerveModuleConstants;
+import frc.lib.util.swerveUtil.CTREModuleState;
+import frc.lib.util.swerveUtil.RevSwerveModuleConstants;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;

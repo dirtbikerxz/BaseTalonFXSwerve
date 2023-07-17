@@ -11,8 +11,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import frc.lib.util.COTSFalconSwerveConstants;
-import frc.lib.util.SwerveModuleConstants;
+import frc.lib.util.swerveUtil.COTSFalconSwerveConstants;
+import frc.lib.util.swerveUtil.SwerveModuleConstants;
 
 /** Add your docs here. */
 public class CTRESwerveConstants {

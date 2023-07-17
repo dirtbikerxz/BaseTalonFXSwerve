@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.lib.util.COTSFalconSwerveConstants;
+import frc.lib.util.swerveUtil.COTSFalconSwerveConstants;
 
 
 public class SwerveConfig 
