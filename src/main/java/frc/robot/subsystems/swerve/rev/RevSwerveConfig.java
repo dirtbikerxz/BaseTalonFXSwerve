@@ -11,7 +11,7 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.swerveUtil.COTSFalconSwerveConstants;
 
 
-public class SwerveConfig 
+public class RevSwerveConfig 
 {
     
     public CANCoderConfiguration canCoderConfig;
@@ -107,7 +107,7 @@ public class SwerveConfig
  
    
 
-    public SwerveConfig()
+    public RevSwerveConfig()
     {
         canCoderConfig = new CANCoderConfiguration();
         canCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;

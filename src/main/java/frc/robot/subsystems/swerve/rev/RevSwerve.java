@@ -41,7 +41,7 @@ public class RevSwerve extends SubsystemBase {
             new RevSwerveModule1(3, RevSwerveConstants.Swerve.Mod3.constants)
         };
 
-        swerveOdometry = new SwerveDriveOdometry(SwerveConfig.swerveKinematics, getYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(RevSwerveConfig.swerveKinematics, getYaw(), getModulePositions());
         zeroGyro();
 
     }
@@ -73,8 +73,8 @@ public class RevSwerve extends SubsystemBase {
                 translation.getY(),
                 rotation);
         desiredChassisSpeeds = correctForDynamics(desiredChassisSpeeds);
-        SwerveModuleState[] swerveModuleStates = SwerveConfig.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveConfig.maxSpeed);
+        SwerveModuleState[] swerveModuleStates = RevSwerveConfig.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, RevSwerveConfig.maxSpeed);
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()], isOpenLoop);
         }
@@ -84,7 +84,7 @@ public class RevSwerve extends SubsystemBase {
     public void setModuleStates(SwerveModuleState[] desiredStates) {
 
        // System.out.println("setting module states: "+desiredStates[0]);
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConfig.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, RevSwerveConfig.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.getModuleNumber()], false);
@@ -117,7 +117,7 @@ public class RevSwerve extends SubsystemBase {
     }
 
     public void zeroGyro(double deg) {
-        if(SwerveConfig.invertGyro) {
+        if(RevSwerveConfig.invertGyro) {
             deg = -deg;
         }
         gyro.setYaw(deg);
@@ -129,7 +129,7 @@ public class RevSwerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return (SwerveConfig.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
+        return (RevSwerveConfig.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     @Override
