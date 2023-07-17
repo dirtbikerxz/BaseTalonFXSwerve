@@ -164,6 +164,8 @@ public class GeometryUtils {
   }
 }
 ```
+To show the difference in First Order (regular) Kinematics, and First Order, Rafi Alum From 449 in the same post, provided these gifs for comparison.
+![alt text](https://www.chiefdelphi.com/uploads/default/original/3X/d/7/d7d621a8eade46187281485aa99a31b4a5b0dd46.gif "Logo Title Text 1")
 -----
 **Custom Log Manager**
 ----
