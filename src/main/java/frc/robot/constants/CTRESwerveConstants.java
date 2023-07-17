@@ -4,14 +4,8 @@
 
 package frc.robot.constants;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-import frc.lib.util.swerveUtil.COTSFalconSwerveConstants;
 import frc.robot.subsystems.swerve.falcon.CTRESwerveModule;
 
 /** Add your docs here. */

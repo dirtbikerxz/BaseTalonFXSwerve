@@ -8,8 +8,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.math.Conversions;
 import frc.lib.util.swerveUtil.CTREModuleState;
 import frc.robot.Robot;
-import frc.robot.constants.CTRESwerveConstants;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
