@@ -117,7 +117,7 @@ private static ChassisSpeeds correctForDynamics(ChassisSpeeds originalSpeeds) {
 ```
 ______
 This is a custom shim of the WPILib Pose2d class, correctForDynamics uses the log function to calculates the logarithm of a Pose2d object by extracting the rotation angle, performing some calculations based on the rotation angle, and rotating the translation part of the Pose2d object. The resulting translation and rotation components are then used to create a Twist2d object, which is returned as the result.
-```
+```java
 package frc.robot.utils;
 
 import edu.wpi.first.math.geometry.Pose2d;
