@@ -102,10 +102,7 @@ public class CTRESwerve extends SubsystemBase {
         return updatedSpeeds;
         //Here, a new ChassisSpeeds object called updatedSpeeds is created. The dx, dy, and dtheta components 
         //of the updatedSpeeds are set based on the corresponding components of twistForPose divided by the loop time (LOOP_TIME_S).
-
-        // In summary, the correctForDynamics method takes in the original chassis speeds, 
-        // calculates the future robot pose based on those speeds and the loop time, computes the twist for the future pose, 
-        // and then updates the chassis speeds based on the twist. The updated chassis speeds are returned as the result.
+        //AKA 2nd order kinematics
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {        
