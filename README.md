@@ -8,6 +8,7 @@ Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based o
 - [ ] Easy Control Scheme Editing </br>
 - [ ] Custom Shuffleboard </br>
 - [ ] PathPlanner Easy Auto Maker </br>
+- [ ] Detailed Documentation 
 
 **Basic Swerve Code for a Swerve Module using Falcon Motors, a CTRE CANCoder, and a CTRE Pigeon Gyro** </br>
 This code was designed with Swerve Drive Specialties MK3, MK4, and MK4i style modules in mind, but should be easily adaptable to other styles of modules.</br>
