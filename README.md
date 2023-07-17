@@ -1,4 +1,4 @@
-Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based on 364's code, but I have added many features, like support for NEOs, 2nd Order Swerve Kinematics, my custom logging software (compatible with Advantage Scope), and many more on the way.
+Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based on 364's code, but I have added many features, like support for NEOs, 2nd Order Swerve Kinematics, my custom logging class (compatible with Advantage Scope), and many more on the way.
 # Ultimate Swerve Base</br>
 **Project Goals**
 ----
