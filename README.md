@@ -1,5 +1,13 @@
 Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based on 364's code, but I have added many features, like support for NEOs, 2nd Order Swerve Kinematics, my custom logging software (compatible with Advantage Scope), and many more on the way.
 # BaseFalconSwerve </br>
+**Project Goals**
+----
+[x] NEO support. </br>
+[x] Simple 2nd Order Swerve Kinematics.</br>
+[x] Log Manager compatible with Advantage Scope. </br>
+[] Easy Control Scheme Editing </br>
+[] Custom Shuffleboard </br>
+[] PathPlanner Easy Auto Maker </br>
 
 **Basic Swerve Code for a Swerve Module using Falcon Motors, a CTRE CANCoder, and a CTRE Pigeon Gyro** </br>
 This code was designed with Swerve Drive Specialties MK3, MK4, and MK4i style modules in mind, but should be easily adaptable to other styles of modules.</br>
