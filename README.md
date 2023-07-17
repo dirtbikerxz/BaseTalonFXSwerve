@@ -1,5 +1,4 @@
-**Note: In 2023, there was an [issue](https://github.com/Team364/BaseFalconSwerve/issues/8) that prevented this code from working with MK4i's (or any module that used inverted motors). A [fix](https://github.com/Team364/BaseFalconSwerve/issues/8#issuecomment-1384799539) has been found, tested on a real robot, and this issue is believed to have been fixed as of 1/17. If anyone experiences any further issues, please report them. Thanks**
-
+Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based on 364's code, but I have added many features, like support for NEOs, 2nd Order Swerve Kinematics, my custom logging software (compatible with Advantage Scope), and many more on the way.
 # BaseFalconSwerve </br>
 
 **Basic Swerve Code for a Swerve Module using Falcon Motors, a CTRE CANCoder, and a CTRE Pigeon Gyro** </br>
