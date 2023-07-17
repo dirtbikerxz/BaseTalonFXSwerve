@@ -35,10 +35,10 @@ public class RevSwerve extends SubsystemBase {
 
         mSwerveMods = new SwerveModule[] {
            
-            new RevSwerveModule1(0, RevSwerveConstants.Swerve.Mod0.constants),
-            new RevSwerveModule1(1, RevSwerveConstants.Swerve.Mod1.constants),
-            new RevSwerveModule1(2, RevSwerveConstants.Swerve.Mod2.constants),
-            new RevSwerveModule1(3, RevSwerveConstants.Swerve.Mod3.constants)
+            new RevSwerveModule(0, RevSwerveConstants.Swerve.Mod0.constants),
+            new RevSwerveModule(1, RevSwerveConstants.Swerve.Mod1.constants),
+            new RevSwerveModule(2, RevSwerveConstants.Swerve.Mod2.constants),
+            new RevSwerveModule(3, RevSwerveConstants.Swerve.Mod3.constants)
         };
 
         swerveOdometry = new SwerveDriveOdometry(RevSwerveConfig.swerveKinematics, getYaw(), getModulePositions());

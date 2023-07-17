@@ -19,7 +19,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 /**
  * a Swerve Modules using REV Robotics motor controllers and CTRE CANcoder absolute encoders.
  */
-public class RevSwerveModule1 implements SwerveModule
+public class RevSwerveModule implements SwerveModule
 {
     public int moduleNumber;
     private Rotation2d angleOffset;
@@ -38,7 +38,7 @@ public class RevSwerveModule1 implements SwerveModule
 
     //SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-    public RevSwerveModule1(int moduleNumber, RevSwerveModuleConstants moduleConstants)
+    public RevSwerveModule(int moduleNumber, RevSwerveModuleConstants moduleConstants)
     {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
