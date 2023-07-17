@@ -4,10 +4,12 @@ import frc.lib.math.GeometryUtils;
 import frc.robot.constants.CTRESwerveConstants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -21,7 +23,8 @@ public class CTRESwerve extends SubsystemBase {
     
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-
+    private SwerveDrivePoseEstimator swervePose;
+    public Pose2d robotPose;
     public CTRESwerve() {
         gyro = new Pigeon2(CTRESwerveConstants.Swerve.pigeonID, "CANivore"); //"rio" (default), or the name of your CANivore
         gyro.configFactoryDefault();
@@ -37,6 +40,7 @@ public class CTRESwerve extends SubsystemBase {
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.*/
         Timer.delay(1.0);
         resetModulesToAbsolute();
+        
     }
 
     /*
@@ -126,8 +130,6 @@ public class CTRESwerve extends SubsystemBase {
         }
     }
 
-   
-
     public void stopDrive() {
         drive(new Translation2d(0, 0), 0, false, true);
     }
@@ -147,6 +149,9 @@ public class CTRESwerve extends SubsystemBase {
             states[mod.moduleNumber] = mod.getState();
         }
         return states;
+    }
+    public Pose2d getPose(){
+        return robotPose;
     }
 
     public SwerveModulePosition[] getModulePositions() {
@@ -177,9 +182,12 @@ public class CTRESwerve extends SubsystemBase {
     public double gyroTemp(){
         return gyro.getTemp();
     }
+
+   
     
     @Override
     public void periodic() {
+        robotPose = swervePose.update(getYaw(), getModulePositions());        
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
