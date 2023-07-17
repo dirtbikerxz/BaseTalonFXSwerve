@@ -7,7 +7,7 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 
-import frc.robot.constants.CTRESwerveConstants;
+import frc.robot.subsystems.swerve.falcon.CTRESwerveConfig;
 
 public final class CTREConfigs {
     public TalonFXConfiguration swerveAngleFXConfig;
@@ -21,35 +21,35 @@ public final class CTREConfigs {
 
         /* Swerve Angle Motor Configurations */
         SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(
-            CTRESwerveConstants.Swerve.angleEnableCurrentLimit, 
-            CTRESwerveConstants.Swerve.angleContinuousCurrentLimit, 
-            CTRESwerveConstants.Swerve.anglePeakCurrentLimit, 
-            CTRESwerveConstants.Swerve.anglePeakCurrentDuration);
+            CTRESwerveConfig.angleEnableCurrentLimit, 
+            CTRESwerveConfig.angleContinuousCurrentLimit, 
+            CTRESwerveConfig.anglePeakCurrentLimit, 
+            CTRESwerveConfig.anglePeakCurrentDuration);
 
-        swerveAngleFXConfig.slot0.kP = CTRESwerveConstants.Swerve.angleKP;
-        swerveAngleFXConfig.slot0.kI = CTRESwerveConstants.Swerve.angleKI;
-        swerveAngleFXConfig.slot0.kD = CTRESwerveConstants.Swerve.angleKD;
-        swerveAngleFXConfig.slot0.kF = CTRESwerveConstants.Swerve.angleKF;
+        swerveAngleFXConfig.slot0.kP = CTRESwerveConfig.angleKP;
+        swerveAngleFXConfig.slot0.kI = CTRESwerveConfig.angleKI;
+        swerveAngleFXConfig.slot0.kD = CTRESwerveConfig.angleKD;
+        swerveAngleFXConfig.slot0.kF = CTRESwerveConfig.angleKF;
         swerveAngleFXConfig.supplyCurrLimit = angleSupplyLimit;
 
         /* Swerve Drive Motor Configuration */
         SupplyCurrentLimitConfiguration driveSupplyLimit = new SupplyCurrentLimitConfiguration(
-            CTRESwerveConstants.Swerve.driveEnableCurrentLimit, 
-            CTRESwerveConstants.Swerve.driveContinuousCurrentLimit, 
-            CTRESwerveConstants.Swerve.drivePeakCurrentLimit, 
-            CTRESwerveConstants.Swerve.drivePeakCurrentDuration);
+            CTRESwerveConfig.driveEnableCurrentLimit, 
+            CTRESwerveConfig.driveContinuousCurrentLimit, 
+            CTRESwerveConfig.drivePeakCurrentLimit, 
+            CTRESwerveConfig.drivePeakCurrentDuration);
 
-        swerveDriveFXConfig.slot0.kP = CTRESwerveConstants.Swerve.driveKP;
-        swerveDriveFXConfig.slot0.kI = CTRESwerveConstants.Swerve.driveKI;
-        swerveDriveFXConfig.slot0.kD = CTRESwerveConstants.Swerve.driveKD;
-        swerveDriveFXConfig.slot0.kF = CTRESwerveConstants.Swerve.driveKF;        
+        swerveDriveFXConfig.slot0.kP = CTRESwerveConfig.driveKP;
+        swerveDriveFXConfig.slot0.kI = CTRESwerveConfig.driveKI;
+        swerveDriveFXConfig.slot0.kD = CTRESwerveConfig.driveKD;
+        swerveDriveFXConfig.slot0.kF = CTRESwerveConfig.driveKF;        
         swerveDriveFXConfig.supplyCurrLimit = driveSupplyLimit;
-        swerveDriveFXConfig.openloopRamp = CTRESwerveConstants.Swerve.openLoopRamp;
-        swerveDriveFXConfig.closedloopRamp = CTRESwerveConstants.Swerve.closedLoopRamp;
+        swerveDriveFXConfig.openloopRamp = CTRESwerveConfig.openLoopRamp;
+        swerveDriveFXConfig.closedloopRamp = CTRESwerveConfig.closedLoopRamp;
         
         /* Swerve CANCoder Configuration */
         swerveCanCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-        swerveCanCoderConfig.sensorDirection = CTRESwerveConstants.Swerve.canCoderInvert;
+        swerveCanCoderConfig.sensorDirection = CTRESwerveConfig.canCoderInvert;
         swerveCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
         swerveCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
     }

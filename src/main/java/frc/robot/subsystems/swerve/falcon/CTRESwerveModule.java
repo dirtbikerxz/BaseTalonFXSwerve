@@ -1,8 +1,8 @@
-package frc.lib.util.swerveUtil;
+package frc.robot.subsystems.swerve.falcon;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class SwerveModuleConstants {
+public class CTRESwerveModule {
     public final int driveMotorID;
     public final int angleMotorID;
     public final int cancoderID;
@@ -17,7 +17,7 @@ public class SwerveModuleConstants {
      * @param angleOffset
      * @param canBus
      */
-    public SwerveModuleConstants(int driveMotorID, int angleMotorID, int canCoderID, Rotation2d angleOffset, String canBus) {
+    public CTRESwerveModule(int driveMotorID, int angleMotorID, int canCoderID, Rotation2d angleOffset, String canBus) {
         this.driveMotorID = driveMotorID;
         this.angleMotorID = angleMotorID;
         this.cancoderID = canCoderID;

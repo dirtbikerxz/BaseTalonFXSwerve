@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.constants.CTRESwerveConstants;
 import frc.robot.subsystems.swerve.falcon.CTRESwerve;
+import frc.robot.subsystems.swerve.falcon.CTRESwerveConfig;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -38,8 +38,8 @@ public class TeleopSwerve extends CommandBase {
 
         /* Drive */
         s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(CTRESwerveConstants.Swerve.maxSpeed), 
-            rotationVal * CTRESwerveConstants.Swerve.maxAngularVelocity, 
+            new Translation2d(translationVal, strafeVal).times(CTRESwerveConfig.maxSpeed), 
+            rotationVal * CTRESwerveConfig.maxAngularVelocity, 
             !robotCentricSup.getAsBoolean(), 
             true
         );
