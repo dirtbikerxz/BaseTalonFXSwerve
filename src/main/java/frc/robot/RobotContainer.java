@@ -440,9 +440,6 @@ public class RobotContainer {
         driverY.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         driverB.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
 
-        driverStart.onTrue(new InstantCommand(() -> rotationSpeed = 0.5));
-        driverBack.onTrue(new InstantCommand(() -> rotationSpeed = 1.0));
-
         driverRStick.toggleOnTrue(
             new TeleopSwerve(
                 s_Swerve, 
