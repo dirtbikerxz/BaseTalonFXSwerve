@@ -64,7 +64,7 @@ public class AutoBalance extends CommandBase {
     Translation2d move = new Translation2d(pidVar, 0.0);
 
     if (angle <= balanceVar + Constants.BALANCE_LEVEL_DEADZONE && angle >= balanceVar - Constants.BALANCE_LEVEL_DEADZONE) {
-
+      
       
       System.out.println("balanced");
       // new LockWheels(swerve);

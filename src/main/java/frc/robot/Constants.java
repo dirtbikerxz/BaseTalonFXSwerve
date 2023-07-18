@@ -29,7 +29,7 @@ public final class Constants {
     public static final double WRIST_CONE_STOW_POSITION = 48.58;
     public static final double WRIST_CONE_LOW_POSITION = -41.27;
     public static final double WRIST_CONE_MID_POSITION = -76.68;
-    public static final double WRIST_CONE_HIGH_POSITION = -38.97;
+    public static final double WRIST_CONE_HIGH_POSITION = -30.0;
     public static final double WRIST_CONE_SINGLE_POSITION = 88.58;
     public static final double WRIST_CONE_DOUBLE_POSITION = -44.41;
     public static final double WRIST_CONE_STANDING_POSITION = -55.0;
@@ -82,11 +82,11 @@ public final class Constants {
     public static final double AUTO_R_D = 0;
     
     //TODO: Set offset
-    public static final double WRIST_ENCODER_OFFSET = -5.61;
+    public static final double WRIST_ENCODER_OFFSET = -10; //-5.61 
     public static final double TARGET_WRIST_ANGLE = 0.0;
 
     public static final double INTAKE_CONE_RUN_SPEED = 1.0;
-    public static final double INTAKE_CONE_REVERSE_SPEED = -1.0;
+    public static final double INTAKE_CONE_REVERSE_SPEED = -0.8;
     public static final double INTAKE_CUBE_RUN_SPEED = -0.6;
     public static final double INTAKE_CUBE_REVERSE_SPEED = 0.6;
 
@@ -101,7 +101,7 @@ public final class Constants {
     public static final double WRIST_ENCODER_RATIO = 1.4545;
 
     /* Elevator Constants */
-    public static final float FORWARD_ELEVATOR_LIMIT = (float) 27.9;
+    public static final float FORWARD_ELEVATOR_LIMIT = (float) 28.1;
     public static final float REVERSE_ELEVATOR_LIMIT = (float) 0.5;
     public static final int ELEVATOR_MOTOR_ID = 16;
 
@@ -115,13 +115,13 @@ public final class Constants {
     public static final double ELEVATOR_D = 0.0;
     public static final double ELEVATOR_G = 0.5;
 
-    public static final double ELEVATOR_CONE_HIGH_LEVEL = 27.85;
+    public static final double ELEVATOR_CONE_HIGH_LEVEL = 28.1;
     public static final double ELEVATOR_CONE_MID_LEVEL = 23.42;
     public static final double ELEVATOR_CONE_LOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SAFE_LEVEL = 10.0;
     public static final double ELEVATOR_CONE_STOW_LEVEL = REVERSE_ELEVATOR_LIMIT;
     public static final double ELEVATOR_CONE_SINGLE_POSITION = 0;
-    public static final double ELEVATOR_CONE_DOUBLE_POSITION = 23.0;
+    public static final double ELEVATOR_CONE_DOUBLE_POSITION = 24.25;
     public static final double ELEVATOR_CONE_STANDING_POSITION = 6.5;
 
     public static final double ELEVATOR_CUBE_HIGH_LEVEL = 23.1;
@@ -148,12 +148,12 @@ public final class Constants {
     public static final int OPERATOR_PORT = 1;
 
     // auto balancing constants
-    public static final double AUTO_BALANCE_P = 0.03;
+    public static final double AUTO_BALANCE_P = 0.05;
     public static final double AUTO_BALANCE_I = 0.00;
     public static final double AUTO_BALANCE_D = 0.01;
-    public static final double RED_BALANCE_LEVEL = -2.4;
-    public static final double BLUE_BALANCE_LEVEL = -2.4;
-    public static final double BALANCE_LEVEL_DEADZONE = 5.0;
+    public static final double RED_BALANCE_LEVEL = 0;
+    public static final double BLUE_BALANCE_LEVEL = 0;
+    public static final double BALANCE_LEVEL_DEADZONE = 0.0;
     public static final double WHEEL_LOCK_TIME = 0.1;
 
      /* PID Rotation */ 
@@ -226,7 +226,7 @@ public final class Constants {
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
-        public static final double openLoopRamp = 0.5;
+        public static final double openLoopRamp = 0.0; //0.5
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */

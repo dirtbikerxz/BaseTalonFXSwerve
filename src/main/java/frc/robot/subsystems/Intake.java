@@ -53,7 +53,7 @@ public class Intake extends SubsystemBase {
       motor.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
       /* Current Limits */
-      motor.setSmartCurrentLimit(20);
+      motor.setSmartCurrentLimit(30);
 
       /* Logging */
       logger = DataLogManager.getLog();

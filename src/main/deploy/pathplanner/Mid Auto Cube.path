@@ -58,7 +58,10 @@
         "x": 2.9597318103801378,
         "y": 2.7748578574080227
       },
-      "nextControl": null,
+      "nextControl": {
+        "x": 4.879375149885065,
+        "y": 2.7748578574080227
+      },
       "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": 0.1,
@@ -68,6 +71,28 @@
         "names": [
           "Auto Balance"
         ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.928911230744078,
+        "y": 2.779984277308222
+      },
+      "prevControl": {
+        "x": 4.404143190314572,
+        "y": 2.777421067358122
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
