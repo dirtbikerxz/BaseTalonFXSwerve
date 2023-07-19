@@ -160,6 +160,11 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("debug/yaw", getYaw().getDegrees());
         //System.out.println(getYaw().getDegrees());
         m_field.setRobotPose(swerveOdometry.getPoseMeters());
+        
+        Pose2d odometry = swerveOdometry.getPoseMeters();
+        robotPose2D.append(odometry.getX());
+        robotPose2D.append(odometry.getY());
+        robotPose2D.append(odometry.getRotation().getDegrees());
 
         for(SwerveModule mod : mSwerveMods){
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Current Draw", mod.mDriveMotor.getSupplyCurrent());
