@@ -29,7 +29,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
@@ -71,4 +71,3 @@ public class RobotContainer {
         return new exampleAuto(s_Swerve);
     }
 }
-

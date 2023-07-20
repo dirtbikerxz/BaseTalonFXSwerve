@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+
 import frc.lib.math.Conversions;
 import frc.lib.util.AbsoluteEncoder;
 import frc.lib.util.CTREModuleState;
@@ -74,11 +75,10 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    public Rotation2d getAngle(){
+    private Rotation2d getAngle(){
         return Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
     }
 
-    
     public Rotation2d getCanCoder(){
         
         //return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
