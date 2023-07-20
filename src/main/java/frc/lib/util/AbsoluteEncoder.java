@@ -25,10 +25,10 @@ public class AbsoluteEncoder {
 
     }
 
-    public Rotation2d getRotation() {
+    public double getAbsolutePosition() {
         double voltage = analogInput.getVoltage();
         double degrees = 360 * (voltage / Constants.MAX_ENCODER_VOLTAGE);
-        return Rotation2d.fromDegrees(degrees);
+        return degrees;
     }
 
     /*

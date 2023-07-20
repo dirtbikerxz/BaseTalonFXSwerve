@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -15,8 +16,12 @@ public final class Constants {
     public static final double MAX_ENCODER_VOLTAGE = 4.926;
 
     public static final class Swerve {
+        public enum EncoderType { CANCODER, PWM }
+
         public static final int pigeonID = 1;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+
+        public static final EncoderType encoderType = EncoderType.CANCODER;
 
         public static final COTSFalconSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
@@ -95,7 +100,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 2;
             public static final int encoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0); 
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, encoderID, angleOffset);
         }
