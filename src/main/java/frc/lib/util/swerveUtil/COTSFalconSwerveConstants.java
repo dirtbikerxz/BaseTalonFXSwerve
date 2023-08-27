@@ -84,6 +84,60 @@ public class COTSFalconSwerveConstants {
         return new COTSFalconSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
     }
 
+    /** West Coast Products - Flipped Gear Module*/
+    public static COTSFalconSwerveConstants WCPxFlippedGear(double driveGearRatio){
+        double wheelDiameter = Units.inchesToMeters(4.0);
+
+        /** (150 / 7) : 1 */
+        double angleGearRatio = (15.43 / 1.0);
+
+        double angleKP = 0.3; //this value does need to be tested :skull:
+        double angleKI = 0.0;
+        double angleKD = 0.0;
+        double angleKF = 0.0;
+
+        boolean driveMotorInvert = false;
+        boolean angleMotorInvert = true;
+        boolean canCoderInvert = false;
+        return new COTSFalconSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
+    }
+
+    /** West Coast Products - Flipped Belt Module*/
+    public static COTSFalconSwerveConstants WCPxFlippedBelt(double driveGearRatio){
+        double wheelDiameter = Units.inchesToMeters(4.0);
+
+        /** (150 / 7) : 1 */
+        double angleGearRatio = (10.29 / 1.0);
+
+        double angleKP = 0.3; //this value does need to be tested :skull:
+        double angleKI = 0.0;
+        double angleKD = 0.0;
+        double angleKF = 0.0;
+
+        boolean driveMotorInvert = false;
+        boolean angleMotorInvert = false;
+        boolean canCoderInvert = false;
+        return new COTSFalconSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
+    }
+
+    /** West Coast Products - Non-Flipped Belt Module*/
+    public static COTSFalconSwerveConstants WCPxNonFlippedBelt(double driveGearRatio){
+        double wheelDiameter = Units.inchesToMeters(4.0);
+
+        /** (150 / 7) : 1 */
+        double angleGearRatio = (15.43 / 1.0);
+
+        double angleKP = 0.3; //this value does need to be tested :skull:
+        double angleKI = 0.0;
+        double angleKD = 0.0;
+        double angleKF = 0.0;
+
+        boolean driveMotorInvert = false;
+        boolean angleMotorInvert = true;
+        boolean canCoderInvert = false;
+        return new COTSFalconSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
+    }
+
     /* Drive Gear Ratios for all supported modules */
     public class driveGearRatios{
         /* SDS MK3 */
@@ -109,6 +163,21 @@ public class COTSFalconSwerveConstants {
         public static final double SDSMK4i_L2 = (6.75 / 1.0);
         /** SDS MK4i - 6.12 : 1 */
         public static final double SDSMK4i_L3 = (6.12 / 1.0);
+        /* WCP Swerve X */
+        /* Flipped Gear */
+        public static final double WCPXflippedGear_675 = (6.75 / 1.0);
+        public static final double WCPXflippedGear_736 = (7.36 / 1.0);
+        public static final double WCPXflippedGear_810 = (8.10 / 1.0);
+        /* Flipped Belt */
+        public static final double WCPXflippedBelt_550 = (5.50 / 1.0);
+        public static final double WCPXflippedBelt_655 = (5.55 / 1.0);
+        public static final double WCPXflippedBelt_780 = (7.80 / 1.0);
+        /* Non-Flipped */
+        public static final double WCPXnonFlipped_550 = (6.54 / 1.0);
+        public static final double WCPXnonFlipped_655 = (7.13 / 1.0);
+        public static final double WCPXnonFlipped_780 = (7.85 / 1.0);
+
+
     }
 }
 
