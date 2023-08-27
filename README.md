@@ -9,7 +9,7 @@ Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based o
 - [x] 2nd Order Kinematics (4481 Style).</br>
 - [x] Log Manager compatible with Advantage Scope. </br>
 - [x] WCP SwerveX Support</br>
-- [ ] NEO Versions of the modules support</br>
+- [x] NEO Versions of the modules support</br>
 - [ ] Easy Control Scheme Editing </br>
 - [ ] Custom Shuffleboard </br>
 - [ ] PathPlanner Easy Auto Maker </br>
