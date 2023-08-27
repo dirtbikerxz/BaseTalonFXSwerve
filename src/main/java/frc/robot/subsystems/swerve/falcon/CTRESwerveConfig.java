@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.swerveUtil.COTSFalconSwerveConstants;
+import frc.lib.util.swerveUtil.secondOrder.SecondOrderSwerveKinematics;
 
 /** Add your docs here. */
 public class CTRESwerveConfig {
@@ -26,6 +27,12 @@ public class CTRESwerveConfig {
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
          public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
+            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+        
+        public static final SecondOrderSwerveKinematics secondKinematics = new SecondOrderSwerveKinematics(
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
             new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
             new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
