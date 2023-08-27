@@ -3,13 +3,15 @@ Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based o
 # Ultimate Swerve Base </br>
 **Project Goals**
 ----
-- [x] CANivore Support
+- [x] CANivore Support</br>
 - [x] NEO support. </br>
 - [x] Simple 2nd Order Swerve Kinematics.</br>
 - [x] 2nd Order Kinematics (4481 Style).</br>
 - [x] Log Manager compatible with Advantage Scope. </br>
 - [x] WCP SwerveX Support</br>
 - [x] NEO Versions of the modules support</br>
+- [ ] Different IMU support (Navx, ADIS, etc) Support.</br>
+- [ ] Different Encoder suppport (Thrifty, Helium CANandCoder, etc) Support.</br>
 - [ ] Easy Control Scheme Editing </br>
 - [ ] Custom Shuffleboard </br>
 - [ ] PathPlanner Easy Auto Maker </br>
