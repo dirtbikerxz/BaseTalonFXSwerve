@@ -1,6 +1,7 @@
 package frc.robot.subsystems.swerve.falcon;
 
 import frc.lib.math.GeometryUtils;
+import frc.lib.util.swerveUtil.secondOrder.SecondOrderSwerveModuleStates;
 import frc.robot.constants.CTRESwerveConstants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -71,8 +72,12 @@ public class CTRESwerve extends SubsystemBase {
                     translation.getY(),
                     rotation);
         desiredChassisSpeeds = correctForDynamics(desiredChassisSpeeds);
+        
+        //old 1st order kinematics
+        // SwerveModuleState[] swerveModuleStates = CTRESwerveConfig.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
 
-        SwerveModuleState[] swerveModuleStates = CTRESwerveConfig.swerveKinematics.toSwerveModuleStates(desiredChassisSpeeds);
+        SecondOrderSwerveModuleStates secondOrderSwerveModuleStates = CTRESwerveConfig.secondKinematics.toSwerveModuleState(desiredChassisSpeeds, getYaw());
+        SwerveModuleState[] swerveModuleStates = secondOrderSwerveModuleStates.getSwerveModuleStates();
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, CTRESwerveConfig.maxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
