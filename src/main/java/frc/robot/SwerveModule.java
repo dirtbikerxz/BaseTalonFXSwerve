@@ -63,7 +63,7 @@ public class SwerveModule {
             mDriveMotor.setControl(new DutyCycleOut(percentOutput, true, false));
         }
         else {
-            double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, DrivetrainConstants.WHEEL_CIRCUMFERENCE, DrivetrainConstants.GEAR_RATIO);
+            double velocity = Conversions.getInputShaftRotations((desiredState.speedMetersPerSecond / DrivetrainConstants.WHEEL_CIRCUMFERENCE), DrivetrainConstants.GEAR_RATIO);
             mDriveMotor.setControl(new VelocityDutyCycle(velocity, true, feedforward.calculate(desiredState.speedMetersPerSecond), 0, false));
         }
     }
@@ -107,14 +107,14 @@ public class SwerveModule {
 
     public SwerveModuleState getState(){
         return new SwerveModuleState(
-            Conversions.falconToMPS(mDriveMotor.getRotorVelocity().getValue(), DrivetrainConstants.WHEEL_CIRCUMFERENCE, DrivetrainConstants.GEAR_RATIO), 
+            Conversions.getOutputShaftRotations(mDriveMotor.getRotorVelocity().getValue(), DrivetrainConstants.GEAR_RATIO) * DrivetrainConstants.WHEEL_CIRCUMFERENCE,
             getAngle()
         ); 
     }
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
-            Conversions.falconToMeters(mDriveMotor.getRotorPosition().getValue(), DrivetrainConstants.WHEEL_CIRCUMFERENCE, DrivetrainConstants.GEAR_RATIO), 
+            Conversions.getOutputShaftRotations(mDriveMotor.getRotorPosition().getValue(), DrivetrainConstants.GEAR_RATIO) * DrivetrainConstants.WHEEL_CIRCUMFERENCE,
             getAngle()
         );
     }
