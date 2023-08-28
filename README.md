@@ -10,6 +10,7 @@ Hello, this is what I'm calling the "Ultimate Swerve Base", this is made based o
 - [x] Log Manager compatible with Advantage Scope. </br>
 - [x] WCP SwerveX Support</br>
 - [x] NEO Versions of the modules support</br>
+- [ ] Rev MAXSwerve Support</br>
 - [ ] Different IMU support (Navx, ADIS, etc) Support.</br>
 - [ ] Different Encoder suppport (Thrifty, Helium CANandCoder, etc) Support.</br>
 - [ ] Easy Control Scheme Editing </br>
