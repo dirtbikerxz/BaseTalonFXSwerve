@@ -145,7 +145,7 @@ public final class Constants {
 
             public final static String AZIMUTH = "canivore";
 
-            public final static String CANCODERS = "canivore";
+            public final static String CANCODER = "canivore";
         }
     }
 }

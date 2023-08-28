@@ -18,7 +18,6 @@ import com.ctre.phoenix6.hardware.CANcoder;
 
 import frc.robot.Constants.DrivetrainConstants.DriveGains;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.RobotMap;
 
 public class SwerveModule {
     public int moduleNumber;
@@ -36,15 +35,15 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
         
         /* Angle Encoder Config */
-        angleEncoder = new CANcoder(moduleConstants.cancoderID, RobotMap.BUS.CANCODERS);
+        angleEncoder = new CANcoder(moduleConstants.cancoderID, moduleConstants.cancoderBus);
         configAngleEncoder();
 
         /* Angle Motor Config */
-        mAngleMotor = new TalonFX(moduleConstants.angleMotorID, RobotMap.BUS.AZIMUTH);
+        mAngleMotor = new TalonFX(moduleConstants.angleMotorID, moduleConstants.angleMotorBus);
         configAngleMotor();
 
         /* Drive Motor Config */
-        mDriveMotor = new TalonFX(moduleConstants.driveMotorID, RobotMap.BUS.DRIVE);
+        mDriveMotor = new TalonFX(moduleConstants.driveMotorID, moduleConstants.driveMotorBus);
         configDriveMotor();
 
         lastAngle = getState().angle;

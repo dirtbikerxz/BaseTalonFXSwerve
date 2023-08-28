@@ -36,17 +36,88 @@ public class Swerve extends SubsystemBase {
         //this can be compacted significantly, but this is what you have to do to make it work with our existing constants
         if (Constants.isBlackout()) {
             mSwerveMods = new SwerveModule[] {
-                new SwerveModule(0, new SwerveModuleConstants(RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR, RobotMap.CAN.FRONT_LEFT_AZIMUTH_MOTOR, RobotMap.CAN.FRONT_LEFT_CANCODER, Rotation2d.fromDegrees(Offsets.Blackout.FRONT_LEFT_STEER_OFFSET))),
-                new SwerveModule(1, new SwerveModuleConstants(RobotMap.CAN.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.CAN.FRONT_RIGHT_AZIMUTH_MOTOR, RobotMap.CAN.FRONT_RIGHT_CANCODER, Rotation2d.fromDegrees(Offsets.Blackout.FRONT_RIGHT_STEER_OFFSET))),
-                new SwerveModule(2, new SwerveModuleConstants(RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR, RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR, RobotMap.CAN.BACK_RIGHT_CANCODER, Rotation2d.fromDegrees(Offsets.Blackout.BACK_RIGHT_STEER_OFFSET))),
-                new SwerveModule(3, new SwerveModuleConstants(RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR, RobotMap.CAN.BACK_LEFT_AZIMUTH_MOTOR, RobotMap.CAN.BACK_LEFT_CANCODER, Rotation2d.fromDegrees(Offsets.Blackout.BACK_LEFT_STEER_OFFSET)))
+                new SwerveModule(
+                    0,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR,
+                        RobotMap.CAN.FRONT_LEFT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.FRONT_LEFT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Blackout.FRONT_LEFT_STEER_OFFSET))),
+                new SwerveModule(
+                    1,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_RIGHT_DRIVE_MOTOR,
+                        RobotMap.CAN.FRONT_RIGHT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.FRONT_RIGHT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Blackout.FRONT_RIGHT_STEER_OFFSET))),
+                new SwerveModule(
+                    2,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR,
+                        RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.BACK_RIGHT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Blackout.BACK_RIGHT_STEER_OFFSET))),
+                new SwerveModule(
+                    3,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR,
+                        RobotMap.CAN.BACK_LEFT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.BACK_LEFT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Blackout.BACK_LEFT_STEER_OFFSET)))
             };
         } else {
             mSwerveMods = new SwerveModule[] {
-                new SwerveModule(0, new SwerveModuleConstants(RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR, RobotMap.CAN.FRONT_LEFT_AZIMUTH_MOTOR, RobotMap.CAN.FRONT_LEFT_CANCODER, Rotation2d.fromDegrees(Offsets.Gridlock.FRONT_LEFT_STEER_OFFSET))),
-                new SwerveModule(1, new SwerveModuleConstants(RobotMap.CAN.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.CAN.FRONT_RIGHT_AZIMUTH_MOTOR, RobotMap.CAN.FRONT_RIGHT_CANCODER, Rotation2d.fromDegrees(Offsets.Gridlock.FRONT_RIGHT_STEER_OFFSET))),
-                new SwerveModule(2, new SwerveModuleConstants(RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR, RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR, RobotMap.CAN.BACK_RIGHT_CANCODER, Rotation2d.fromDegrees(Offsets.Gridlock.BACK_RIGHT_STEER_OFFSET))),
-                new SwerveModule(3, new SwerveModuleConstants(RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR, RobotMap.CAN.BACK_LEFT_AZIMUTH_MOTOR, RobotMap.CAN.BACK_LEFT_CANCODER, Rotation2d.fromDegrees(Offsets.Gridlock.BACK_LEFT_STEER_OFFSET)))
+                new SwerveModule(
+                    0,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR,
+                        RobotMap.CAN.FRONT_LEFT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.FRONT_LEFT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Gridlock.FRONT_LEFT_STEER_OFFSET))),
+                new SwerveModule(
+                    1,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_RIGHT_DRIVE_MOTOR,
+                        RobotMap.CAN.FRONT_RIGHT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.FRONT_RIGHT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Gridlock.FRONT_RIGHT_STEER_OFFSET))),
+                new SwerveModule(
+                    2,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR,
+                        RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.BACK_RIGHT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Gridlock.BACK_RIGHT_STEER_OFFSET))),
+                new SwerveModule(3,
+                    new SwerveModuleConstants(
+                        RobotMap.CAN.FRONT_LEFT_DRIVE_MOTOR,
+                        RobotMap.CAN.BACK_LEFT_AZIMUTH_MOTOR,
+                        RobotMap.CAN.BACK_LEFT_CANCODER,
+                        RobotMap.BUS.DRIVE,
+                        RobotMap.BUS.AZIMUTH,
+                        RobotMap.BUS.CANCODER,
+                        Rotation2d.fromDegrees(Offsets.Gridlock.BACK_LEFT_STEER_OFFSET)))
             };
         }
 
