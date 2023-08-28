@@ -71,7 +71,7 @@ public class SwerveModule {
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (DrivetrainConstants.MAX_SPEED * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
-        mAngleMotor.setControl(new PositionDutyCycle(Conversions.degreesToFalcon(angle.getDegrees(), DrivetrainConstants.ANGLE_RATIO)));
+        mAngleMotor.setControl(new PositionDutyCycle((angle.getDegrees() / 360) / DrivetrainConstants.ANGLE_RATIO));
         lastAngle = angle;
     }
 
@@ -84,7 +84,7 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), DrivetrainConstants.ANGLE_RATIO);
+        double absolutePosition = ((getCanCoder().getDegrees() - angleOffset.getDegrees()) * DrivetrainConstants.ANGLE_RATIO)/360;
         mAngleMotor.setRotorPosition(absolutePosition);
     }
 
