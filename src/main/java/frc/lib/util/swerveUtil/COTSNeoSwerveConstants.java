@@ -138,6 +138,24 @@ public class COTSNeoSwerveConstants {
         return new COTSNeoSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
     }
 
+    /** West Coast Products - Non-Flipped Belt Module*/
+    public static COTSNeoSwerveConstants REVMaxSwerve(double driveGearRatio){
+        double wheelDiameter = Units.inchesToMeters(4.0);
+
+        /** (150 / 7) : 1 */
+        double angleGearRatio = (14.0 / 1.0); //TODO i dunno how to properly add the gear ratio of the neo 550 rotation motor and the steering plate | future me check this
+
+        double angleKP = 0.3; //this value does need to be tested :skull:
+        double angleKI = 0.0;
+        double angleKD = 0.0;
+        double angleKF = 0.0;
+
+        boolean driveMotorInvert = false;
+        boolean angleMotorInvert = true;
+        boolean canCoderInvert = false;
+        return new COTSNeoSwerveConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, angleKF, driveMotorInvert, angleMotorInvert, canCoderInvert);
+    }
+
     /* Drive Gear Ratios for all supported modules */
     public class driveGearRatios{
         /* SDS MK3 */
@@ -176,6 +194,10 @@ public class COTSNeoSwerveConstants {
         public static final double WCPXnonFlipped_550 = (6.54 / 1.0);
         public static final double WCPXnonFlipped_655 = (7.13 / 1.0);
         public static final double WCPXnonFlipped_780 = (7.85 / 1.0);
+        /* REV MaxSwerve */
+        public static final double REVMax12T = (5.50 / 1.0);
+        public static final double REVMax13T = (5.08 / 1.0);
+        public static final double REVMax14T = (4.71 / 1.0);
 
 
     }
