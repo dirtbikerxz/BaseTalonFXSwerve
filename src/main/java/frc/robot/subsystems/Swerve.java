@@ -4,7 +4,6 @@ import frc.robot.SwerveModule;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.RobotMap;
 import frc.lib.util.SwerveModuleConstants;
-import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants.Offsets;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;

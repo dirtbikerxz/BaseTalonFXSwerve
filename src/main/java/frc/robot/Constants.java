@@ -22,11 +22,10 @@ public final class Constants {
     }
 
     public static final class DrivetrainConstants {
-        public static final double FRAME_PERIMETER = 26;
 
         // Our drivetrain track width and Wheelbase
-        public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(FRAME_PERIMETER-5.1875);
-        public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(FRAME_PERIMETER-5.1875);
+        public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(22.5);
+        public static final double DRIVETRAIN_WHEELBASE_METERS =  Units.inchesToMeters(22.5);
 
         public static final double DRIVE_SUPPLY_LIMIT = 40d;
         public static final double DRIVE_SUPPLY_THRESHOLD = 60d;
@@ -39,7 +38,7 @@ public final class Constants {
         public static final double DRIVE_OPEN_RAMP_RATE = 0.25;
         public static final double DRIVE_CLOSED_RAMP_RATE = 0.0;
 
-        public static final double MAX_SPEED = Units.feetToMeters(16.3);
+        public static final double MAX_SPEED = Units.feetToMeters(16.2);
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_SPEED / Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
         public static final double GEAR_RATIO = 6.12;
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(4d);
@@ -60,17 +59,17 @@ public final class Constants {
         );
 
         public static final class AzimuthGains {
-            public static final double kP = 0.2;
-            public static final double kI = 0d;
-            public static final double kD = 0.1d;
-            public static final double kS = 0d;
+            public static final double kP = 0.22;
+            public static final double kI = 0.22d;
+            public static final double kD = 0.0005d;
+            public static final double kS = 0.054d;
         }
 
         // Gains vaules for PIDControllers
         public static final class DriveGains {
-            public static final double kP = 0.15;// .116d;
-            public static final double kI = 0d;
-            public static final double kD = 0d;
+            public static final double kP = 0.22;// .116d;
+            public static final double kI = 0.22d;
+            public static final double kD = 0.001d;
 
             public static final double kS = 0.225;// 229d;
             public static final double kV = 0d;
