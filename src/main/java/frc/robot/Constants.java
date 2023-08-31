@@ -1,8 +1,5 @@
 package frc.robot;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -12,17 +9,6 @@ import edu.wpi.first.math.util.Units;
 
 
 public final class Constants {
-    // Path to the Blackout directory
-    public static final Path BLACKOUT_PATH = Paths.get("home/lvuser/blackout");
-    
-    // Check if we're on Blackout
-    public static final boolean isBlackout() {
-        return BLACKOUT_PATH.toFile().exists();
-    }
-
-    public static final boolean isGridlock() {
-        return !isBlackout();
-    }
 
     public static final class ControllerConstants {
         // Ports for the controllers
@@ -93,21 +79,11 @@ public final class Constants {
 
         // Steer offsets for our modules
         public static final class Offsets {
-            // Gridlocks swerve module absolute encoder offsets
-            public static final class Gridlock {
+            // swerve module absolute encoder offsets
                 public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(193.535);
                 public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(145.547);
                 public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(199.688);
                 public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(210.938);
-            }
-
-            // Blackouts swerve module absolute encoder offsets
-            public static final class Blackout {
-                public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(253.916);
-                public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(222.451);
-                public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(19.688);
-                public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(63.018);
-            }
         }
     }
 
