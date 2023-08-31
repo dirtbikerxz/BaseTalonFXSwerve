@@ -43,7 +43,7 @@ public final class Constants {
         public static final double GEAR_RATIO = 6.12;
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(4d);
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-        public static final double ANGLE_RATIO = ((150.0 / 7.0) / 1.0);
+        public static final double ANGLE_RATIO = 12.8;
 
         public static final InvertedValue ANGLE_INVERT = InvertedValue.Clockwise_Positive;
         public static final InvertedValue DRIVE_INVERT = InvertedValue.Clockwise_Positive;
@@ -79,10 +79,10 @@ public final class Constants {
         // Steer offsets for our modules
         public static final class Offsets {
             // swerve module absolute encoder offsets
-                public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(193.535);
-                public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(145.547);
-                public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(199.688);
-                public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(210.938);
+                public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(87.012);
+                public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(14.590);
+                public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(74.883);
+                public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(230.713);
         }
     }
 
@@ -96,31 +96,31 @@ public final class Constants {
             public static final int PDH = 21;
 
             // Front left CanIDs
-            public static final int FRONT_LEFT_DRIVE_MOTOR = 1;
-            public static final int FRONT_LEFT_AZIMUTH_MOTOR = 2;
-            public static final int FRONT_LEFT_CANCODER = 31;
+            public static final int FRONT_LEFT_DRIVE_MOTOR = 8;
+            public static final int FRONT_LEFT_AZIMUTH_MOTOR = 7;
+            public static final int FRONT_LEFT_CANCODER = 16;
             // Front right CanIDs
-            public static final int FRONT_RIGHT_DRIVE_MOTOR = 3;
-            public static final int FRONT_RIGHT_AZIMUTH_MOTOR = 4;
-            public static final int FRONT_RIGHT_CANCODER = 32;
+            public static final int FRONT_RIGHT_DRIVE_MOTOR = 11;
+            public static final int FRONT_RIGHT_AZIMUTH_MOTOR = 12;
+            public static final int FRONT_RIGHT_CANCODER = 17;
             // Back right CanIDs
-            public static final int BACK_RIGHT_DRIVE_MOTOR = 5;
-            public static final int BACK_RIGHT_AZIMUTH_MOTOR = 6;
-            public static final int BACK_RIGHT_CANCODER = 33;
+            public static final int BACK_RIGHT_DRIVE_MOTOR = 13;
+            public static final int BACK_RIGHT_AZIMUTH_MOTOR = 14;
+            public static final int BACK_RIGHT_CANCODER = 18;
             // Back left CanIDs
-            public static final int BACK_LEFT_DRIVE_MOTOR = 7;
-            public static final int BACK_LEFT_AZIMUTH_MOTOR = 8;
-            public static final int BACK_LEFT_CANCODER = 34;
+            public static final int BACK_LEFT_DRIVE_MOTOR = 10;
+            public static final int BACK_LEFT_AZIMUTH_MOTOR = 9;
+            public static final int BACK_LEFT_CANCODER = 15;
         }
 
         public static final class BUS {
-            public final static String PIGEON = "canivore";
+            public final static String PIGEON = "Canivore";
 
-            public final static String DRIVE = "canivore";
+            public final static String DRIVE = "Canivore";
 
-            public final static String AZIMUTH = "canivore";
+            public final static String AZIMUTH = "Canivore";
 
-            public final static String CANCODER = "canivore";
+            public final static String CANCODER = "Canivore";
         }
     }
 }

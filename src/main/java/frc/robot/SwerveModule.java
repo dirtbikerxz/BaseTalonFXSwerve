@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
@@ -70,7 +71,9 @@ public class SwerveModule {
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (DrivetrainConstants.MAX_SPEED * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
-        mAngleMotor.setControl(new PositionDutyCycle((angle.getDegrees() / 360) / DrivetrainConstants.ANGLE_RATIO));
+        //TODO: i fucked that and be better, maybe unfuck
+        mAngleMotor.setControl(new PositionDutyCycle((desiredState.angle.getDegrees() / 360) * DrivetrainConstants.ANGLE_RATIO));
+        SmartDashboard.putNumber("desired angle", desiredState.angle.getDegrees());
         lastAngle = angle;
     }
 
