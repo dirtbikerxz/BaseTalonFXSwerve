@@ -101,7 +101,9 @@ public class SwerveModule {
 
     private void configAngleMotor(){
         mAngleMotor.getConfigurator().apply(new TalonFXConfiguration());
-        mAngleMotor.getConfigurator().apply(new CTREConfigs().swerveAngleFXConfig);
+        TalonFXConfiguration config = new CTREConfigs().swerveAngleFXConfig;
+        config.Feedback.FeedbackRemoteSensorID = angleEncoder.getDeviceID();
+        mAngleMotor.getConfigurator().apply(config);
         resetToAbsolute();
     }
 
