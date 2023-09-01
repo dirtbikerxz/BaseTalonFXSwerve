@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -51,12 +52,19 @@ public final class Constants {
         public static final NeutralModeValue ANGLE_NEUTRAL = NeutralModeValue.Brake;
         public static final NeutralModeValue DRIVE_NEUTRAL = NeutralModeValue.Brake;
 
+        // i swapped the left and right negations here in order to fix an issue with turn motors being oriented like an X instead of a diamond. There is likely some underlying cause that should be addressed, perhaps something to do with sensor inverts, or some other novel phoenix 6 thing
+        // i do remember noticing similar behavior when using phoenix 6 on HaD, so that does point me to it being the underlying cause
         public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
-            new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
             new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
-            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
-            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0)
+            new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
+            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
+            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0)
         );
+
+        public static final Rotation2d FRONT_LEFT_RESTING_ANGLE = Rotation2d.fromDegrees(-45d);
+        public static final Rotation2d FRONT_RIGHT_RESTING_ANGLE = Rotation2d.fromDegrees(45d);
+        public static final Rotation2d BACK_LEFT_RESTING_ANGLE = Rotation2d.fromDegrees(45d);
+        public static final Rotation2d BACK_RIGHT_RESTING_ANGLE = Rotation2d.fromDegrees(-45d);
 
         public static final class AzimuthGains {
             public static final double kP = 0.22;
@@ -79,10 +87,10 @@ public final class Constants {
         // Steer offsets for our modules
         public static final class Offsets {
             // swerve module absolute encoder offsets
-                public static final double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(87.012);
-                public static final double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(14.590);
-                public static final double BACK_LEFT_STEER_OFFSET = -Math.toRadians(74.883);
-                public static final double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(230.713);
+                public static final double FRONT_LEFT_STEER_OFFSET  = 0.756104;
+                public static final double FRONT_RIGHT_STEER_OFFSET = 0.962646;
+                public static final double BACK_LEFT_STEER_OFFSET   = 0.792725;
+                public static final double BACK_RIGHT_STEER_OFFSET  = 0.340820;
         }
     }
 

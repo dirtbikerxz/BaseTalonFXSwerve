@@ -71,22 +71,26 @@ public class SwerveModule {
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (DrivetrainConstants.MAX_SPEED * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
-        //TODO: i fucked that and be better, maybe unfuck
-        mAngleMotor.setControl(new PositionDutyCycle((desiredState.angle.getDegrees() / 360) * DrivetrainConstants.ANGLE_RATIO));
-        SmartDashboard.putNumber("desired angle", desiredState.angle.getDegrees());
+        mAngleMotor.setControl(new PositionDutyCycle((angle.getDegrees() / 360) * DrivetrainConstants.ANGLE_RATIO));
+        // mAngleMotor.setControl(new PositionDutyCycle((0)));
+
         lastAngle = angle;
     }
 
     private Rotation2d getAngle(){
-        return Rotation2d.fromRotations(mAngleMotor.getRotorPosition().getValue() / DrivetrainConstants.ANGLE_RATIO);
+        return Rotation2d.fromRotations(mAngleMotor.getRotorPosition().refresh().getValue() / DrivetrainConstants.ANGLE_RATIO);
     }
 
     public Rotation2d getCanCoder(){
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
+        return Rotation2d.fromRotations((angleEncoder.getAbsolutePosition().refresh().getValue() - angleOffset.getRotations()));
+    }
+
+    public double getCanCoderRaw(){
+        return angleEncoder.getAbsolutePosition().refresh().getValue();// - angleOffset.getRotations();
     }
 
     public void resetToAbsolute(){
-        double absolutePosition = ((getCanCoder().getDegrees() - angleOffset.getDegrees()) * DrivetrainConstants.ANGLE_RATIO)/360;
+        double absolutePosition = getCanCoder().getRotations() * DrivetrainConstants.ANGLE_RATIO;
         mAngleMotor.setRotorPosition(absolutePosition);
     }
 

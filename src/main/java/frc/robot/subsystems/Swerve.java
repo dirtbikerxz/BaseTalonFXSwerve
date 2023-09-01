@@ -48,7 +48,7 @@ public class Swerve extends SubsystemBase {
                 RobotMap.BUS.DRIVE,
                 RobotMap.BUS.AZIMUTH,
                 RobotMap.BUS.CANCODER,
-                Rotation2d.fromDegrees(Offsets.FRONT_LEFT_STEER_OFFSET))),
+                Rotation2d.fromRotations(Offsets.FRONT_LEFT_STEER_OFFSET))),
         new SwerveModule(
             1,
             new SwerveModuleConstants(
@@ -58,18 +58,8 @@ public class Swerve extends SubsystemBase {
                 RobotMap.BUS.DRIVE,
                 RobotMap.BUS.AZIMUTH,
                 RobotMap.BUS.CANCODER,
-                Rotation2d.fromDegrees(Offsets.FRONT_RIGHT_STEER_OFFSET))),
-        new SwerveModule(
-            2,
-            new SwerveModuleConstants(
-                RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR,
-                RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR,
-                RobotMap.CAN.BACK_RIGHT_CANCODER,
-                RobotMap.BUS.DRIVE,
-                RobotMap.BUS.AZIMUTH,
-                RobotMap.BUS.CANCODER,
-                Rotation2d.fromDegrees(Offsets.BACK_RIGHT_STEER_OFFSET))),
-        new SwerveModule(3,
+                Rotation2d.fromRotations(Offsets.FRONT_RIGHT_STEER_OFFSET))),
+        new SwerveModule(2,
             new SwerveModuleConstants(
                 RobotMap.CAN.BACK_LEFT_DRIVE_MOTOR,
                 RobotMap.CAN.BACK_LEFT_AZIMUTH_MOTOR,
@@ -77,7 +67,16 @@ public class Swerve extends SubsystemBase {
                 RobotMap.BUS.DRIVE,
                 RobotMap.BUS.AZIMUTH,
                 RobotMap.BUS.CANCODER,
-                Rotation2d.fromDegrees(Offsets.BACK_LEFT_STEER_OFFSET)))
+                Rotation2d.fromRotations(Offsets.BACK_LEFT_STEER_OFFSET))),
+        new SwerveModule(3,
+            new SwerveModuleConstants(
+                RobotMap.CAN.BACK_RIGHT_DRIVE_MOTOR,
+                RobotMap.CAN.BACK_RIGHT_AZIMUTH_MOTOR,
+                RobotMap.CAN.BACK_RIGHT_CANCODER,
+                RobotMap.BUS.DRIVE,
+                RobotMap.BUS.AZIMUTH,
+                RobotMap.BUS.CANCODER,
+                Rotation2d.fromRotations(Offsets.BACK_RIGHT_STEER_OFFSET)))
         };
 
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
@@ -108,7 +107,15 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
+    
+    public void park() {
+        //as of yet, non-functional
+        mSwerveMods[0].setDesiredState(new SwerveModuleState(0d, DrivetrainConstants.FRONT_LEFT_RESTING_ANGLE), true);
+        mSwerveMods[1].setDesiredState(new SwerveModuleState(0d, DrivetrainConstants.FRONT_RIGHT_RESTING_ANGLE), true);
+        mSwerveMods[2].setDesiredState(new SwerveModuleState(0d, DrivetrainConstants.BACK_LEFT_RESTING_ANGLE), true);
+        mSwerveMods[3].setDesiredState(new SwerveModuleState(0d, DrivetrainConstants.BACK_RIGHT_RESTING_ANGLE), true);
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -165,8 +172,9 @@ public class Swerve extends SubsystemBase {
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder (raw)", mod.getCanCoderRaw());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
     }
 }
