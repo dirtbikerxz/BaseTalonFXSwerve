@@ -35,8 +35,9 @@ public final class CTREConfigs {
         swerveAngleFXConfig.Slot0.kS = DrivetrainConstants.AzimuthGains.kS;
 
         swerveAngleFXConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
-        swerveAngleFXConfig.Feedback.SensorToMechanismRatio = 1.0;
+        swerveAngleFXConfig.Feedback.SensorToMechanismRatio = 1/12.8;
         swerveAngleFXConfig.Feedback.RotorToSensorRatio = DrivetrainConstants.ANGLE_RATIO;
+        swerveAngleFXConfig.ClosedLoopGeneral.ContinuousWrap = true;
 
 
         //Drive Config
@@ -64,7 +65,8 @@ public final class CTREConfigs {
         
 
         /* Swerve CANCoder Configuration */
-        swerveCanCoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+        swerveCanCoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
         swerveCanCoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+
     }
 }

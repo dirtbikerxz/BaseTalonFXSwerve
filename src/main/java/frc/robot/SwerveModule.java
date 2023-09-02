@@ -48,11 +48,13 @@ public class SwerveModule {
         configDriveMotor();
 
         lastAngle = getState().angle;
+
+        mAngleMotor.setRotorPosition(0);
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         /* This is a custom optimize function, since default WPILib optimize assumes continuous controller which CTRE and Rev onboard is not */
-        desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
+        // desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }
@@ -78,15 +80,19 @@ public class SwerveModule {
     }
 
     private Rotation2d getAngle(){
-        return Rotation2d.fromRotations(mAngleMotor.getRotorPosition().refresh().getValue() / DrivetrainConstants.ANGLE_RATIO);
+        return Rotation2d.fromRotations(mAngleMotor.getRotorPosition().getValue() / DrivetrainConstants.ANGLE_RATIO);
     }
 
     public Rotation2d getCanCoder(){
-        return Rotation2d.fromRotations((angleEncoder.getAbsolutePosition().refresh().getValue() - angleOffset.getRotations()));
+        return Rotation2d.fromRotations((angleEncoder.getAbsolutePosition().getValue()));//= - angleOffset.getRotations()));
     }
 
     public double getCanCoderRaw(){
-        return angleEncoder.getAbsolutePosition().refresh().getValue();// - angleOffset.getRotations();
+        return angleEncoder.getAbsolutePosition().getValue();// - angleOffset.getRotations();
+    }
+
+    public double getAngleRaw(){
+        return mAngleMotor.getRotorPosition().getValue();
     }
 
     public void resetToAbsolute(){
@@ -96,7 +102,9 @@ public class SwerveModule {
 
     private void configAngleEncoder(){        
         angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
-        angleEncoder.getConfigurator().apply(new CTREConfigs().swerveCanCoderConfig);
+        CANcoderConfiguration config = new CTREConfigs().swerveCanCoderConfig;
+        config.MagnetSensor.MagnetOffset = angleOffset.getRotations();
+        angleEncoder.getConfigurator().apply(config);
     }
 
     private void configAngleMotor(){

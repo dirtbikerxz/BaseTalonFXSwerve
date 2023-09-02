@@ -83,7 +83,7 @@ public class Swerve extends SubsystemBase {
          * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
          */
         Timer.delay(1.0);
-        resetModulesToAbsolute();
+        // resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(DrivetrainConstants.SWERVE_KINEMATICS, getYaw(), getModulePositions());
     }
@@ -160,20 +160,20 @@ public class Swerve extends SubsystemBase {
         return Rotation2d.fromDegrees(gyro.getYaw());
     }
 
-    public void resetModulesToAbsolute(){
-        for(SwerveModule mod : mSwerveMods){
-            mod.resetToAbsolute();
-        }
-    }
+    // public void resetModulesToAbsolute(){
+    //     for(SwerveModule mod : mSwerveMods){
+    //         mod.resetToAbsolute();
+    //     }
+    // }
 
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder (raw)", mod.getCanCoderRaw());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+            // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder (raw)", mod.getCanCoderRaw());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getAngleRaw());
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
     }
