@@ -35,7 +35,7 @@ public final class CTREConfigs {
         swerveAngleFXConfig.Slot0.kS = DrivetrainConstants.AzimuthGains.kS;
 
         swerveAngleFXConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
-        swerveAngleFXConfig.Feedback.SensorToMechanismRatio = 1/12.8;
+        swerveAngleFXConfig.Feedback.SensorToMechanismRatio = 1;
         swerveAngleFXConfig.Feedback.RotorToSensorRatio = DrivetrainConstants.ANGLE_RATIO;
         swerveAngleFXConfig.ClosedLoopGeneral.ContinuousWrap = true;
 

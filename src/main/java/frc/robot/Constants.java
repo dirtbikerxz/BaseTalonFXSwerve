@@ -55,10 +55,10 @@ public final class Constants {
         // i swapped the left and right negations here in order to fix an issue with turn motors being oriented like an X instead of a diamond. There is likely some underlying cause that should be addressed, perhaps something to do with sensor inverts, or some other novel phoenix 6 thing
         // i do remember noticing similar behavior when using phoenix 6 on HaD, so that does point me to it being the underlying cause
         public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
-            new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
+            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
             new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
             new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0),
-            new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2.0, DRIVETRAIN_TRACKWIDTH_METERS / 2.0)
+            new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2.0, -DRIVETRAIN_TRACKWIDTH_METERS / 2.0)
         );
 
         public static final Rotation2d FRONT_LEFT_RESTING_ANGLE = Rotation2d.fromDegrees(-45d);
@@ -66,11 +66,12 @@ public final class Constants {
         public static final Rotation2d BACK_LEFT_RESTING_ANGLE = Rotation2d.fromDegrees(45d);
         public static final Rotation2d BACK_RIGHT_RESTING_ANGLE = Rotation2d.fromDegrees(-45d);
 
+        // very BS tuning (no matter how well it works :P)
         public static final class AzimuthGains {
-            public static final double kP = 0.5;//22
+            public static final double kP = 2.816;//22
             public static final double kI = 0.0;//22d;
             public static final double kD = 0.0;//0005d;
-            public static final double kS = 0.0;//54d;
+            public static final double kS = 3;//54d;
         }
 
         // Gains vaules for PIDControllers
@@ -90,7 +91,7 @@ public final class Constants {
                 public static final double FRONT_LEFT_STEER_OFFSET  = 0.250977;
                 public static final double FRONT_RIGHT_STEER_OFFSET = 0.462158;
                 public static final double BACK_LEFT_STEER_OFFSET   = 0.293457;
-                public static final double BACK_RIGHT_STEER_OFFSET  = -0.171631;
+                public static final double BACK_RIGHT_STEER_OFFSET  = 0.340820;
         }
     }
 

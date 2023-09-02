@@ -49,12 +49,15 @@ public class SwerveModule {
 
         lastAngle = getState().angle;
 
-        mAngleMotor.setRotorPosition(0);
+        // mAngleMotor.setRotorPosition(0);
+        angleEncoder.setPosition(getCanCoderRaw());
+        resetToAbsolute();
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         /* This is a custom optimize function, since default WPILib optimize assumes continuous controller which CTRE and Rev onboard is not */
-        // desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
+        desiredState = CTREModuleState.optimize(desiredState, getCanCoder()); 
+        // SwerveModuleState.optimize(desiredState, getCanCoder());
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }
@@ -73,8 +76,10 @@ public class SwerveModule {
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (DrivetrainConstants.MAX_SPEED * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
-        mAngleMotor.setControl(new PositionDutyCycle((angle.getDegrees() / 360) * DrivetrainConstants.ANGLE_RATIO));
+        // mAngleMotor.setControl(new PositionDutyCycle((angle.getDegrees() / 360) * DrivetrainConstants.ANGLE_RATIO));
         // mAngleMotor.setControl(new PositionDutyCycle((0)));
+        mAngleMotor.setControl(new PositionDutyCycle(angle.getRotations()));
+
 
         lastAngle = angle;
     }
@@ -103,7 +108,7 @@ public class SwerveModule {
     private void configAngleEncoder(){        
         angleEncoder.getConfigurator().apply(new CANcoderConfiguration());
         CANcoderConfiguration config = new CTREConfigs().swerveCanCoderConfig;
-        config.MagnetSensor.MagnetOffset = angleOffset.getRotations();
+        config.MagnetSensor.MagnetOffset = -angleOffset.getRotations();
         angleEncoder.getConfigurator().apply(config);
     }
 
