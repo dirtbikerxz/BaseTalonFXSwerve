@@ -58,7 +58,14 @@ public class Fault {
         return sticky.getAsBoolean();
     }
 
+    /**
+     * Get the number of active faults, typically 1 or 0 for boolean faults, but can faults are counted individually
+     * @return a positive integer for the number of faults
+     */
     public int getCount() {
+        if (count.getAsInt() < 0) {
+            return get() ? 1 : 0;
+        }
         return count.getAsInt();
     }
 }

@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 
 public  class FaultGrabber {
-    public static ArrayList<Fault> grabTalonFX(TalonFX mc) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public static FaultList grabTalonFX(TalonFX mc) {
+        FaultList faults = new FaultList();
         faults.add(new Fault("BootDuringEnable", () -> mc.getFault_BootDuringEnable().getValue(), () -> mc.getStickyFault_BootDuringEnable().getValue()));
         faults.add(new Fault("DeviceTemp", () -> mc.getFault_DeviceTemp().getValue(), () -> mc.getStickyFault_DeviceTemp().getValue()));
         faults.add(new Fault("ForwardHardLimit", () -> mc.getFault_ForwardHardLimit().getValue(), () -> mc.getStickyFault_ForwardHardLimit().getValue()));
@@ -36,8 +36,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public static ArrayList<Fault> grabCANcoder(CANcoder cancoder) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public static FaultList grabCANcoder(CANcoder cancoder) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("BadMagnet", () -> cancoder.getFault_BadMagnet().getValue(), () -> cancoder.getStickyFault_BadMagnet().getValue()));
         faults.add(new Fault("BootDuringEnable", () -> cancoder.getFault_BootDuringEnable().getValue(), () -> cancoder.getStickyFault_BootDuringEnable().getValue()));
@@ -47,8 +47,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public static ArrayList<Fault> grabPigeon(Pigeon2 pigeon) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public static FaultList grabPigeon(Pigeon2 pigeon) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("BootDuringEnable", () -> pigeon.getFault_BootDuringEnable().getValue(), () -> pigeon.getStickyFault_BootDuringEnable().getValue()));
         faults.add(new Fault("BootIntoMotion", () -> pigeon.getFault_BootIntoMotion().getValue(), () -> pigeon.getStickyFault_BootIntoMotion().getValue()));
@@ -68,8 +68,8 @@ public  class FaultGrabber {
     }
 
     
-    public static ArrayList<Fault> grabRio() {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public static FaultList grabRio() {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("UserButton", () -> RobotController.getUserButton()));
         faults.add(new Fault("BrownedOut", () -> RobotController.isBrownedOut()));
@@ -83,8 +83,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public static ArrayList<Fault> grabPDH(PowerDistribution pdh) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public static FaultList grabPDH(PowerDistribution pdh) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("Brownout", () -> pdh.getFaults().Brownout, () -> pdh.getStickyFaults().Brownout));
         faults.add(new Fault("CanWarning", () -> pdh.getFaults().CanWarning, () -> pdh.getStickyFaults().CanWarning));
@@ -119,10 +119,10 @@ public  class FaultGrabber {
         return faults;
     }
     
-    public ArrayList<Fault> grabPDP(PowerDistribution pdp) { return grabPDH(pdp); }
+    public FaultList grabPDP(PowerDistribution pdp) { return grabPDH(pdp); }
 
-    public ArrayList<Fault> grabPH(PneumaticHub ph) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public FaultList grabPH(PneumaticHub ph) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("Brownout", () -> ph.getFaults().Brownout, () -> ph.getStickyFaults().Brownout));
         faults.add(new Fault("CanWarning", () -> ph.getFaults().CanWarning, () -> ph.getStickyFaults().CanWarning));
@@ -153,8 +153,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public ArrayList<Fault> grabPCM(PneumaticsControlModule pcm) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public FaultList grabPCM(PneumaticsControlModule pcm) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("CompressorCurrentTooHigh", () -> pcm.getCompressorCurrentTooHighFault(), () -> pcm.getCompressorCurrentTooHighStickyFault()));
         faults.add(new Fault("CompressorNotConnected", () -> pcm.getCompressorNotConnectedFault(), () -> pcm.getCompressorNotConnectedStickyFault()));
@@ -164,8 +164,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public ArrayList<Fault> grabSparkMax(CANSparkMax sparkmax) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public FaultList grabSparkMax(CANSparkMax sparkmax) {
+        FaultList faults = new FaultList();
 
 
         faults.add(new Fault("Brownout", () -> sparkmax.getFault(FaultID.kBrownout), () -> sparkmax.getStickyFault(FaultID.kBrownout)));
@@ -188,8 +188,8 @@ public  class FaultGrabber {
         return faults;
     }
 
-    public ArrayList<Fault> grabColorSensor(ColorSensorV3 colorsensor) {
-        ArrayList<Fault> faults = new ArrayList<Fault>();
+    public FaultList grabColorSensor(ColorSensorV3 colorsensor) {
+        FaultList faults = new FaultList();
 
         faults.add(new Fault("hasReset", () -> false, () -> colorsensor.hasReset()));
         faults.add(new Fault("isConnected", () -> colorsensor.isConnected()));
