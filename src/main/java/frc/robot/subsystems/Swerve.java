@@ -8,13 +8,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,7 +25,7 @@ public class Swerve extends SubsystemBase {
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        gyro.configFactoryDefault();
+        gyro.getConfigurator().apply(new Pigeon2Configuration());
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
@@ -34,12 +34,6 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
-
-        /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
-         * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
-         */
-        Timer.delay(1.0);
-        resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
@@ -103,7 +97,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw().getValue()) : Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
 
     public void resetModulesToAbsolute(){
@@ -117,7 +111,7 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
