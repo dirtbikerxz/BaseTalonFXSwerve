@@ -18,6 +18,7 @@ public class Limelight {
     private String ip;
     private URL baseUrl;
     private final double ntDefaultDouble = 0.0;
+    private final long ntDefaultInt = 0;
     private final String ntDefaultString = "";
     private final double[] ntDefaultArray = {};
 
@@ -62,7 +63,7 @@ public class Limelight {
      * @return the value of the key, or ntDefaultDouble if the key does not exist or has some other error
      */
     private int getIntNT(String key) {
-        return (int) table.getEntry(key).getInteger((long) ntDefaultDouble);
+        return (int) table.getEntry(key).getInteger(ntDefaultInt);
     }
 
     /**
