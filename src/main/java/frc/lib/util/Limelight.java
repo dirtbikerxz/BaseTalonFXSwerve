@@ -1,5 +1,11 @@
 package frc.lib.util;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.CompletableFuture;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -9,13 +15,36 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class Limelight {
     private NetworkTable table;
     private String name;
+    private String ip;
+    private URL baseUrl;
     private final double ntDefaultDouble = 0.0;
     private final String ntDefaultString = "";
     private final double[] ntDefaultArray = {};
 
-    public Limelight(String name) {
+    /**
+     * Create a new Limelight object with the specified name and ip
+     * @param name the name of the limelight used in network tables
+     * @param ip the ip of the limelight (no slashes or http://)
+     */
+    public Limelight(String name, String ip) {
         this.name = name;
         this.table = NetworkTableInstance.getDefault().getTable(name);
+        this.ip = ip;
+        try {
+            this.baseUrl = new URL("http://" + ip);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid IP");
+        }
+    }
+
+    /**
+     * Create a new Limelight object with the specified name and default ip
+     * @param name the name of the limelight used in network tables
+     * ip defaults to 10.8.62.11
+     * @see Limelight#Limelight(String, String)
+     */
+    public Limelight(String name) {
+        this(name, "10.8.62.11");
     }
 
     /**
@@ -348,14 +377,112 @@ public class Limelight {
     }
 
     /**
-     * Take exactly one snapshot with the current limelight settings
+     * Sets limelight’s crop rectangle. The pipeline must utilize the default crop rectangle in the web interface.
+     * @param xMin the minimum x value of the crop rectangle
+     * @param yMin the minimum y value of the crop rectangle
+     * @param xMax the maximum x value of the crop rectangle
+     * @param yMax the maximum y value of the crop rectangle
      */
-    public void takeSnapshot() {
-        setNumNT("snapshot", 0);
-        setNumNT("snapshot", 1);
-    }
-
     public void setCropSize(double xMin, double yMin, double xMax, double yMax) {
         setArrayNT("crop", new double[] {xMin, xMax, yMin, yMax});
     }
+
+
+    /**
+     * @return a URL object containing the ip of the limelight
+     */
+    public URL getBaseUrl() {
+        return baseUrl;
+    }
+
+    /**
+     * @param suffix the suffix to add to the base url
+     * @return a new URL object with the suffix and port 5807 added to the base url
+     */
+    private URL generateURL(String suffix) {
+        try {
+            return new URL(baseUrl.toString() + ":5807/" + suffix);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid Suffix");
+        }
+
+    }
+
+    //TODO: implement receiving JSON dumps
+    private void synchronousGetResults() {}
+
+    /**
+     * DON'T USE THIS (There's a reason it's private)
+     * It Will cause delays in places you don't want them
+     * @see Limelight#takeSnapshot(String)
+     * @param snapName the name of the snapshot (can be null for default naming)
+     */
+    private void SynchronousSnapshot(String snapName) {
+        URL url = generateURL("capturesnapshot");
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            if (snapName != null && snapName != "") {
+                connection.setRequestProperty("snapname", snapName);
+            }
+            int responseCode = connection.getResponseCode();
+            if (responseCode != 200) {
+                System.err.println("Bad LL Request: " + responseCode + " " + connection.getResponseMessage());
+            }
+        } catch (IOException e) {
+            throw new IllegalArgumentException("I'm on Crack");
+        }
+    }
+
+    /**
+     * Take exactly one snapshot with the current limelight settings
+     * @param name the name of the snapshot
+     * @see Limelight#SynchronousSnapshot(String)
+     */
+    public CompletableFuture<Void> takeSnapshot(String name) {
+        return CompletableFuture.supplyAsync(() -> { SynchronousSnapshot(name); return null; });
+    }
+
+    /**
+     * Take exactly one snapshot with the current limelight settings with default naming
+     * @see Limelight#SynchronousSnapshot(String)
+     */
+    public CompletableFuture<Void> takeSnapshot() {
+        return CompletableFuture.supplyAsync(() -> { SynchronousSnapshot(null); return null; });
+    }
+
+    //TODO: implement snapshot uploading
+    private void synchronousUploadSnapshot() {}
+
+    //TODO: implement snapshot list
+    private void synchronousGetSnapshotNames() {}
+
+    /**
+     * DON'T USE THIS (There's a reason it's private)
+     * It Will cause delays in places you don't want them
+     * @see Limelight#deleteAllSnapshots()
+     */
+    private void synchronousDeleteAllSnapshots() {
+        URL url = generateURL("deletesnapshots");
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            if (responseCode != 200) {
+                System.err.println("Bad LL Request: " + responseCode + " " + connection.getResponseMessage());
+            }
+        } catch (IOException e) {
+            throw new IllegalArgumentException("I'm on Crack");
+        }
+    }
+
+    /**
+     * Delete all snapshots on the limelight
+     * @see Limelight#synchronousDeleteAllSnapshots()
+     */
+    public CompletableFuture<Void> deleteAllSnapshots() {
+        return CompletableFuture.supplyAsync(() -> { synchronousDeleteAllSnapshots(); return null; });
+    }
+
+
 }
