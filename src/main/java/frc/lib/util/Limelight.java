@@ -240,7 +240,7 @@ public class Limelight {
      * Robot transform in field-space (blue driverstation WPILIB origin)
      * @return Translation (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
      */
-    private Pose4d getBotPoseBlue() {
+    public Pose4d getBotPoseBlue() {
         return toPose4d(getArrayNT("botpose_wpiblue"));
     }
 
@@ -248,7 +248,7 @@ public class Limelight {
      * Robot transform in field-space (red driverstation WPILIB origin)
      * @return Translation (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
      */
-    private Pose4d getBotPoseRed() {
+    public Pose4d getBotPoseRed() {
         return toPose4d(getArrayNT("botpose_wpired"));
     }
 
@@ -256,28 +256,28 @@ public class Limelight {
     /**
      * @return 3D transform of the camera in the coordinate system of the primary in-view AprilTag
      */
-    private Pose3d getCamPoseTargetSpace() {
+    public Pose3d getCamPoseTargetSpace() {
         return toPose3d(getArrayNT("camerapose_targetspace"));
     }
 
     /**
      * @return 3D transform of the camera in the coordinate system of the Robot
      */
-    private Pose3d getCamPoseRobotSpace() {
+    public Pose3d getCamPoseRobotSpace() {
         return toPose3d(getArrayNT("camerapose_robotspace"));
     }
 
     /**
      * @return 3D transform of the primary in-view AprilTag in the coordinate system of the Camera
      */
-    private Pose3d getTargetPoseCameraSpace() {
+    public Pose3d getTargetPoseCameraSpace() {
         return toPose3d(getArrayNT("targetpose_cameraspace"));
     }
 
     /**
      * @return 3D transform of the primary in-view AprilTag in the coordinate system of the Robot
      */
-    private Pose3d getTargetPoseRobotSpace() {
+    public Pose3d getTargetPoseRobotSpace() {
         return toPose3d(getArrayNT("targetpose_robotspace"));
     }
 
