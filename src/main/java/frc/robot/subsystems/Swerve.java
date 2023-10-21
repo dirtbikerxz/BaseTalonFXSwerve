@@ -10,10 +10,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
+import java.util.Map;
 
 public class Swerve extends SubsystemBase {
   public SwerveDriveOdometry swerveOdometry;
@@ -41,6 +44,8 @@ public class Swerve extends SubsystemBase {
 
     swerveOdometry =
         new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+
+    configureShuffleboard();
   }
 
   public void drive(
@@ -110,14 +115,30 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     swerveOdometry.update(getYaw(), getModulePositions());
+  }
+
+  private void configureShuffleboard() {
+
+    ShuffleboardTab tab = Shuffleboard.getTab("SwerveModules");
+    int i = 0;
 
     for (SwerveModule mod : mSwerveMods) {
-      SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-      SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-      SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+      tab.addDouble("Mod " + mod.moduleNumber + " Cancoder", () -> mod.getCanCoder().getDegrees())
+          .withPosition(i, 0);
+      tab.addDouble(
+              "Mod " + mod.moduleNumber + " Integrated", () -> mod.getPosition().angle.getDegrees())
+          .withPosition(i, 1)
+          .withWidget(BuiltInWidgets.kDial)
+          .withProperties(Map.of("min", 0, "max", 360));
+      tab.addDouble(
+              "Mod " + mod.moduleNumber + " Velocity", () -> mod.getState().speedMetersPerSecond)
+          .withPosition(i, 2);
+      i++;
     }
+
+    tab.add("NavX Gyroscope", gyro)
+        .withPosition(4, 0)
+        .withSize(1, 1)
+        .withWidget(BuiltInWidgets.kGyro);
   }
 }
