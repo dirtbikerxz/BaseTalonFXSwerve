@@ -124,7 +124,9 @@ public class Swerve extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       tab.addDouble("Mod " + mod.moduleNumber + " Cancoder", () -> mod.getCanCoder().getDegrees())
-          .withPosition(i, 0);
+          .withPosition(i, 0)
+          .withWidget(BuiltInWidgets.kDial)
+          .withProperties(Map.of("min", 0, "max", 360));
       tab.addDouble(
               "Mod " + mod.moduleNumber + " Integrated", () -> mod.getPosition().angle.getDegrees())
           .withPosition(i, 1)
@@ -136,7 +138,7 @@ public class Swerve extends SubsystemBase {
       i++;
     }
 
-    tab.add("NavX Gyroscope", gyro)
+    tab.add("Pigeon2 Gyroscope", gyro)
         .withPosition(4, 0)
         .withSize(1, 1)
         .withWidget(BuiltInWidgets.kGyro);
