@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
@@ -124,9 +125,7 @@ public class Swerve extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       tab.addDouble("Mod " + mod.moduleNumber + " Cancoder", () -> mod.getCanCoder().getDegrees())
-          .withPosition(i, 0)
-          .withWidget(BuiltInWidgets.kDial)
-          .withProperties(Map.of("min", 0, "max", 360));
+          .withPosition(i, 0);
       tab.addDouble(
               "Mod " + mod.moduleNumber + " Integrated", () -> mod.getPosition().angle.getDegrees())
           .withPosition(i, 1)
@@ -138,9 +137,9 @@ public class Swerve extends SubsystemBase {
       i++;
     }
 
-    tab.add("Pigeon2 Gyroscope", gyro)
-        .withPosition(4, 0)
-        .withSize(1, 1)
-        .withWidget(BuiltInWidgets.kGyro);
+    // tab.add("Pigeon2 Gyroscope", gyro)
+    //     .withPosition(4, 0)
+    //     .withSize(1, 1)
+    //     .withWidget(BuiltInWidgets.kGyro);
   }
 }
