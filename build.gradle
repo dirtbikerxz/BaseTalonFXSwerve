@@ -140,4 +140,6 @@ spotless {
         indentWithSpaces(2)
         endWithNewline()
     }
+
+    build.dependsOn spotlessApply
 }

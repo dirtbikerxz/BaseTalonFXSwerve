@@ -9,21 +9,26 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Controllers;
 import frc.robot.SwerveModule;
 import java.util.Map;
 
 public class Swerve extends SubsystemBase {
+  public Boolean m_slow;
+
   public SwerveDriveOdometry swerveOdometry;
   public SwerveModule[] mSwerveMods;
   public Pigeon2 gyro;
 
   public Swerve() {
+    m_slow = true;
     gyro = new Pigeon2(Constants.Swerve.pigeonID);
     gyro.configFactoryDefault();
     zeroGyro();
@@ -81,6 +86,15 @@ public class Swerve extends SubsystemBase {
     states[2] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0));
     states[3] = new SwerveModuleState(0, Rotation2d.fromDegrees(-135.0));
     setModuleStates(states);
+  }
+
+  public void toggleSlow() {
+    m_slow = !m_slow;
+    if (this.m_slow) {
+      Controllers.driverController.setRumble(RumbleType.kBothRumble, Controllers.kRumbleValue);
+    } else {
+      Controllers.driverController.setRumble(RumbleType.kBothRumble, 0);
+    }
   }
 
   public Pose2d getPose() {

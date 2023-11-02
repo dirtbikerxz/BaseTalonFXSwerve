@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.lib.util.CommandXboxExtended;
+import frc.robot.Constants.Controllers;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
 
@@ -16,9 +16,6 @@ import frc.robot.subsystems.Swerve;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  /* Controllers */
-  public static final CommandXboxExtended driverController = new CommandXboxExtended(0);
-
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -42,19 +39,21 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    driverController.y().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    driverController.x().onTrue(new InstantCommand(() -> s_Swerve.setWheelsToX()));
-
+    Controllers.driverController.y().onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    Controllers.driverController.x().onTrue(new InstantCommand(() -> s_Swerve.setWheelsToX()));
+    Controllers.driverController
+        .rightBumper()
+        .onTrue(new InstantCommand(() -> s_Swerve.toggleSlow()));
   }
 
   private void configureSubsystemCommands() {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            () -> -driverController.getRawAxis(translationAxis),
-            () -> -driverController.getRawAxis(strafeAxis),
-            () -> -driverController.getRawAxis(rotationAxis),
-            () -> driverController.leftBumper().getAsBoolean()));
+            () -> -Controllers.driverController.getRawAxis(translationAxis),
+            () -> -Controllers.driverController.getRawAxis(strafeAxis),
+            () -> -Controllers.driverController.getRawAxis(rotationAxis),
+            () -> Controllers.driverController.leftBumper().getAsBoolean()));
   }
 
   /**

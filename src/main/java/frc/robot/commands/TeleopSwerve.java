@@ -4,6 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Controllers;
 import frc.robot.subsystems.Swerve;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -34,9 +35,10 @@ public class TeleopSwerve extends CommandBase {
   public void execute() {
     /* Get Values, Deadband*/
     double translationVal =
-        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
-    double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-    double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Controllers.stickDeadband);
+    double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Controllers.stickDeadband);
+    double rotationVal =
+        MathUtil.applyDeadband(rotationSup.getAsDouble(), Controllers.stickDeadband);
 
     /* Drive */
     s_Swerve.drive(
