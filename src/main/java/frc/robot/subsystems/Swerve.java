@@ -72,6 +72,17 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  public void setWheelsToX() {
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+    SwerveModuleState[] states =
+        Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+    states[0] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0));
+    states[1] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0));
+    states[2] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0));
+    states[3] = new SwerveModuleState(0, Rotation2d.fromDegrees(-135.0));
+    setModuleStates(states);
+  }
+
   public Pose2d getPose() {
     return swerveOdometry.getPoseMeters();
   }
