@@ -11,6 +11,8 @@ import frc.lib.util.CommandXboxExtended;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
+  public static final double slowModif = 1;
+
   public static final class Controllers {
     public static final CommandXboxExtended driverController = new CommandXboxExtended(0);
     public static final double kRumbleValue = .3;
