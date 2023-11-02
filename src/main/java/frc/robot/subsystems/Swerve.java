@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SwerveModule;
@@ -137,9 +136,9 @@ public class Swerve extends SubsystemBase {
       i++;
     }
 
-    // tab.add("Pigeon2 Gyroscope", gyro)
-    //     .withPosition(4, 0)
-    //     .withSize(1, 1)
-    //     .withWidget(BuiltInWidgets.kGyro);
+    tab.addDouble("Pigeon2 Gyroscope", () -> gyro.getYaw())
+        .withPosition(4, 0)
+        .withSize(1, 1)
+        .withWidget(BuiltInWidgets.kGyro);
   }
 }
