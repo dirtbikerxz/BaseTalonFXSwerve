@@ -4,7 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -14,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   public static CTREConfigs ctreConfigs;
 
   private Command m_autonomousCommand;
@@ -27,10 +29,32 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+   // Record metadata
+   Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
+   Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
+   Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
+   Logger.recordMetadata("GitDate", BuildConstants.GIT_DATE);
+   Logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
+   switch (BuildConstants.DIRTY) {
+     case 0:
+       Logger.recordMetadata("GitDirty", "All changes committed");
+       break;
+     case 1:
+       Logger.recordMetadata("GitDirty", "Uncomitted changes");
+       break;
+     default:
+       Logger.recordMetadata("GitDirty", "Unknown");
+       break;
+   }
+
+   Logger.start();;
+
     ctreConfigs = new CTREConfigs();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    
   }
 
   /**

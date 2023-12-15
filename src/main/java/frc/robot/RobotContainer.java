@@ -39,6 +39,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final PoseEstimator s_PoseEstimator = new PoseEstimator();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
