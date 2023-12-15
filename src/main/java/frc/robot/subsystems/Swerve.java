@@ -8,6 +8,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -126,6 +128,8 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
              
+            Logger.recordOutput("Mystates", getModuleStates());
+            Logger.recordOutput("MyPose", getPose());
         }
     }
 }
