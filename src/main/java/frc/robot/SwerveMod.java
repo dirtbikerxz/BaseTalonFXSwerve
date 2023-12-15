@@ -4,7 +4,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-
+import frc.lib.LazyCANCoder;
+import frc.lib.LazyTalonFX;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
@@ -14,7 +15,7 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
-public class SwerveModule {
+public class SwerveMod {
     public int moduleNumber;
     private Rotation2d angleOffset;
     private Rotation2d lastAngle;
@@ -25,21 +26,32 @@ public class SwerveModule {
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
+    public SwerveMod(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
         
         /* Angle Encoder Config */
-        angleEncoder = new CANCoder(moduleConstants.cancoderID);
-        configAngleEncoder();
+        angleEncoder = new LazyCANCoder(
+            moduleConstants.cancoderID, 
+            Robot.ctreConfigs.swerveCanCoderConfig
+        );
 
         /* Angle Motor Config */
-        mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
-        configAngleMotor();
+        mAngleMotor = new LazyTalonFX(
+            moduleConstants.angleMotorID,
+            Robot.ctreConfigs.swerveAngleFXConfig,
+            Constants.Swerve.angleNeutralMode,
+            Constants.Swerve.angleMotorInvert,
+            false
+        );
 
         /* Drive Motor Config */
-        mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
-        configDriveMotor();
+        mDriveMotor = new LazyTalonFX(
+            moduleConstants.driveMotorID,
+            Robot.ctreConfigs.swerveDriveFXConfig,
+            Constants.Swerve.driveNeutralMode,
+            Constants.Swerve.driveMotorInvert,
+            false);
 
         lastAngle = getState().angle;
     }
@@ -80,27 +92,6 @@ public class SwerveModule {
     public void resetToAbsolute(){
         double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
-    }
-
-    private void configAngleEncoder(){        
-        angleEncoder.configFactoryDefault();
-        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
-    }
-
-    private void configAngleMotor(){
-        mAngleMotor.configFactoryDefault();
-        mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
-        mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
-        mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
-        resetToAbsolute();
-    }
-
-    private void configDriveMotor(){        
-        mDriveMotor.configFactoryDefault();
-        mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
-        mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
-        mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
-        mDriveMotor.setSelectedSensorPosition(0);
     }
 
     public SwerveModuleState getState(){
