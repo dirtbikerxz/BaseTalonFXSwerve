@@ -1,3 +1,7 @@
+//THIS AUTO IS DEPRECATED. IT HAS BEEN REPLACED BY PATHPLANNER AUTOS
+
+
+
 package frc.robot.autos;
 
 import frc.robot.Constants;
