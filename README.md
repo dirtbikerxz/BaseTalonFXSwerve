@@ -1,4 +1,4 @@
-**Note: While this code intends to provide plug n play configs/tuning numbers for COTS Modules, there are several configs/tunes that are untested with the change to Phoenix 6. If this code is used for one of those untested modules, the module specific configs and tuning will most likely need to be edited.**
+**<ins>Note:</ins> While this code intends to provide plug n play configs/tuning numbers for COTS Modules, there are several configs/tunes that are untested with the change to Phoenix 6. If this code is used for one of those untested modules, the module specific configs and tuning will most likely need to be edited.**
 
 **If anyone would like to contribute a config/tune to be added as "tested" please send a message or make a PR.**
 
@@ -15,10 +15,10 @@ The following things must be adjusted to your robot and module's specific consta
 These instructions are mostly followable from Step 
 1. Gyro Settings: ```pigeonID```(ensure that the gyro rotation is CCW+ (Counter Clockwise Positive)
 2. ```chosenModule```: 
+<br><b><ins>Note: Not every module's configs are tested. See the note at the top</b></ins>
 <br>If you are using a supported COTS Module, set the module and drive ratio you are using here. 
-<br><b><u>Note: Not every module's configs are tested. See the note at the top</b></u>
 <br>This will automatically set certain constants for the specific module required to function properly. 
-<br><b><u>If you are not using a COTS supported module, you should delete this variable, and fix all the errors that pop up with correct values for the module you are using</b></u>
+<br><b><ins>If you are not using a COTS supported module, you should delete this variable, and fix all the errors that pop up with correct values for the module you are using</b></ins>
 <br> Here is a list of the constants that will automatically be set if you are using a supported module:
     * Wheel Circumference
     * Angle Motor Invert
