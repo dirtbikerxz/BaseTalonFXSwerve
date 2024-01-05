@@ -46,7 +46,7 @@ public class SwerveModule {
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
-        mDriveMotor.getConfigurator().setRotorPosition(0);
+        mDriveMotor.getConfigurator().setPosition(0.0);
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
@@ -71,21 +71,16 @@ public class SwerveModule {
         return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
 
-    private Rotation2d waitForCANcoder(){
-        /* wait for up to 250ms for a new CANcoder position */
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().waitForUpdate(250).getValue());
-    }
-
     public void resetToAbsolute(){
-        double absolutePosition = waitForCANcoder().getRotations() - angleOffset.getRotations();
-        mAngleMotor.setRotorPosition(absolutePosition);
+        double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
+        mAngleMotor.setPosition(absolutePosition);
     }
 
     public SwerveModuleState getState(){
         return new SwerveModuleState(
             Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference), 
             Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
-        ); 
+        );
     }
 
     public SwerveModulePosition getPosition(){
