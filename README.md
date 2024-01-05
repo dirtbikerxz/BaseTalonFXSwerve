@@ -94,4 +94,5 @@ This code is natively setup to use a xbox controller to control the swerve drive
         * Updated conversions from Phoenix 5's units ("counts") to Phoenix 6's units (rotations).
     * Updated WPILib to 2024.1.1-beta-4
     * Added SwerveX Modules and Kraken X60 Motors
-    * Moved from directly using the Gyro angle in `Swerve` for heading (`getGyroYaw()`) to using the odometry output for rotation `getHeading()` as intended by WPILib.
+    * Moved from directly using the Gyro angle in `Swerve` for heading (`getGyroYaw()`) to using the odometry output for rotation `getHeading()` as intended by WPILib
+    * Moved repository off of 364's Github 
