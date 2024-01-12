@@ -23,7 +23,7 @@ public class SwerveModule {
 
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
-    private CANcoder angleEncoder;
+    //private CANcoder angleEncoder;
     private AbsoluteEncoder absoluteEncoder;
 
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
@@ -40,8 +40,8 @@ public class SwerveModule {
         this.angleOffset = moduleConstants.angleOffset;
         
         /* Angle Encoder Config */
-        absoluteEncoder = new AbsoluteEncoder(moduleConstants.encoderID);
-        configAngleEncoder();
+        absoluteEncoder = new AbsoluteEncoder(moduleConstants.cancoderID);
+        //configAngleEncoder();
 
         /* Angle Motor Config */
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
@@ -98,12 +98,14 @@ public class SwerveModule {
     }
 
     public Rotation2d getAngle(){
-        return mAngleMotor.getPosition();
-    }
+        return Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getPosition().getValue(), Constants.Swerve.angleGearRatio));
+    }   
 
 
     public Rotation2d getCANcoder(){
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
+        //return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
+
+        return absoluteEncoder.getRotation();
     }
 
     public void resetToAbsolute(){
