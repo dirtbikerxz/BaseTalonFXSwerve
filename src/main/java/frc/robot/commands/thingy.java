@@ -7,6 +7,6 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class thingy {
-    //
+    //I have no idea what I am doing - Matthew
 
 }
