@@ -18,17 +18,17 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick joystick0 = new Joystick(0); //Middle
-    private final Joystick joystick1 = new Joystick(1); //Left
-    private final Joystick joystick2 = new Joystick(2); //Right (I know it's messed up to order them like that idk why)
+    private final Joystick joystick0 = new Joystick(2); //Middle
+    private final Joystick joystick1 = new Joystick(3); //Left
+    private final Joystick joystick2 = new Joystick(4); //Right (I know it's messed up to order them like that idk why it's that way)
 
-    /* Drive Controls */
-    private final int translationAxis = Joystick.Axis.kLeftY.value;
-    private final int strafeAxis = Joystick.Axis.kLeftX.value;
-    private final int rotationAxis = Joystick.Axis.kRightX.value;
+    // /* Drive Controls */
+    // private final int translationAxis = Joystick.Axis.kLeftY.value;
+    // private final int strafeAxis = Joystick.Axis.kLeftX.value;
+    // private final int rotationAxis = Joystick.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(joystick1, 11);
+    private final JoystickButton zeroGyro = new JoystickButton(joystick1, 10);
     private final JoystickButton robotCentric = new JoystickButton(joystick0, 7);
 
     /* Subsystems */
@@ -40,9 +40,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -joystick0.getRawAxis(translationAxis), 
-                () -> -joystick0.getRawAxis(strafeAxis), 
-                () -> -joystick1.getRawAxis(rotationAxis), 
+                () -> -joystick0.getRawAxis(1), 
+                () -> -joystick0.getRawAxis(0), 
+                () -> -joystick1.getRawAxis(0), 
                 () -> robotCentric.getAsBoolean()
             )
         );
