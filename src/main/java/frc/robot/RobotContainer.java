@@ -76,7 +76,7 @@ public class RobotContainer {
     }
 }
 
-/* Shooter code */
+/* Shooter */
 public class RunMotorCommand extends CommandBase {
 
     private final TalonSRX motorController;
