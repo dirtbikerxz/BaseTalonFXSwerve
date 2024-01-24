@@ -1,30 +1,17 @@
-
-
-/* Shooter */
-public class RunMotorCommand extends CommandBase {
+//Shooter code
+public class RobotContainer {
 
     private final TalonSRX motorController;
-    private final double speed;
+    private final RunMotorCommand runMotorCommand;
 
-    public RunMotorCommand(TalonSRX motorController, double speed) {
-        this.motorController = motorController;
-        this.speed = speed;
-        addRequirements(motorController);
+    public RobotContainer() {
+        motorController = new TalonSRX(1); // Replace 1 with your actual device ID
+        runMotorCommand = new RunMotorCommand(motorController, 0.5); // Set the speed as needed
     }
 
-    @Override
-    public void execute() {
-        motorController.set(speed);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        // Optional: Add cleanup code here
-        motorController.set(0); // Stop the motor when the command ends
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false; // This command never finishes on its own
+    public void configureButtonBindings() {
+        // Example: Trigger the motor command when a button is pressed
+        new JoystickButton(driverController, Button.kA.value)
+            .whenPressed(runMotorCommand);
     }
 }
