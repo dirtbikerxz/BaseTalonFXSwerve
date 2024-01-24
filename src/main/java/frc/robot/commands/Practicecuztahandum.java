@@ -1,17 +1,23 @@
-//Shooter code
-public class RobotContainer {
+import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
 
-    private final TalonSRX motorController;
-    private final RunMotorCommand runMotorCommand;
+public class Robot extends TimedRobot {
 
-    public RobotContainer() {
+    private TalonSRX motorController;
+    private Joystick joystick;
+
+    @Override
+    public void robotInit() {
+        // Initialize the motor controller with the appropriate device ID
         motorController = new TalonSRX(1); // Replace 1 with your actual device ID
-        runMotorCommand = new RunMotorCommand(motorController, 0.5); // Set the speed as needed
+        joystick = new Joystick(0); // Replace 0 with your actual joystick port
     }
 
-    public void configureButtonBindings() {
-        // Example: Trigger the motor command when a button is pressed
-        new JoystickButton(driverController, Button.kA.value)
-            .whenPressed(runMotorCommand);
+    @Override
+    public void teleopPeriodic() {
+        // Control the motor based on joystick input during teleop (driver control)
+        double speed = joystick.getRawAxis(1); // Get the Y-axis value of the joystick
+        motorController.set(speed);
     }
 }
