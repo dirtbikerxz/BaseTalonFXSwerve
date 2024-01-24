@@ -41,15 +41,6 @@ public class RobotContainer {
     motorController = new TalonSRX(1); // Replace 1 with your actual device ID
     runMotorCommand = new RunMotorCommand(motorController, 0.5); // Set the speed as needed
 
-    private final TalonSRX motorController;
-    private final RunMotorCommand runMotorCommand;
-
-    public void configureButtonBindings() {
-        // Example: Trigger the motor command when a button is pressed
-        new JoystickButton(driverController, Button.kA.value)
-            .whenPressed(runMotorCommand);
-
-
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
@@ -85,5 +76,18 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new exampleAuto(s_Swerve);
+    }
+}
+
+//Shooter code
+public class RobotContainer {
+
+    private final TalonSRX motorController;
+    private final RunMotorCommand runMotorCommand;
+
+    public void configureButtonBindings() {
+        // Example: Trigger the motor command when a button is pressed
+        new JoystickButton(driverController, Button.kA.value)
+            .whenPressed(runMotorCommand);
     }
 }
