@@ -33,6 +33,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Shooter s_Shooter = new Shooter();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -46,6 +47,8 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+
+        s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -69,6 +72,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return new ShooterCommand(s_Shooter);
     }
 }
