@@ -46,11 +46,13 @@ public class Swerve extends SubsystemBase {
                                     translation.getY(), 
                                     rotation, 
                                     getHeading()
+                                    // getGyroYaw()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
-                                    rotation)
+                                    rotation
+                                    )
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -106,6 +108,10 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getGyroYaw() {
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
+    }
+
+    public double getGyroYawD() {
+        return gyro.getYaw().getValue();
     }
 
     public void resetModulesToAbsolute(){
