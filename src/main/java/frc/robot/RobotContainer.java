@@ -32,21 +32,21 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(joystick0, 7);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    // private final Swerve s_Swerve = new Swerve();
     private final Shooter s_Shooter = new Shooter();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -joystick0.getRawAxis(1), 
-                () -> -joystick0.getRawAxis(0), 
-                () -> -joystick1.getRawAxis(0), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
+        // s_Swerve.setDefaultCommand(
+        //     new TeleopSwerve(
+        //         s_Swerve, 
+        //         () -> -joystick0.getRawAxis(1), 
+        //         () -> -joystick0.getRawAxis(0), 
+        //         () -> -joystick1.getRawAxis(0), 
+        //         () -> robotCentric.getAsBoolean()
+        //     )
+        // );
 
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
 
@@ -62,7 +62,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
     }
 
     /**

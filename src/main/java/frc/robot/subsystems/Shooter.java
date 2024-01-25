@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         shooterControllerL = new TalonSRX(1); // TODO: change to correct port #
         shooterControllerR = new TalonSRX(2); // TODO: change to correct port #
-        speed = .1;
+        speed = .8;
     }
 
     @Override
@@ -39,13 +39,13 @@ public class Shooter extends SubsystemBase {
 
 
     public void runShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, speed);
-        shooterControllerR.set(ControlMode.PercentOutput, -speed);
+        shooterControllerL.set(ControlMode.PercentOutput, -speed);
+        shooterControllerR.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, speed);
-        shooterControllerR.set(ControlMode.PercentOutput, -speed);
+        shooterControllerL.set(ControlMode.PercentOutput, 0);
+        shooterControllerR.set(ControlMode.PercentOutput, 0);
     }
 
 }
