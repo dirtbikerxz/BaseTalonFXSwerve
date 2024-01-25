@@ -14,6 +14,7 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
+    public static final int IntakeMototCANID = 31;
 
     public static final class Swerve {
         public static final int pigeonID = 1;
@@ -132,6 +133,7 @@ public final class Constants {
         }
     }
 
+    
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
