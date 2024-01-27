@@ -77,28 +77,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("Noo");
-    }
-
-    private static double deadband(double value, double deadband) {
-        if (Math.abs(value) > deadband) {
-          if (value > 0.0) {
-            return (value - deadband) / (1.0 - deadband);
-          } else {
-            return (value + deadband) / (1.0 - deadband);
-          }
-        } else {
-          return 0.0;
-        }
-      }
-
-    public static double modifyAxis(double value, SlewRateLimiter limiter) {
-    // Deadband
-    value = deadband(value, 0.05);
-
-    // Square the axis
-    value = limiter.calculate(Math.copySign(value * value, value));
-
-    return value;
+        return new PathPlannerAuto("Speaker");
     }
 }

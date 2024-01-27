@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.0,
-      "y": 7.0
+      "x": 1.336590141851963,
+      "y": 5.51401363454356
     },
     "rotation": 0
   },
@@ -14,7 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test"
+            "pathName": "speakerP1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "speakerP2"
           }
         }
       ]
