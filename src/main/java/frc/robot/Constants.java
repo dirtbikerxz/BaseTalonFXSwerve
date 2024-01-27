@@ -136,7 +136,7 @@ public final class Constants {
         //   maxSpeed,
         //   Units.inchesToMeters(35/2), //flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
         //   new ReplanningConfig()
-        // );
+        // ); commented out bc it's in swerve subsystem, can be changed to stay here
     }
 
     public static final class AutoConstants {

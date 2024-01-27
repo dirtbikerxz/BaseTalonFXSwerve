@@ -7,6 +7,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -28,6 +29,13 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     private Field2d field = new Field2d();
+
+// Slew rate limiters to make joystick inputs more gentle.
+  // A value of .1 will requier 10 seconds to get from 0 to 1. It is calculated as 1/rateLimitPerSecond to go from 0 to 1
+  private final SlewRateLimiter xLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter turnLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter balanceXLimiter = new SlewRateLimiter(1);
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -162,5 +170,17 @@ public class Swerve extends SubsystemBase {
 
         SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
         setModuleStates(targetStates);
+    }
+
+    public SlewRateLimiter getXLimiter() {
+        return xLimiter;
+    }
+    
+    public SlewRateLimiter getYLimiter() {
+        return yLimiter;
+    }
+    
+    public SlewRateLimiter getTurnLimiter() {
+        return turnLimiter;
     }
 }
