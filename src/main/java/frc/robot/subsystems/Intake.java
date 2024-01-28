@@ -4,22 +4,25 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
+
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
 
-  public CANSparkMax intakeMotor;
+  public CANSparkFlex intakeMotor;
 
   public Intake() {
-    intakeMotor = new CANSparkMax(Constants.IntakeMototCANID, MotorType.kBrushless);
+    intakeMotor = new CANSparkFlex(Constants.IntakeMototCANID, MotorType.kBrushless);
   }
 
-  public void IntakeFast1() {
+  public void doIntake() {
     intakeMotor.set(0.9);
   }
 
@@ -30,5 +33,6 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("intakemotor", intakeMotor.get());
   }
 }
