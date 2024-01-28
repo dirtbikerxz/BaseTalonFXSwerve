@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
 import frc.robot.SwerveModuleTalonNeo;
+import frc.robot.SwerveModuleNeoNeo;
 import frc.robot.Constants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -29,10 +30,10 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve() {
         this(new SwerveModule[] {
-            new SwerveModuleTalonNeo(Constants.Swerve.Mod0.constants),
-            new SwerveModuleTalonNeo(Constants.Swerve.Mod1.constants),
-            new SwerveModuleTalonNeo(Constants.Swerve.Mod2.constants),
-            new SwerveModuleTalonNeo(Constants.Swerve.Mod3.constants)
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod0.constants),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod1.constants),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod2.constants),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod3.constants)
         });
     }
 
