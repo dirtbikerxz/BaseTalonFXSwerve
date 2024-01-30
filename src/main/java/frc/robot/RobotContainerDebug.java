@@ -13,6 +13,7 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,25 +34,27 @@ public class RobotContainerDebug {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kX.value);
+    
+    private final JoystickButton drive0 = new JoystickButton(driver, XboxController.Button.kA.value);
 
 
     
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
-    private final Intake m_Intake = new Intake();
-
+    // private final Swerve s_Swerve = new Swerve();
+    // private final Intake m_Intake = new Intake();
+    private final MotorTest motorTest = new MotorTest();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerDebug() {
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
+        // s_Swerve.setDefaultCommand(
+        //     new TeleopSwerve(
+        //         s_Swerve, 
+        //         () -> -driver.getRawAxis(translationAxis), 
+        //         () -> -driver.getRawAxis(strafeAxis), 
+        //         () -> -driver.getRawAxis(rotationAxis), 
+        //         () -> robotCentric.getAsBoolean()
+        //     )
+        // );
 
         // Configure the button bindings
         configureButtonBindings();
@@ -65,9 +68,9 @@ public class RobotContainerDebug {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-        intake.onTrue(new InstantCommand(() -> m_Intake.doIntake())).onFalse(new InstantCommand(() -> m_Intake.stop()));
-        
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        // intake.onTrue(new InstantCommand(() -> m_Intake.doIntake())).onFalse(new InstantCommand(() -> m_Intake.stop()));
+        drive0.onTrue(new InstantCommand(()-> motorTest.angleMotor2(0.5))).onFalse(new InstantCommand(()-> motorTest.angleMotor2(0.0)));
         
     }
 
@@ -78,6 +81,7 @@ public class RobotContainerDebug {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        //return new exampleAuto(s_Swerve);
+        return new InstantCommand(() -> {});
     }
 }
