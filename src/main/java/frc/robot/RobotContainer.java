@@ -34,6 +34,7 @@ public class RobotContainer {
     /* Subsystems */
     // private final Swerve s_Swerve = new Swerve();
     private final Shooter s_Shooter = new Shooter();
+    private final Intake s_Intake = new Intake();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -49,7 +50,7 @@ public class RobotContainer {
         // );
 
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
-
+        s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -70,8 +71,12 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
+    public Command getShooterAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new ShooterCommand(s_Shooter);
+    }
+
+    public Command getIntakeAutonomousCommand() {
+        return new IntakeCommand(s_Intake);
     }
 }
