@@ -5,8 +5,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import static frc.robot.Constants.*;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -24,23 +22,21 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterControllerL;
     private final TalonSRX shooterControllerR;
-    private final double speed;
 
     public Shooter() {
         shooterControllerL = new TalonSRX(1); // TODO: change to correct port #
         shooterControllerR = new TalonSRX(2); // TODO: change to correct port #
-        speed = .8;
     }
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Shooter Speed", speed);
+        SmartDashboard.putNumber("Shooter Speed", Constants.Shooter.speed);
     }
 
 
     public void runShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, -speed);
-        shooterControllerR.set(ControlMode.PercentOutput, speed);
+        shooterControllerL.set(ControlMode.PercentOutput, -Constants.Shooter.speed);
+        shooterControllerR.set(ControlMode.PercentOutput, Constants.Shooter.speed);
     }
 
     public void stopShooter() {
