@@ -4,7 +4,6 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.SparkPIDController;
 
@@ -12,14 +11,17 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
 
 public class SwerveModuleNeoNeo implements SwerveModule {
 
-    private Rotation2d angleOffset;
-    private Rotation2d lastAngle;
-    private Rotation2d angle = new Rotation2d(0);
+    private Rotation2d steeringOffset;
+    private Rotation2d lastSteeringAngle;
+    private Rotation2d steering = new Rotation2d(0);
+    private int mModuleNumber;
 
     private CANSparkMax mAngleMotor;
     private CANSparkMax mDriveMotor;
@@ -39,8 +41,9 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     /* angle motor control requests */
     // private final PositionVoltage anglePosition = new PositionVoltage(0);
 
-    public SwerveModuleNeoNeo(SwerveModuleConstants moduleConstants) {
-        this.angleOffset = moduleConstants.angleOffset;
+    public SwerveModuleNeoNeo(SwerveModuleConstants moduleConstants, int moduleNumber) {
+        this.steeringOffset = moduleConstants.angleOffset;
+        this.mModuleNumber = moduleNumber;
         
         /* Angle Encoder Config */
         angleEncoder = new CANcoder(moduleConstants.cancoderID);
@@ -59,18 +62,18 @@ public class SwerveModuleNeoNeo implements SwerveModule {
         configDriveMotor();
 
 
-        lastAngle = Rotation2d.fromDegrees(anglemotorEncoder.getPosition());
+        lastSteeringAngle = Rotation2d.fromDegrees(anglemotorEncoder.getPosition());
     }
 
     @Override
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle); 
-        SparkPIDController pidController = mAngleMotor.getPIDController();
-        pidController.setFF(1);
-        pidController.setReference(desiredState.angle.getRotations(), CANSparkBase.ControlType.kPosition);
+//        SparkPIDController pidController = mAngleMotor.getPIDController();
+//        pidController.setFF(1);
+//        pidController.setReference(desiredState.angle.getRotations(), CANSparkBase.ControlType.kPosition);
         //mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()));
         setSpeed(desiredState, isOpenLoop);
-        setAngle(desiredState);
+        setSteeringAngle(desiredState);
     }
 
     @Override
@@ -79,7 +82,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     }
 
     public void resetToAbsolute(){
-        double absolutePosition = getRotation().getRotations() - angleOffset.getRotations();
+        double absolutePosition = getRotation().getRotations() - steeringOffset.getRotations();
 
         SparkPIDController pidController = mAngleMotor.getPIDController();
         pidController.setReference(absolutePosition,CANSparkMax.ControlType.kPosition);
@@ -98,7 +101,8 @@ public class SwerveModuleNeoNeo implements SwerveModule {
 
         anglePIDController.setP(Constants.Swerve.angleKP);
         anglePIDController.setI(Constants.Swerve.angleKI);
-        anglePIDController.setD(Constants.Swerve.angleKD);
+//        anglePIDController.setD(Constants.Swerve.angleKD);
+        anglePIDController.setD(10.0);
         anglePIDController.setFF(0.0);
 
         mAngleMotor.getPIDController().setOutputRange(-0.25, 0.25);
@@ -115,7 +119,8 @@ public class SwerveModuleNeoNeo implements SwerveModule {
 
         drivePIDController.setP(Constants.Swerve.driveKP);
         drivePIDController.setI(Constants.Swerve.driveKI);
-        drivePIDController.setD(Constants.Swerve.driveKD);
+//        drivePIDController.setD(Constants.Swerve.driveKD);
+        drivePIDController.setD(15.0);
         drivePIDController.setFF(Constants.Swerve.driveKF);
 
         drivePIDController.setOutputRange(-0.5, 0.5);
@@ -124,11 +129,11 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
             Conversions.rotationsToMeters(mDriveMotor.getEncoder().getPosition(), Constants.Swerve.wheelCircumference), 
-            Rotation2d.fromRotations(mDriveMotor.getEncoder().getPosition())
+            Rotation2d.fromRotations(mAngleMotor.getEncoder().getPosition())
         );
     }
 
-    private Rotation2d getAngle(){
+    private Rotation2d getSteeringAngle(){
         return Rotation2d.fromDegrees(anglemotorEncoder.getPosition());
     }
 
@@ -150,10 +155,18 @@ public class SwerveModuleNeoNeo implements SwerveModule {
         }
     }
 
-    private void setAngle(SwerveModuleState desiredState){
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+    private void setSteeringAngle(SwerveModuleState desiredState){
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastSteeringAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
         mAngleMotor.getPIDController().setReference(angle.getDegrees(), CANSparkBase.ControlType.kPosition);
-        lastAngle = angle;
+        lastSteeringAngle = angle;
+    }
+
+    @Override
+    public void dashboardPeriodic() {
+        SmartDashboard.putNumber("Mod " + mModuleNumber + " CANcoder", this.getRotation().getDegrees());
+        SmartDashboard.putNumber("Mod " + mModuleNumber + " Angle", this.getPosition().angle.getDegrees());
+        SmartDashboard.putNumber("Mod " + mModuleNumber + " Velocity", this.getState().speedMetersPerSecond);
+        SmartDashboard.putNumber("Mod " + mModuleNumber + " Drive", this.mDriveMotor.getAppliedOutput());
     }
 }

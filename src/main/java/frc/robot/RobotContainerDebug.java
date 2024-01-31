@@ -20,7 +20,7 @@ import frc.robot.subsystems.*;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainerDebug {
+public class RobotContainerDebug implements RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     //private final CommandXboxController driver = new CommandXboxController(0);
@@ -79,6 +79,7 @@ public class RobotContainerDebug {
      *
      * @return the command to run in autonomous
      */
+    @Override
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return new exampleAuto(s_Swerve);

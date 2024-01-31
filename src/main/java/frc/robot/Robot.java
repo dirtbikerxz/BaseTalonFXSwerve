@@ -20,9 +20,7 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
 
-  private RobotContainerGame m_robotContainer;
-  // private RobotContainerDebug m_robotContainer;
-
+  private RobotContainer mRobotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -32,8 +30,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-     m_robotContainer = new RobotContainerGame();
-    // m_robotContainer = new RobotContainerDebug();
+     mRobotContainer = new RobotContainerGame();
+     SmartDashboard.putString("Version", "2");
   }
 
   /**
@@ -50,7 +48,12 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    mRobotContainer.robotPeriodic();
+
+
+
   }
+
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
@@ -62,7 +65,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainerGame} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = mRobotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

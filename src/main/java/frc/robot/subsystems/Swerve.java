@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.SwerveModule;
 import frc.robot.SwerveModuleTalonNeo;
 import frc.robot.SwerveModuleNeoNeo;
@@ -30,10 +33,10 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve() {
         this(new SwerveModule[] {
-            new SwerveModuleNeoNeo(Constants.Swerve.Mod0.constants),
-            new SwerveModuleNeoNeo(Constants.Swerve.Mod1.constants),
-            new SwerveModuleNeoNeo(Constants.Swerve.Mod2.constants),
-            new SwerveModuleNeoNeo(Constants.Swerve.Mod3.constants)
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod0.constants, 0),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod1.constants, 1),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod2.constants, 2),
+            new SwerveModuleNeoNeo(Constants.Swerve.Mod3.constants, 3)
         });
     }
 
@@ -130,14 +133,11 @@ public class Swerve extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
-        for(int i = 0; i < mSwerveMods.length; i++) {
-            SwerveModule mod = mSwerveMods[i];
-            SmartDashboard.putNumber("Mod " + i + " CANcoder", mod.getRotation().getDegrees());
-            SmartDashboard.putNumber("Mod " + i + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + i + " Velocity", mod.getState().speedMetersPerSecond);
+        for (SwerveModule mod : mSwerveMods) {
+            mod.dashboardPeriodic();
         }
     }
 }

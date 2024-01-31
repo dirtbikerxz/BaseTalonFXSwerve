@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,7 +20,7 @@ import frc.robot.subsystems.*;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainerGame {
+public class RobotContainerGame implements RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     //private final CommandXboxController driver = new CommandXboxController(0);
@@ -34,13 +35,9 @@ public class RobotContainerGame {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kX.value);
 
-
-
-    
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake m_Intake = new Intake();
-
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerGame() {
@@ -76,8 +73,18 @@ public class RobotContainerGame {
      *
      * @return the command to run in autonomous
      */
+    @Override
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new exampleAuto(s_Swerve);
+    }
+
+    @Override
+    public void robotPeriodic() {
+        SwerveModuleState[] swerveStates = s_Swerve.getModuleStates();
+        for (int i = 0; i < swerveStates.length; i++) {
+            SwerveModuleState state = swerveStates[i];
+            SmartDashboard.putNumber(String.format("SwerveSpeed%d", i), state.speedMetersPerSecond);
+        }
     }
 }
