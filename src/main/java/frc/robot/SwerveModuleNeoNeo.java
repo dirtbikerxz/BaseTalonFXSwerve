@@ -99,10 +99,10 @@ public class SwerveModuleNeoNeo implements SwerveModule {
 
         resetToAbsolute();
 
-        anglePIDController.setP(Constants.Swerve.angleKP);
+        anglePIDController.setP(0.12);
         anglePIDController.setI(Constants.Swerve.angleKI);
 //        anglePIDController.setD(Constants.Swerve.angleKD);
-        anglePIDController.setD(10.0);
+        anglePIDController.setD(0.0);
         anglePIDController.setFF(0.0);
 
         mAngleMotor.getPIDController().setOutputRange(-0.25, 0.25);
@@ -120,7 +120,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
         drivePIDController.setP(Constants.Swerve.driveKP);
         drivePIDController.setI(Constants.Swerve.driveKI);
 //        drivePIDController.setD(Constants.Swerve.driveKD);
-        drivePIDController.setD(15.0);
+        drivePIDController.setD(0);
         drivePIDController.setFF(Constants.Swerve.driveKF);
 
         drivePIDController.setOutputRange(-0.5, 0.5);
