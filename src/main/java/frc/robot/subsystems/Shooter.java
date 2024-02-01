@@ -7,26 +7,26 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import static frc.robot.Constants.Shooter.*;
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterControllerL;
     private final TalonSRX shooterControllerR;
 
     public Shooter() {
-        shooterControllerL = new TalonSRX(1); // TODO: change to correct port #
-        shooterControllerR = new TalonSRX(2); // TODO: change to correct port #
+        shooterControllerL = new TalonSRX(leftMotorID); 
+        shooterControllerR = new TalonSRX(rightMotorID); 
     }
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Shooter Speed", Constants.Shooter.speed);
+        SmartDashboard.putNumber("Shooter Speed", maxSpeed);
     }
 
 
     public void runShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, -Constants.Shooter.speed);
-        shooterControllerR.set(ControlMode.PercentOutput, Constants.Shooter.speed);
+        shooterControllerL.set(ControlMode.PercentOutput, -maxSpeed);
+        shooterControllerR.set(ControlMode.PercentOutput, maxSpeed);
     }
 
     public void stopShooter() {

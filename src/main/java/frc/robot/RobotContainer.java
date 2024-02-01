@@ -1,10 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -17,38 +15,30 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    /* Controllers */
-    private final Joystick joystick0 = new Joystick(2); //Middle
-    private final Joystick joystick1 = new Joystick(3); //Left
-    private final Joystick joystick2 = new Joystick(4); //Right (I know it's messed up to order them like that idk why it's that way)
+    private final DriveControls controls = new DriveControls();
 
     // /* Drive Controls */
     // private final int translationAxis = Joystick.Axis.kLeftY.value;
     // private final int strafeAxis = Joystick.Axis.kLeftX.value;
     // private final int rotationAxis = Joystick.Axis.kRightX.value;
 
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(joystick1, 10);
-    private final JoystickButton robotCentric = new JoystickButton(joystick0, 7);
-
     /* Subsystems */
-    // private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = new Swerve();
     private final Shooter s_Shooter = new Shooter();
     private final Intake s_Intake = new Intake();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        // s_Swerve.setDefaultCommand(
-        //     new TeleopSwerve(
-        //         s_Swerve, 
-        //         () -> -joystick0.getRawAxis(1), 
-        //         () -> -joystick0.getRawAxis(0), 
-        //         () -> -joystick1.getRawAxis(0), 
-        //         () -> robotCentric.getAsBoolean()
-        //     )
-        // );
-
+        s_Swerve.setDefaultCommand(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
         // Configure the button bindings
@@ -71,12 +61,11 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public Command getShooterAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
+    public Command getShooterCommand() {
         return new ShooterCommand(s_Shooter);
     }
 
-    public Command getIntakeAutonomousCommand() {
+    public Command getIntakeCommand() {
         return new IntakeCommand(s_Intake);
     }
 }

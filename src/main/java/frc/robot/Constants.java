@@ -130,7 +130,16 @@ public final class Constants {
     }
 
     public static final class Shooter {
-        public static final double speed = .8;
+        public static final int leftMotorID = 1; // TODO: change to correct port #
+        public static final int rightMotorID = 2; // TODO: change to correct port #
+
+        public static final double maxSpeed = .8;
+    }
+    
+    public static final class Intake {
+        public static final int motorID = 1; //TODO: change to correct port #
+
+        public static final double maxSpeed = .2;
     }
 
     public static final class Auto { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
