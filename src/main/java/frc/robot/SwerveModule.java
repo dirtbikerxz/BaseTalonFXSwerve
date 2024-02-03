@@ -1,10 +1,8 @@
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 /**
  * Interface containing behavior needed to control a swerve module.
