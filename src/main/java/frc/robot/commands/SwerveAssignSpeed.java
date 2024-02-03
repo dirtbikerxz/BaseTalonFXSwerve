@@ -8,22 +8,23 @@ import frc.robot.subsystems.SwerveTest;
  */
 public class SwerveAssignSpeed extends Command {
     private static final double DEFAULT_SPEED = 0.50;
+    private final int mModule;
     private final double mSpeed;
     private final SwerveTest mSwerve;
 
-    public SwerveAssignSpeed(SwerveTest swerve) {
-        this(swerve, DEFAULT_SPEED);
+    public SwerveAssignSpeed(SwerveTest swerve, int module) {
+        this(swerve, module, DEFAULT_SPEED);
     }
 
-    public SwerveAssignSpeed(SwerveTest swerve, double speed) {
+    public SwerveAssignSpeed(SwerveTest swerve, int module, double speed) {
+        addRequirements(swerve);
         this.mSwerve = swerve;
+        this.mModule = module;
         this.mSpeed = speed;
     }
 
     public void initialize() {
-        for (int i = 0; i < 4; i++) {
-            mSwerve.setDriveSpeed(i, mSpeed);
-        }
+        mSwerve.setDriveSpeed(mModule, mSpeed);
     }
 
     public void execute() {
@@ -34,8 +35,6 @@ public class SwerveAssignSpeed extends Command {
     }
 
     public void end(boolean interrupted) {
-        for (int i = 0; i < 4; i++) {
-            mSwerve.setDriveSpeed(i, mSpeed);
-        }
+        mSwerve.setDriveSpeed(mModule, 0.0);
     }
 }

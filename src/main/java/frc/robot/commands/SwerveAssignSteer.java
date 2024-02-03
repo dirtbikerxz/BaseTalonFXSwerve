@@ -8,22 +8,22 @@ import frc.robot.subsystems.SwerveTest;
  */
 public class SwerveAssignSteer extends Command {
     private static final double DEFAULT_SPEED = 0.50;
-    private final double mSpeed;
+    public final int mModule;
+    private final double mPosition;
     private final SwerveTest mSwerve;
 
-    public SwerveAssignSteer(SwerveTest swerve) {
-        this(swerve, DEFAULT_SPEED);
+    public SwerveAssignSteer(SwerveTest swerve, int module) {
+        this(swerve, module, DEFAULT_SPEED);
     }
 
-    public SwerveAssignSteer(SwerveTest swerve, double speed) {
+    public SwerveAssignSteer(SwerveTest swerve, int module, double position) {
         this.mSwerve = swerve;
-        this.mSpeed = speed;
+        this.mModule = module;
+        this.mPosition = position;
     }
 
     public void initialize() {
-        for (int i = 0; i < 4; i++) {
-            mSwerve.setSteeringSpeed(i, mSpeed);
-        }
+        mSwerve.setSteerPosition(mModule, mPosition);
     }
 
     public void execute() {
@@ -34,8 +34,6 @@ public class SwerveAssignSteer extends Command {
     }
 
     public void end(boolean interrupted) {
-        for (int i = 0; i < 4; i++) {
-            mSwerve.setSteeringSpeed(i, mSpeed);
-        }
+        mSwerve.setSteerPosition(mModule, 0.0);
     }
 }

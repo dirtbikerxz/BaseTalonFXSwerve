@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -30,11 +31,12 @@ public class SwerveTest extends SubsystemBase {
         mDriveMotors[module].set(speed);
     }
 
-    public void setSteeringSpeed(int module, double speed) {
+    public void setSteerPosition(int module, double position) {
         if (module < 0 || module > 3) {
             return;
         }
 
-        mSteeringMotors[module].set(speed);
+        mSteeringMotors[module].set(position);
+//        mSteeringMotors[module].getPIDController().setReference(position, CANSparkBase.ControlType.kPosition);
     }
 }
