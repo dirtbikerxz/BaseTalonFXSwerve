@@ -2,6 +2,11 @@ package frc.robot;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+//import com.ctre.phoenix6.sensors.CANCoderConfiguration;
+//import com.ctre.phoenix6.sensors.SensorInitializationStrategy;
+//import com.ctre.phoenix6.sensors.SensorTimeBase;
 
 public final class CTREConfigs {
     public TalonFXConfiguration swerveAngleFXConfig = new TalonFXConfiguration();
@@ -11,6 +16,10 @@ public final class CTREConfigs {
     public CTREConfigs(){
         /** Swerve CANCoder Configuration */
         swerveCANcoderConfig.MagnetSensor.SensorDirection = Constants.Swerve.cancoderInvert;
+        swerveCANcoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+        swerveCANcoderConfig.MagnetSensor.SensorDirection = Constants.Swerve.cancoderInvert;
+//        swerveCANcoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+//        swerveCANcoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
 
         /** Swerve Angle Motor Configurations */
         /* Motor Inverts and Neutral Mode */
