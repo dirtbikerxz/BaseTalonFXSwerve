@@ -30,12 +30,6 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     private Field2d field = new Field2d();
 
-// Slew rate limiters to make joystick inputs more gentle.
-  // A value of .1 will requier 10 seconds to get from 0 to 1. It is calculated as 1/rateLimitPerSecond to go from 0 to 1
-  private final SlewRateLimiter xLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter yLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter turnLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter balanceXLimiter = new SlewRateLimiter(1);
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -162,6 +156,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+        SmartDashboard.putData(gyro);
     }
 
     public ChassisSpeeds getSpeeds() {
@@ -174,15 +169,4 @@ public class Swerve extends SubsystemBase {
         setModuleStates(targetStates);
     }
 
-    public SlewRateLimiter getXLimiter() {
-        return xLimiter;
-    }
-    
-    public SlewRateLimiter getYLimiter() {
-        return yLimiter;
-    }
-    
-    public SlewRateLimiter getTurnLimiter() {
-        return turnLimiter;
-    }
 }
