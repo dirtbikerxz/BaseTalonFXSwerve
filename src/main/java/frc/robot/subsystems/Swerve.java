@@ -22,13 +22,14 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.SwerveModule;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-    private Field2d field = new Field2d();
+    
 
 
     public Swerve() {
@@ -139,7 +140,6 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getGyroYaw() {
      return Rotation2d.fromDegrees(gyro.getYaw().getValue());
-     //return Rotation2d.fromDegrees(360-gyro.getYaw().getValue());
     }
 
     public void resetModulesToAbsolute(){
@@ -157,7 +157,9 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
-        SmartDashboard.putData(gyro);
+        // SmartDashboard.putData(gyro);
+        RobotContainer.getInstance().field.setRobotPose(getPose());
+        
     }
 
     public ChassisSpeeds getSpeeds() {
