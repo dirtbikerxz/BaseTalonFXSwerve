@@ -35,6 +35,7 @@ public class Swerve extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
+        
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -137,8 +138,8 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getGyroYaw() {
-          return Rotation2d.fromDegrees(gyro.getYaw().getValue());
-      // return Rotation2d.fromDegrees(360-gyro.getYaw().getValue());
+     return Rotation2d.fromDegrees(gyro.getYaw().getValue());
+     //return Rotation2d.fromDegrees(360-gyro.getYaw().getValue());
     }
 
     public void resetModulesToAbsolute(){
