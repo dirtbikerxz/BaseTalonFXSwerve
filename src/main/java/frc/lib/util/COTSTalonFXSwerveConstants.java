@@ -303,6 +303,14 @@ public class COTSTalonFXSwerveConstants {
                 public static final double L2 = (6.75 / 1.0);
                 /** SDS MK4i - (6.12 : 1) */
                 public static final double L3 = (6.12 / 1.0);
+
+                /** SDS MK4i (with 16t adapter kit) - (7.13 : 1) */
+                // TODO: Could rename to L1_5
+                public static final double L1_16T = (7.13 / 1.0);
+                /** SDS MK4i (with 16t adapter kit) - (5.90 : 1) */
+                public static final double L2_16T = (5.90 / 1.0);
+                /** SDS MK4i (with 16t adapter kit) - (5.36 : 1) */
+                public static final double L3_16T = (5.36 / 1.0);
             }
         }
     }
