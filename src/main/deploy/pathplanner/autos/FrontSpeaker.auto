@@ -12,9 +12,21 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "FrontSpeakerP1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonAcquireCommand"
           }
         },
         {
@@ -26,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "autonShootCommand"
           }
         }
       ]
