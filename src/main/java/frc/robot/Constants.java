@@ -18,6 +18,11 @@ public final class Constants {
     public static final class Swerve { 
         public static final int pigeonID = 13;
 
+        public static final class ShooterConstants {
+            public static final double kRightShooterCMDVolts = 10.0;
+            public static final double kLeftShooterCMDVolts = 6.0;
+        }
+
         public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
