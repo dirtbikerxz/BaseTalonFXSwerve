@@ -2,37 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6884877930156866,
-      "y": 6.6456209102894395
+      "x": 0.7604991651086064,
+      "y": 7.684642136201566
     },
-    "rotation": 60.99187650063335
+    "rotation": -90.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "autonShootCommand"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "AmpP1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "AmpP2"
+            "pathName": "ShortAmpP1"
           }
         },
         {
@@ -44,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpP3"
+            "pathName": "ShortAmpP2"
           }
         },
         {
@@ -56,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpP4"
+            "pathName": "ShortAmpP3"
           }
         },
         {

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6884877930156866,
-      "y": 6.6456209102894395
+      "x": 0.6782004541452696,
+      "y": 4.351544342186429
     },
-    "rotation": 60.99187650063335
+    "rotation": -61.76255446183275
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpP1"
+            "pathName": "2SideSpeakerP1"
           }
         },
         {
@@ -32,31 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpP2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAmpCommand"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "AmpP3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "AmpP4"
+            "pathName": "2SideSpeakerP2"
           }
         },
         {

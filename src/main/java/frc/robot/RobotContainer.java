@@ -178,7 +178,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     return autoChooser.getSelected();
-    // return new PathPlannerAuto("Speaker");
   }
   
 
