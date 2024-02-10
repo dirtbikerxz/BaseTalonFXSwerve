@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
-import frc.robot.SwerveModule;
-import frc.robot.SwerveModuleNeoNeo;
-import frc.robot.Constants;
+import frc.lib.doubleNeoConstants;
+import frc.robot.interfaces.SwerveModule;
+import frc.robot.swervemodules.SwerveModuleDoubleNeo;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -28,10 +28,10 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve() {
         this(new SwerveModule[]{
-                new SwerveModuleNeoNeo(Constants.Swerve.Mod0.constants, 0),
-                new SwerveModuleNeoNeo(Constants.Swerve.Mod1.constants, 1),
-                new SwerveModuleNeoNeo(Constants.Swerve.Mod2.constants, 2),
-                new SwerveModuleNeoNeo(Constants.Swerve.Mod3.constants, 3)
+                new SwerveModuleDoubleNeo(doubleNeoConstants.Swerve.Mod0.constants, 0),
+                new SwerveModuleDoubleNeo(doubleNeoConstants.Swerve.Mod1.constants, 1),
+                new SwerveModuleDoubleNeo(doubleNeoConstants.Swerve.Mod2.constants, 2),
+                new SwerveModuleDoubleNeo(doubleNeoConstants.Swerve.Mod3.constants, 3)
         });
     }
 
@@ -40,10 +40,10 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve(SwerveModule[] modules) {
         this.mSwerveMods = modules;
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro = new Pigeon2(doubleNeoConstants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(doubleNeoConstants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -57,8 +57,8 @@ public class Swerve extends SubsystemBase {
                 translation.getY(),
                 rotation);
 
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(speeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+        SwerveModuleState[] swerveModuleStates = doubleNeoConstants.Swerve.swerveKinematics.toSwerveModuleStates(speeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, doubleNeoConstants.Swerve.maxSpeed);
 
         for (int i = 0; i < mSwerveMods.length; i++) {
             SwerveModule mod = mSwerveMods[i];
@@ -68,7 +68,7 @@ public class Swerve extends SubsystemBase {
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, doubleNeoConstants.Swerve.maxSpeed);
 
         for (int i = 0; i < mSwerveMods.length; i++) {
             SwerveModule mod = mSwerveMods[i];

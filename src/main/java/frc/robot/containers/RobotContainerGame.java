@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.containers;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.autos.*;
+import frc.robot.Robot;
 import frc.robot.commands.*;
+import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
 /**
@@ -46,8 +47,8 @@ public class RobotContainerGame implements RobotContainer {
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                () -> -driver.getRawAxis(rotationAxis),
+                    robotCentric
             )
         );
 
@@ -63,8 +64,8 @@ public class RobotContainerGame implements RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-        intake.onTrue(new InstantCommand(() -> m_Intake.doIntake())).onFalse(new InstantCommand(() -> m_Intake.stop()));
+        zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroHeading));
+        intake.onTrue(new InstantCommand(m_Intake::doIntake)).onFalse(new InstantCommand(m_Intake::stop));
         
     }
 
@@ -76,7 +77,7 @@ public class RobotContainerGame implements RobotContainer {
     @Override
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return Commands.print("No Auto");
     }
 
     @Override

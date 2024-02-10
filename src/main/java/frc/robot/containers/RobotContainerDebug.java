@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.containers;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.commands.ShooterAssignPower;
+import frc.robot.Robot;
 import frc.robot.commands.SwerveAssignSpeed;
 import frc.robot.commands.SwerveAssignSteer;
+import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
 /**

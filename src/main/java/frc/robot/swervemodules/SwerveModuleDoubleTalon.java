@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.swervemodules;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -9,20 +9,23 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.lib.math.Conversions;
-import frc.lib.util.SwerveModuleConstants;
+import frc.lib.Conversions;
+import frc.lib.SwerveModuleConstants;
+import frc.robot.Robot;
+import frc.robot.interfaces.SwerveModule;
+import frc.lib.doubleNeoConstants;
 
 /**
  * Swerve Module using a TalonFX for both Drive and Steering
  */
-public class SwerveModuleTalonTalon implements SwerveModule {
+public class SwerveModuleDoubleTalon implements SwerveModule {
     private Rotation2d angleOffset;
 
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
     private CANcoder angleEncoder;
 
-    private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+    private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(doubleNeoConstants.Swerve.driveKS, doubleNeoConstants.Swerve.driveKV, doubleNeoConstants.Swerve.driveKA);
 
     /* drive motor control requests */
     private final DutyCycleOut driveDutyCycle = new DutyCycleOut(0);
@@ -31,7 +34,7 @@ public class SwerveModuleTalonTalon implements SwerveModule {
     /* angle motor control requests */
     private final PositionVoltage anglePosition = new PositionVoltage(0);
 
-    public SwerveModuleTalonTalon(SwerveModuleConstants moduleConstants) {
+    public SwerveModuleDoubleTalon(SwerveModuleConstants moduleConstants) {
         this.angleOffset = moduleConstants.angleOffset;
 
         /* Angle Encoder Config */
@@ -70,7 +73,7 @@ public class SwerveModuleTalonTalon implements SwerveModule {
     @Override
     public SwerveModuleState getState() {
         return new SwerveModuleState(
-                Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference),
+                Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), doubleNeoConstants.Swerve.wheelCircumference),
                 Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
         );
     }
@@ -78,18 +81,18 @@ public class SwerveModuleTalonTalon implements SwerveModule {
     @Override
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-                Conversions.rotationsToMeters(mDriveMotor.getPosition().getValue(), Constants.Swerve.wheelCircumference),
+                Conversions.rotationsToMeters(mDriveMotor.getPosition().getValue(), doubleNeoConstants.Swerve.wheelCircumference),
                 Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
         );
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if(isOpenLoop){
-            driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+            driveDutyCycle.Output = desiredState.speedMetersPerSecond / doubleNeoConstants.Swerve.maxSpeed;
             mDriveMotor.setControl(driveDutyCycle);
         }
         else {
-            driveVelocity.Velocity = Conversions.MPSToRPS(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference);
+            driveVelocity.Velocity = Conversions.MPSToRPS(desiredState.speedMetersPerSecond, doubleNeoConstants.Swerve.wheelCircumference);
             driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
             mDriveMotor.setControl(driveVelocity);
         }
