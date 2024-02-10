@@ -1,5 +1,10 @@
-package frc.robot;
+package frc.robot.swervemodules;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.lib.SwerveModuleConstants;
+import frc.robot.interfaces.SwerveModule;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -14,16 +19,67 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.lib.util.SwerveModuleConstants;
+import frc.lib.SwerveModuleConstants;
+import frc.lib.doubleNeoConstants;
 
+//public class SwerveModuleDoubleNeo implements SwerveModule {
+//    private Rotation2d angleoffset;
+//    private CANSparkMax angleMotor;
+//    private CANSparkMax driveMotor;
+//    private final RelativeEncoder angleEncoder;
+//    private final RelativeEncoder driveEncoder;
+//
+//    private final SparkPIDController drivePIDController;
+//    private final SparkPIDController anglePIDController;
+//
+//    private CANcoder absoluteEncoder;
+//
+//
+//    public SwerveModuleDoubleNeo(SwerveModuleConstants moduleConstants, int moduleNumber, RelativeEncoder angleEncoder, RelativeEncoder driveEncoder, SparkPIDController drivePIDController, SparkPIDController anglePIDController) {
+//
+//        this.angleEncoder = angleEncoder;
+//        this.driveEncoder = driveEncoder;
+//        this.drivePIDController = drivePIDController;
+//        this.anglePIDController = anglePIDController;
+//    }
+//    @Override
+//    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+//
+//    }
+//
+//    @Override
+//    public void resetToAbsolute() {
+//
+//    }
+//
+//    @Override
+//    public Rotation2d getRotation() {
+//
+//    }
+//
+//    @Override
+//    public SwerveModulePosition getPosition() {
+//
+//    }
+//
+//    @Override
+//    public SwerveModuleState getState() {
+//
+//    }
+//
+//    @Override
+//    public void dashboardPeriodic() {
+//
+//    }
+//}
 
-public class SwerveModuleNeoNeo implements SwerveModule {
+public class SwerveModuleDoubleNeo implements SwerveModule {
     public int moduleNumber;
-    private Rotation2d angleOffset;
+    private final Rotation2d angleOffset;
     private Rotation2d lastAngle;
 
-    private CANSparkMax mAngleMotor;
-    private CANSparkMax mDriveMotor;
+    private final CANSparkMax mAngleMotor;
+    private final CANSparkMax mDriveMotor;
 
     private final RelativeEncoder angleEncoder;
     private final RelativeEncoder driveEncoder;
@@ -31,11 +87,11 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     private final SparkPIDController drivePIDController;
     private final SparkPIDController anglePIDController;
 
-    private CANcoder absoluteEncoder;
+    private final CANcoder absoluteEncoder;
 
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(doubleNeoConstants.Swerve.driveKS, doubleNeoConstants.Swerve.driveKV, doubleNeoConstants.Swerve.driveKA);
 
-    public SwerveModuleNeoNeo(SwerveModuleConstants moduleConstants, int moduleNumber){
+    public SwerveModuleDoubleNeo(SwerveModuleConstants moduleConstants, int moduleNumber){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
 
@@ -70,7 +126,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
         if(isOpenLoop){
-            double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+            double percentOutput = desiredState.speedMetersPerSecond / doubleNeoConstants.Swerve.maxSpeed;
             mDriveMotor.set(percentOutput);
         }
         else {
@@ -86,7 +142,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     }
 
     private void setAngle(SwerveModuleState desiredState){
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (doubleNeoConstants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
 //        PIDController pid = new PIDController(0.12, 0, 0);
 //        pid.enableContinuousInput(-180, 180);
 //
@@ -117,7 +173,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
     }
 
     private void configAngleEncoder(){
-        absoluteEncoder.getConfigurator().apply(Robot.ctreConfigs.swerveCANcoderConfig);
+        absoluteEncoder.getConfigurator().apply(frc.lib.CTREConfigs.swerveCANcoderConfig);
 
 
         //absoluteEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
@@ -131,7 +187,7 @@ public class SwerveModuleNeoNeo implements SwerveModule {
         mAngleMotor.setInverted(false);
         //mAngleMotor.setIdleMode(false);
 
-        angleEncoder.setPositionConversionFactor((1/Constants.Swerve.angleGearRatio) * 360);
+        angleEncoder.setPositionConversionFactor((1/doubleNeoConstants.Swerve.angleGearRatio) * 360);
 
         resetToAbsolute();
 
@@ -149,18 +205,18 @@ public class SwerveModuleNeoNeo implements SwerveModule {
         mDriveMotor.setSecondaryCurrentLimit(0.1);
         mDriveMotor.setInverted(false);
         //mDriveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
-        mDriveMotor.setOpenLoopRampRate(Constants.Swerve.openLoopRamp);
-        mDriveMotor.setClosedLoopRampRate(Constants.Swerve.closedLoopRamp);
+        mDriveMotor.setOpenLoopRampRate(doubleNeoConstants.Swerve.openLoopRamp);
+        mDriveMotor.setClosedLoopRampRate(doubleNeoConstants.Swerve.closedLoopRamp);
 
-        driveEncoder.setVelocityConversionFactor(1/Constants.Swerve.driveGearRatio * Constants.Swerve.wheelCircumference / 60);
+        driveEncoder.setVelocityConversionFactor(1/doubleNeoConstants.Swerve.driveGearRatio * doubleNeoConstants.Swerve.wheelCircumference / 60);
         //TODO Make sure conversion factor is correct for position
-        driveEncoder.setPositionConversionFactor(1/Constants.Swerve.driveGearRatio * Constants.Swerve.wheelCircumference);
+        driveEncoder.setPositionConversionFactor(1/doubleNeoConstants.Swerve.driveGearRatio * doubleNeoConstants.Swerve.wheelCircumference);
         driveEncoder.setPosition(0);
 
-        drivePIDController.setP(Constants.Swerve.driveKP);
-        drivePIDController.setI(Constants.Swerve.driveKI);
-        drivePIDController.setD(Constants.Swerve.driveKD);
-        drivePIDController.setFF(Constants.Swerve.driveKF);
+        drivePIDController.setP(doubleNeoConstants.Swerve.driveKP);
+        drivePIDController.setI(doubleNeoConstants.Swerve.driveKI);
+        drivePIDController.setD(doubleNeoConstants.Swerve.driveKD);
+        drivePIDController.setFF(doubleNeoConstants.Swerve.driveKF);
 
         drivePIDController.setOutputRange(-0.5, 0.5);
     }

@@ -6,12 +6,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-
-import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import frc.lib.doubleNeoConstants;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
@@ -19,7 +17,7 @@ public class Intake extends SubsystemBase {
   public CANSparkFlex intakeMotor;
 
   public Intake() {
-    intakeMotor = new CANSparkFlex(Constants.IntakeMototCANID, MotorType.kBrushless);
+    intakeMotor = new CANSparkFlex(doubleNeoConstants.intakeMotorCAN, MotorType.kBrushless);
   }
 
   public void doIntake() {
