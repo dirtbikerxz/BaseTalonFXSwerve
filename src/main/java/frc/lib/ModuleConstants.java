@@ -86,9 +86,27 @@ public class ModuleConstants {
                 return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
             }
 
+            public static final ModuleConstants KrakenFalcon(double driveGearRatio){
+                double wheelDiameter = Units.inchesToMeters(4.0);
+
+                /** (150 / 7) : 1 */
+                double angleGearRatio = ((150.0 / 7.0) / 1.0);
+
+                double angleKP = 100.0;
+                double angleKI = 0.0;
+                double angleKD = 0.0;
+
+                InvertedValue driveMotorInvert = InvertedValue.CounterClockwise_Positive;
+                InvertedValue angleMotorInvert = InvertedValue.Clockwise_Positive;
+                SensorDirectionValue cancoderInvert = SensorDirectionValue.CounterClockwise_Positive;
+                return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
+            }
+
             public static final class driveRatio {
                 /** SDS MK4i - (8.14 : 1) */
                 public static final double L1 = (8.14 / 1.0);
+
+                public static final double L1and16t = (9.88/1.0);
             }
         }
     }
