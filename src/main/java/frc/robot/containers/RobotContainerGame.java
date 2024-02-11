@@ -9,7 +9,12 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Robot;
+import frc.robot.commands.Arm.IntakePosition;
+import frc.robot.commands.Arm.ShootPosition;
 import frc.robot.commands.Drive.TeleopSwerve;
+import frc.robot.commands.Intake.IntakeNote;
+import frc.robot.commands.Shooter.IndexNote;
+import frc.robot.commands.Shooter.ShootNote;
 import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
@@ -41,6 +46,16 @@ public class RobotContainerGame implements RobotContainer {
     private final Intake i_Intake = new Intake();
     private final Shooter s_Shooter = new Shooter();
 
+    // commands
+
+    private final IntakePosition armToIntake = new IntakePosition(a_Arm);
+    private final ShootPosition armToShoot = new ShootPosition(a_Arm);
+
+    private final IntakeNote intakeNote = new IntakeNote(i_Intake);
+
+    private final IndexNote indexNote = new IndexNote(s_Shooter);
+    private final ShootNote shootNote = new ShootNote(s_Shooter);
+
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerGame() {
@@ -67,7 +82,7 @@ public class RobotContainerGame implements RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroHeading));
-        //intake.onTrue();
+        intake.onTrue(new SequentialCommandGroup(armToIntake, new ParallelDeadlineGroup(indexNote, intakeNote)));
         
     }
 
