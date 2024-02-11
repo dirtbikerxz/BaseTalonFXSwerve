@@ -14,11 +14,11 @@ public class ModuleConstants {
     public final double angleKP;
     public final double angleKI;
     public final double angleKD;
-    public final InvertedValue driveMotorInvert;
-    public final InvertedValue angleMotorInvert;
+    public final boolean driveMotorInvert;
+    public final boolean angleMotorInvert;
     public final SensorDirectionValue cancoderInvert;
 
-    public ModuleConstants(double wheelDiameter, double angleGearRatio, double driveGearRatio, double angleKP, double angleKI, double angleKD, InvertedValue driveMotorInvert, InvertedValue angleMotorInvert, SensorDirectionValue cancoderInvert){
+    public ModuleConstants(double wheelDiameter, double angleGearRatio, double driveGearRatio, double angleKP, double angleKI, double angleKD, boolean driveMotorInvert, boolean angleMotorInvert, SensorDirectionValue cancoderInvert){
         this.wheelDiameter = wheelDiameter;
         this.wheelCircumference = wheelDiameter * Math.PI;
         this.angleGearRatio = angleGearRatio;
@@ -33,71 +33,71 @@ public class ModuleConstants {
 
     /** Swerve Drive Specialities */
     public static final class SDS {
-    
+
         /** MK4i Module*/
         public static final class MK4i{
             /** Swerve Drive Specialties - MK4i Module (Double Falcon 500)*/
-            public static final ModuleConstants DoubleFalcon500(double driveGearRatio){
+            public static ModuleConstants DoubleFalcon500(double driveGearRatio){
                 double wheelDiameter = Units.inchesToMeters(4.0);
-        
-                /** (150 / 7) : 1 */
+
+                // (150 / 7) : 1
                 double angleGearRatio = ((150.0 / 7.0) / 1.0);
         
                 double angleKP = 100.0;
                 double angleKI = 0.0;
                 double angleKD = 0.0;
         
-                InvertedValue driveMotorInvert = InvertedValue.CounterClockwise_Positive;
-                InvertedValue angleMotorInvert = InvertedValue.Clockwise_Positive;
+                boolean driveMotorInvert = false;//InvertedValue.CounterClockwise_Positive;
+                boolean angleMotorInvert = false;//InvertedValue.Clockwise_Positive;
                 SensorDirectionValue cancoderInvert = SensorDirectionValue.CounterClockwise_Positive;
                 return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
             }
 
-            public static final ModuleConstants DoubleNeo(double driveGearRatio){
+            public static ModuleConstants DoubleNeo(double driveGearRatio){
                 double wheelDiameter = Units.inchesToMeters(4.0);
         
-                /** (150 / 7) : 1 */
+                // (150 / 7) : 1
                 double angleGearRatio = ((150.0 / 7.0) / 1.0);
         
                 double angleKP = 0.3;
                 double angleKI = 0.0;
                 double angleKD = 0.0;
         
-                InvertedValue driveMotorInvert = InvertedValue.CounterClockwise_Positive;
-                InvertedValue angleMotorInvert = InvertedValue.Clockwise_Positive;
+                boolean driveMotorInvert = false;//InvertedValue.CounterClockwise_Positive;
+                boolean angleMotorInvert = false;//InvertedValue.Clockwise_Positive;
                 SensorDirectionValue cancoderInvert = SensorDirectionValue.CounterClockwise_Positive;
                 return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
             }
 
             /** Swerve Drive Specialties - MK4i Module (Kraken X60)*/
-            public static final ModuleConstants DoubleKrakenX60(double driveGearRatio){
+            public static ModuleConstants DoubleKrakenX60(double driveGearRatio){
                 double wheelDiameter = Units.inchesToMeters(4.0);
         
-                /** (150 / 7) : 1 */
+                // (150 / 7) : 1
                 double angleGearRatio = ((150.0 / 7.0) / 1.0);
         
                 double angleKP = 1.0;
                 double angleKI = 0.0;
                 double angleKD = 0.0;
-        
-                InvertedValue driveMotorInvert = InvertedValue.CounterClockwise_Positive;
-                InvertedValue angleMotorInvert = InvertedValue.Clockwise_Positive;
+
+                boolean driveMotorInvert = false;//InvertedValue.CounterClockwise_Positive;
+                boolean angleMotorInvert = false;//InvertedValue.Clockwise_Positive;
                 SensorDirectionValue cancoderInvert = SensorDirectionValue.CounterClockwise_Positive;
                 return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
             }
 
-            public static final ModuleConstants KrakenFalcon(double driveGearRatio){
+            public static ModuleConstants KrakenFalcon(double driveGearRatio){
                 double wheelDiameter = Units.inchesToMeters(4.0);
 
-                /** (150 / 7) : 1 */
-                double angleGearRatio = ((150.0 / 7.0) / 1.0);
+                // (150 / 7) : 1
+                double angleGearRatio = ((150.0 / 7.0));
 
                 double angleKP = 100.0;
                 double angleKI = 0.0;
                 double angleKD = 0.0;
 
-                InvertedValue driveMotorInvert = InvertedValue.CounterClockwise_Positive;
-                InvertedValue angleMotorInvert = InvertedValue.Clockwise_Positive;
+                boolean driveMotorInvert = false;//InvertedValue.CounterClockwise_Positive;
+                boolean angleMotorInvert = false;//InvertedValue.Clockwise_Positive;
                 SensorDirectionValue cancoderInvert = SensorDirectionValue.CounterClockwise_Positive;
                 return new ModuleConstants(wheelDiameter, angleGearRatio, driveGearRatio, angleKP, angleKI, angleKD, driveMotorInvert, angleMotorInvert, cancoderInvert);
             }

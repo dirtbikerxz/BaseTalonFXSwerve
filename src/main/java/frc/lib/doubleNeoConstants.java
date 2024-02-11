@@ -43,8 +43,8 @@ public class doubleNeoConstants {
         public final static double angleGearRatio = anglemodule.angleGearRatio;
 
         /* Motor Inverts */
-        public final static InvertedValue angleMotorInvert = anglemodule.angleMotorInvert;
-        public final static InvertedValue driveMotorInvert = drivemodule.driveMotorInvert;
+        public final static boolean angleMotorInvert = anglemodule.angleMotorInvert;
+        public final static boolean driveMotorInvert = drivemodule.driveMotorInvert;
 
         /* Angle Encoder Invert */
         public final static SensorDirectionValue cancoderInvert = anglemodule.cancoderInvert;
