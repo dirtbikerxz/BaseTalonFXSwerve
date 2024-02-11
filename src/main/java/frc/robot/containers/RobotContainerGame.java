@@ -5,13 +5,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Robot;
-import frc.robot.commands.*;
+import frc.robot.commands.Drive.TeleopSwerve;
 import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
@@ -34,11 +32,15 @@ public class RobotContainerGame implements RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton intake = new JoystickButton(driver, XboxController.Axis.kLeftTrigger.value);
+    private final JoystickButton shoot = new JoystickButton(driver, XboxController.Axis.kRightTrigger.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-    private final Intake m_Intake = new Intake();
+    private final Arm a_Arm = new Arm();
+    private final Intake i_Intake = new Intake();
+    private final Shooter s_Shooter = new Shooter();
+
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerGame() {
@@ -65,7 +67,7 @@ public class RobotContainerGame implements RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroHeading));
-        intake.onTrue(new InstantCommand(m_Intake::doIntake)).onFalse(new InstantCommand(m_Intake::stop));
+        //intake.onTrue();
         
     }
 

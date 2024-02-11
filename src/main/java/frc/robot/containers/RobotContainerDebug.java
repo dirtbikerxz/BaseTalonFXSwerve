@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Robot;
-import frc.robot.commands.SwerveAssignSpeed;
-import frc.robot.commands.SwerveAssignSteer;
 import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
@@ -46,8 +44,8 @@ public class RobotContainerDebug implements RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
 
-        Command testCommand = makeSteeringTestCommand();
-        commandDrive.onTrue(testCommand);
+        //Command testCommand = makeSteeringTestCommand();
+        //commandDrive.onTrue(testCommand);
 //        commandSteer.onTrue(new SwerveAssignSteer(motorTest));
 //        commandShoot.onTrue(new ShooterAssignPower(mShooter, 0.70));
     }
@@ -64,26 +62,26 @@ public class RobotContainerDebug implements RobotContainer {
         return new InstantCommand(() -> {});
     }
 
-    public Command makeDriveTestCommand() {
-        return new SequentialCommandGroup(
-                new SwerveAssignSpeed(motorTest, 0, 0.5).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 1, 0.5).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 2, 0.5).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 3, 0.5).withTimeout(2.0),
-
-                new SwerveAssignSpeed(motorTest, 0, 0).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 1, 0).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 2, 0).withTimeout(2.0),
-                new SwerveAssignSpeed(motorTest, 3, 0).withTimeout(2.0)
-        );
-    }
-
-    public Command makeSteeringTestCommand() {
-        return new SequentialCommandGroup(
-                new SwerveAssignSteer(motorTest, 0, 0.5).withTimeout(2.0),
-                new SwerveAssignSteer(motorTest, 1, 0.5).withTimeout(2.0),
-                new SwerveAssignSteer(motorTest, 2, 0.5).withTimeout(2.0),
-                new SwerveAssignSteer(motorTest, 3, 0.5).withTimeout(2.0)
-        );
-    }
+//    public Command makeDriveTestCommand() {
+//        return new SequentialCommandGroup(
+//                new SwerveAssignSpeed(motorTest, 0, 0.5).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 1, 0.5).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 2, 0.5).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 3, 0.5).withTimeout(2.0),
+//
+//                new SwerveAssignSpeed(motorTest, 0, 0).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 1, 0).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 2, 0).withTimeout(2.0),
+//                new SwerveAssignSpeed(motorTest, 3, 0).withTimeout(2.0)
+//        );
+//    }
+//
+//    public Command makeSteeringTestCommand() {
+//        return new SequentialCommandGroup(
+//                new SwerveAssignSteer(motorTest, 0, 0.5).withTimeout(2.0),
+//                new SwerveAssignSteer(motorTest, 1, 0.5).withTimeout(2.0),
+//                new SwerveAssignSteer(motorTest, 2, 0.5).withTimeout(2.0),
+//                new SwerveAssignSteer(motorTest, 3, 0.5).withTimeout(2.0)
+//        );
+//    }
 }
