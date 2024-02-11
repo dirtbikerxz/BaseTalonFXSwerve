@@ -83,6 +83,7 @@ public class RobotContainerGame implements RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroHeading));
         intake.onTrue(new SequentialCommandGroup(armToIntake, new ParallelDeadlineGroup(indexNote, intakeNote)));
+        shoot.onTrue(new SequentialCommandGroup(armToShoot, shootNote));
         
     }
 

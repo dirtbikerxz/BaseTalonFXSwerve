@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.lib.Constants;
 import frc.lib.doubleNeoConstants;
 import frc.robot.interfaces.SwerveModule;
 import frc.robot.swervemodules.SwerveModuleDoubleNeo;
@@ -31,10 +32,10 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve() {
         this(new SwerveModule[]{
-                new SwerveModuleKrakenFalcon(doubleNeoConstants.Swerve.Mod0.constants, 0),
-                new SwerveModuleKrakenFalcon(doubleNeoConstants.Swerve.Mod1.constants, 1),
-                new SwerveModuleKrakenFalcon(doubleNeoConstants.Swerve.Mod2.constants, 2),
-                new SwerveModuleKrakenFalcon(doubleNeoConstants.Swerve.Mod3.constants, 3)
+                new SwerveModuleKrakenFalcon(Constants.Swerve.Mod0.constants, 0),
+                new SwerveModuleKrakenFalcon(Constants.Swerve.Mod1.constants, 1),
+                new SwerveModuleKrakenFalcon(Constants.Swerve.Mod2.constants, 2),
+                new SwerveModuleKrakenFalcon(Constants.Swerve.Mod3.constants, 3)
         });
     }
 

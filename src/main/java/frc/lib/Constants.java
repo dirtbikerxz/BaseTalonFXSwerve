@@ -1,20 +1,6 @@
 package frc.lib;
 
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
-
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.I2C;
-import frc.lib.ModuleConstants;
-import frc.lib.SwerveModuleConstants;
-
-public final class Constants {
+public final class Constants extends doubleNeoConstants{
 
 
     public static final class Intake {
@@ -51,4 +37,6 @@ public final class Constants {
         public static final double shooterIntakeSpeed = 0.8;
         public static final double shooterSpeed = 0.8;
     }
+
+
 }

@@ -12,83 +12,84 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.ModuleConstants;
 import frc.lib.SwerveModuleConstants;
 
-public final class doubleNeoConstants {
-    public static final double stickDeadband = 0.1;
+public class doubleNeoConstants {
+    public static double stickDeadband = 0.1;
+
 
     public static final class Swerve {
-        public static final int pigeonID = 30;
+        public final static int pigeonID = 30;
 
-        public static final ModuleConstants drivemodule =  //TODO: This must be tuned to specific robot
-                ModuleConstants.SDS.MK4i.DoubleFalcon500(ModuleConstants.SDS.MK4i.driveRatio.L1);
+        public  final static ModuleConstants drivemodule =  //TODO: This must be tuned to specific robot
+                ModuleConstants.SDS.MK4i.DoubleFalcon500(ModuleConstants.SDS.MK4i.driveRatio.L1and16t);
 
-        public static final ModuleConstants anglemodule =  //TODO: This must be tuned to specific robot
-                ModuleConstants.SDS.MK4i.DoubleFalcon500(ModuleConstants.SDS.MK4i.driveRatio.L1);
+        public  final static ModuleConstants anglemodule =  //TODO: This must be tuned to specific robot
+                ModuleConstants.SDS.MK4i.DoubleFalcon500(ModuleConstants.SDS.MK4i.driveRatio.L1and16t);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(20.75); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(20.75); //TODO: This must be tuned to specific robot
-        public static final double wheelCircumference = drivemodule.wheelCircumference;
+        public final static double trackWidth = Units.inchesToMeters(20.75); //TODO: This must be tuned to specific robot
+        public final static double wheelBase = Units.inchesToMeters(20.75); //TODO: This must be tuned to specific robot
+        public final static double wheelCircumference = drivemodule.wheelCircumference;
 
         /* Swerve Kinematics
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
-        public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+        public final static SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
                 new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
                 new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
                 new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
                 new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
         /* Module Gear Ratios */
-        public static final double driveGearRatio = drivemodule.driveGearRatio;
-        public static final double angleGearRatio = anglemodule.angleGearRatio;
+        public final static double driveGearRatio = drivemodule.driveGearRatio;
+        public final static double angleGearRatio = anglemodule.angleGearRatio;
 
         /* Motor Inverts */
-        public static final InvertedValue angleMotorInvert = anglemodule.angleMotorInvert;
-        public static final InvertedValue driveMotorInvert = drivemodule.driveMotorInvert;
+        public final static InvertedValue angleMotorInvert = anglemodule.angleMotorInvert;
+        public final static InvertedValue driveMotorInvert = drivemodule.driveMotorInvert;
 
         /* Angle Encoder Invert */
-        public static final SensorDirectionValue cancoderInvert = anglemodule.cancoderInvert;
+        public final static SensorDirectionValue cancoderInvert = anglemodule.cancoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleCurrentLimit = 25;
-        public static final int angleCurrentThreshold = 40;
-        public static final double angleCurrentThresholdTime = 0.1;
-        public static final boolean angleEnableCurrentLimit = true;
+        public final static int angleCurrentLimit = 25;
+        public final static int angleCurrentThreshold = 40;
+        public final static double angleCurrentThresholdTime = 0.1;
+        public final static boolean angleEnableCurrentLimit = true;
 
-        public static final int driveCurrentLimit = 35;
-        public static final int driveCurrentThreshold = 60;
-        public static final double driveCurrentThresholdTime = 0.1;
-        public static final boolean driveEnableCurrentLimit = true;
+        public final static int driveCurrentLimit = 35;
+        public final static int driveCurrentThreshold = 60;
+        public final static double driveCurrentThresholdTime = 0.1;
+        public final static boolean driveEnableCurrentLimit = true;
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
-        public static final double openLoopRamp = 0.25;
-        public static final double closedLoopRamp = 0.0;
+        public final static double openLoopRamp = 0.25;
+        public final static double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
-        public static final double angleKP = anglemodule.angleKP;
-        public static final double angleKI = anglemodule.angleKI;
-        public static final double angleKD = anglemodule.angleKD;
+        public final static double angleKP = anglemodule.angleKP;
+        public final static double angleKI = anglemodule.angleKI;
+        public final static double angleKD = anglemodule.angleKD;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.12; //TODO: This must be tuned to specific robot
-        public static final double driveKI = 0.0;
-        public static final double driveKD = 0.0;
-        public static final double driveKF = 0.0;
+        public final static double driveKP = 0.12; //TODO: This must be tuned to specific robot
+        public final static double driveKI = 0.0;
+        public final static double driveKD = 0.0;
+        public final static double driveKF = 0.0;
 
         /* Drive Motor Characterization Values From SYSID */
-        public static final double driveKS = 0.32; //TODO: This must be tuned to specific robot
-        public static final double driveKV = 1.51;
-        public static final double driveKA = 0.27;
+        public final static double driveKS = 0.32; //TODO: This must be tuned to specific robot
+        public final static double driveKV = 1.51;
+        public final static double driveKA = 0.27;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public final static double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
+        public final static double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
-        public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
-        public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
+        public final static NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
+        public final static NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
@@ -103,26 +104,26 @@ public final class doubleNeoConstants {
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 7;
-            public static final int angleMotorID = 8;
-            public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.64);
-            public static final SwerveModuleConstants constants =
+            public final static int driveMotorID = 7;
+            public final static int angleMotorID = 8;
+            final static int canCoderID = 12;
+            final static Rotation2d angleOffset = Rotation2d.fromDegrees(0.64);
+            public final static SwerveModuleConstants constants =
                     new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 3;
-            public static final int angleMotorID = 4;
-            public static final int canCoderID = 10;
+        public static class Mod2 { //TODO: This must be tuned to specific robot
+            public static int driveMotorID = 3;
+            public static int angleMotorID = 4;
+            public static int canCoderID = 10;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.84);
             public static final SwerveModuleConstants constants =
                     new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { //TODO: This must be tuned to specific robot
+        public static class Mod3 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 11;
@@ -133,18 +134,18 @@ public final class doubleNeoConstants {
     }
 
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+        public static double kMaxSpeedMetersPerSecond = 3;
+        public static double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+        public static double kPXController = 1;
+        public static double kPYController = 1;
+        public static double kPThetaController = 1;
 
         /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        public static TrapezoidProfile.Constraints kThetaControllerConstraints =
                 new TrapezoidProfile.Constraints(
                         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
