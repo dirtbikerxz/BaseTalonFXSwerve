@@ -22,11 +22,11 @@ public final class Constants {
         public static final int pigeonID = 8;
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
-        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L1);
+        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(22.25);
-        public static final double wheelBase = Units.inchesToMeters(22.25); 
+        public static final double trackWidth = Units.inchesToMeters(24.5);
+        public static final double wheelBase = Units.inchesToMeters(24.5); 
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
