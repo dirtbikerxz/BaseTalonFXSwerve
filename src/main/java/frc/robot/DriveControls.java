@@ -13,7 +13,7 @@ public class DriveControls {
     public final JoystickButton zeroGyro = new JoystickButton(joystick1, 10);
     public final JoystickButton robotCentric = new JoystickButton(joystick0, 7);    
 
-    public double getForward() { return -joystick0.getRawAxis(1); }
-    public double getStrafe() { return -joystick0.getRawAxis(0); }
-    public double getRotation() { return -joystick1.getRawAxis(0); }  
-  }
+    public double getForward() { return -joystick0.getY(); }
+    public double getStrafe() { return -joystick0.getX(); }
+    public double getRotation() { return -joystick1.getX(); }  
+}
