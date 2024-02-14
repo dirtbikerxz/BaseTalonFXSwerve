@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.kauailabs.navx.frc.AHRS;
 
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -26,6 +25,11 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         navxGyro = new AHRS(SPI.Port.kMXP);
         navxGyro.zeroYaw();
+        /*
+        * NOTE: idk if this is going counter clockwise positive, but it's supposed to. 
+        * We also might have to wrap the angle b/c the old 2020 swerve code does that. 
+        * I'm not sure yet tho.
+        */
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Mod0.constants),
@@ -116,6 +120,8 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getGyroYaw(), getModulePositions());
+
+        SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
