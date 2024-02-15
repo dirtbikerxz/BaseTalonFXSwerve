@@ -29,8 +29,8 @@ public class LockAprilTag extends Command {
     public void execute() {
         /* Get Values, Deadband*/
 
-        Pose2d robotPose = s_Swerve.getPose();
-        Pose3d targetPose = s_Eyes.getTargetPose();
+        Pose2d robotPose = s_Swerve.m_poseEstimator.getEstimatedPosition();
+        Pose3d targetPose = s_Swerve.getTargetPose();
 
         double robotX = robotPose.getX();
         double robotY = robotPose.getY();

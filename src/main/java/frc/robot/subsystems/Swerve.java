@@ -19,12 +19,15 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -67,7 +70,7 @@ public class Swerve extends SubsystemBase {
            VecBuilder.fill(0.1, 0.1, 0.1),
            VecBuilder.fill(1.5, 1.5, 1.5)
         );
-        
+
     }
 
 
@@ -148,8 +151,44 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public Pose3d getTargetPose() {
+
+        Pose3d pose;
+
+        if(DriverStation.getAlliance().get() == Alliance.Blue) {
+
+            pose = new Pose3d(Constants.Positions.speakerBlueX, Constants.Positions.speakerBlueY, 0, new Rotation3d(0,0,Constants.Positions.speakerBlueR));
+
+        } else {
+
+            pose = new Pose3d(Constants.Positions.speakerRedX, Constants.Positions.speakerRedY, 0, new Rotation3d(0,0,Constants.Positions.speakerRedR));
+
+        }
+        
+        return pose;
+
+    }
+
+    public double getDistanceFromTarget() {
+
+        double distance;
+
+        if(DriverStation.getAlliance().get() == Alliance.Blue) {
+
+            distance = Math.sqrt(Math.pow((Constants.Positions.speakerBlueX - m_poseEstimator.getEstimatedPosition().getX()), 2) - Math.pow((Constants.Positions.speakerBlueY - m_poseEstimator.getEstimatedPosition().getY()), 2));
+
+        } else {
+
+            distance = Math.sqrt(Math.pow((Constants.Positions.speakerRedX - m_poseEstimator.getEstimatedPosition().getX()), 2) - Math.pow((Constants.Positions.speakerRedY - m_poseEstimator.getEstimatedPosition().getY()), 2));
+
+        }
+
+        return distance;
+    }
+
     @Override
     public void periodic(){
+
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
         //setPose(eyes.getRobotPose());

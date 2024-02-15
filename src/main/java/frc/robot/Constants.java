@@ -144,4 +144,16 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public static final class Positions {
+
+        public static final double speakerBlueX = 0;
+        public static final double speakerBlueY = 5.5;
+        public static final double speakerBlueR = 0;
+
+        public static final double speakerRedX = 16.5;
+        public static final double speakerRedY = 5.5;
+        public static final double speakerRedR = 180;
+
+    }
 }
