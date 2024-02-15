@@ -23,7 +23,7 @@ public class Swerve extends SubsystemBase {
     public AHRS navxGyro;
 
     public Swerve() {
-        navxGyro = new AHRS(SPI.Port.kMXP);
+        navxGyro = new AHRS();
         navxGyro.zeroYaw();
         /*
         * NOTE: idk if this is going counter clockwise positive, but it's supposed to. 
@@ -121,7 +121,7 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
-        SmartDashboard.putNumber("Gyro Angle", getGyroYaw());
+        SmartDashboard.putNumber("Gyro Angle", getGyroYaw().getDegrees());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
