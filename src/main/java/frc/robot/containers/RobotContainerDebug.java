@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Robot;
+import frc.robot.commands.*;
 import frc.robot.interfaces.RobotContainer;
 import frc.robot.subsystems.*;
 
@@ -23,11 +23,10 @@ public class RobotContainerDebug implements RobotContainer {
     private final Joystick driver = new Joystick(0);
     private final JoystickButton commandDrive = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton commandSteer = new JoystickButton(driver, XboxController.Button.kB.value);
-//    private final JoystickButton commandShoot = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
-    private final SwerveTest motorTest = new SwerveTest();
-//    private final Shooter mShooter = new Shooter(3, 4);
+//    private final Swerve mSwerve = new Swerve();
+    private final SwerveTest mSwerveTest = new SwerveTest();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerDebug() {
@@ -44,8 +43,8 @@ public class RobotContainerDebug implements RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
 
-        //Command testCommand = makeSteeringTestCommand();
-        //commandDrive.onTrue(testCommand);
+        commandDrive.onTrue(new DiagnoseDrive(mSwerveTest));
+        commandSteer.onTrue(new DiagnoseSteering(mSwerveTest));
 //        commandSteer.onTrue(new SwerveAssignSteer(motorTest));
 //        commandShoot.onTrue(new ShooterAssignPower(mShooter, 0.70));
     }
@@ -64,24 +63,24 @@ public class RobotContainerDebug implements RobotContainer {
 
 //    public Command makeDriveTestCommand() {
 //        return new SequentialCommandGroup(
-//                new SwerveAssignSpeed(motorTest, 0, 0.5).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 1, 0.5).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 2, 0.5).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 3, 0.5).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 0, 0.5).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 1, 0.5).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 2, 0.5).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 3, 0.5).withTimeout(2.0),
 //
-//                new SwerveAssignSpeed(motorTest, 0, 0).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 1, 0).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 2, 0).withTimeout(2.0),
-//                new SwerveAssignSpeed(motorTest, 3, 0).withTimeout(2.0)
+//                new TestSwerveDriveMotors(motorTest, 0, 0).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 1, 0).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 2, 0).withTimeout(2.0),
+//                new TestSwerveDriveMotors(motorTest, 3, 0).withTimeout(2.0)
 //        );
 //    }
-//
+
 //    public Command makeSteeringTestCommand() {
 //        return new SequentialCommandGroup(
-//                new SwerveAssignSteer(motorTest, 0, 0.5).withTimeout(2.0),
-//                new SwerveAssignSteer(motorTest, 1, 0.5).withTimeout(2.0),
-//                new SwerveAssignSteer(motorTest, 2, 0.5).withTimeout(2.0),
-//                new SwerveAssignSteer(motorTest, 3, 0.5).withTimeout(2.0)
+//                new TestSwerveSteerMotors(motorTest, 0, 0.5).withTimeout(2.0),
+//                new TestSwerveSteerMotors(motorTest, 1, 0.5).withTimeout(2.0),
+//                new TestSwerveSteerMotors(motorTest, 2, 0.5).withTimeout(2.0),
+//                new TestSwerveSteerMotors(motorTest, 3, 0.5).withTimeout(2.0)
 //        );
 //    }
 }
