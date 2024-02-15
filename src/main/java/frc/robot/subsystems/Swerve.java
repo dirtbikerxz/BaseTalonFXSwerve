@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
+import frc.robot.LimelightHelpers.LimelightTarget_Detector;
 import frc.robot.Constants;
-
+import frc.robot.LimelightHelpers;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -11,10 +12,20 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,9 +33,15 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    public Eyes eyes;
+    public StructPublisher<Pose2d> publisher;
+    public StructArrayPublisher<SwerveModuleState> swerveKinematicsPublisher;
+
+    public SwerveDrivePoseEstimator m_poseEstimator;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        eyes = new Eyes();
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
@@ -36,7 +53,24 @@ public class Swerve extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+
+        publisher = NetworkTableInstance.getDefault().getStructTopic("/MyPose", Pose2d.struct).publish();
+
+        swerveKinematicsPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("/SwerveModuleStates", SwerveModuleState.struct).publish();
+
+        m_poseEstimator =
+        new SwerveDrivePoseEstimator(
+           Constants.Swerve.swerveKinematics,
+           gyro.getRotation2d(),
+           getModulePositions(),
+           new Pose2d(),
+           VecBuilder.fill(0.1, 0.1, 0.1),
+           VecBuilder.fill(1.5, 1.5, 1.5)
+        );
+        
     }
+
+
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
@@ -118,10 +152,24 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
+        //setPose(eyes.getRobotPose());
+
+        m_poseEstimator.update(getGyroYaw(), getModulePositions());
+
+        if (LimelightHelpers.getTV("") == true) {
+            m_poseEstimator.addVisionMeasurement(eyes.getRobotPose(), Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("")/1000.0) - (LimelightHelpers.getLatency_Capture("")/1000.0));
+        }
+
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+
+        SmartDashboard.putNumber("Robot X", swerveOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Robot Y", swerveOdometry.getPoseMeters().getY());
+
+        publisher.set(swerveOdometry.getPoseMeters());
+        swerveKinematicsPublisher.set(getModuleStates());
     }
 }
