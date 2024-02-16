@@ -1,5 +1,8 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -67,5 +70,11 @@ public class RobotContainer {
 
     public Command getIntakeCommand() {
         return new IntakeCommand(s_Intake);
+    }
+
+    public Command getAutoCommand() {
+        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("NewPath");
+
+        return AutoBuilder.followPath(path);
     }
 }
