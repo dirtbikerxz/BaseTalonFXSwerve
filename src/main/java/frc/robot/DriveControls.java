@@ -10,7 +10,7 @@ public class DriveControls {
     private final Joystick joystick2 = new Joystick(4); //Right (I know it's messed up to order them like that idk why it's that way)
 
     /* Driver Buttons */
-    public final JoystickButton zeroGyro = new JoystickButton(joystick1, 10);
+    public final JoystickButton zeroGyro = new JoystickButton(joystick0, 10);
     public final JoystickButton robotCentric = new JoystickButton(joystick0, 7);    
 
     public double getForward() { return -joystick0.getY(); }
