@@ -207,7 +207,16 @@ public class Swerve extends SubsystemBase {
 
         SmartDashboard.putNumber("angle", angle);
 
-        return -angle;
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+
+            angle = -angle;
+
+        } else {
+
+            angle = angle + 180;
+        }
+
+        return angle;
     }
 
     @Override
