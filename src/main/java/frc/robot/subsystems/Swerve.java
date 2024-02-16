@@ -205,18 +205,15 @@ public class Swerve extends SubsystemBase {
 
         double angle =  (Math.atan((targetY - robotY) / (targetX - robotX)) * (180 / Math.PI));
 
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-
-            angle = -angle;
-
-        } else {
+        if (robotX > targetX) {
 
             angle = angle + 180;
+
         }
 
         SmartDashboard.putNumber("angle", angle);
 
-        return angle;
+        return -angle;
     }
 
     @Override
