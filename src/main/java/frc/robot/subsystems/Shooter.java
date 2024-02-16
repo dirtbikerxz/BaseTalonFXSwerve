@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-// import com.ctre.phoenix6.configs.Pigeon2Configuration;
-// import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
