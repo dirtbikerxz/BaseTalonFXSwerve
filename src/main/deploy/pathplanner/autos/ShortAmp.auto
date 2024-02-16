@@ -46,6 +46,12 @@
           "data": {
             "name": "autonShootCommand"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
         }
       ]
     }
