@@ -23,15 +23,17 @@ public class RobotContainerDebug implements RobotContainer {
     private final Joystick driver = new Joystick(0);
     private final JoystickButton commandDrive = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton commandSteer = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton commandSwerve = new JoystickButton(driver,XboxController.Button.kY.value);
 
     /* Subsystems */
-//    private final Swerve mSwerve = new Swerve();
-    private final SwerveTest mSwerveTest = new SwerveTest();
+    private final Swerve mSwerve = new Swerve();
+//    private final SwerveTest mSwerveTest = new SwerveTest();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainerDebug() {
         // Configure the button bindings
         configureButtonBindings();
+        System.out.println("Initialized DebugRobot");
     }
 
     /**
@@ -43,8 +45,9 @@ public class RobotContainerDebug implements RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
 
-        commandDrive.onTrue(new DiagnoseDrive(mSwerveTest));
-        commandSteer.onTrue(new DiagnoseSteering(mSwerveTest));
+        commandSwerve.onTrue(new DiagnoseSwerve(mSwerve));
+//        commandDrive.onTrue(new DiagnoseDrive(mSwerveTest));
+//        commandSteer.onTrue(new DiagnoseSteering(mSwerveTest));
 //        commandSteer.onTrue(new SwerveAssignSteer(motorTest));
 //        commandShoot.onTrue(new ShooterAssignPower(mShooter, 0.70));
     }

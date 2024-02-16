@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,6 +11,7 @@ import frc.lib.CTREConfigs;
 import frc.robot.containers.RobotContainerDebug;
 import frc.robot.containers.RobotContainerGame;
 import frc.robot.interfaces.RobotContainer;
+import org.littletonrobotics.junction.LoggedRobot;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,7 +19,7 @@ import frc.robot.interfaces.RobotContainer;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     public static final CTREConfigs ctreConfigs = new CTREConfigs();
     private Command m_autonomousCommand;
     private RobotContainer mRobotContainer;
