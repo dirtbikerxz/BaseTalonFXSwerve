@@ -29,6 +29,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final Shooter s_Shooter = new Shooter();
     private final Intake s_Intake = new Intake();
+    private final Hang s_Hang = new Hang();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -44,6 +45,7 @@ public class RobotContainer {
         );
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
+        s_Hang.setDefaultCommand(new HangCommand(s_Hang))
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -57,6 +59,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        hangExtend.onTrue(new InstantCommand(() -> s_Hang.extendHang()));
+        hangRetract.onTrue(new InstantCommand(() -> s_Hang.retractHang()));
     }
 
     /**

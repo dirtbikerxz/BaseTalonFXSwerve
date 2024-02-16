@@ -13,7 +13,7 @@ This code was designed with Swerve Drive Specialties MK3, MK4, MK4i, and WCP Swe
 ----
 The following things must be adjusted to your robot and module's specific constants in the Constants.java file (all distance units must be in meters, and rotation units in radians):</br>
 These instructions are mostly followable from Step 
-1. Gyro Settings: ```pigeonID```(ensure that the gyro rotation is CCW+ (Counter Clockwise Positive)
+1. Gyro Settings: ```pigeonID```(ensure that the gyro rotation is CCW+ (Counter Clockwise Positive)) NOTE: we are currently modifying the code to work with the Navx2 MXP. This should be obselete now.
 2. ```chosenModule```: 
 <br><b><ins>Note: Not every module's configs are tested. See the note at the top</b></ins>
 <br>If you are using a supported COTS Module, set the module and drive ratio you are using here. 
