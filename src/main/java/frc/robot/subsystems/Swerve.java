@@ -212,6 +212,7 @@ public class Swerve extends SubsystemBase {
         }
 
         SmartDashboard.putNumber("angle", angle);
+        SmartDashboard.putNumber(" inverted angle", -angle);
 
         return -angle;
     }
