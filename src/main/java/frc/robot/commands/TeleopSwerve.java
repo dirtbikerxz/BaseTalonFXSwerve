@@ -44,14 +44,5 @@ public class TeleopSwerve extends Command {
         );
     }
 
-    @Override
-    public void initialize() {
-        s_Swerve.startMonitoring();
-    }
-
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) {
-        s_Swerve.stopMonitoring();
-    }
+    
 }

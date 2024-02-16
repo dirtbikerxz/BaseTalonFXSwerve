@@ -72,9 +72,16 @@ public class Swerve extends SubsystemBase {
         this
         );
     }
-
+    
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         fieldRelative = true; // TODO : Override
+        if (translation.getX() == 0 && 
+            translation.getY() == 0 &&
+            rotation == 0){
+            stopMonitoring();
+        } else {
+            startMonitoring();
+        }
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
