@@ -41,11 +41,12 @@ public class LockAprilTag extends Command {
         double angle = Math.atan((targetY - robotY) / (targetX - robotX));
 
         /* Drive */
-        s_Swerve.drive(
-            new Translation2d(0, 0).times(Constants.Swerve.maxSpeed), 
-            angle, 
-            true, 
-            true
-        );
+        
     }
+
+      // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+   return false; 
+  }
 }
