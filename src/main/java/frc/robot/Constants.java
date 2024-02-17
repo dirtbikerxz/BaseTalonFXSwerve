@@ -154,4 +154,9 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public static final class MaxRPMConstants {
+        public static final int maxRPMNeo550 = 11000;
+        public static final int maxRPMNeo = 5676;
+    }
 }
