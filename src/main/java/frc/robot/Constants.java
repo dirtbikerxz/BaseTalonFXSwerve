@@ -31,8 +31,11 @@ public final class Constants {
     public static final double AUTO_ROTATE_DEADBAND = 5.0;
 
     public static final class Swerve {
+
         public static final double maxEncoderVoltage = 5;
         public static final int pigeonID = 8;
+        public static final double gyroOffset = 0;
+
 
         public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
@@ -74,7 +77,7 @@ public final class Constants {
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
-        public static final double openLoopRamp = 0.25;
+        public static final double openLoopRamp = 0.0;
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
