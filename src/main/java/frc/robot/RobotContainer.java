@@ -45,7 +45,7 @@ public class RobotContainer {
         );
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
-        s_Hang.setDefaultCommand(new HangCommand(s_Hang));
+        //s_Hang.setDefaultCommand(new HangCommand(s_Hang));
         // Configure the button bindings
         configureButtonBindings();
     }

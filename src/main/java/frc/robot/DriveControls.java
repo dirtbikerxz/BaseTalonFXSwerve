@@ -18,7 +18,7 @@ public class DriveControls {
     public final JoystickButton runIntake = new JoystickButton(joystick2, 8);
     public final JoystickButton reverseIntake = new JoystickButton(joystick2, 7);
 
-    public double getForward() { return -joystick0.getY(); }
-    public double getStrafe() { return -joystick0.getX(); }
+    public double getForward() { return joystick0.getY(); } //Deleted a negative symbol to flip directions
+    public double getStrafe() { return joystick0.getX(); } //^^
     public double getRotation() { return -joystick1.getX(); }  
 }
