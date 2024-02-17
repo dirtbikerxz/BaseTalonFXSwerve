@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -42,10 +43,14 @@ public class Swerve extends SubsystemBase {
     public StructPublisher<Pose2d> estimatedRobotPosePublisher;
 
     public SwerveDrivePoseEstimator m_poseEstimator;
+    public InterpolatingDoubleTreeMap angleInterpolation;
 
     public Swerve() {
+
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         eyes = new Eyes();
+        angleInterpolation = new InterpolatingDoubleTreeMap();
+
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
@@ -215,6 +220,19 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber(" inverted angle", -angle);
 
         return -angle;
+    }
+
+    
+    public double getShooterAngle() {
+
+        double distance = getDistanceFromTarget();
+
+        //TODO tune
+        angleInterpolation.put(0.0, 0.0);
+        angleInterpolation.put(1.0, 1.0);
+
+        return angleInterpolation.get(distance);
+
     }
 
     @Override
