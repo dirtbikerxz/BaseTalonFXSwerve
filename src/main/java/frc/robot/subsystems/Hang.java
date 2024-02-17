@@ -21,6 +21,7 @@ public class Hang extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Left Hang Current", leftHangController.getOutputCurrent());
+        SmartDashboard.putNumber("Right Hang Current", rightHangController.getOutputCurrent());
     }
 
     public void runHang(int input) {

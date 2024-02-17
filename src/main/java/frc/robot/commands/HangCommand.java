@@ -13,7 +13,7 @@ public class HangCommand extends Command {
   private final Hang m_subsystem;
 
   /**
-   * Creates a new ExampleCommand.
+   * 
    *
    * @param subsystem The subsystem used by this command.
    */
@@ -30,13 +30,13 @@ public class HangCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {  
-    m_subsystem.runHang(0); //TODO: figure out how to get the hang to run up and down depending on the button from this file
+    m_subsystem.stopHang(); //TODO: figure out how to get the hang to run up and down depending on the button from this file
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.stopHang();
+    //m_subsystem.stopHang();
   }
 
   // Returns true when the command should end.
