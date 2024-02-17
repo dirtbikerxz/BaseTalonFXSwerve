@@ -45,7 +45,7 @@ public class RobotContainer {
         );
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
-        s_Hang.setDefaultCommand(new HangCommand(s_Hang))
+        s_Hang.setDefaultCommand(new (s_Hang));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -58,9 +58,9 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-        hangExtend.onTrue(new InstantCommand(() -> s_Hang.extendHang()));
-        hangRetract.onTrue(new InstantCommand(() -> s_Hang.retractHang()));
+        controls.zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        controls.hangExtend.onTrue(new InstantCommand(() -> s_Hang.extendHang()));
+        controls.hangRetract.onTrue(new InstantCommand(() -> s_Hang.retractHang()));
     }
 
     /**
