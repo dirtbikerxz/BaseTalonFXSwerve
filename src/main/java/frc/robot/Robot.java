@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
     auto = new SendableChooser<>();
 
     auto.setDefaultOption("TestAuto", m_robotContainer.getAutoCommand());
+    auto.addOption("TestOption", m_robotContainer.getAutoCommand());
 
     SmartDashboard.putData("Auto Mode", auto);
   }

@@ -14,6 +14,7 @@ public class DriveControls {
     public final JoystickButton robotCentric = new JoystickButton(joystick0, 7);
     public final JoystickButton hangExtend = new JoystickButton(joystick1, 11);
     public final JoystickButton hangRetract = new JoystickButton(joystick1, 10);
+    public final JoystickButton hangNoLimits = new JoystickButton(joystick1, 9);
     public final JoystickButton activateShooter = new JoystickButton(joystick2, 9);
     public final JoystickButton runIntake = new JoystickButton(joystick2, 8);
     public final JoystickButton reverseIntake = new JoystickButton(joystick2, 7);
