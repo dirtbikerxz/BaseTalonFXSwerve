@@ -29,12 +29,14 @@ public class HangCommand extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {  }
+  public void execute() {  
+    m_subsystem.runHang(0); //TODO: figure out how to get the hang to run up and down depending on the button from this file
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.stopShooter();
+    m_subsystem.stopHang();
   }
 
   // Returns true when the command should end.

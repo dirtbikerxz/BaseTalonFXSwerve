@@ -59,8 +59,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons; the names should be self-explanitory */
         controls.zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-        controls.hangExtend.onTrue(new InstantCommand(() -> s_Hang.extendHang()));
-        controls.hangRetract.onTrue(new InstantCommand(() -> s_Hang.retractHang()));
+        //These buttons should proabably be recoded later??
+        controls.hangExtend.onTrue(new InstantCommand(() -> s_Hang.runHang(1)));
+        controls.hangRetract.onTrue(new InstantCommand(() -> s_Hang.runHang(-1)));
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));

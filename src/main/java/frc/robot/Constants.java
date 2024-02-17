@@ -31,7 +31,7 @@ public final class Constants {
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
             new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
             new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0))
+            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
         /* Module Gear Ratios */
         public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -143,7 +143,7 @@ public final class Constants {
 
     public static final class Hang {
         public static final int leftHangID = 0; //TODO: change to correct port #
-        public static final int leftHangID = 0; //TODO: change to correct port #
+        public static final int rightHangID = 0; //TODO: change to correct port #
 
         public static final double maxSpeed = .1;
     }

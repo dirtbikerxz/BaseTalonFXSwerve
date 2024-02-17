@@ -14,21 +14,17 @@ public class Hang extends SubsystemBase {
 
     public Hang() {
         leftHangController = new CANSparkMax(leftHangID, MotorType.kBrushless); 
-        leftHangController = new CANSparkMax(rightHangID, MotorType.kBrushless); 
+        rightHangController = new CANSparkMax(rightHangID, MotorType.kBrushless); 
+        hangSpeed = maxSpeed;
     }
 
     @Override
     public void periodic() {}
 
-    public void extendHang() {
+    public void runHang(int input) {
         //Positive is up on the right side and down on the left side
-        leftHangController.set(-maxSpeed);
-        rightHangController.set(maxSpeed);
-    }
-
-    public void retractHang() {
-        leftHangController.set(maxSpeed);
-        rightHangController.set(-maxSpeed);
+        leftHangController.set(-maxSpeed * input);
+        rightHangController.set(maxSpeed * input);
     }
 
     public void stopHang() {
