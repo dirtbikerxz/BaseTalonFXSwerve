@@ -8,7 +8,7 @@ import frc.robot.subsystems.Hang;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class HangCommand extends Command {
+public class HangCommandDown extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Hang m_subsystem;
 
@@ -17,7 +17,7 @@ public class HangCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public HangCommand(Hang subsystem) {
+  public HangCommandDown(Hang subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -30,13 +30,13 @@ public class HangCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {  
-    m_subsystem.stopHang(); //TODO: figure out how to get the hang to run up and down depending on the button from this file
+    m_subsystem.runHang(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //m_subsystem.stopHang();
+    m_subsystem.stopHang();
   }
 
   // Returns true when the command should end.

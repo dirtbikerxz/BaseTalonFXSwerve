@@ -25,8 +25,7 @@ public class Hang extends SubsystemBase {
     }
 
     public void runHang(int input) {
-        //Positive is up on the right side and down on the left side
-        leftHangController.set(-maxSpeed * input);
+        leftHangController.set(maxSpeed * input);
         rightHangController.set(maxSpeed * input);
     }
 

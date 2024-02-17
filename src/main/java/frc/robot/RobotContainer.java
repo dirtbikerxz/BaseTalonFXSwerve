@@ -47,7 +47,6 @@ public class RobotContainer {
         //this just constantly runs the intake and shooter for now:
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
-        s_Hang.setDefaultCommand(new IntakeCommand(s_Hang));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -62,8 +61,8 @@ public class RobotContainer {
         /* Driver Buttons; the names should be self-explanitory */
         controls.zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
         //These buttons should proabably be recoded later??
-        controls.hangExtend.whileTrue(new InstantCommand(() -> s_Hang.runHang(1)));
-        controls.hangRetract.whileTrue(new InstantCommand(() -> s_Hang.runHang(-1)));
+        controls.hangExtend.whileTrue(new HangCommandUp(s_Hang));
+        controls.hangRetract.whileTrue(new HangCommandDown(s_Hang));
 
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
