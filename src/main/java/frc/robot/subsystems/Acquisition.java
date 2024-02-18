@@ -93,7 +93,7 @@ topShaft = new PWMSparkMax(1);
         }
         if (!isIntakeRetracted() && isNoteInAcquisition()) {
             stopBoth();
-            //retractIntake();
+            retractIntake();
         }
         if (isIntakeRetracted() && !isNoteInAcquisition()) {
             stopBoth();
