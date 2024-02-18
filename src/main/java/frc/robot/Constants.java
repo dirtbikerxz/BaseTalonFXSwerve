@@ -17,6 +17,7 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 1;
+        public static final boolean UseFOC = false; //CHANGE IF PRO LICENSED TALONS OR CANIVORE
 
         public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
