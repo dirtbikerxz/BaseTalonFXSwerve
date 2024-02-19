@@ -6,6 +6,7 @@ public class autonShoot extends Command {
     
     @Override
     public void initialize() {
+        System.out.println("!!SHOOT NOTE!!");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -21,7 +22,7 @@ public class autonShoot extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

@@ -2,19 +2,31 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0073952979986165,
-      "y": 6.96452841527237
+      "x": 0.6884877930156866,
+      "y": 6.6456209102894395
     },
-    "rotation": 0
+    "rotation": 60.99187650063335
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "AmpP1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonAcquireCommand"
           }
         },
         {
@@ -24,15 +36,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "autonAmpCommand"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "AmpP3"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "autonAcquireCommand"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "AmpP4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
           }
         }
       ]
