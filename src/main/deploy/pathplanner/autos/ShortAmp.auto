@@ -24,15 +24,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ShortAmpP2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ShortAmpP2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
           }
         },
         {
@@ -45,12 +52,6 @@
           "type": "named",
           "data": {
             "name": "autonShootCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": []
           }
         }
       ]

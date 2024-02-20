@@ -5,18 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Acquisition;
 
 public class autonAcquire extends Command {
+  private final Acquisition m_acquisition;
   /** Creates a new autonAcquire. */
-  public autonAcquire() {
+  public autonAcquire(Acquisition subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+        m_acquisition = subsystem;
+        addRequirements(m_acquisition);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("!!ACQUIRE NOTE!!");
-
+      m_acquisition.deployIntake();
+      m_acquisition.runIntakeIn();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -26,11 +30,15 @@ public class autonAcquire extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_acquisition.retractIntake();
+    m_acquisition.stopBoth();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return
+    m_acquisition.isNoteInAcquisition();
   }
 }

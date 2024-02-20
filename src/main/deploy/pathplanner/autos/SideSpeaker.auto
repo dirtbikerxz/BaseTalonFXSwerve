@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "SideSpeakerP1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SideSpeakerP1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
           }
         },
         {

@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "AmpP1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpP1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
           }
         },
         {
@@ -42,15 +49,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "AmpP3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonAcquireCommand"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpP3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
           }
         },
         {
