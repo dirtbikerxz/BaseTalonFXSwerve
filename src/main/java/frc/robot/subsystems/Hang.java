@@ -13,11 +13,9 @@ public class Hang extends SubsystemBase {
     private final double hangSpeed;
     private double leftEncoder = 0;
     private double rightEncoder = 0;
-    private double leftUpperLimit = -51; //TODO: find limit
-    private double rightUpperLimit = -51; //TODO: find limit
-    private double leftLowerLimit = 0; //TODO: find limit
-    private double rightLowerLimit = 0; //TODO: find limit
-    private boolean limits = false; //set to 'true' once the limits are done
+    private double upperLimit = -51; 
+    private double lowerLimit = 0;
+    private boolean limits = true;
 
     public Hang() {
         leftHangController = new CANSparkMax(leftHangID, MotorType.kBrushless); 
@@ -36,7 +34,7 @@ public class Hang extends SubsystemBase {
     }
 
     public void runHang(int input) {    
-        if((leftEncoder > leftLowerLimit && rightEncoder > rightLowerLimit && leftEncoder < leftUpperLimit && rightEncoder < rightUpperLimit && limits) || !limits) {
+        if((leftEncoder > lowerLimit && rightEncoder > lowerLimit && leftEncoder < upperLimit && rightEncoder < upperLimit) && limits || !limits) {
             leftHangController.set(maxSpeed * input);
             rightHangController.set(maxSpeed * input);
         }
