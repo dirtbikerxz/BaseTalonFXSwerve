@@ -67,6 +67,7 @@ public class RobotContainer {
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
     }
 
     /**
