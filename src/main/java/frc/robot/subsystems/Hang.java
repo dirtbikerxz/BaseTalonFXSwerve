@@ -13,8 +13,8 @@ public class Hang extends SubsystemBase {
     private final double hangSpeed;
     private double leftEncoder = 0;
     private double rightEncoder = 0;
-    private double leftUpperLimit = 0; //TODO: find limit
-    private double rightUpperLimit = 0; //TODO: find limit
+    private double leftUpperLimit = -51; //TODO: find limit
+    private double rightUpperLimit = -51; //TODO: find limit
     private double leftLowerLimit = 0; //TODO: find limit
     private double rightLowerLimit = 0; //TODO: find limit
     private boolean limits = false; //set to 'true' once the limits are done
@@ -36,7 +36,7 @@ public class Hang extends SubsystemBase {
     }
 
     public void runHang(int input) {    
-        if(leftEncoder > leftLowerLimit && rightEncoder > rightLowerLimit && leftEncoder < leftUpperLimit && rightEncoder < rightUpperLimit && limits) {
+        if((leftEncoder > leftLowerLimit && rightEncoder > rightLowerLimit && leftEncoder < leftUpperLimit && rightEncoder < rightUpperLimit && limits) || !limits) {
             leftHangController.set(maxSpeed * input);
             rightHangController.set(maxSpeed * input);
         }
