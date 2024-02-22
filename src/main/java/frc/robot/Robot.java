@@ -64,7 +64,16 @@ public class Robot extends TimedRobot {
 
         // (alternatively) Record only DS control data
         DriverStation.startDataLog(DataLogManager.getLog(), false);
+
+        //Spamp dash stuff
+        SmartDashboard.putNumber("BL-RPM", RobotContainer.getInstance().m_spamp.defaultRPM);
+        SmartDashboard.putNumber("BR-RPM", RobotContainer.getInstance().m_spamp.defaultRPM);
+        SmartDashboard.putNumber("TL-RPM", RobotContainer.getInstance().m_spamp.defaultRPM);
+        SmartDashboard.putNumber("TR-RPM", RobotContainer.getInstance().m_spamp.defaultRPM);
+        SmartDashboard.putNumber("Top Shaft RPM", 120);
+        SmartDashboard.putNumber("Bottom Shaft RPM", 120);
     }
+
 
     /**
      * This function is called every robot packet, no matter the mode. Use this for
