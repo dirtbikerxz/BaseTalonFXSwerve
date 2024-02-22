@@ -82,7 +82,7 @@ public class Acquisition extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("isNoteInAquisition", isNoteInAcquisition());
-        SmartDashboard.putBoolean("Intake Retracted", isIntakeRetracted());
+        SmartDashboard.putBoolean("Intake Stored", isIntakeRetracted());
         SmartDashboard.putBoolean("Intake Out", isIntakeOut());
         SmartDashboard.putNumber("Top Shaft RPM", 1500);
         SmartDashboard.putNumber("Bottom Shaft RPM", 1500);

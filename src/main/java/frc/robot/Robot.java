@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        // SmartDashboard.putNumber("Pressure", ph.getPressure(0));
+        SmartDashboard.putNumber("Pressure", ph.getPressure(0));
         SmartDashboard.putNumber("PressureLim", 65);
     }
 
