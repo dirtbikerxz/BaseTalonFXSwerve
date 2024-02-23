@@ -8,7 +8,6 @@ public class IntakeCommand extends Command {
     private final Intake m_subsytem;
 
         // @param subsystem
-
     public IntakeCommand(Intake subsystem) {
         m_subsytem = subsystem;
 
