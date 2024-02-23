@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         enableLiveWindowInTest(true);
 
-        ph.enableCompressorAnalog(100, 120);
+        ph.enableCompressorAnalog(100,120);
 
         // Starts recording to data log
         DataLogManager.start();

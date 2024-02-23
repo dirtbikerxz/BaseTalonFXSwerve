@@ -50,7 +50,8 @@ public class ShootLowAmpStart extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_spamp.ampSpinToRPM();
+        // m_spamp.ampSpinToRPM();
+        m_spamp.runTopAmp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

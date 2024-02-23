@@ -51,7 +51,8 @@ public class ShootHighSpeakerStart extends Command {
     @Override
     public void initialize() {
         m_spamp.deployShooter();
-        m_spamp.speakerSpinToRPM();
+        m_spamp.runTopShooter();
+        //m_spamp.speakerSpinToRPM();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
