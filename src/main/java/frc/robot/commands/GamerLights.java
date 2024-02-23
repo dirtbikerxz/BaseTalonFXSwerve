@@ -1,22 +1,23 @@
-package frc.robot.commands;
+// package frc.robot.commands;
 
 
-import frc.robot.Constants;
-import frc.robot.subsystems.Swerve;
+// import frc.robot.Constants;
+// import frc.robot.subsystems.Swerve;
 
-package org.firstinspires.ftc.teamcode;
+// package org.firstinspires.ftc.teamcode;
 
-public class LEDLightsTutorial extends OpMode {
+// public class GamerLights extends OpMode {
 
-    RevBlinkinLedDriver lights;
+//     RevBlinkinLedDriver lights;
+
   
-    public void init(){
+//     public void init(){
+//         lights = hardwareMap.get(RevBlinkinLedDriver.class, deviceName"lights");
+//     }
 
-    }
+//     public void loop(){
 
-    public void loop(){
-
-    }
+//     }
 
 
 
