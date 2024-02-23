@@ -578,14 +578,29 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "4,1": {
+          "7,0": {
             "size": [
               1,
               1
             ],
             "content": {
               "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/driver/isNoteInSpamp",
+              "_source0": "network_table:///SmartDashboard/Note Leaving Spamp",
+              "_title": "SmartDashboard/Note Leaving Spamp",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Note in Spamp",
               "_title": "Note in Spamp",
               "_glyph": 148,
               "_showGlyph": false,
