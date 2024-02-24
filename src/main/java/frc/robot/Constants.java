@@ -156,14 +156,19 @@ public final class Constants {
     }
 
     public static final class MaxRPMConstants {
-        public static final int maxRPMNeo550 = 11000;
-        public static final int maxRPMNeo = 5676;
-        public static final int maxRPMVortex = 6780;
+        public static final double maxRPMNeo550 = 11000;
+        public static final double maxRPMNeo = 5676;
+        public static final double maxRPMVortex = 6780;
     }
 
     public static final class SpampConstants {
-        public static final int speakerRPM = 500;
-        public static final int ampRPM = 500;
+        public static final double speakerRPM = 4000;
+        public static final double topRightAmpRPM = 1950;
+        public static final double midLeftAmpRPM = 1200;
+        public static final double spampIntakeRPM = 4000;
+    }
 
+    public static final class AcquisitionConstants {
+        public static final double floorIntakeRPM = 1500;
     }
 }

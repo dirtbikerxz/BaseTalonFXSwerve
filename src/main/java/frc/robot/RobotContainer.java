@@ -18,6 +18,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -83,6 +84,8 @@ public class RobotContainer {
   private final Swerve s_Swerve = new Swerve();
   public final Acquisition m_acquisition = new Acquisition();
   public final Spamp m_spamp = new Spamp();
+  public PneumaticHub ph = new PneumaticHub(20);
+
 
   /* Path Planner */
   private final SendableChooser<Command> autoChooser;
@@ -105,6 +108,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("autonShootCommand", new autonShoot());
     NamedCommands.registerCommand("autonAcquireCommand", new autonAcquire(m_acquisition));
     NamedCommands.registerCommand("autonAmpCommand", new autonAmp());
+
+    ph.enableCompressorAnalog(100,120);
+    SmartDashboard.putNumber("PressureLim", 65);
 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
