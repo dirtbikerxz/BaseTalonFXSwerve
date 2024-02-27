@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
     public Intake() {
         intakeController = new TalonSRX(motorID);
         intakeSpeed = maxSpeed;
-        m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
+        m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 0);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
 
     }
