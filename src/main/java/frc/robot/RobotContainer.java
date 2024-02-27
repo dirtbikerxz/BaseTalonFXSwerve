@@ -30,6 +30,7 @@ public class RobotContainer {
     private final Shooter s_Shooter = new Shooter();
     private final Intake s_Intake = new Intake();
     private final Hang s_Hang = new Hang();
+    private final GamerLights s_Blinkin = new GamerLights();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
