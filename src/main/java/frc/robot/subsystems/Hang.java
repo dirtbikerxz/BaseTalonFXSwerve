@@ -13,7 +13,7 @@ public class Hang extends SubsystemBase {
     private final double hangSpeed;
     private double leftEncoder = 0;
     private double rightEncoder = 0;
-    private double upperLimit = -51; 
+    private double upperLimit = -49; 
     private double lowerLimit = 0;
     private boolean limits = true;
 
@@ -38,11 +38,11 @@ public class Hang extends SubsystemBase {
          * If the hang is beyond its limit, it can only go in a favorable direction (e.g it can 
          * only go down if it's too high).
          */
-        if(leftEncoder < lowerLimit && rightEncoder < lowerLimit && input == -1 && limits) {
+        if(leftEncoder > lowerLimit && rightEncoder > lowerLimit && input == -1 && limits) {
             leftHangController.set(maxSpeed * -1);
             rightHangController.set(maxSpeed * -1);
         }
-        else if(leftEncoder > upperLimit && rightEncoder > upperLimit && input == 1 && limits) {
+        else if(leftEncoder < upperLimit && rightEncoder < upperLimit && input == 1 && limits) {
             leftHangController.set(maxSpeed);
             rightHangController.set(maxSpeed);
         }
