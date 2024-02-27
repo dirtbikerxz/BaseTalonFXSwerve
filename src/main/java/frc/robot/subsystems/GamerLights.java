@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Spark;
 
+//Manual: https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf 
 
   public class GamerLights extends SubsystemBase {
 
