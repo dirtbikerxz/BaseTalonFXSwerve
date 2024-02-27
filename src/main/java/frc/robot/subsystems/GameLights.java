@@ -8,7 +8,7 @@ public class GamerLight {
 
     public class Blinkin {
 
-        // TODO: Spark ID
+
         Spark blinkin = new Spark(0);
 
         /* FOR FUTURE PURPOSES
@@ -16,6 +16,10 @@ public class GamerLight {
          */
 
         // Joystick driverController = new Joystick(0);
+
+
+        // Manual: https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
+        
 
     public Blinkin() {
     }
