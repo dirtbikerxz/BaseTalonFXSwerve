@@ -76,9 +76,9 @@ public final class Constants {
         public static final double driveKF = 0.0;
 
         /* Drive Motor Characterization Values From SYSID */
-        public static final double driveKS = 0.14368; //0.18978; 
-        public static final double driveKV = 2.2609; // 2.8428;
-        public static final double driveKA = 0.23108; // 0.068797;
+        public static final double driveKS = .19844; // 0.14368; 0.18978; 
+        public static final double driveKV = 2.2097; // 2.2609; 2.8428;
+        public static final double driveKA = .46947; // 0.23108; 0.068797;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
