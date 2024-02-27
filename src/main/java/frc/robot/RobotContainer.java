@@ -69,11 +69,15 @@ public class RobotContainer {
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
-        controls.slowMode.whileTrue(new InstantCommand(
-        () -> controls.getForward()/2, 
-        () -> controls.getStrafe()/2, 
-        () -> controls.getRotation()/2, 
-        () -> controls.robotCentric.getAsBoolean()));
+        controls.slowMode.whileTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
     }
 
     /**
