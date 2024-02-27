@@ -162,7 +162,7 @@ public final class Constants {
     }
 
     public static final class SpampConstants {
-        public static final double speakerRPM = 4000;
+        public static final double speakerRPM = 5000;
         public static final double topRightAmpRPM = 1950;
         public static final double midLeftAmpRPM = 1200;
         public static final double spampIntakeRPM = 4000;
