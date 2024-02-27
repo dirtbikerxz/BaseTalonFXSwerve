@@ -105,7 +105,7 @@ public class Acquisition extends SubsystemBase {
     // here. Call these from Commands.
 
     public void deployIntake() {
-        if (RobotContainer.getInstance().ph.getPressure(0) >=  SmartDashboard.getNumber("PressureLim", 65)){
+        if (RobotContainer.getInstance().ph.getPressure(0) >=  SmartDashboard.getNumber("PressureLim", 45)){
             intakeLeftSolenoid.set(Value.kForward);
             intakeRightSolenoid.set(Value.kForward);
         }
@@ -145,5 +145,10 @@ public class Acquisition extends SubsystemBase {
 
     boolean isIntakeOut() {
         return !intakeOutSwitch.get();
+    }
+
+    public void runIntakeOut() {
+            bottomShaft.set(-Constants.AcquisitionConstants.floorIntakeRPM / intakeGearRatio);
+            topShaft.set(-Constants.AcquisitionConstants.floorIntakeRPM / intakeGearRatio);
     }
 }
