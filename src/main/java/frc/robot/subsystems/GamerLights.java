@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class GamerLights extends SubsystemBase {
   
@@ -9,7 +11,6 @@ public class GamerLights extends SubsystemBase {
 
   Spark blinkin = new Spark(0); //PWM port of the driver
 
-  Joystick driverController = new Joystick(0);
 
   public GamerLights() {}
 
@@ -24,6 +25,6 @@ public class GamerLights extends SubsystemBase {
 
   /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
   public void idleLight() { 
-    currentColor = ((int) Timer.GetMatchTime()) % 2 == 0 ? 0.85 : 0.67; 
+    currentColor = ((int) Timer.getMatchTime()) % 2 == 0 ? 0.85 : 0.67; 
   }
 }
