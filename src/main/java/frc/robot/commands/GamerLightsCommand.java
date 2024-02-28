@@ -1,42 +1,48 @@
-// package frc.robot.commands;
-// package org.firstinspires.ftc.teamcode;
+/* 
+* If needed in the future, Delete if not in use after 3/6/24
+*
+*
 
-// import frc.robot.Constants;
-// import frc.robot.subsystems.Swerve;
+package frc.robot.commands;
+package org.firstinspires.ftc.teamcode;
+
+import frc.robot.Constants;
+import frc.robot.subsystems.Swerve;
 
 
-// public class LEDLightsTutorial extends OpMode {
+public class LEDLightsTutorial extends OpMode {
 
-//   RevBlinkinLedDriver lights;
+  RevBlinkinLedDriver lights;
 
-//   // If using pattern, tempo
-//   int temp = 1
+  // If using pattern, tempo
+  int temp = 1
 
-//     public void init()
-//     {
-//         lights = hardwareMap.get(RevBlinkinLedDriver.class, deviceName : "lights");
+    public void init()
+    {
+        lights = hardwareMap.get(RevBlinkinLedDriver.class, deviceName : "lights");
 
-//         //Starting color
-//         lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
+        //Starting color
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
 
-//     }
+    }
 
-//     public void loop() {
+    public void loop() {
 
-//         if (temp == 1) {
-//             restartStartTime();
-//             temp = 2;
-//         }
+        if (temp == 1) {
+            restartStartTime();
+            temp = 2;
+        }
 
-//         if (time >= 5 && <=15) {
-//             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
-//         }  
-//         if (time >= 15 && <=25) {
-//             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GOLD);
-//         } 
+        if (time >= 5 && <=15) {
+            lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+        }  
+        if (time >= 15 && <=25) {
+            lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GOLD);
+        } 
         
-//         else {
-//             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.AQUA);
-//         }
-//     }
-// }
+        else {
+            lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.AQUA);
+        }
+    }
+}
+*/
