@@ -44,6 +44,7 @@ public class RobotContainer {
             )
         );
 
+
         //this just constantly runs the intake and shooter for now:
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
@@ -68,6 +69,15 @@ public class RobotContainer {
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
+        controls.slowMode.whileTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
     }
 
     /**
