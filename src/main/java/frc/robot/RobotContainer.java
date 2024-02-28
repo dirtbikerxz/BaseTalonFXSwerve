@@ -50,7 +50,7 @@ public class RobotContainer {
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
 
-        s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
+        //s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
         // Configure the button bindings
         configureButtonBindings();
     }

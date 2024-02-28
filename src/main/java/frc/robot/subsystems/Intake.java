@@ -26,6 +26,7 @@ public class Intake extends SubsystemBase {
         m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 
         m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+        m_compressor.enableAnalog(100, 115);
     }
 
     @Override
