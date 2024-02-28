@@ -5,45 +5,28 @@ import edu.wpi.first.wpilibj.Spark;
 
 //Manual: https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf 
 
-  public class GamerLights extends SubsystemBase {
+public class GamerLights extends SubsystemBase {
+  
+  private double currentColor;
 
-    Spark blinkin = new Spark(0);
+  Spark blinkin = new Spark(0); //PWM port of the driver
 
-    /* FOR FUTURE PURPOSES
-    *  If needing to press a button on the controller, to change a LED LIGHT
-    */
+  Joystick driverController = new Joystick(0);
 
-    Joystick driverController = new Joystick(0);
+  public GamerLights() {}
 
-    public Blinkin() {}
-    
-    public void NAME() { blinkin.set(COLOR); }
-
-    //IF NEED COLOR DURING DRIVING
-    public void driveLight() {
-        blinkin.set(0.69);
-    } 
-
-    //IF NEED COLOR DURING BUTTON PRESS 
-    public void buttonLight() {
-      blinkin.set(0.69);
-    } 
-
-    public void idleLight() { blinkin.set(0.85); }
-
-    /* FOR FUTURE PURPOSES (IF YOU NEED A COLOR DURING DRIVING)
-    Set name if using, set button id (X)*/
   @Override
-  public void periodic() {
-    if(driverController.getRawButton(2)){
-      driveLight();
-    }
-    else if(driverController.getRawButton(3)){
-      buttonLight();
-    }
-    else {
-      idleLight();
-    }
+  public void periodic() { blinkin.set(currentColor); }
+
+  //IF NEED COLOR DURING DRIVING
+  public void driveLight() { currentColor = 0.69; } 
+
+  //IF NEED COLOR DURING BUTTON PRESS 
+  public void buttonLight() { currentColor = 0.65; } 
+
+  /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
+  public void idleLight() { 
+    currentColor = ((int) Timer.GetMatchTime()) % 2 == 0 ? 0.85 : 0.67; 
   }
 }
     
