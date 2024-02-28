@@ -25,14 +25,14 @@ public class Intake extends SubsystemBase {
         m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 
-        m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-        m_compressor.enableAnalog(100, 115);
+        // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+        // m_compressor.enableAnalog(100, 115);
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
-        SmartDashboard.putBoolean("Compressor", m_compressor.isEnabled());
+        //SmartDashboard.putBoolean("Compressor", m_compressor.isEnabled());
     }
 
     public void runIntake() {
