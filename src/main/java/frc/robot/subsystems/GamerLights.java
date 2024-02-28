@@ -11,7 +11,6 @@ public class GamerLights extends SubsystemBase {
 
   Spark blinkin = new Spark(0); //PWM port of the driver
 
-
   public GamerLights() {}
 
   @Override

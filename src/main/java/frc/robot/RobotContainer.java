@@ -68,7 +68,7 @@ public class RobotContainer {
         controls.hangRetract.whileTrue(new HangCommandDown(s_Hang));
         controls.hangNoLimits.onTrue(new InstantCommand(() -> s_Hang.removeHangLimits()));
         
-        controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
+        controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
         controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
