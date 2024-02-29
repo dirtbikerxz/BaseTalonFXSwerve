@@ -48,7 +48,7 @@ public class RobotContainer {
 
         //this just constantly runs the intake and shooter for now:
         s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
-        s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
+        // s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
 
         //s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
         // Configure the button bindings
@@ -70,9 +70,9 @@ public class RobotContainer {
         
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
-        controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-        controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
-        controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
+        controls.runIntake.whileTrue(new InstantCommand(() -> s_Intake.runIntake()));
+        controls.reverseIntake.whileTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        controls.toggleIntake.whileTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
