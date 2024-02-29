@@ -17,14 +17,17 @@ public class Intake extends SubsystemBase {
     private final TalonSRX intakeController;
     private final double intakeSpeed;
     private final DoubleSolenoid m_doubleSolenoid;
-    private final Compressor m_compressor;
+    // private final Compressor m_compressor;
 
     public Intake() {
         intakeController = new TalonSRX(motorID);
         intakeSpeed = maxSpeed;
         m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
-
+        
+        //pressure switch actually turns off the pressurvizer at around 125-130 psi ????
+        //gague might be bad, but it works 
+        
         // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
         // m_compressor.enableAnalog(100, 115);
     }
