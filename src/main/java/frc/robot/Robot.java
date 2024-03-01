@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
         // (alternatively) Record only DS control data
         DriverStation.startDataLog(DataLogManager.getLog(), false);
 
-        CameraServer.startAutomaticCapture();
+      //  CameraServer.startAutomaticCapture();
     }
 
 
