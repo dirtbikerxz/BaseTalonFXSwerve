@@ -218,4 +218,10 @@ public class Spamp extends SubsystemBase {
             shootSpeaker();
         }
     }
+
+    public void ampAutonShoot() {
+        topRight.set(.3); // .25
+        midLeft.set(.23); // .17
+        bottomLeft.set(.2);
+    }
 }

@@ -4,11 +4,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Spamp;
 
 public class autonAmp extends Command {
   private final Spamp m_spamp;
+  private final Timer m_time = new Timer();
 
   public autonAmp(Spamp subsystem) {
     m_spamp = subsystem;
@@ -18,12 +20,13 @@ public class autonAmp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_time.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_spamp.runTopAmp();
+    m_spamp.ampAutonShoot();
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +38,6 @@ public class autonAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_spamp.isNoteInSpamp() && m_spamp.isNoteLeavingSpamp(); 
+    return m_spamp.isDoneShooting() && m_time.hasElapsed(1); 
   }
 }
