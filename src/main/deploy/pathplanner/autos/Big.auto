@@ -1,0 +1,106 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6542860479085884,
+      "y": 4.386721190503992
+    },
+    "rotation": -60.39554925399506
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BigP1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BigP2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BigP3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BigP4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BigP5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
