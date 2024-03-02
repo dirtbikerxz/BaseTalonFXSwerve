@@ -2,19 +2,25 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2234294142773756,
-      "y": 5.51401363454356
+      "x": 0.7604991651086064,
+      "y": 7.684642136201566
     },
-    "rotation": 0
+    "rotation": -90.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "ShortAmpP1"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "autonShootCommand"
+            "name": "autonAmpCommand"
           }
         },
         {
@@ -24,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FrontSpeakerP1"
+                  "pathName": "ShortAmpP2"
                 }
               },
               {
@@ -39,7 +45,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "FrontSpeakerP2"
+            "pathName": "ShortAmpP3"
           }
         },
         {
