@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Big",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6542860479085884,
-      "y": 4.386721190503992
+      "x": 0.6782004541452696,
+      "y": 4.351544342186429
     },
-    "rotation": -60.39554925399506
+    "rotation": -61.76255446183275
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BigP1"
+                  "pathName": "SideSpeakerP1"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BigP2"
+            "pathName": "SideSpeakerP2"
           }
         },
         {
@@ -49,13 +49,25 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "SideSpeakerP3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SideSpeakerP3.5"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BigP3"
+                  "pathName": "SideSpeakerP3.55"
                 }
               },
               {
@@ -70,38 +82,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BigP4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autonShootCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BigP5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autonAcquireCommand"
-                }
-              }
-            ]
+            "pathName": "SideSpeakerP4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BigP6"
+            "pathName": "SideSpeakerP4.5"
           }
         },
         {

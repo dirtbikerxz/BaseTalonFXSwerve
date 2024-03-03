@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8430470066505353,
-        "y": 3.711954511623179
+        "x": 1.7868633909114249,
+        "y": 3.927055264226312
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 4.37211901992212
       },
       "prevControl": {
-        "x": 1.4806128860429462,
-        "y": 3.518269893677501
+        "x": 1.5617455732169228,
+        "y": 3.932057882397301
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "SideSpeaker",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

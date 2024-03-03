@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6884877930156866,
-      "y": 6.6456209102894395
+      "x": 0.7213057204907822,
+      "y": 6.683497876441213
     },
     "rotation": 60.99187650063335
   },
@@ -68,15 +68,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "AmpP4"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "autonShootCommand"
+            "name": "autonAmpCommand"
           }
         }
       ]
