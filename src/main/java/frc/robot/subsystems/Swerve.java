@@ -59,7 +59,7 @@ public class Swerve extends SubsystemBase {
          new PIDConstants(5.0, 0, 0), // Translation constants 
           new PIDConstants(5.0, 0, 0), // Rotation constants 
           4.5,
-          Units.inchesToMeters(35/2), //flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
+          Units.inchesToMeters(27.5/2), //flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
           new ReplanningConfig()
        ),
         () -> {

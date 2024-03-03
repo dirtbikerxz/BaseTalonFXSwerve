@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6782004541452696,
-      "y": 4.351544342186429
+      "x": 0.732099284103781,
+      "y": 4.376994535979592
     },
     "rotation": -61.76255446183275
   },
@@ -15,31 +15,6 @@
           "type": "named",
           "data": {
             "name": "autonShootCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "SideSpeakerP1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autonAcquireCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SideSpeakerP2"
           }
         },
         {
