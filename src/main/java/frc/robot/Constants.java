@@ -129,10 +129,10 @@ public final class Constants {
     }
 
     public static final class Shooter {
-        public static final int leftMotorID = 1; // TODO: change to correct port #
-        public static final int rightMotorID = 2; // TODO: change to correct port #
+        public static final int leftMotorID = 7; // TODO: change to correct port #
+        public static final int rightMotorID = 20; // TODO: change to correct port #
 
-        public static final double maxSpeed = .8;
+        public static final double maxSpeed = .75;
     }
     
     public static final class Intake {

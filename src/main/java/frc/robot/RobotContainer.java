@@ -47,7 +47,7 @@ public class RobotContainer {
 
 
         //this just constantly runs the intake and shooter for now:
-        s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
+        // s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
         // s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
 
         //s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
@@ -69,7 +69,10 @@ public class RobotContainer {
         controls.hangNoLimits.onTrue(new InstantCommand(() -> s_Hang.removeHangLimits()));
         
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
+        controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
+            
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
+        controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         controls.runIntake.whileTrue(new InstantCommand(() -> s_Intake.runIntake()));
         controls.reverseIntake.whileTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         controls.toggleIntake.whileTrue(new InstantCommand(() -> s_Intake.toggleIntake()));

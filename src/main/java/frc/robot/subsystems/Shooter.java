@@ -23,8 +23,8 @@ public class Shooter extends SubsystemBase {
 
 
     public void runShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, -maxSpeed);
-        shooterControllerR.set(ControlMode.PercentOutput, maxSpeed);
+        shooterControllerL.set(ControlMode.PercentOutput, maxSpeed);
+        shooterControllerR.set(ControlMode.PercentOutput, -maxSpeed);
     }
 
     public void stopShooter() {
