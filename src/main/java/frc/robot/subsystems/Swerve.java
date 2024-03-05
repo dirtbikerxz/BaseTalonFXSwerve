@@ -162,14 +162,16 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swervePoseEstimator.update(getGyroYaw(), getModulePositions());
         Vision.getInstance().UpdatePoseEstimatorWithVisionBotPose(swervePoseEstimator);
-        for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
+        // for(SwerveModule mod : mSwerveMods){
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        // }
         // SmartDashboard.putData(gyro);
         RobotContainer.getInstance().field.setRobotPose(getPose());
         
+        SmartDashboard.putString("Robot Position", String.format("x:%.2f, y:%.2f, rotation: %.2f degrees", 
+            getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()));
     }
 
     public ChassisSpeeds getSpeeds() {
