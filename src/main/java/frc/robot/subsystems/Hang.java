@@ -1,7 +1,8 @@
 package frc.robot.subsystems;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.None;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,13 +39,24 @@ public class Hang extends SubsystemBase {
          * If the hang is beyond its limit, it can only go in a favorable direction (e.g it can 
          * only go down if it's too high).
          */
-        if(leftEncoder > lowerLimit && rightEncoder > lowerLimit && input == -1 && limits) {
-            leftHangController.set(maxSpeed * -1);
-            rightHangController.set(maxSpeed * -1);
+
+        if (!limits) {
+            return;
         }
-        else if(leftEncoder < upperLimit && rightEncoder < upperLimit && input == 1 && limits) {
-            leftHangController.set(maxSpeed);
-            rightHangController.set(maxSpeed);
+        
+        boolean atMaxHeight = false;
+        boolean atMinHeight = false;
+
+        if (leftEncoder > lowerLimit || rightEncoder > lowerLimit) {
+            atMinHeight = true;
+        }
+        else if (leftEncoder < upperLimit || rightEncoder < upperLimit) {
+            atMaxHeight = true;
+        }
+
+        if (atMinHeight && input < 0 || atMaxHeight && input > 0) {
+            leftHangController.set(0);
+            rightHangController.set(0);
         }
         else {
             leftHangController.set(maxSpeed * input);

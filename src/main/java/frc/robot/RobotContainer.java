@@ -98,7 +98,7 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand() {
-        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("NewPath");
+        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Rotate");
 
         return AutoBuilder.followPath(path);
     }
