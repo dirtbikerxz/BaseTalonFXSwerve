@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7193498096269378,
+        "x": 0.6782004541452696,
         "y": 4.351544342186429
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6987751318861035,
-        "y": 4.289820308963927
+        "x": 1.511474902649054,
+        "y": 3.724016671090986
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4439904803980226,
-        "y": 4.114374863820816
+        "x": 2.4476227398570094,
+        "y": 4.001774820592248
       },
       "prevControl": {
-        "x": 2.4439904803980226,
-        "y": 4.176098897043318
+        "x": 1.9126811185953203,
+        "y": 4.022349498333083
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": -60.94539590092287,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -49,7 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": null,
+  "folder": "SideSpeaker",
+  "previewStartingState": {
+    "rotation": -58.62699485989154,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

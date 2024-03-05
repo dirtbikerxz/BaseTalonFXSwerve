@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.3983141750744656,
-        "y": 5.555162990025228
+        "x": 1.4703255471673857,
+        "y": 5.565450328895646
       },
       "prevControl": {
-        "x": 1.4497508694265515,
-        "y": 5.565450328895646
+        "x": 1.5217622415194716,
+        "y": 5.575737667766064
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Amp",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

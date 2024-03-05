@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7213057204907822,
-      "y": 6.683497876441213
+      "x": 0.6542860479085884,
+      "y": 4.386721190503992
     },
-    "rotation": 60.99187650063335
+    "rotation": -60.39554925399506
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AmpP1"
+                  "pathName": "BigP1"
                 }
               },
               {
@@ -39,13 +39,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AmpP2"
+            "pathName": "BigP2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "autonAmpCommand"
+            "name": "autonShootCommand"
           }
         },
         {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AmpP3"
+                  "pathName": "BigP3"
                 }
               },
               {
@@ -68,9 +68,46 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "BigP4"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "autonAmpCommand"
+            "name": "autonShootCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BigP5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autonAcquireCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BigP6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
           }
         }
       ]

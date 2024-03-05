@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 1.8200950687615665,
+        "x": 1.781860772740436,
         "y": 7.684642136201566
       },
       "prevControl": {
-        "x": 1.542336919260305,
+        "x": 1.5041026232391745,
         "y": 7.694929475071983
       },
       "nextControl": null,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "ShortAmp",
   "previewStartingState": {
     "rotation": -91.24536426676832,
     "velocity": 0

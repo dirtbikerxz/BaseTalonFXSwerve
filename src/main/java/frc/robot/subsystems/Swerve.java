@@ -57,7 +57,7 @@ public class Swerve extends SubsystemBase {
          new PIDConstants(5.0, 0, 0), // Translation constants 
           new PIDConstants(5.0, 0, 0), // Rotation constants 
           4.5,
-          Units.inchesToMeters(35/2), //flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
+          Units.inchesToMeters(27.5/2), //flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
           new ReplanningConfig()
        ),
         () -> {
@@ -172,11 +172,14 @@ public class Swerve extends SubsystemBase {
     public ChassisSpeeds getSpeeds() {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
-    public void driveRobotRelative(ChassisSpeeds robotRelativSpeeds) {
-        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativSpeeds, 0.02);
+    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
 
         SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
         setModuleStates(targetStates);
+    }
+    public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds){
+        driveRobotRelative(ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation()));
     }
 
     public void startMonitoring() {

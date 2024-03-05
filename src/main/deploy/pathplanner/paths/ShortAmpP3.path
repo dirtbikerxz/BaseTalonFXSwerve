@@ -8,36 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.727509018922924,
-        "y": 6.3884374385246465
+        "x": 1.460038208303759,
+        "y": 6.841080348822203
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7399244873724916,
-        "y": 6.676482926907258
+        "x": 0.741316193174738,
+        "y": 6.763539767177035
       },
       "prevControl": {
-        "x": 1.5526242581354417,
-        "y": 6.511885504980584
-      },
-      "nextControl": {
-        "x": -0.07277528339045847,
-        "y": 6.841080348833931
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 0.6370510986636014,
-        "y": 6.676482926907258
-      },
-      "prevControl": {
-        "x": 0.2049828661084433,
-        "y": 6.743350629568252
+        "x": 0.7824655486631971,
+        "y": 6.773827106035723
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "ShortAmp",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

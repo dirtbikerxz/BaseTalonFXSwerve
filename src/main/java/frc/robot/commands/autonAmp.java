@@ -38,6 +38,6 @@ public class autonAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_spamp.isDoneShooting() && m_time.hasElapsed(1); 
+    return m_spamp.isDoneShooting() && m_time.hasElapsed(1.2); 
   }
 }

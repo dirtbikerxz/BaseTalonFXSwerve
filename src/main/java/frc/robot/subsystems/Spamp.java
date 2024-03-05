@@ -87,7 +87,7 @@ public class Spamp extends SubsystemBase {
 
         noteDetectorSpampBottom = new DigitalInput(2);
         addChild("noteDetectorSpampBottom", noteDetectorSpampBottom);
-
+        
         shootSolenoid = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, 14, 15);
         addChild("shootSolenoid", shootSolenoid);
 

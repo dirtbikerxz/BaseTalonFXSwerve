@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6542860479085884,
-      "y": 4.386721190503992
+      "x": 0.732099284103781,
+      "y": 4.376994535979592
     },
-    "rotation": -60.39554925399506
+    "rotation": -61.76255446183275
   },
   "command": {
     "type": "sequential",
@@ -18,13 +18,31 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "autonShootCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SideSpeakerP3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SideSpeakerP3.5"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SideSpeakerP1"
+                  "pathName": "SideSpeakerP3.55"
                 }
               },
               {
@@ -39,7 +57,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SideSpeakerP2"
+            "pathName": "SideSpeakerP4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SideSpeakerP4.5"
           }
         },
         {
