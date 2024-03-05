@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
     private final TalonSRX intakeController;
     private final double intakeSpeed;
     private final DoubleSolenoid m_doubleSolenoid;
-    // private final Compressor m_compressor;
+    private final Compressor m_compressor;
 
     public Intake() {
         intakeController = new TalonSRX(motorID);
@@ -28,14 +28,13 @@ public class Intake extends SubsystemBase {
         //pressure switch actually turns off the pressurvizer at around 125-130 psi ????
         //gague might be bad, but it works 
 
-        // m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-        // m_compressor.enableAnalog(100, 115);
+        m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
-        //SmartDashboard.putBoolean("Compressor", m_compressor.isEnabled());
+        SmartDashboard.putBoolean("Compressor Running", m_compressor.isEnabled());
     }
 
     public void runIntake() {
