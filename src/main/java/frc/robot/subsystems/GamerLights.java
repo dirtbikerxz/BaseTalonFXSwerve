@@ -20,7 +20,7 @@ public class GamerLights extends SubsystemBase {
   public void driveLight() { currentColor = 0.69; } 
 
   //IF NEED COLOR DURING BUTTON PRESS 
-  public void buttonLight() { currentColor = 0.65; } 
+  public void buttonLight() { currentColor = 0.99; } 
 
   /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
   public void idleLight() { 
