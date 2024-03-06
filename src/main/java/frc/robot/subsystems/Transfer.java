@@ -5,30 +5,28 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.Shooter.*;
+import static frc.robot.Constants.Transfer.*;
 
 public class Transfer extends SubsystemBase {
     private final TalonSRX transferController;
 
 
     public Transfer() {
-        shooterControllerL = new TalonSRX(leftMotorID); 
+        transferController = new TalonSRX(transferMotorID); 
     }
 
     @Override
-    public void periodic(){
-        SmartDashboard.putNumber("Shooter Speed", maxSpeed);
+    public void periodic() {
+        SmartDashboard.putNumber("Transfer Speed", maxSpeed);
     }
 
 
-    public void runShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, maxSpeed);
-        shooterControllerR.set(ControlMode.PercentOutput, -maxSpeed);
+    public void runTransfer() {
+        transferController.set(ControlMode.PercentOutput, maxSpeed);
     }
 
-    public void stopShooter() {
-        shooterControllerL.set(ControlMode.PercentOutput, 0);
-        shooterControllerR.set(ControlMode.PercentOutput, 0);
+    public void stopTransfer() {
+        transferController.set(ControlMode.PercentOutput, 0);   
     }
 
 }
