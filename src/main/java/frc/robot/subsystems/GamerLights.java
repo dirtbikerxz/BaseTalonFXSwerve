@@ -16,14 +16,12 @@ public class GamerLights extends SubsystemBase {
   @Override
   public void periodic() { blinkin.set(currentColor); }
 
-  //IF NEED COLOR DURING DRIVING
- // public void driveLight() { currentColor = -0.11; } 
+  //IF NEED COLOR DURING DRIVING; strobe red
+  public void driveLight() { currentColor = -0.11; } 
 
-  //IF NEED COLOR DURING BUTTON PRESS 
+  //IF NEED COLOR DURING BUTTON PRESS; strobe white
   public void buttonLight() { currentColor = -0.05; } 
 
-  /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
-  public void idleLight() { 
-    currentColor = 0.53; 
-  }
+  /** Idle Light; Shifts from color 1 to color 2 (set manually on the driver) */
+  public void idleLight() { currentColor = 0.53; }
 }
