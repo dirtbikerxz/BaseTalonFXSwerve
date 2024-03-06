@@ -17,13 +17,13 @@ public class GamerLights extends SubsystemBase {
   public void periodic() { blinkin.set(currentColor); }
 
   //IF NEED COLOR DURING DRIVING
-  public void driveLight() { currentColor = 0.69; } 
+ // public void driveLight() { currentColor = -0.11; } 
 
   //IF NEED COLOR DURING BUTTON PRESS 
-  public void buttonLight() { currentColor = 0.99; } 
+  public void buttonLight() { currentColor = -0.05; } 
 
   /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
   public void idleLight() { 
-    currentColor = ((int) Timer.getMatchTime()) % 2 == 0 ? 0.85 : 0.67; 
+    currentColor = 0.53; 
   }
 }

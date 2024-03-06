@@ -21,7 +21,7 @@ public class DriveControls {
     public final JoystickButton reverseIntake = new JoystickButton(joystick2, 7);
     public final JoystickButton toggleIntake = new JoystickButton(joystick2, 4);
     public final JoystickButton slowMode = new JoystickButton(joystick0, 1); //I wonder if button 1 is the trigger
-    public final JoystickButton requestCoopertition = new JoystickButton(joystick2, 8);
+    public final JoystickButton requestCoopertition = new JoystickButton(joystick2, 5);
     public final JoystickButton requestAmplification = new JoystickButton(joystick2, 3);
 
     public double getForward() { return joystick0.getY(); } //Deleted a negative symbol to flip directions
