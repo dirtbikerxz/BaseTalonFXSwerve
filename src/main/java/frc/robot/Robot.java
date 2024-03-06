@@ -5,11 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+// Color Sensor Code 
+import edu.wpi.first.wpilibj.I2C;
+import com.revrobotics.ColorSensorV3;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +32,12 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private SendableChooser<Command> auto;
+
+  // Color Sensor Code
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -59,6 +72,17 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    // Color Sensor Code
+    Color detectedColor = m_colorSensor.getColor();
+    double IR = m_colorSensor.getIR();
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
+    SmartDashboard.putNumber("IR", IR);
+
+    int proximity = m_colorSensor.getProximity();
+    SmartDashboard.putNumber("Proximity", proximity);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

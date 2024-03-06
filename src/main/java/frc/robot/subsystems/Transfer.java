@@ -7,13 +7,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Shooter.*;
 
-public class Shooter extends SubsystemBase {
-    private final TalonSRX shooterControllerL;
-    private final TalonSRX shooterControllerR;
+public class Transfer extends SubsystemBase {
+    private final TalonSRX transferController;
 
-    public Shooter() {
+
+    public Transfer() {
         shooterControllerL = new TalonSRX(leftMotorID); 
-        shooterControllerR = new TalonSRX(rightMotorID); 
     }
 
     @Override

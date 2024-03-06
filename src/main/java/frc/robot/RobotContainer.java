@@ -47,10 +47,10 @@ public class RobotContainer {
 
 
         //this just constantly runs the intake and shooter for now:
-        s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
-        s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
+        // s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
+        // s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
 
-        s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
+        //s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -68,11 +68,14 @@ public class RobotContainer {
         controls.hangRetract.whileTrue(new HangCommandDown(s_Hang));
         controls.hangNoLimits.onTrue(new InstantCommand(() -> s_Hang.removeHangLimits()));
         
-        controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
+        controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
+        controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
+            
         controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
-        controls.runIntake.onTrue(new InstantCommand(() -> s_Intake.runIntake()));
-        controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
-        controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
+        controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
+        controls.runIntake.whileTrue(new InstantCommand(() -> s_Intake.runIntake()));
+        controls.reverseIntake.whileTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        controls.toggleIntake.whileTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
@@ -98,7 +101,7 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand() {
-        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("NewPath");
+        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("New Auto");
 
         return AutoBuilder.followPath(path);
     }

@@ -21,8 +21,8 @@ public final class Constants {
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(22.5); 
-        public static final double wheelBase = Units.inchesToMeters(22.5); 
+        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
+        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -129,10 +129,10 @@ public final class Constants {
     }
 
     public static final class Shooter {
-        public static final int leftMotorID = 1; // TODO: change to correct port #
-        public static final int rightMotorID = 2; // TODO: change to correct port #
+        public static final int leftMotorID = 7; // TODO: change to correct port #
+        public static final int rightMotorID = 20; // TODO: change to correct port #
 
-        public static final double maxSpeed = .8;
+        public static final double maxSpeed = .75;
     }
     
     public static final class Intake {
@@ -142,8 +142,8 @@ public final class Constants {
     }
 
     public static final class Hang {
-        public static final int leftHangID = 21; 
-        public static final int rightHangID = 20; 
+        public static final int leftHangID = 21;
+        public static final int rightHangID = 20;
 
         public static final double maxSpeed = .4;
     }

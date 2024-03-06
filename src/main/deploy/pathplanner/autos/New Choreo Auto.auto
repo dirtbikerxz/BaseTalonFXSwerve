@@ -5,7 +5,7 @@
       "x": 1.721955180168152,
       "y": 4.348909854888916
     },
-    "rotation": 1.5911697214325715
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NewPath"
+            "pathName": null
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCommand"
           }
         }
       ]

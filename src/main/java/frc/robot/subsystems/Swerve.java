@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -52,7 +53,7 @@ public class Swerve extends SubsystemBase {
             this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-            new HolonomicPathFollowerConfig(0, 0, null),
+            new HolonomicPathFollowerConfig(4.5, .4, new ReplanningConfig()),
             () -> {
                 // Boolean supplier that controls when the path will be mirrored for the red alliance
                 // This will flip the path being followed to the red side of the field.

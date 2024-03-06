@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Manual: https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf 
 
@@ -11,22 +13,17 @@ public class GamerLights extends SubsystemBase {
 
   Spark blinkin = new Spark(0); //PWM port of the driver
 
-  Joystick driverController = new Joystick(0);
-
   public GamerLights() {}
 
   @Override
   public void periodic() { blinkin.set(currentColor); }
 
-  //IF NEED COLOR DURING DRIVING
-  public void driveLight() { currentColor = 0.69; } 
+  //IF NEED COLOR DURING DRIVING; strobe red
+  public void driveLight() { currentColor = -0.11; } 
 
-  //IF NEED COLOR DURING BUTTON PRESS 
-  public void buttonLight() { currentColor = 0.65; } 
+  //IF NEED COLOR DURING BUTTON PRESS; strobe white
+  public void buttonLight() { currentColor = -0.05; } 
 
-  /** Idle Light; Shifts from blue (0.85) to yellow (0.67) every second */
-  public void idleLight() { 
-    currentColor = ((int) Timer.GetMatchTime()) % 2 == 0 ? 0.85 : 0.67; 
-  }
+  /** Idle Light; Shifts from color 1 to color 2 (set manually on the driver) */
+  public void idleLight() { currentColor = 0.53; }
 }
-    
