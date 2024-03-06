@@ -6,6 +6,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
@@ -27,9 +28,11 @@ public class Vision extends SubsystemBase {
         tagApproches = new TagApproaches();
     }
 
+    private Pose2d currentOptimalPose;
     @Override
     public void periodic() {
-
+        // Periodically, update the data on the current target
+        UpdateTargetData();
     }
 
     @Override
@@ -50,7 +53,6 @@ public class Vision extends SubsystemBase {
                 CalculateStearingValues(targetID);
             }
         }
-
     }
 
     private Alliance MyAlliance() {
@@ -63,7 +65,16 @@ public class Vision extends SubsystemBase {
     }
 
     private void CalculateStearingValues(int targetID) {
+        // using data from tag approaches, determine the desired pose for the target currently be tracked
+        /// TO DO - Calculate the desired pose for the target we are tracking.  Do this only if the target is ours.///
+        /// otherwise return null??? or something to that affect.
+        this.currentOptimalPose = new Pose2d(0,0,new Rotation2d(0));
 
+        /// other calculations for PID turning to target may be appropriate here as well.
+    }
+
+    public Pose2d GetTargetPose(){
+        return this.currentOptimalPose;
     }
 
     public void UpdatePoseEstimatorWithVisionBotPose(SwerveDrivePoseEstimator swervePoseEstimator) {
