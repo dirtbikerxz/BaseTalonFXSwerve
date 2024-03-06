@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
+//Manual: https://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf 
+
 public class GamerLights extends SubsystemBase {
   
   private double currentColor;
