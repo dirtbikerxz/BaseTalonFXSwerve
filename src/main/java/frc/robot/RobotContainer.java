@@ -31,6 +31,7 @@ public class RobotContainer {
     private final Intake s_Intake = new Intake();
     private final Hang s_Hang = new Hang();
     private final GamerLights s_Blinkin = new GamerLights();
+    private final Transfer s_Transfer = new Transfer();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -70,12 +71,13 @@ public class RobotContainer {
         
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
         controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
-            
-        controls.activateShooter.onTrue(new InstantCommand(() -> s_Shooter.runShooter()));
-        controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
-        controls.runIntake.whileTrue(new InstantCommand(() -> s_Intake.runIntake()));
-        controls.reverseIntake.whileTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
-        controls.toggleIntake.whileTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
+        controls.runTransfer.onTrue(new InstantCommand(() -> s_Transfer.runTransfer()));
+        controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
+        // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
+        //TODO: test intake to make it holdable or smth
+        controls.runIntake.whileTrue(new IntakeCommand(s_Intake));
+        controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
@@ -98,6 +100,10 @@ public class RobotContainer {
 
     public Command getIntakeCommand() {
         return new IntakeCommand(s_Intake);
+    }
+
+    public Command getTransferCommand() {
+        return new TransferCommand(s_Transfer);
     }
 
     public Command getAutoCommand() {
