@@ -77,7 +77,7 @@ public class RobotContainer {
         //TODO: test intake to make it holdable or smth
         controls.runIntake.whileTrue(new IntakeCommand(s_Intake));
         controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
-        controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
+        // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 

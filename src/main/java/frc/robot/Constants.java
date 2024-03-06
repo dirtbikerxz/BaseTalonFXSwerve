@@ -85,6 +85,12 @@ public final class Constants {
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
         public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
+
+        /*intake states (wip) */
+        public enum IntakeState{
+            Deactivated,
+            Activated,
+        }
         
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
