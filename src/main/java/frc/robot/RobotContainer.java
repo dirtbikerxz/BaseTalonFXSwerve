@@ -106,9 +106,15 @@ public class RobotContainer {
         return new TransferCommand(s_Transfer);
     }
 
-    public Command getAutoCommand() {
-        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("New Auto");
+    public Command getAutoRotateCommand() {
+        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Rotate");
 
         return AutoBuilder.followPath(path);
     }
+    public Command getAutoDriveCommand() {
+        PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Drive & Rotate");
+
+        return AutoBuilder.followPath(path);
+    }
+
 }

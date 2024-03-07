@@ -25,7 +25,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_subsytem.stopIntake();
+        m_subsytem.reverseIntake();
     }
     
     @Override
