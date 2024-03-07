@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     // Color Sensor Code
-    var detectedColor = m_colorSensor.getColor();
+    Color detectedColor = m_colorSensor.getColor();
     double IR = m_colorSensor.getIR();
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
