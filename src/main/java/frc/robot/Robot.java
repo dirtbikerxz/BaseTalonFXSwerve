@@ -97,20 +97,23 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Proximity", proximity);
 
     String colorString;
+    colorString = "";
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-    // if (match.color == kBlueTarget) {
-    //   colorString = "Blue";
-    // } else if (match.color == kRedTarget) {
-    //   colorString = "Red";
-    // } else if (match.color == kGreenTarget) {
-    //   colorString = "Green";
-    // } else if (match.color == kYellowTarget) {
-    //   colorString = "Yellow";
-    // } else {
-    //   colorString = "Unknown";
-    // }
-    
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+      colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+      colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
+    }
+
+    SmartDashboard.putString("Color Registered", colorString);
+    console.log(colorString);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
