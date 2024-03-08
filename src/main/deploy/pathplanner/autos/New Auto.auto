@@ -8,13 +8,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "autoC1"
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "IntakeCommand"
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of autoC1"
           }
         }
       ]
