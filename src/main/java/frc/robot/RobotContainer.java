@@ -38,6 +38,7 @@ import frc.robot.autos.exampleAuto;
 import frc.robot.commands.ActivateIntake;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.ClearIntake;
+import frc.robot.commands.DriveToTag;
 import frc.robot.commands.ResetState;
 import frc.robot.commands.RetractIntake;
 import frc.robot.commands.RunClimb;
@@ -222,6 +223,16 @@ public class RobotContainer {
     final JoystickButton btnStartSpeaker = new JoystickButton(driver.getHID(),
         XboxController.Button.kRightBumper.value);
     btnStartSpeaker.onTrue(new ShootHighSpeakerStart(m_spamp).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+  
+    final JoystickButton btnDriveToTag = new JoystickButton(driver.getHID(),
+        XboxController.Button.kA.value);
+    btnDriveToTag.whileTrue(new DriveToTag(
+            s_Swerve, 
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis),
+            () -> -driver.getRawAxis(rotationAxis),
+            () -> false
+    ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   
     /* Accessory Buttons */
     final JoystickButton btnClearIntake = new JoystickButton(accessory.getHID(), XboxController.Button.kA.value);

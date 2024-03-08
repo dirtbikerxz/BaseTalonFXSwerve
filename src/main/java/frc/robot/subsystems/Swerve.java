@@ -144,7 +144,7 @@ public class Swerve extends SubsystemBase {
         // Attempt to set the pose to the correct location if there is a target visible.
         // The call to Vision in the following command is purposely returning a new Pose2d.   It is not getting the limelight
         // pose as this causes a flip in orientation that I could not figure out in the time alotted.   David
-        swervePoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), Vision.getInstance().GetLimelightPose());
+        swervePoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), Vision.getInstance().GetRobotLimelightPoseEstimate());
 
     }
 
