@@ -6,7 +6,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -69,9 +69,16 @@ public class RobotContainer {
         controls.hangRetract.whileTrue(new HangCommandDown(s_Hang));
         controls.hangNoLimits.onTrue(new InstantCommand(() -> s_Hang.removeHangLimits()));
         
-        controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
+        // controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.idleLight()));
         controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.buttonLight()));
-        controls.runTransfer.onTrue(new InstantCommand(() -> s_Transfer.runTransfer()));
+        controls.runTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.runTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
+        controls.reverseTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.reverseTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
         controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         //TODO: test intake to make it holdable or smth

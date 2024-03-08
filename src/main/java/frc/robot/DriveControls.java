@@ -23,10 +23,8 @@ public class DriveControls {
     public final JoystickButton slowMode = new JoystickButton(joystick0, 1); //I wonder if button 1 is the trigger
     public final JoystickButton requestCoopertition = new JoystickButton(joystick2, 5);
     public final JoystickButton requestAmplification = new JoystickButton(joystick2, 3);
-    public final JoystickButton runTransfer = new JoystickButton(joystick2, 6);
-    public final JoystickButton runTransfer2 = new JoystickButton(joystick2, 9);
-    public final JoystickButton stopTransfer = new JoystickButton(joystick2, 7);
-    
+    public final JoystickButton runTransfer = new JoystickButton(joystick2, 11);    
+    public final JoystickButton reverseTransfer = new JoystickButton(joystick2, 10);    
 
     public double getForward() { return joystick0.getY(); } //Deleted a negative symbol to flip directions
     public double getStrafe() { return joystick0.getX(); } //Deleted a negative symbol to flip directions
