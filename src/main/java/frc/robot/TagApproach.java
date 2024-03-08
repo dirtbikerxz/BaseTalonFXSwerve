@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class TagApproach {
@@ -15,13 +17,16 @@ public class TagApproach {
     private double _offset_y;
     private Alliance _alliance;
     private gameTarget _targetType;
+    private Pose2d _desiredPose;
     
-    public TagApproach(int id, double x, double y, Alliance alliance, gameTarget targetType) {
+    public TagApproach(int id, double tagOffsetX, double tagOffsetY, Alliance alliance, gameTarget targetType, 
+        Pose2d desiredPose) {
         _fiduciaryNumber = id;
-        _offset_X = x;
-        _offset_y = y;
+        _offset_X = tagOffsetX;
+        _offset_y = tagOffsetY;
         _alliance = alliance;
         _targetType = targetType;
+        _desiredPose = desiredPose;
     }
 
     public int FiduciaryNumber(){
@@ -46,5 +51,9 @@ public class TagApproach {
 
     public String GameTargetName() {
         return String.format("%s - %s Alliance",_targetType.name(), _alliance.name());
+    }
+    
+    public Pose2d DesiredPos(){
+        return _desiredPose;
     }
 }
