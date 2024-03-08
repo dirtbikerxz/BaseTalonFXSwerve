@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
   //Calibrating sensor and defining colors
+  private final Color kOrangeTarget = new Color(0.573, 0.354, 0.078);
   private final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
   private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
   private final Color kRedTarget = new Color(0.561, 0.232, 0.114);
@@ -68,6 +70,7 @@ public class Robot extends TimedRobot {
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);  
+    m_colorMatcher.addColorMatch(kOrangeTarget);
   }
 
   /**
@@ -96,21 +99,35 @@ public class Robot extends TimedRobot {
     int proximity = m_colorSensor.getProximity();
     SmartDashboard.putNumber("Proximity", proximity);
 
-    String colorString;
+    String colorString = "";
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-    // if (match.color == kBlueTarget) {
-    //   colorString = "Blue";
-    // } else if (match.color == kRedTarget) {
-    //   colorString = "Red";
-    // } else if (match.color == kGreenTarget) {
-    //   colorString = "Green";
-    // } else if (match.color == kYellowTarget) {
-    //   colorString = "Yellow";
+     // if (match.color == kOrangeTarget) {
+    //   colorString = "Orange";
     // } else {
-    //   colorString = "Unknown";
+    //   colorString = "Not Orange";
     // }
+
+    // boolean ringProximity = false; 
+    boolean ringPresent = false; 
+
+    // if (proximity>250){
+    //   ringProximity = true;
+     // } else {
+    //   colorString = "Unknown";
+    //   ringProximity = false;
+    // }
+
+    // SmartDashboard.putBoolean("Ring Proximity", ringProximity);
+    // SmartDashboard.putString("Orange", colorString);
     
+    if (match.color == kOrangeTarget && proximity>200){
+      ringPresent = true;
+    } else {
+      ringPresent = false;
+    }
+
+    SmartDashboard.putBoolean("Ring Present", ringPresent);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -158,5 +175,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    Shooter shooter = new Shooter();
+    shooter.runShooter();
+  }
 }
