@@ -111,4 +111,8 @@ public class TagApproaches {
     public Pose2d DesiredRobotPos(int tagID){
         return tagArray[tagID - 1].DesiredPos();
     }
+
+    public Pose2d TagFieldPose2d(int tagID){
+        return FieldLayout.getTagPose(tagID).get().toPose2d();
+    }
 }

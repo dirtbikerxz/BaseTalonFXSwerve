@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
@@ -18,6 +19,7 @@ import frc.robot.TagApproaches;
 
 public class Vision extends SubsystemBase {
     public AprilTagFieldLayout AprilTag_FieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+    public Pose2d getVisionCalculatedRobotPose = new Pose2d();
 
     private static final Vision m_Vision = new Vision();
 
@@ -29,22 +31,23 @@ public class Vision extends SubsystemBase {
     private double turnPower = 0;
 
     private String _limelightName = "limelight-cybears";
-    
+
     // Supplier of pose information for each pose.
     private TagApproaches _tagApproches;
 
-
-    public static Vision getInstance(){
+    public static Vision getInstance() {
         return m_Vision;
     }
+
     public Vision() {
         _tagApproches = new TagApproaches();
-        
+
         // Set tolerance to 2 degrees
         _turnToTargetPID.setTolerance(2);
     }
 
     private Pose2d currentOptimalPose;
+
     @Override
     public void periodic() {
         // Periodically, update the data on the current target
@@ -70,7 +73,6 @@ public class Vision extends SubsystemBase {
         }
     }
 
-
     private Alliance MyAlliance() {
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
@@ -81,73 +83,87 @@ public class Vision extends SubsystemBase {
     }
 
     private void CalculateStearingValues(int targetID) {
-        // using data from tag approaches, determine the desired pose for the target currently be tracked
-        /// TO DO - Calculate the desired pose for the target we are tracking.  Do this only if the target is ours.///
+        // using data from tag approaches, determine the desired pose for the target
+        // currently be tracked
+        /// TO DO - Calculate the desired pose for the target we are tracking. Do this
+        // only if the target is ours.///
         /// otherwise return null??? or something to that affect.
-        this.currentOptimalPose = new Pose2d(0,0,new Rotation2d(0));
+        this.currentOptimalPose = new Pose2d(0, 0, new Rotation2d(0));
 
-        /// other calculations for PID turning to target may be appropriate here as well.
+        /// other calculations for PID turning to target may be appropriate here as
+        /// well.
         turnPower = _turnToTargetPID.calculate(LimelightHelpers.getTX(_limelightName), 0);
         if (_turnToTargetPID.atSetpoint())
             turnPower = 0;
     }
 
-    public Pose2d GetTargetPose(){
+    public Pose2d GetTargetPose() {
         return this.currentOptimalPose;
     }
 
     public void UpdatePoseEstimatorWithVisionBotPose(SwerveDrivePoseEstimator swervePoseEstimator) {
-        LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(_limelightName);
+        LimelightHelpers.PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue(_limelightName);
 
-        // invalid LL data
-        if (estimate.pose.getX() == 0.0) {
+        if (estimatedPose.pose.getX() == 0.0) {
             return;
         }
 
-        double a = estimate.pose.getX();
-        double b = estimate.pose.getY();
-        
-        // sqrt(a^2+b^2)
-        double poseDifference = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+        int fidID = (int) LimelightHelpers.getFiducialID(_limelightName);
 
-        LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults(_limelightName);
+        if ((fidID >= 0) && (fidID <= 15)) {
+            Pose2d pose = _tagApproches.TagFieldPose2d(fidID);
+            Translation2d trans1 = new Translation2d(estimatedPose.pose.getX(), estimatedPose.pose.getY());
+            Translation2d trans2 = new Translation2d(pose.getX(), pose.getY());
+            double poseDifference = trans1.getDistance(trans2);
 
-        if (llresults.targetingResults.valid) {
-            if (poseDifference < 1.5){
+            Pose2d robotPose  = new Pose2d(
+                estimatedPose.pose.getX(),
+                estimatedPose.pose.getY(),
+                new Rotation2d(estimatedPose.pose.getRotation().getRadians() + Math.PI)
+            );
+
+            getVisionCalculatedRobotPose = robotPose;    
+
+            SmartDashboard.putNumber("Distance", poseDifference);
+
+            if (poseDifference < 1.5) {
                 // swervePoseEstimator.setVisionMeasurementStdDevs(
                 // VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
-                
-                System.out.println("Current Robot Pose:     " + swervePoseEstimator.getEstimatedPosition().toString());
-                System.out.println("Estimated Vision Pose:  " + estimate.pose.toString());
-                swervePoseEstimator.addVisionMeasurement(estimate.pose,
-                    Timer.getFPGATimestamp() - estimate.latency);
-                System.out.println("Corrected Robot Pose:   " + swervePoseEstimator.getEstimatedPosition().toString());
+
+                if (swervePoseEstimator != null) {
+                    swervePoseEstimator.addVisionMeasurement(robotPose,
+                            Timer.getFPGATimestamp() - estimatedPose.latency);
+                }
             }
         }
     }
 
-    // returns a blank pose if no tags are available to return a pose.  Otherwise returns where the camera is 
-    //   relative to the field.
+    // returns a blank pose if no tags are available to return a pose. Otherwise
+    // returns where the camera is
+    // relative to the field.
     public Pose2d GetRobotLimelightPoseEstimate() {
         LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(_limelightName);
         if (estimate.pose.getX() == 0.0) {
             return new Pose2d();
         } else {
-            //return new Pose2d();
+            // return new Pose2d();
             return estimate.pose;
         }
     }
 
-    public boolean AllianceTargetAquired(){
+    public boolean AllianceTargetAquired() {
         boolean targetAquired = LimelightHelpers.getTV(_limelightName);
         if (targetAquired) {
             int targetID = (int) LimelightHelpers.getFiducialID(_limelightName);
-            return (MyAlliance() == _tagApproches.TagAlliance(targetID));
+            if ((targetID >= 0) && (targetID <= 15))
+                return (MyAlliance() == _tagApproches.TagAlliance(targetID));
+            else
+                return false;
         }
         return false;
     }
 
-    public double GetTargetTurnPower(){
+    public double GetTargetTurnPower() {
         return turnPower;
     }
 }
