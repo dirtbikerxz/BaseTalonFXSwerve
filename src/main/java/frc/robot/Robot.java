@@ -128,6 +128,10 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putBoolean("Ring Present", ringPresent);
+
+    if (ringPresent == true){
+      runShooter()
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
