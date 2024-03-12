@@ -72,7 +72,14 @@ public class RobotContainer {
         
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.ampLight()));
         controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.coopertitionLight()));
-        controls.runTransfer.onTrue(new InstantCommand(() -> s_Transfer.runTransfer()));
+        controls.runTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.runTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
+        controls.reverseTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.reverseTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
         controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         //TODO: test intake to make it holdable or smth
@@ -116,6 +123,9 @@ public class RobotContainer {
         PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Drive & Rotate");
 
         return AutoBuilder.followPath(path);
+    }
+    public Command getTestAuto() {
+
     }
 
 }
