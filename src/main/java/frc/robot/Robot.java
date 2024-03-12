@@ -43,10 +43,6 @@ public class Robot extends TimedRobot {
   private final ColorMatch m_colorMatcher = new ColorMatch();
   //Calibrating sensor and defining colors
   private final Color kOrangeTarget = new Color(0.573, 0.354, 0.078);
-  private final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
-  private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
-  private final Color kRedTarget = new Color(0.561, 0.232, 0.114);
-  private final Color kYellowTarget = new Color(0.361, 0.524, 0.113);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -66,10 +62,6 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("Auto Mode", auto);
 
-    m_colorMatcher.addColorMatch(kBlueTarget);
-    m_colorMatcher.addColorMatch(kGreenTarget);
-    m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);  
     m_colorMatcher.addColorMatch(kOrangeTarget);
   }
 
@@ -90,11 +82,11 @@ public class Robot extends TimedRobot {
 
     // Color Sensor Code
     Color detectedColor = m_colorSensor.getColor();
-    double IR = m_colorSensor.getIR();
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
+    // double IR = m_colorSensor.getIR();
+    // SmartDashboard.putNumber("Red", detectedColor.red);
+    // SmartDashboard.putNumber("Green", detectedColor.green);
+    // SmartDashboard.putNumber("Blue", detectedColor.blue);
+    // SmartDashboard.putNumber("IR", IR);
 
     int proximity = m_colorSensor.getProximity();
     SmartDashboard.putNumber("Proximity", proximity);
@@ -128,6 +120,10 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putBoolean("Ring Present", ringPresent);
+
+    if (ringPresent == true){
+      schedule(ShooterCommand());
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
