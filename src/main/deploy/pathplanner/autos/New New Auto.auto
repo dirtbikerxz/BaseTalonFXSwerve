@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 1.721955180168152,
-      "y": 4.348909854888916
+      "y": 4.4
     },
     "rotation": 0.0
   },
@@ -14,19 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeCommand"
+            "pathName": "Rotate"
           }
         }
       ]
