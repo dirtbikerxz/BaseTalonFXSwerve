@@ -33,7 +33,7 @@ public class Intake extends SubsystemBase {
         m_doubleSolenoid.set(DoubleSolenoid.Value.kOff);
         intakePosition = IntakeState.Deactivated;
         //TODO: change to correct sensor port
-        input = new DigitalInput(0);
+        input = new DigitalInput(1);
         
         //pressure switch actually turns off the pressurvizer at around 125-130 psi ????
         //gague might be bad, but it works 
@@ -45,11 +45,13 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
         SmartDashboard.putBoolean("Compressor Running", m_compressor.isEnabled());
+        SmartDashboard.putBoolean("Intake Full", input.get());
         
         if (input.get() && intakePosition == IntakeState.Activated)
         {
             new InstantCommand(() -> new Intake().reverseIntake());
             intakePosition = IntakeState.Deactivated;
+            SmartDashboard.putBoolean("Intake Full", input.get());
         }
     } 
 
@@ -59,6 +61,7 @@ public class Intake extends SubsystemBase {
             m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
             intakeController.set(ControlMode.PercentOutput, intakeSpeed);
             intakePosition = IntakeState.Activated;
+            
         }
     }
 

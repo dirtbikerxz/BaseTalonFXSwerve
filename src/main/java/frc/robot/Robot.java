@@ -59,13 +59,14 @@ public class Robot extends TimedRobot {
 
     auto.setDefaultOption("Test Rotate", m_robotContainer.getAutoRotateCommand());
     auto.addOption("Test Drive & Rotate", m_robotContainer.getAutoDriveCommand());
+    auto.addOption("New Auto", m_robotContainer.getTestAuto());
 
     SmartDashboard.putData("Auto Mode", auto);
 
     m_colorMatcher.addColorMatch(kOrangeTarget);
   }
 
-  /**
+  /**)
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
@@ -121,9 +122,9 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean("Ring Present", ringPresent);
 
-    if (ringPresent == true){
-      schedule(ShooterCommand());
-    }
+    // if (ringPresent == true){
+    //   schedule(ShooterCommand());
+    // }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
