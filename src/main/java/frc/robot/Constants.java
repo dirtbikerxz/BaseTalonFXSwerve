@@ -142,9 +142,9 @@ public final class Constants {
     }
     
     public static final class Transfer {
-        public static final int transferMotorID = 1; // TODO: change to correct port #
+        public static final int transferMotorID = 20; // TODO: change to correct port #
 
-        public static final double maxSpeed = .1; //TOD: to change
+        public static final double maxSpeed = .5; //TODO: to change
     }
 
     public static final class Intake {

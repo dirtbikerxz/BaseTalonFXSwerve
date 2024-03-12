@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Shooter.*;
 
@@ -24,7 +25,7 @@ public class Shooter extends SubsystemBase {
 
     public void runShooter() {
         shooterControllerL.set(ControlMode.PercentOutput, maxSpeed);
-        shooterControllerR.set(ControlMode.PercentOutput, -maxSpeed);
+        shooterControllerR.set(ControlMode.PercentOutput, maxSpeed);
     }
 
     public void stopShooter() {

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3509924162705473,
-      "y": 5.55593454044051
+      "x": 0.51,
+      "y": 4.11
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "autoB1"
+            "pathName": "autoC1"
           }
         },
         {
@@ -26,13 +26,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterCommandOff"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "autoB2"
+            "pathName": "autoC2"
           }
         }
       ]

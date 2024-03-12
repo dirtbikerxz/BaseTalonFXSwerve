@@ -4,6 +4,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class GamerLights extends SubsystemBase {
@@ -19,7 +20,6 @@ public class GamerLights extends SubsystemBase {
         currentColor = 0.87; // Initialize to blue color
         blinkin.set(currentColor); // Set initial color
         
-        Timer.start();
     }
 
     // Update the color based on the current state
@@ -47,7 +47,7 @@ public class GamerLights extends SubsystemBase {
     
     public void periodic() {
      
-        if (Timer.getFPGATimestamp() - lastToggleTime >= 5) { // Check if 5 seconds have elapsed
+        if (Timer.getFPGATimestamp() - lastToggleTime >= 2) { // Check if 2 seconds have elapsed
 
         // isBlue = isBlue; // Toggle the color back to blue
 
@@ -59,13 +59,11 @@ public class GamerLights extends SubsystemBase {
 
     // Method to set the button light color (strobe white)
     public void ampLight() {
-        currentColor = -0.05; // Strobe white color value
-        updateColor(); // Update the color
+        blinkin.set(-0.05); // Strobe white color value
     }
 
     // Method to set the button light color (strobe gold)
     public void coopertitionLight() {
-        currentColor = -0.07; // strobe gold color value
-        updateColor(); // Update the color
+         blinkin.set(-0.07); // strobe gold color
     }
 }

@@ -17,13 +17,19 @@ public class Transfer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Transfer Speed", maxSpeed);
+        SmartDashboard.putNumber("Transfer Speed", transferController.getMotorOutputPercent());
     }
 
 
     public void runTransfer() {
         transferController.set(ControlMode.PercentOutput, maxSpeed);
     }
+
+
+    public void reverseTransfer() {
+        transferController.set(ControlMode.PercentOutput, -maxSpeed);
+    }
+
 
     public void stopTransfer() {
         transferController.set(ControlMode.PercentOutput, 0);   
