@@ -30,17 +30,22 @@ public class IntakeCommand extends Command {
     public void execute() {
 
         // m_subsytem.runIntake();
-        if (input.get() && intakePosition == IntakeState.Activated)
+        if (!input.get() && intakePosition == IntakeState.Deactivated)
         {
-            m_subsytem.reverseIntake();
-            intakePosition = IntakeState.Deactivated;
+            m_subsytem.runIntake();
+            intakePosition = IntakeState.Activated;
             SmartDashboard.putBoolean("Intake Full", input.get());
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_subsytem.reverseIntake();
+        if (input.get() && intakePosition == IntakeState.Activated)
+        {
+            m_subsytem.reverseIntake();
+            intakePosition = IntakeState.Deactivated;
+            SmartDashboard.putBoolean("Intake Full", input.get());
+        }
     }
     
     @Override
