@@ -40,9 +40,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward(), 
-                () -> controls.getStrafe(), 
-                () -> controls.getRotation(), 
+                () -> controls.getForward() / 1.5, 
+                () -> controls.getStrafe() / 1.5, 
+                () -> controls.getRotation() / 1.5, 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
@@ -89,9 +89,18 @@ public class RobotContainer {
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward() / 2, 
-                () -> controls.getStrafe() / 2, 
-                () -> controls.getRotation() / 2, 
+                () -> controls.getForward() / 3, 
+                () -> controls.getStrafe() / 3, 
+                () -> controls.getRotation() / 3, 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
+        controls.fastMode.whileTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
