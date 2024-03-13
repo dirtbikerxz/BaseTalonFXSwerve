@@ -24,14 +24,12 @@ public class Intake extends SubsystemBase {
     private final DoubleSolenoid m_doubleSolenoid;
     private final Compressor m_compressor;
     private final DigitalInput input;
-    private IntakeState intakePosition;
 
     public Intake() {
         intakeController = new TalonSRX(motorID);
         intakeSpeed = maxSpeed;
         m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kOff);
-        intakePosition = IntakeState.Deactivated;
         //TODO: change to correct sensor port
         input = new DigitalInput(1);
         
