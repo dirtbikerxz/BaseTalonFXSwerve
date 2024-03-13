@@ -40,9 +40,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward(), 
-                () -> controls.getStrafe(), 
-                () -> controls.getRotation(), 
+                () -> controls.getForward() / 1.5, 
+                () -> controls.getStrafe() / 1.5, 
+                () -> controls.getRotation() / 1.5, 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
@@ -72,7 +72,14 @@ public class RobotContainer {
         
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.ampLight()));
         controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.coopertitionLight()));
-        controls.runTransfer.onTrue(new InstantCommand(() -> s_Transfer.runTransfer()));
+        controls.runTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.runTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
+        controls.reverseTransfer.whileTrue(new StartEndCommand(
+            () -> s_Transfer.reverseTransfer(), 
+            () -> s_Transfer.stopTransfer()
+            ));
         controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         //TODO: test intake to make it holdable or smth
@@ -82,9 +89,18 @@ public class RobotContainer {
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward() / 2, 
-                () -> controls.getStrafe() / 2, 
-                () -> controls.getRotation() / 2, 
+                () -> controls.getForward() / 3, 
+                () -> controls.getStrafe() / 3, 
+                () -> controls.getRotation() / 3, 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
+        controls.fastMode.whileTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
@@ -116,6 +132,10 @@ public class RobotContainer {
         PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Drive & Rotate");
 
         return AutoBuilder.followPath(path);
+    }
+    public Command getAutoTestCommand() {
+
+        return new PathPlannerAuto("New Auto");
     }
 
 }

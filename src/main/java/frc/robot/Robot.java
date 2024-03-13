@@ -60,13 +60,14 @@ public class Robot extends TimedRobot {
 
     auto.setDefaultOption("Test Rotate", m_robotContainer.getAutoRotateCommand());
     auto.addOption("Test Drive & Rotate", m_robotContainer.getAutoDriveCommand());
+    auto.addOption("New Auto", m_robotContainer.getAutoTestCommand());
 
     SmartDashboard.putData("Auto Mode", auto);
 
     m_colorMatcher.addColorMatch(kOrangeTarget);
   }
 
-  /**
+  /**)
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *

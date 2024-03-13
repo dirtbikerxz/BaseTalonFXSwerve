@@ -24,16 +24,14 @@ public class Intake extends SubsystemBase {
     private final DoubleSolenoid m_doubleSolenoid;
     private final Compressor m_compressor;
     private final DigitalInput input;
-    public IntakeState intakePosition;
 
     public Intake() {
         intakeController = new TalonSRX(motorID);
         intakeSpeed = maxSpeed;
         m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kOff);
-        intakePosition = IntakeState.Deactivated;
         //TODO: change to correct sensor port
-        input = new DigitalInput(0);
+        input = new DigitalInput(1);
         
         //pressure switch actually turns off the pressurvizer at around 125-130 psi ????
         //gague might be bad, but it works 
@@ -45,21 +43,14 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
         SmartDashboard.putBoolean("Compressor Running", m_compressor.isEnabled());
+        SmartDashboard.putBoolean("Intake Full", input.get());
         
-        if (input.get() && intakePosition == IntakeState.Activated)
-        {
-            new InstantCommand(() -> new Intake().reverseIntake());
-            intakePosition = IntakeState.Deactivated;
-        }
+        
     } 
 
     public void runIntake() {
-        if (intakePosition == IntakeState.Deactivated)
-        {
-            m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
-            intakeController.set(ControlMode.PercentOutput, intakeSpeed);
-            intakePosition = IntakeState.Activated;
-        }
+        m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+        intakeController.set(ControlMode.PercentOutput, intakeSpeed);
     }
 
     //i dunno if it works so ill just comment it out for now
@@ -69,11 +60,7 @@ public class Intake extends SubsystemBase {
 
 
     public void reverseIntake() {
-        if (intakePosition == IntakeState.Activated)
-        {
-            intakeController.set(ControlMode.PercentOutput, 0);
-            m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
-            intakePosition = IntakeState.Deactivated;
-        }
+        intakeController.set(ControlMode.PercentOutput, 0);
+        m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 }

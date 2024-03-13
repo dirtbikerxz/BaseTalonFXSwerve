@@ -54,9 +54,13 @@ public class Hang extends SubsystemBase {
             atMaxHeight = true;
         }
 
-        if (atMinHeight && input < 0 || atMaxHeight && input > 0) {
-            leftHangController.set(0);
-            rightHangController.set(0);
+        if (atMinHeight && input < 0) {
+            leftHangController.set(maxSpeed * input);
+            rightHangController.set(maxSpeed * input);
+        }
+        else if (atMaxHeight && input > 0) {
+            leftHangController.set(maxSpeed * input);
+            rightHangController.set(maxSpeed * input);
         }
         else {
             leftHangController.set(maxSpeed * input);
