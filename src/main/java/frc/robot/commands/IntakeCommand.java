@@ -34,7 +34,6 @@ public class IntakeCommand extends Command {
         {
             m_subsytem.runIntake();
             intakePosition = IntakeState.Activated;
-            SmartDashboard.putBoolean("Intake Full", input.get());
         }
     }
 
@@ -44,7 +43,6 @@ public class IntakeCommand extends Command {
         {
             m_subsytem.reverseIntake();
             intakePosition = IntakeState.Deactivated;
-            SmartDashboard.putBoolean("Intake Full", input.get());
         }
     }
     
