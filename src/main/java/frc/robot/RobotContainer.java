@@ -98,9 +98,9 @@ public class RobotContainer {
         controls.fastMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward(), 
-                () -> controls.getStrafe(), 
-                () -> controls.getRotation(), 
+                () -> controls.getForward() * 1.5, 
+                () -> controls.getStrafe() * 1.5, 
+                () -> controls.getRotation() * 1.5, 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
