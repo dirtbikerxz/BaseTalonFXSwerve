@@ -47,12 +47,7 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putBoolean("Compressor Running", m_compressor.isEnabled());
         SmartDashboard.putBoolean("Intake Full", input.get());
         
-        if (input.get() && intakePosition == IntakeState.Activated)
-        {
-            new InstantCommand(() -> new Intake().reverseIntake());
-            intakePosition = IntakeState.Deactivated;
-            SmartDashboard.putBoolean("Intake Full", input.get());
-        }
+        
     } 
 
     public void runIntake() {
