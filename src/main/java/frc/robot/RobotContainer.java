@@ -82,9 +82,9 @@ public class RobotContainer {
             ));
         controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
-        //TODO: test intake to make it holdable or smth
-        controls.runIntake.whileTrue(new IntakeCommand(s_Intake));
-        controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        //TODO: test auto intake (collection but no transfer)
+        controls.runIntake.onTrue(new IntakeCommand(s_Intake));
+        // controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(

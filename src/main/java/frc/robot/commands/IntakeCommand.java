@@ -30,10 +30,12 @@ public class IntakeCommand extends Command {
     public void execute() {
 
         // m_subsytem.runIntake();
-        if (!input.get() && intakePosition == IntakeState.Deactivated)
-        {
+        if (!input.get() && intakePosition == IntakeState.Deactivated) {
             m_subsytem.runIntake();
             intakePosition = IntakeState.Activated;
+        } else if (input.get() && intakePosition == IntakeState.Activated) {
+            m_subsytem.reverseIntake();
+            intakePosition = IntakeState.Deactivated;
         }
     }
 
