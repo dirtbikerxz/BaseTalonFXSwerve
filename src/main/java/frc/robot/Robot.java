@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -81,18 +82,15 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     // Color Sensor Code
-    Color detectedColor = m_colorSensor.getColor();
+
     // double IR = m_colorSensor.getIR();
     // SmartDashboard.putNumber("Red", detectedColor.red);
     // SmartDashboard.putNumber("Green", detectedColor.green);
     // SmartDashboard.putNumber("Blue", detectedColor.blue);
     // SmartDashboard.putNumber("IR", IR);
 
-    int proximity = m_colorSensor.getProximity();
-    SmartDashboard.putNumber("Proximity", proximity);
 
-    String colorString = "";
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
 
      // if (match.color == kOrangeTarget) {
     //   colorString = "Orange";
@@ -101,7 +99,7 @@ public class Robot extends TimedRobot {
     // }
 
     // boolean ringProximity = false; 
-    boolean ringPresent = false; 
+
 
     // if (proximity>250){
     //   ringProximity = true;
@@ -112,7 +110,16 @@ public class Robot extends TimedRobot {
 
     // SmartDashboard.putBoolean("Ring Proximity", ringProximity);
     // SmartDashboard.putString("Orange", colorString);
-    
+
+    Color detectedColor = m_colorSensor.getColor();
+
+    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    int proximity = m_colorSensor.getProximity();
+    SmartDashboard.putNumber("Proximity", proximity);
+
+    boolean ringPresent = false;
+
     if (match.color == kOrangeTarget && proximity>200){
       ringPresent = true;
     } else {
@@ -122,7 +129,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Ring Present", ringPresent);
 
     if (ringPresent == true){
-      schedule(ShooterCommand());
+
     }
   }
 
