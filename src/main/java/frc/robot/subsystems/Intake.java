@@ -51,13 +51,8 @@ public class Intake extends SubsystemBase {
     } 
 
     public void runIntake() {
-        if (intakePosition == IntakeState.Deactivated)
-        {
-            m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
-            intakeController.set(ControlMode.PercentOutput, intakeSpeed);
-            intakePosition = IntakeState.Activated;
-            
-        }
+        m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+        intakeController.set(ControlMode.PercentOutput, intakeSpeed);
     }
 
     //i dunno if it works so ill just comment it out for now
@@ -67,11 +62,7 @@ public class Intake extends SubsystemBase {
 
 
     public void reverseIntake() {
-        if (intakePosition == IntakeState.Activated)
-        {
-            intakeController.set(ControlMode.PercentOutput, 0);
-            m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
-            intakePosition = IntakeState.Deactivated;
-        }
+        intakeController.set(ControlMode.PercentOutput, 0);
+        m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 }
