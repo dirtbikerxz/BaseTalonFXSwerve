@@ -124,8 +124,9 @@ public class RobotContainer {
 
         return AutoBuilder.followPath(path);
     }
-    public Command getTestAuto() {
+    public Command getAutoTestCommand() {
 
+        return new PathPlannerAuto("New Auto");
     }
 
 }
