@@ -40,9 +40,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward(), 
-                () -> controls.getStrafe(), 
-                () -> controls.getRotation(), 
+                () -> controls.getForward() / 1.5, 
+                () -> controls.getStrafe() / 1.5, 
+                () -> controls.getRotation() / 1.5, 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
@@ -74,16 +74,25 @@ public class RobotContainer {
             ));
         controls.activateShooter.whileTrue(new ShooterCommand(s_Shooter));
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
-        //TODO: test intake to make it holdable or smth
-        controls.runIntake.whileTrue(new IntakeCommand(s_Intake));
-        controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
+        //TODO: test auto intake (collection but no transfer)
+        controls.runIntake.onTrue(new IntakeCommand(s_Intake));
+        // controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> controls.getForward() / 2, 
-                () -> controls.getStrafe() / 2, 
-                () -> controls.getRotation() / 2, 
+                () -> controls.getForward() / 3, 
+                () -> controls.getStrafe() / 3, 
+                () -> controls.getRotation() / 3, 
+                () -> controls.robotCentric.getAsBoolean()
+            )
+        );
+        controls.fastMode.whileTrue(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> controls.getForward(), 
+                () -> controls.getStrafe(), 
+                () -> controls.getRotation(), 
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
@@ -115,6 +124,10 @@ public class RobotContainer {
         PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory("Drive & Rotate");
 
         return AutoBuilder.followPath(path);
+    }
+    public Command getAutoTestCommand() {
+
+        return new PathPlannerAuto("New Auto");
     }
 
 }

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ShooterCommand;
 
@@ -60,13 +61,14 @@ public class Robot extends TimedRobot {
 
     auto.setDefaultOption("Test Rotate", m_robotContainer.getAutoRotateCommand());
     auto.addOption("Test Drive & Rotate", m_robotContainer.getAutoDriveCommand());
+    auto.addOption("New Auto", m_robotContainer.getAutoTestCommand());
 
     SmartDashboard.putData("Auto Mode", auto);
 
     m_colorMatcher.addColorMatch(kOrangeTarget);
   }
 
-  /**
+  /**)
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
    *
@@ -82,18 +84,15 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     // Color Sensor Code
-    Color detectedColor = m_colorSensor.getColor();
+
     // double IR = m_colorSensor.getIR();
     // SmartDashboard.putNumber("Red", detectedColor.red);
     // SmartDashboard.putNumber("Green", detectedColor.green);
     // SmartDashboard.putNumber("Blue", detectedColor.blue);
     // SmartDashboard.putNumber("IR", IR);
 
-    int proximity = m_colorSensor.getProximity();
-    SmartDashboard.putNumber("Proximity", proximity);
 
-    String colorString = "";
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
 
      // if (match.color == kOrangeTarget) {
     //   colorString = "Orange";
@@ -102,7 +101,7 @@ public class Robot extends TimedRobot {
     // }
 
     // boolean ringProximity = false; 
-    boolean ringPresent = false; 
+
 
     // if (proximity>250){
     //   ringProximity = true;
@@ -113,19 +112,23 @@ public class Robot extends TimedRobot {
 
     // SmartDashboard.putBoolean("Ring Proximity", ringProximity);
     // SmartDashboard.putString("Orange", colorString);
-    
-    if (match.color == kOrangeTarget && proximity>200){
+
+    Color detectedColor = m_colorSensor.getColor();
+
+    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    int proximity = m_colorSensor.getProximity();
+    SmartDashboard.putNumber("Proximity", proximity);
+
+    boolean ringPresent = false;
+
+    if (match.color == kOrangeTarget && proximity>200)
       ringPresent = true;
-    } else {
+    else 
       ringPresent = false;
-    }
 
     SmartDashboard.putBoolean("Ring Present", ringPresent);
-
-    // if (ringPresent == true){
-      // Shooter m_subsystem;
-      // m_subsystem.runShooter();
-      // schedule(ShooterCommand());
+    
     }
 
   /** This function is called once each time the robot enters Disabled mode. */

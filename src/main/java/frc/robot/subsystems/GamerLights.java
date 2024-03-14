@@ -43,10 +43,9 @@ public class GamerLights extends SubsystemBase {
         lastToggleTime = Timer.getFPGATimestamp(); // Reset the timestamp
     }
 
-    // Method to check if it's time to toggle the color and reset the timer if needed
-    
     public void periodic() {
      
+        // check if it's time to toggle the color and reset the timer if needed
         if (Timer.getFPGATimestamp() - lastToggleTime >= 2) { // Check if 2 seconds have elapsed
 
         // isBlue = isBlue; // Toggle the color back to blue
