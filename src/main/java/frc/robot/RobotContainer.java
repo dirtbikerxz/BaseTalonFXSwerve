@@ -76,6 +76,8 @@ public class RobotContainer {
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         //TODO: test auto intake (collection but no transfer)
         controls.runIntake.onTrue(new IntakeCommand(s_Intake));
+        controls.autoTransfer.onTrue(new TransferCommand(s_Transfer, s_Intake));
+        
         // controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
