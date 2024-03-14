@@ -53,6 +53,14 @@ public class Intake extends SubsystemBase {
         intakeController.set(ControlMode.PercentOutput, intakeSpeed);
     }
 
+    public void moveToTransfer() {
+        intakeController.set(ControlMode.PercentOutput, intakeSpeed);
+    }
+
+    public void stopMoveToTransfer() {
+        intakeController.set(ControlMode.PercentOutput, 0);
+    }
+
     //i dunno if it works so ill just comment it out for now
     // public void toggleIntake() {
     //     m_doubleSolenoid.toggle();

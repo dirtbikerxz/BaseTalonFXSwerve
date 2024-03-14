@@ -120,7 +120,7 @@ public class RobotContainer {
     }
 
     public Command getTransferCommand() {
-        return new TransferCommand(s_Transfer);
+        return new TransferCommand(s_Transfer, s_Intake);
     }
 
     public Command getAutoRotateCommand() {
