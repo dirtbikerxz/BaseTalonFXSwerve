@@ -4,15 +4,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.None;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 import static frc.robot.Constants.Hang.*;
 
 public class Hang extends SubsystemBase {
     private final CANSparkMax leftHangController;
     private final CANSparkMax rightHangController;
     private final double hangSpeed;
-    private double leftEncoder = 0;
+    public double leftEncoder = 0;
     private double rightEncoder = 0;
     private double upperLimit = -49; 
     private double lowerLimit = 0;
@@ -75,3 +80,4 @@ public class Hang extends SubsystemBase {
 
     public void removeHangLimits() { limits = false; }
 }
+

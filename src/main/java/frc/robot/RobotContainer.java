@@ -69,7 +69,9 @@ public class RobotContainer {
         controls.hangExtend.whileTrue(new HangCommandUp(s_Hang));
         controls.hangRetract.whileTrue(new HangCommandDown(s_Hang));
         controls.hangNoLimits.onTrue(new InstantCommand(() -> s_Hang.removeHangLimits()));
-        
+
+//        controls.hangExtend.whileTrue(new Hang(() -> s_Hang.runHang(8));
+
         controls.requestAmplification.whileTrue(new InstantCommand(() -> s_Blinkin.ampLight()));
         controls.requestCoopertition.whileTrue(new InstantCommand(() -> s_Blinkin.coopertitionLight()));
         controls.runTransfer.whileTrue(new StartEndCommand(

@@ -25,7 +25,8 @@ public class DriveControls {
     public final JoystickButton requestCoopertition = new JoystickButton(joystick2, 5);
     public final JoystickButton requestAmplification = new JoystickButton(joystick2, 3);
     public final JoystickButton runTransfer = new JoystickButton(joystick2, 11);    
-    public final JoystickButton reverseTransfer = new JoystickButton(joystick2, 10);    
+    public final JoystickButton reverseTransfer = new JoystickButton(joystick2, 10);
+    private final JoystickButton instantHangExtension = new JoystickButton(joystick0,8);
 
     public double getForward() { return joystick0.getY(); } //Deleted a negative symbol to flip directions
     public double getStrafe() { return joystick0.getX(); } //Deleted a negative symbol to flip directions
