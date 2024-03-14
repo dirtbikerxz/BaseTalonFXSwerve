@@ -18,7 +18,7 @@ public class Hang extends SubsystemBase {
     private final CANSparkMax rightHangController;
     private final double hangSpeed;
     public double leftEncoder = 0;
-    private double rightEncoder = 0;
+    public double rightEncoder = 0;
     private double upperLimit = -49; 
     private double lowerLimit = 0;
     private boolean limits = true;
