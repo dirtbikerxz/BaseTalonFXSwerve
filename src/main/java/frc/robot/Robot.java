@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     auto.setDefaultOption("Test Rotate", m_robotContainer.getAutoRotateCommand());
     auto.addOption("Test Drive & Rotate", m_robotContainer.getAutoDriveCommand());
     auto.addOption("New Auto", m_robotContainer.getAutoTestCommand());
+    auto.addOption("autoC", m_robotContainer.autoCommandC());
 
     SmartDashboard.putData("Auto Mode", auto);
 

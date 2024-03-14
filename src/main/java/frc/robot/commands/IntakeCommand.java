@@ -39,7 +39,7 @@ public class IntakeCommand extends Command {
         }
     }
 
-    @Override
+    @Override 
     public void end(boolean interrupted) {
         if (input.get() && intakePosition == IntakeState.Activated)
         {

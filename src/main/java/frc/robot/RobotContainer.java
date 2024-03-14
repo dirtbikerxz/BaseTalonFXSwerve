@@ -137,5 +137,9 @@ public class RobotContainer {
 
         return new PathPlannerAuto("New Auto");
     }
+    public Command autoCommandC() {
+
+        return new PathPlannerAuto("autoC");
+    }
 
 }
