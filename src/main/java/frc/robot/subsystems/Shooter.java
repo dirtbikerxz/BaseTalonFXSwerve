@@ -28,9 +28,19 @@ public class Shooter extends SubsystemBase {
         shooterControllerR = new TalonSRX(rightMotorID); 
     }
 
+    public void shooterGamerLight() {
+        double velocity = shooterControllerL.getActiveTrajectoryVelocity();
+
+        if (velocity>300) {
+            blinkin.set(0.77);
+        }
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Shooter Speed", maxSpeed);
+        SmartDashboard.putNumber("Shooter Velocity", shooterControllerL.getActiveTrajectoryVelocity());
+        shooterGamerLight();
     }
 
 
@@ -39,13 +49,6 @@ public class Shooter extends SubsystemBase {
         shooterControllerR.set(ControlMode.PercentOutput, maxSpeed);
     }
 
-    public void shooterGamerLight() {
-        double velocity = shooterControllerL.getActiveTrajectoryVelocity();
-
-        if (velocity>300) {
-            blinkin.set(0.77);
-        }
-    }
 
     public void stopShooter() {
         shooterControllerL.set(ControlMode.PercentOutput, 0);
