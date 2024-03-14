@@ -112,7 +112,7 @@ public class RobotContainer {
     }
 
     public Command getTransferCommand() {
-        return new TransferCommand(s_Transfer);
+        return new TransferCommand(s_Transfer, s_Intake);
     }
 
     public Command getAutoRotateCommand() {
@@ -128,6 +128,10 @@ public class RobotContainer {
     public Command getAutoTestCommand() {
 
         return new PathPlannerAuto("New Auto");
+    }
+    public Command autoCommandC() {
+
+        return new PathPlannerAuto("autoC");
     }
 
 }
