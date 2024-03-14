@@ -5,21 +5,34 @@
 package frc.robot.commands;
 
 
+import frc.robot.Constants.Swerve.IntakeState;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Transfer;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /** An example command that uses an example subsystem. */
 public class TransferCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Transfer m_subsystem;
+  private final Intake i_subsystem;
+  private final DigitalInput input;
+  private IntakeState intakePosition;
+
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TransferCommand(Transfer subsystem) {
+  public TransferCommand(Transfer subsystem, Intake intakeSystem) {
     m_subsystem = subsystem;
+    i_subsystem = intakeSystem;
+    intakePosition = IntakeState.Deactivated;
+    input = new DigitalInput(1);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -31,12 +44,17 @@ public class TransferCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.runTransfer();
+    //m_subsystem.runTransfer();
+    if (input.get() && intakePosition == IntakeState.Deactivated) {
+      i_subsystem.moveToTransfer();
+      m_subsystem.runTransfer();
+    };
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    i_subsystem.stopMoveToTransfer();
     m_subsystem.stopTransfer();
   }
 

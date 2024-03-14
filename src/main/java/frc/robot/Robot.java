@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.Shooter;
+import frc.robot.commands.ShooterCommand;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
     auto.setDefaultOption("Test Rotate", m_robotContainer.getAutoRotateCommand());
     auto.addOption("Test Drive & Rotate", m_robotContainer.getAutoDriveCommand());
     auto.addOption("New Auto", m_robotContainer.getAutoTestCommand());
+    auto.addOption("autoC", m_robotContainer.autoCommandC());
 
     SmartDashboard.putData("Auto Mode", auto);
 
@@ -121,18 +123,14 @@ public class Robot extends TimedRobot {
 
     boolean ringPresent = false;
 
-    if (match.color == kOrangeTarget && proximity>200){
+    if (match.color == kOrangeTarget && proximity>200)
       ringPresent = true;
-    } else {
+    else 
       ringPresent = false;
-    }
 
     SmartDashboard.putBoolean("Ring Present", ringPresent);
-
-    if (ringPresent == true){
-
+    
     }
-  }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override

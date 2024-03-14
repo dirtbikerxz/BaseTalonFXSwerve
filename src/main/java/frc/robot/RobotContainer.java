@@ -46,14 +46,6 @@ public class RobotContainer {
                 () -> controls.robotCentric.getAsBoolean()
             )
         );
-
-
-        //this just constantly runs the intake and shooter for now:
-        // s_Shooter.setDefaultCommand(new ShooterCommand(s_Shooter));
-        // s_Intake.setDefaultCommand(new IntakeCommand(s_Intake));
-
-        //s_Blinkin.setDefaultCommand(new InstantCommand(() -> s_Blinkin.idleLight()));
-        // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -86,6 +78,8 @@ public class RobotContainer {
         // controls.stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
         //TODO: test auto intake (collection but no transfer)
         controls.runIntake.onTrue(new IntakeCommand(s_Intake));
+        controls.autoTransfer.onTrue(new TransferCommand(s_Transfer, s_Intake));
+        
         // controls.reverseIntake.onTrue(new InstantCommand(() -> s_Intake.reverseIntake()));
         // controls.toggleIntake.onTrue(new InstantCommand(() -> s_Intake.toggleIntake()));
         controls.slowMode.whileTrue(
@@ -122,7 +116,7 @@ public class RobotContainer {
     }
 
     public Command getTransferCommand() {
-        return new TransferCommand(s_Transfer);
+        return new TransferCommand(s_Transfer, s_Intake);
     }
 
     public Command getAutoRotateCommand() {
@@ -138,6 +132,10 @@ public class RobotContainer {
     public Command getAutoTestCommand() {
 
         return new PathPlannerAuto("New Auto");
+    }
+    public Command autoCommandC() {
+
+        return new PathPlannerAuto("autoC");
     }
 
 }

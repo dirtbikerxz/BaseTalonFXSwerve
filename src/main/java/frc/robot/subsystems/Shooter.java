@@ -11,11 +11,14 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Shooter.*;
 import frc.robot.subsystems.GamerLights.*;
+
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterControllerL;
