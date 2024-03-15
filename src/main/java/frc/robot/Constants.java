@@ -135,20 +135,20 @@ public final class Constants {
     }
 
     public static final class Shooter {
-        public static final int leftMotorID = 7; // TODO: change to correct port #
-        public static final int rightMotorID = 20; // TODO: change to correct port #
+        public static final int leftMotorID = 90; // TODO: change to correct port #
+        public static final int rightMotorID = 23; // TODO: change to correct port #
 
         public static final double maxSpeed = .75;
     }
     
     public static final class Transfer {
-        public static final int transferMotorID = 20; // TODO: change to correct port #
+        public static final int transferMotorID = 22; // TODO: change to correct port #
 
         public static final double maxSpeed = .5; //TODO: to change
     }
 
     public static final class Intake {
-        public static final int motorID = 1; //TODO: change to correct port #
+        public static final int motorID = 91; //TODO: change to correct port #
 
         public static final double maxSpeed = .2;
     }

@@ -23,7 +23,7 @@ public class Intake extends SubsystemBase {
     private final double intakeSpeed;
     private final DoubleSolenoid m_doubleSolenoid;
     private final Compressor m_compressor;
-    private final DigitalInput input;
+    public final DigitalInput input;
 
     public Intake() {
         intakeController = new TalonSRX(motorID);
@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
         SmartDashboard.putBoolean("Compressor Running", m_compressor.isEnabled());
-        SmartDashboard.putBoolean("Intake Full", input.get());
+        // SmartDashboard.putBoolean("Intake Full", input.get());
         
         
     } 
