@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 
 import frc.robot.Constants.Swerve.IntakeState;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Transfer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,7 +20,8 @@ public class TransferCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Transfer m_subsystem;
   private final Intake i_subsystem;
-  private final DigitalInput input;
+  private final DigitalInput transfer_command_input;
+  private final DigitalInput transfer_stop_Input;
   private IntakeState intakePosition;
 
 
@@ -32,7 +34,8 @@ public class TransferCommand extends Command {
     m_subsystem = subsystem;
     i_subsystem = intakeSystem;
     intakePosition = IntakeState.Deactivated;
-    input = new DigitalInput(1);
+    transfer_command_input = intakeSystem.input;
+    transfer_stop_Input = subsystem.transferInput;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -45,10 +48,12 @@ public class TransferCommand extends Command {
   @Override
   public void execute() {
     //m_subsystem.runTransfer();
-    if (input.get() && intakePosition == IntakeState.Deactivated) {
+    if (transfer_command_input.get() && intakePosition == IntakeState.Deactivated) {
       i_subsystem.moveToTransfer();
       m_subsystem.runTransfer();
     };
+
+    
   }
 
   // Called once the command ends or is interrupted.

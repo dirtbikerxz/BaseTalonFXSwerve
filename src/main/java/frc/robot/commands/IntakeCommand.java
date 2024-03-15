@@ -16,7 +16,7 @@ public class IntakeCommand extends Command {
         // @param subsystem
     public IntakeCommand(Intake subsystem) {
         m_subsytem = subsystem;
-        input = new DigitalInput(1);
+        input = subsystem.input;
         intakePosition = IntakeState.Deactivated;
 
         addRequirements(subsystem);
