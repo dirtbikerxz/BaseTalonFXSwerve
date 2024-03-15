@@ -30,8 +30,7 @@ public class Intake extends SubsystemBase {
         intakeSpeed = maxSpeed;
         m_doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
         m_doubleSolenoid.set(DoubleSolenoid.Value.kOff);
-        //TODO: change to correct sensor port
-        input = new DigitalInput(1);
+        input = new DigitalInput(1); //TODO: change to correct sensor port
         
         //pressure switch actually turns off the pressurvizer at around 125-130 psi ????
         //gague might be bad, but it works 
